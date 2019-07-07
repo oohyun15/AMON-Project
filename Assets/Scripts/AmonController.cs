@@ -6,9 +6,8 @@ public class AmonController : MonoBehaviour
 {
     private float h = 0.0f;
     private float v = 0.0f;
-    private float r = 0.0f;
 
-    private Transform transform;
+    private new Transform transform;
     public float moveSpeed;
     public float rotSpeed;
 
