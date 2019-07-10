@@ -10,7 +10,7 @@ public class Obstacle : MonoBehaviour
     void Start()
     {
         Rigidbody rgbd = transform.GetComponent<Rigidbody>();
-        rgbd.mass = Mathf.Infinity; //mass를 최대로 높여 Amon과 장애물이 부딪혀도 장애물은 움직이지 않게 함
+        if(rgbd != null) rgbd.mass = Mathf.Infinity; //mass를 최대로 높여 Amon과 장애물이 부딪혀도 장애물은 움직이지 않게 함
     }
 
     private void OnCollisionEnter(Collision collision)

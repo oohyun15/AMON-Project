@@ -13,7 +13,7 @@ public class AmonController : MonoBehaviour
 
     private Obstacle obstacle; // 충돌처리된 장애물을 받아올 변수
     public bool attackDelay = false; // 장애물 공격 시 딜레이를 주기위한 변수
-    public CameraShake camera; // 화면 흔듦을 위해 카메라를 받아올 변수
+    public CameraShake _camera; // 화면 흔듦을 위해 카메라를 받아올 변수
 
     // Start is called before the first frame update
     void Start()
@@ -33,6 +33,7 @@ public class AmonController : MonoBehaviour
         transform.Translate(Vector3.forward * moveSpeed * v * Time.deltaTime, Space.Self);
 
         transform.Rotate(Vector3.up * rotSpeed * h * Time.deltaTime);
+        
     }
 
     private void OnCollisionStay(Collision collision) // 장애물과 충돌할 때 space키를 누르면 장애물을 공격하도록 코딩
@@ -52,7 +53,7 @@ public class AmonController : MonoBehaviour
 
         if(_obstacle.hp <= 0)
         {
-            StartCoroutine(camera.Shake(0.01f, 0.3f));
+            StartCoroutine(_camera.Shake(0.01f, 0.3f));
             Destroy(_obstacle.gameObject);
         }
         yield return new WaitForSeconds(0.1f);
