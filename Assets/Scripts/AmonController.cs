@@ -53,11 +53,14 @@ public class AmonController : MonoBehaviour
 
             case "Injured": // collision 부상자일 경우 부상자 종류에 따라 상호작용
                 Injured nearInjured = collision.gameObject.GetComponent<Injured>();
+
                 if (Input.GetKey(KeyCode.Space) && !nearInjured.isRescued)
                 {
-                    if (nearInjured.type == Injured.InjuryType.SERIOUS && isRescuing) break; // 현재 부상자 업고 있을 경우 구조 불가능
+                    // 현재 부상자 업고 있을 경우 구조 불가능
+                    if (nearInjured.type == Injured.InjuryType.SERIOUS && isRescuing) break;
                     nearInjured.Rescue(this);
                 }
+
                 break;
         }
     }

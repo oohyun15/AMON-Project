@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class SeriousInjured : Injured
 {
-    private BoxCollider collider;
+    private BoxCollider col;
 
     protected override void Start()
     {
-        collider = GetComponent<BoxCollider>();
+        col = GetComponent<BoxCollider>();
 
         base.Start();
         type = InjuryType.SERIOUS;
@@ -21,9 +21,14 @@ public class SeriousInjured : Injured
         player.isRescuing = true;
 
         // 캐릭터 뒤에 업히기
-        collider.isTrigger = true;
+        col.isTrigger = true;
         transform.SetParent(player.backPoint);
         transform.localPosition = Vector3.zero;
         transform.rotation = new Quaternion(0, 0, 0, 0);
+    }
+
+    protected override void EnteredExit()
+    {
+        player.isRescuing = false;
     }
 }

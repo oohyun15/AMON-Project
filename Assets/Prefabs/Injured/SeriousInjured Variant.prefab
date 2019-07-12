@@ -24,12 +24,17 @@ PrefabInstance:
     - target: {fileID: 4252750737936603404, guid: 09e6dcf84d57f904c862264efef1e928,
         type: 3}
       propertyPath: m_IsKinematic
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4252750737936603404, guid: 09e6dcf84d57f904c862264efef1e928,
         type: 3}
       propertyPath: m_UseGravity
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4252750737936603404, guid: 09e6dcf84d57f904c862264efef1e928,
+        type: 3}
+      propertyPath: m_Constraints
+      value: 126
       objectReference: {fileID: 0}
     - target: {fileID: 2229698136743296853, guid: 09e6dcf84d57f904c862264efef1e928,
         type: 3}
@@ -121,8 +126,7 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.35814872
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 4252750737936603404, guid: 09e6dcf84d57f904c862264efef1e928, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 09e6dcf84d57f904c862264efef1e928, type: 3}
 --- !u!1 &8147176089953080741 stripped
 GameObject:

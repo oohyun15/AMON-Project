@@ -6,7 +6,7 @@ public class FollowPlayer : MonoBehaviour
 {
     private Transform target;
 
-    public float distance;      // 캐릭터와의 거리 차이
+    public float distance;      // 캐릭터와의 최소 거리 차이
     public float speed;         // 부상자 최대 속도
 
     public void SetTarget(Transform target)
