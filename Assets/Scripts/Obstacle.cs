@@ -23,7 +23,7 @@ public class Obstacle : MonoBehaviour
                 {
                     Debug.Log(contact.point);
                     GameObject camera = collision.transform.GetChild(1).gameObject; 
-                    camera.transform.parent = null; // 상속된 카메라를 상속 해제하는 코드
+                    if(camera.transform.GetComponent<Camera>() != null) camera.transform.parent = null; // 상속된 카메라를 상속 해제하는 코드
                     Destroy(collision.gameObject);
                 }
             }

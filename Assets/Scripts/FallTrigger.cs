@@ -6,6 +6,14 @@ using UnityEngine;
 public class FallTrigger : MonoBehaviour
 {
     //public Obstacle obstacle; // 인스턴스화할 장애물을 받아오는 변수, 하이라키창에서 Object 직접 연결
+    GameObject fallObs;
+    GameObject obs;
+
+    private void Start()
+    {
+      fallObs= transform.GetChild(0).gameObject;
+      obs = transform.GetChild(1).gameObject;
+    }
 
     public Material _material; // 하이라키창에서 material 직접 연결
     
@@ -24,8 +32,6 @@ public class FallTrigger : MonoBehaviour
 
         //Instantiate(obstacle.gameObject, new Vector3(1.09f, 4.82f, -11.86f), Quaternion.identity);
 
-        GameObject fallObs = transform.GetChild(0).gameObject;
-        GameObject obs = transform.GetChild(1).gameObject;
         fallObs.SetActive(true);
         fallObs.transform.parent = null;
 
