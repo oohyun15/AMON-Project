@@ -23,25 +23,30 @@ public class FogOfWar : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Ray r = new Ray(transform.position, Character.position - transform.position);
-        RaycastHit hit;
-        if (Physics.Raycast(r, out hit, 1000, FogLayer, QueryTriggerInteraction.Collide))
+        if(Character != null) // 캐릭터 사망 시 오류뜨는거 방지용 if문
         {
-            for (int i = 0; i < vertices.Length; i++)
+            Ray r = new Ray(transform.position, Character.position - transform.position);
+            RaycastHit hit;
+            if (Physics.Raycast(r, out hit, 1000, FogLayer, QueryTriggerInteraction.Collide))
             {
-                Vector3 v = FogPlane.transform.TransformPoint(vertices[i]);
-
-                float dist = Vector3.SqrMagnitude(v - hit.point);
-
-                if (dist < radiusSqr)
+                for (int i = 0; i < vertices.Length; i++)
                 {
-                    float alpha = Mathf.Min(colors[i].a, dist / radiusSqr);
+                    Vector3 v = FogPlane.transform.TransformPoint(vertices[i]);
 
-                    colors[i].a = alpha;
+                    float dist = Vector3.SqrMagnitude(v - hit.point);
+
+                    if (dist < radiusSqr)
+                    {
+                        float alpha = Mathf.Min(colors[i].a, dist / radiusSqr);
+
+                        colors[i].a = alpha;
+                    }
                 }
+                UpdateColor();
             }
-            UpdateColor();
+
         }
+      
     }
 
     void Initialize()
