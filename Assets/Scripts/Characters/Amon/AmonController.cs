@@ -21,7 +21,7 @@ public class AmonController : MonoBehaviour
     public float rotSpeed;
     
 
-    public bool isRescuing;             // 현재 구조중인지 저장할 변수
+    public bool isRescuing;             // 현재 중상 부상자 구조중인지 저장할 변수
     public Transform backPoint;         // 부상자 업었을 때 위치 받아올 변수
     public Transform rescuers;
 
@@ -90,16 +90,24 @@ public class AmonController : MonoBehaviour
 
             // collision 부상자일 경우 부상자 종류에 따라 상호작용
             case "Injured":
-                Injured nearInjured = collision.gameObject.GetComponent<Injured>();
 
-                if (Input.GetKey(KeyCode.Space) && !nearInjured.isRescued)
-                {
-                    // 현재 부상자 업고 있을 경우 구조 불가능
-                    if (nearInjured.type == Injured.InjuryType.SERIOUS && isRescuing) break;
+                RescueInjured(collision.gameObject);
 
-                    nearInjured.Rescue(this);
-                }
                 break;
+        }
+    }
+
+    // (예진) 부상자 구조 상호작용
+    private void RescueInjured(GameObject nearObject)
+    {
+        Injured nearInjured = nearObject.gameObject.GetComponent<Injured>();
+
+        if (Input.GetKey(KeyCode.Space) && !nearInjured.isRescued)
+        {
+            // 현재 부상자 업고 있을 경우 구조 불가능
+            if (nearInjured.type == Injured.InjuryType.SERIOUS && isRescuing) return;
+
+            nearInjured.Rescue(this);
         }
     }
 
