@@ -1,4 +1,11 @@
-﻿using System.Collections;
+﻿/****************************************
+ * MinorInjured.cs
+ * 제작: 조예진
+ * 경상 부상자 캐릭터의 상세 상호작용 코드
+ * 작성일자: 19.07.11
+ ***************************************/
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 

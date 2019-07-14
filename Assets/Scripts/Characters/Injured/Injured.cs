@@ -1,4 +1,12 @@
-﻿using System.Collections;
+﻿/****************************************
+ * Injured.cs
+ * 제작: 조예진
+ * 부상자 캐릭터의 기본 클래스, 구조 시 기본 상호작용 코드
+ * 작성일자: 19.07.11
+ * 19. 07. 14 수정 - 구조 시 초록색으로 바뀌도록 함, 플레이어 속도 조절
+ ***************************************/
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -35,6 +43,11 @@ public abstract class Injured : MonoBehaviour
         meshRenderer.material.color = Color.green;
 
         this.player = player;
+
+        // 플레이어 속도 0 이하 되지 않도록 속도 조정
+        if ((player.moveSpeed -= speed) <= 0) player.moveSpeed += speed;
+
+        Debug.Log(player.moveSpeed);
     }
 
     protected virtual void OnTriggerEnter(Collider col)
@@ -45,7 +58,9 @@ public abstract class Injured : MonoBehaviour
             // 점수 추가, 부상자 구조 체크 - GameManager에서 설정
 
             // 플레이어 속도 정상화
+            player.moveSpeed += speed;
 
+            Debug.Log(player.moveSpeed);
 
             // 부상 타입별 출구 도착 시 행동 구현
             EnteredExit();
