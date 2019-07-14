@@ -36,6 +36,9 @@ public abstract class Injured : MonoBehaviour
         isRescued = true;
         gameObject.tag = "Rescued";
 
+        // 플레이어가 통과해 다닐 수 있도록 트리거 처리
+        GetComponent<Collider>().isTrigger = true;
+
         // 미니맵 표시점 색깔 변경
         minimapDot.color = Color.green;
 
