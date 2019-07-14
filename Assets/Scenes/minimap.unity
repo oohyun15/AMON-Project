@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -147,6 +147,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6605085323122512125, guid: a97f145a573b8334893edbf48d01c609,
+        type: 3}
+      propertyPath: m_Name
+      value: TestMap
+      objectReference: {fileID: 0}
     - target: {fileID: 7922574755705381614, guid: a97f145a573b8334893edbf48d01c609,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -201,11 +206,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6605085323122512125, guid: a97f145a573b8334893edbf48d01c609,
-        type: 3}
-      propertyPath: m_Name
-      value: TestMap
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a97f145a573b8334893edbf48d01c609, type: 3}
@@ -422,14 +422,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8296172668488189985, guid: 1d9d66c8fdb2791498c99d46269b8fc4,
         type: 3}
-      propertyPath: _camera
-      value: 
-      objectReference: {fileID: 487710503}
-    - target: {fileID: 8296172668488189985, guid: 1d9d66c8fdb2791498c99d46269b8fc4,
-        type: 3}
       propertyPath: rescuers
       value: 
       objectReference: {fileID: 666463861}
+    - target: {fileID: 8570972279124404056, guid: 1d9d66c8fdb2791498c99d46269b8fc4,
+        type: 3}
+      propertyPath: m_Name
+      value: Drink
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1d9d66c8fdb2791498c99d46269b8fc4, type: 3}
 --- !u!1 &415490580 stripped
@@ -558,18 +558,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hp: 0
---- !u!114 &487710503 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2049370281368317194, guid: 1d9d66c8fdb2791498c99d46269b8fc4,
-    type: 3}
-  m_PrefabInstance: {fileID: 355780014}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8c1bbbdaab896d4ba5372276b04aeb5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &548106775 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6121344561115224423, guid: a0737587944884e4e91ac5674948ce4b,
@@ -858,6 +846,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1857107770}
     m_Modifications:
+    - target: {fileID: 5787624010060231089, guid: bf57717aa4ffc8d47a7944981f5398d8,
+        type: 3}
+      propertyPath: m_Name
+      value: Interaction
+      objectReference: {fileID: 0}
     - target: {fileID: 5787624010060231088, guid: bf57717aa4ffc8d47a7944981f5398d8,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -962,11 +955,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5787624010060231089, guid: bf57717aa4ffc8d47a7944981f5398d8,
-        type: 3}
-      propertyPath: m_Name
-      value: Interaction
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bf57717aa4ffc8d47a7944981f5398d8, type: 3}
@@ -2541,6 +2529,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1857107770}
     m_Modifications:
+    - target: {fileID: 2926645025123394923, guid: 8e22e27401b43024eb594a499c2d479c,
+        type: 3}
+      propertyPath: m_Name
+      value: Minimap
+      objectReference: {fileID: 0}
     - target: {fileID: 2926645025123394900, guid: 8e22e27401b43024eb594a499c2d479c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2660,11 +2653,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 0.998556
-      objectReference: {fileID: 0}
-    - target: {fileID: 2926645025123394923, guid: 8e22e27401b43024eb594a499c2d479c,
-        type: 3}
-      propertyPath: m_Name
-      value: Minimap
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8e22e27401b43024eb594a499c2d479c, type: 3}
