@@ -14,7 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isRescued: 0
   type: 0
-  speed: 0.3
 --- !u!114 &6928876913664464487
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -39,7 +38,7 @@ PrefabInstance:
     - target: {fileID: 2229698136743296853, guid: 09e6dcf84d57f904c862264efef1e928,
         type: 3}
       propertyPath: m_Name
-      value: MinorInjured Variant
+      value: NormalInjured
       objectReference: {fileID: 0}
     - target: {fileID: 2229698136743296856, guid: 09e6dcf84d57f904c862264efef1e928,
         type: 3}
@@ -111,6 +110,11 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 25
       objectReference: {fileID: 0}
+    - target: {fileID: 4252750737936603404, guid: 09e6dcf84d57f904c862264efef1e928,
+        type: 3}
+      propertyPath: m_Constraints
+      value: 112
+      objectReference: {fileID: 0}
     - target: {fileID: 2229698136743296857, guid: 09e6dcf84d57f904c862264efef1e928,
         type: 3}
       propertyPath: m_Mesh
@@ -120,22 +124,22 @@ PrefabInstance:
     - target: {fileID: 2229698136743296855, guid: 09e6dcf84d57f904c862264efef1e928,
         type: 3}
       propertyPath: m_Size.x
-      value: 0.016593974
+      value: 0.03588511
       objectReference: {fileID: 0}
     - target: {fileID: 2229698136743296855, guid: 09e6dcf84d57f904c862264efef1e928,
         type: 3}
       propertyPath: m_Size.y
-      value: 0.0526332
+      value: 0.058020134
       objectReference: {fileID: 0}
     - target: {fileID: 2229698136743296855, guid: 09e6dcf84d57f904c862264efef1e928,
         type: 3}
       propertyPath: m_Size.z
-      value: 0.01468625
+      value: 0.01953164
       objectReference: {fileID: 0}
     - target: {fileID: 2229698136743296855, guid: 09e6dcf84d57f904c862264efef1e928,
         type: 3}
       propertyPath: m_Center.x
-      value: 0.00022197005
+      value: 0.00022197007
       objectReference: {fileID: 0}
     - target: {fileID: 2229698136743296855, guid: 09e6dcf84d57f904c862264efef1e928,
         type: 3}
@@ -145,18 +149,13 @@ PrefabInstance:
     - target: {fileID: 2229698136743296855, guid: 09e6dcf84d57f904c862264efef1e928,
         type: 3}
       propertyPath: m_Center.z
-      value: -0.002444124
+      value: -0.00002143204
       objectReference: {fileID: 0}
     - target: {fileID: 2229698136743296854, guid: 09e6dcf84d57f904c862264efef1e928,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 6a2dc48262a966a4abeb00022dc736da, type: 2}
-    - target: {fileID: 4252750737936603404, guid: 09e6dcf84d57f904c862264efef1e928,
-        type: 3}
-      propertyPath: m_Constraints
-      value: 112
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 09e6dcf84d57f904c862264efef1e928, type: 3}
 --- !u!1 &8324321381253189338 stripped
