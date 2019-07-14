@@ -2,7 +2,7 @@
  * AmonController.cs
  * 제작: 김태윤, 조예진
  * Amon캐릭터의 움직임 및 구조자와 아이템의 상호작용 코드
- * 함수 추가 및 수정시 시 누가 작성했는지 꼭 해당 함수 주석으로 명시해주세요!
+ * 함수 추가 및 수정 시 누가 작성했는지 꼭 해당 함수 주석으로 명시해주세요!
  * 작성일자: 19.07.14
  ***************************************/
 
@@ -12,12 +12,14 @@ using UnityEngine;
 
 public class AmonController : MonoBehaviour
 {
+    
     private float h = 0.0f;
     private float v = 0.0f;
 
     private new Transform transform;
     public float moveSpeed;
     public float rotSpeed;
+    
 
     public bool isRescuing;             // 현재 구조중인지 저장할 변수
     public Transform backPoint;         // 부상자 업었을 때 위치 받아올 변수
@@ -48,6 +50,7 @@ public class AmonController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Unity에서 디버깅용 버튼. 추후에 삭제해야함
         h = Input.GetAxis("Horizontal");
 
         v = Input.GetAxis("Vertical");
