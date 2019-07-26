@@ -18,8 +18,7 @@ public class AmonController : MonoBehaviour
 
     private new Transform transform;
     public float moveSpeed;
-    public float rotSpeed;
-    
+    public float rotSpeed;    
 
     public bool isRescuing;             // 현재 중상 부상자 구조중인지 저장할 변수
     public Transform backPoint;         // 부상자 업었을 때 위치 받아올 변수
@@ -33,6 +32,9 @@ public class AmonController : MonoBehaviour
     public Item currentItem;            // 플레이어가 현재 가지고 있는 아이템을 받아오는 변수
     public ItemController itemcontroller;
 
+    private bool isEscaped;             // 플레이어 탈출 확인 변수
+    public bool IsEscaped { get { return isEscaped; } }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -43,6 +45,8 @@ public class AmonController : MonoBehaviour
         transform = GetComponent<Transform>();
 
         isRescuing = false;
+
+        isEscaped = false;
 
         damage = 1;
     }
@@ -95,6 +99,19 @@ public class AmonController : MonoBehaviour
 
                 break;
         }
+    }
+
+    // (예진) 플레이어 탈출 확인
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Exit"))
+            isEscaped = true;
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Exit"))
+            isEscaped = false;
     }
 
     // (예진) 부상자 구조 상호작용

@@ -39,11 +39,7 @@ public abstract class Injured : MonoBehaviour
         // 플레이어가 통과해 다닐 수 있도록 트리거 처리
         GetComponent<Collider>().isTrigger = true;
 
-        // 미니맵 표시점 색깔 변경
-        minimapDot.color = Color.green;
-
-        // material 색깔 변경
-        meshRenderer.material.color = Color.green;
+        CheckMaterialRescued();
 
         this.player = player;
 
@@ -51,12 +47,22 @@ public abstract class Injured : MonoBehaviour
         if ((player.moveSpeed -= speed) <= 0) player.moveSpeed += speed;
     }
 
+    public void CheckMaterialRescued()
+    {
+        // 미니맵 표시점 색깔 변경
+        minimapDot.color = Color.green;
+
+        // material 색깔 변경
+        meshRenderer.material.color = Color.green;
+    }
+
     protected virtual void OnTriggerEnter(Collider col)
     {
         // 출구 트리거 발생 시
         if (col.tag == "Exit")
         {
-            // 점수 추가, 부상자 구조 체크 - GameManager에서 설정
+            // 부상자 구조 체크
+            GameManager.Instance.CheckGameClear();
 
             // 플레이어 속도 정상화
             player.moveSpeed += speed;
