@@ -13,28 +13,35 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;         // 터치 이벤트 구현을 위해 추가
+using UnityEngine.EventSystems;                 // 터치 이벤트 구현을 위해 추가
 
 public class JoystickController : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler
 {
-    // 조이스틱 UI 관련 변수            19.07.14 추가
-    public RectTransform Background;    // 좌측 하단 백그라운드
-    public RectTransform Joystick;      // 촤즉 하단 조이스틱 버튼
-    private float radius;               // 백그라운드 내에서 조이스틱이 이동가능한 범위의 반지름
+    // 싱글톤                                   19.07.30 추가
+    public static JoystickController instance = null; // 싱글톤 구현을 위한 변수
 
-    public GameObject Player;           // 이동시킬 플레이어 오브젝트
-    private float moveSpeed;            // 플레이어의 이동속도. AmonController에서 가져올 예정
-    private float rotSpeed;             // 플레이어의 회전속도. AmonController에서 가져올 예정
-    private bool isTouch = false;       // 터치를 눌렀는 지 확인하는 변수
+    // 조이스틱 UI 관련 변수                    19.07.14 추가
+    public RectTransform Background;            // 좌측 하단 백그라운드
+    public RectTransform Joystick;              // 촤즉 하단 조이스틱 버튼
+    private float radius;                       // 백그라운드 내에서 조이스틱이 이동가능한 범위의 반지름
+
+    public GameObject Player;                   // 이동시킬 플레이어 오브젝트
+    private float moveSpeed;                    // 플레이어의 이동속도. AmonController에서 가져올 예정
+    private float rotSpeed;                     // 플레이어의 회전속도. AmonController에서 가져올 예정
+    private bool isTouch = false;               // 터치를 눌렀는 지 확인하는 변수
     private Vector3 movePosition;
     private Vector3 rotPosition;
 
     void Start()
     {
-        // AmonController에서 캐릭터의 이동속도 및 회전속도를 가져옴
-        moveSpeed = Player.GetComponent<AmonController>().moveSpeed;
+        // 싱글톤 구현, 인스턴스가 이미 있는지 확인, 없으면 인스턴스를 this로 할당
+        if (instance == null) instance = this;
 
-        rotSpeed = Player.GetComponent<AmonController>().rotSpeed;
+        // 인스턴스가 this로 할당되있다면  게임오브젝트 삭제
+        else if (instance != this) Destroy(gameObject);
+
+        // AmonController에서 캐릭터의 이동속도 및 회전속도를 가져옴
+        UpdateSpeed();
 
         // 백그라운드 이미지의 가로 길이의 절반을 반지름으로 사용
         radius = Background.rect.width * 0.5f;
@@ -97,5 +104,12 @@ public class JoystickController : MonoBehaviour, IPointerDownHandler, IPointerUp
             0f,
             value.x * rotSpeed * Time.deltaTime,
             0f);
+    }
+
+    public void UpdateSpeed()
+    {
+        moveSpeed = Player.GetComponent<AmonController>().moveSpeed;
+
+        rotSpeed = Player.GetComponent<AmonController>().rotSpeed;
     }
 }

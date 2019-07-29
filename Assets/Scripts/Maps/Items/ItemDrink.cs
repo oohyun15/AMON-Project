@@ -10,6 +10,7 @@ public class ItemDrink : Item
     public override void ItemActive()
     {
         player.StartCoroutine(player.UpSpeed(addSpeed, dopingTime));
+
         DurabilityManage();
     }
 }

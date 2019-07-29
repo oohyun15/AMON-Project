@@ -5,7 +5,7 @@ using UnityEngine;
 public class ItemController : MonoBehaviour
 {
     public GameObject itemInvt; // 아이템들이 포함되어있는 게임오브젝트를 받아옴
-    private AmonController player;
+    private AmonController Player;
 
     // private bool itemIsActive;
 
@@ -20,7 +20,7 @@ public class ItemController : MonoBehaviour
 
     void Start()
     {
-        player = gameObject.transform.GetComponent<AmonController>(); // player 캐릭터를 받아옴
+        Player = gameObject.transform.GetComponent<AmonController>(); // player 캐릭터를 받아옴
 
         key1 = itemInvt.transform.GetChild(0).gameObject; // key 오브젝트와 keyItem 정보를 받아옴
         key1Item = key1.transform.GetChild(0).gameObject.GetComponent<Item>();
@@ -48,39 +48,59 @@ public class ItemController : MonoBehaviour
 
     void ItemSwap(int itemNum)
     {
+        // 아이템 변경 전 모든 key를 비활성화
         key1.SetActive(false);
         key2.SetActive(false);
-        key3.SetActive(false); // 아이템 변경 전 모든 key를 비활성화
+        key3.SetActive(false);
+
+        // (용현) 플레이어 상태를 Idle로 변경
+        Player.state = AmonController.InteractionState.Idle;
 
         // itemNum에 맞는 숫자키만 활성화, 만약 그 숫자에 상속된 아이템이 없을 경우 keyItem에 null, 아니면 아이템 정보를 넘김
+        // Axe
         if (itemNum == 1)
         {
             key1.SetActive(true);
-            if (key1Item == null) player.currentItem = null;
-            else key1Item.gameObject.SetActive(true);
+            if (key1Item == null) Player.currentItem = null;
+            else
+            {
+                key1Item.gameObject.SetActive(true);
 
-            player.currentItem = key1Item;
+                // (용현) 음료수를 집었을 시, 플레이어의 인터렉션 상태를 Item으로 변경
+                Player.state = AmonController.InteractionState.Item;
+            }
+
+            Player.currentItem = key1Item;
         }
 
+        // Drink
         else if (itemNum == 2)
         {
-            key2.SetActive(true); 
+            key2.SetActive(true);
 
-            if (key2Item == null) player.currentItem = null;
-            else key2Item.gameObject.SetActive(true);
+            if (key2Item == null) Player.currentItem = null;
+            else
+            {
+                key2Item.gameObject.SetActive(true);
 
-            player.currentItem = key2Item;
+                // (용현) 음료수를 집었을 시, 플레이어의 인터렉션 상태를 Item으로 변경
+                Player.state = AmonController.InteractionState.Item;
+            }
+
+            Player.currentItem = key2Item;
         }
 
+        // Unknown
         else if (itemNum == 3)
         {
             key3.SetActive(true);
-            if (key3Item == null) player.currentItem = null;
+            if (key3Item == null) Player.currentItem = null;
             else key3Item.gameObject.SetActive(true);
 
-            player.currentItem = key3Item;
+            Player.currentItem = key3Item;
         }
-        else if (itemNum == 4) player.currentItem = null; // 4번키는 맨손을 의미함
+        else if (itemNum == 4) Player.currentItem = null; // 4번키는 맨손을 의미함
+
     }
 
     public IEnumerator AddItem(Item _item)
@@ -98,7 +118,7 @@ public class ItemController : MonoBehaviour
 
                     //keyItem과 currentItem, inventoryData를 _item값으로 초기화
                     key1Item = _item;
-                    player.currentItem = _item;
+                    Player.currentItem = _item;
                     inventoryData[i] = key1Item;
 
                    yield break; // 아이템을 주우는 행위를 했다면 코루틴에서 탈출
@@ -110,7 +130,7 @@ public class ItemController : MonoBehaviour
                     _item.gameObject.transform.parent = key2.transform;
 
                     key2Item = _item;
-                    player.currentItem = _item;
+                    Player.currentItem = _item;
                     inventoryData[i] = key2Item;
 
                     yield break;
@@ -122,7 +142,7 @@ public class ItemController : MonoBehaviour
                     _item.gameObject.transform.parent = key3.transform;
 
                     key3Item = _item;
-                    player.currentItem = _item;
+                    Player.currentItem = _item;
                     inventoryData[i] = key3Item;
 
                     yield break;

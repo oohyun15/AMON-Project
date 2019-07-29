@@ -43,6 +43,9 @@ public class Item : MonoBehaviour // Item들의 기본 속성을 가져 인터�
             else inventory.key3Item = null;
 
             Destroy(gameObject);
+
+            // (용현) 19.07.30 아이템 사용 후 플레이어 상태 Idle로 변경
+            player.state = AmonController.InteractionState.Idle;
         }
     }
 }

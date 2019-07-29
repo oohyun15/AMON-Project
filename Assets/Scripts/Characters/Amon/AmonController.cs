@@ -1,9 +1,11 @@
 ﻿/****************************************
  * AmonController.cs
- * 제작: 김태윤, 조예진
+ * 제작: 김태윤, 조예진, 김용현
  * Amon캐릭터의 움직임 및 구조자와 아이템의 상호작용 코드
+ * (19.07.30) UI 인터렉션 버튼을 구현을 위한 Interaction 함수 정의(Space 키)
  * 함수 추가 및 수정 시 누가 작성했는지 꼭 해당 함수 주석으로 명시해주세요!
  * 작성일자: 19.07.14
+ * 수정일자: 19.07.30
  ***************************************/
 
 using System.Collections;
@@ -12,43 +14,55 @@ using UnityEngine;
 
 public class AmonController : MonoBehaviour
 {
-    
-    private float h = 0.0f;
-    private float v = 0.0f;
+    // 플레이어 상태 종류
+    public enum InteractionState { Idle, Item, Obstacle, Rescue } 
 
-    private new Transform transform;
+    [Header("Player Info")]
     public float moveSpeed;
-    public float rotSpeed;    
+    public float rotSpeed;
+    public int damage;                  // 장애물 공격 데미지
 
-    public bool isRescuing;             // 현재 중상 부상자 구조중인지 저장할 변수
-    public Transform backPoint;         // 부상자 업었을 때 위치 받아올 변수
-    public Transform rescuers;
+    [Header("Player State")]
+    public InteractionState state = InteractionState.Idle; // 현재 플레이어의 상태
 
+    [Header("Currnet Item")]
+    public Item currentItem;            // 플레이어가 현재 가지고 있는 아이템을 받아오는 변수
+    public ItemController ItemController;
+
+    [Header("Obstacle")]
+    [SerializeField]
     private Obstacle obstacle;          // 충돌처리된 장애물을 받아올 변수
     public bool attackDelay = false;    // 장애물 공격 시 딜레이를 주기위한 변수
     public CameraShake _camera;         // 화면 흔듦을 위해 카메라를 받아올 변수
 
-    private int damage;
-    public Item currentItem;            // 플레이어가 현재 가지고 있는 아이템을 받아오는 변수
-    public ItemController itemcontroller;
-
+    [Header("Rescue")]
+    public bool isRescuing;             // 현재 중상 부상자 구조중인지 저장할 변수
+    public Transform backPoint;         // 부상자 업었을 때 위치 받아올 변수
+    public Transform rescuers;
+    private GameObject target;          // (용현) 부상자(충돌체) 타겟 변수
     private bool isEscaped;             // 플레이어 탈출 확인 변수
     public bool IsEscaped { get { return isEscaped; } }
+    
+    [Header("Debug")]                   // 키보드로 이동할 때 사용하는 변수, 추후에 삭제해야함
+    [SerializeField]
+    private float h = 0.0f;             // 좌,우
+    [SerializeField]
+    private float v = 0.0f;             // 상,하
+    private new Transform transform;
+
 
     // Start is called before the first frame update
     void Start()
     {
         Debug.Log("Hello world!");
 
-        itemcontroller = gameObject.transform.GetComponent<ItemController>();
+        ItemController = gameObject.transform.GetComponent<ItemController>();
 
         transform = GetComponent<Transform>();
 
         isRescuing = false;
 
         isEscaped = false;
-
-        damage = 1;
     }
 
     // Update is called once per frame
@@ -64,18 +78,8 @@ public class AmonController : MonoBehaviour
         transform.Rotate(Vector3.up * rotSpeed * h * Time.deltaTime);
 
         // 아이템 사용 버튼 - space 키
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            if (currentItem == null) return;
+        if (Input.GetKeyDown(KeyCode.Space)) Interaction();
 
-            else
-            {
-                //무기는 평소에 사용 안되도록 구현
-                if (currentItem.transform.GetComponent<ItemWeapon>() != null) return;
-
-                else currentItem.ItemActive();
-            }
-        }
     }
 
     private void OnCollisionStay(Collision collision)
@@ -84,18 +88,22 @@ public class AmonController : MonoBehaviour
         {
             // 장애물과 충돌할 때 space키를 누르면 장애물을 공격하도록 코딩
             case "Obstacle":
-                Obstacle nearObs = collision.gameObject.GetComponent<Obstacle>();
 
-                if (!attackDelay && nearObs != null)
-                {
-                    if (Input.GetKey(KeyCode.Space)) StartCoroutine(DestroyObs(nearObs));
-                }
+                // 장애물 제거 모드로 변경
+                state = InteractionState.Obstacle;
+
+                obstacle = collision.gameObject.GetComponent<Obstacle>();
+
                 break;
 
             // collision 부상자일 경우 부상자 종류에 따라 상호작용
             case "Injured":
 
-                RescueInjured(collision.gameObject);
+                // 구출모드로 변경
+                state = InteractionState.Rescue;
+
+                // (용현) 부상자를 target으로 설정
+                target = collision.gameObject;
 
                 break;
         }
@@ -119,26 +127,27 @@ public class AmonController : MonoBehaviour
     {
         Injured nearInjured = nearObject.gameObject.GetComponent<Injured>();
 
-        if (Input.GetKey(KeyCode.Space) && !nearInjured.isRescued)
+        // 현재 부상자 업고 있을 경우 구조 불가능. (용현) 이중 if절을 한개로 합침
+        if (!nearInjured.isRescued &&
+            !(isRescuing && nearInjured.type == Injured.InjuryType.SERIOUS))
         {
-            // 현재 부상자 업고 있을 경우 구조 불가능
-            if (nearInjured.type == Injured.InjuryType.SERIOUS && isRescuing) return;
-
+            // 부상자 구조
             nearInjured.Rescue(this);
+
+            // (용현) 구조 후 플레이어 상태 변경
+            state = currentItem ? InteractionState.Item : InteractionState.Idle;
         }
     }
 
     // 딜레이를 위해 코루틴을 사용하였다.
-    IEnumerator DestroyObs(Obstacle _obstacle) 
+    private IEnumerator DestroyObs(Obstacle _obstacle)
     {
         attackDelay = true;
 
-        if (currentItem == null)
-        {
-            _obstacle.hp -= damage;
-        }
+        if (currentItem == null) _obstacle.hp -= damage;
+
         // 무기 사용 시 추가 데미지가 있도록 별개로 구현
-        else if (currentItem.transform.GetComponent<ItemWeapon>() != null) 
+        else if (currentItem.transform.GetComponent<ItemWeapon>() != null)
         {
             _obstacle.hp -= currentItem.transform.GetComponent<ItemWeapon>().addDamage;
 
@@ -156,7 +165,8 @@ public class AmonController : MonoBehaviour
 
         if (_obstacle.hp <= 0)
         {
-            StartCoroutine(_camera.Shake(0.01f, 0.3f));
+            // 코루틴 함수는 모두 게임매니저로 걸어놓음
+            GameManager.Instance.StartCoroutine(_camera.Shake(0.01f, 0.3f));
 
             Destroy(_obstacle.gameObject);
         }
@@ -174,12 +184,56 @@ public class AmonController : MonoBehaviour
 
         moveSpeed *= _addSpeed;
 
-        rotSpeed *= _addSpeed * 0.7f;
+        // (용현) 회전속도 0.7 -> 0.5
+        rotSpeed *= _addSpeed * 0.5f;
+
+        // (용현) 조이스틱에서 이동속도 업데이트
+        JoystickController.instance.UpdateSpeed();
 
         yield return new WaitForSeconds(_timer);
 
         moveSpeed = orgMoveSpeed;
 
         rotSpeed = orgRotSpeed;
+
+        // (용현) 조이스틱에서 이동속도 업데이트
+        JoystickController.instance.UpdateSpeed();
+    }
+
+    // (용현) 인터렉션 버튼
+    public void Interaction()
+    {
+        switch (state)
+        {
+            // 기본 상태
+            case InteractionState.Idle:
+
+                Debug.Log("Do Nothing");
+
+                break;
+
+            // 아이템 사용
+            case InteractionState.Item:
+
+                currentItem.ItemActive();
+
+                break;
+
+            // 장애물 제거
+            case InteractionState.Obstacle:
+
+                if (!attackDelay) GameManager.Instance.StartCoroutine(DestroyObs(obstacle));
+
+                break;
+           
+            // 부상자 구출
+            case InteractionState.Rescue:
+
+                RescueInjured(target);
+
+                break;
+        } 
+
+        
     }
 }
