@@ -2,8 +2,10 @@
  * GameManager.cs
  * 제작: 조예진
  * 게임 클리어 조건 확인 스크립트
+ * (19.07.30)  게임 시작 버튼을 누르면 UI(조이스틱 및 인터렉션 버튼)를 활성화함
  * 함수 추가 및 수정 시 누가 작성했는지 꼭 해당 함수 주석으로 명시해주세요!
  * 작성일자: 19.07.26
+ * 수정일자: 19.07.30
  ***************************************/
 
 using System.Collections;
@@ -55,6 +57,7 @@ public class GameManager : MonoBehaviour
 
     [Header("UI")]
     public Text leftTimeText;
+    public GameObject[] UI;                     // (용현) 0: Joystick, 1: Interaction
 
     private float time;                         // 남은 시간, 초 단위
     private bool gameOver;
@@ -70,12 +73,18 @@ public class GameManager : MonoBehaviour
         time = timeLimit;
 
         SetTimeText(timeLimit);
+
+        // (용현) UI 비활성화
+        foreach (GameObject ui in UI) ui.SetActive(false);
     }
 
     public void StartGame(GameObject startButton)
     {
         startButton.SetActive(false);
 
+        // (용현) UI 활성화
+        foreach (GameObject ui in UI) ui.SetActive(true);
+        
         timeCheckCoroutine = CheckTime();
 
         StartCoroutine(timeCheckCoroutine);
