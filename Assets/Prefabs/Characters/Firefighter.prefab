@@ -368,13 +368,13 @@ GameObject:
   - component: {fileID: 6416054586260472039}
   - component: {fileID: 2616979614712298193}
   - component: {fileID: 8605790044996142632}
+  - component: {fileID: 8296172668488189985}
+  - component: {fileID: 2049370282513406990}
   - component: {fileID: 2049370282513406984}
   - component: {fileID: 2049370282513406991}
-  - component: {fileID: 2049370282513406990}
-  - component: {fileID: 8296172668488189985}
   m_Layer: 0
   m_Name: Firefighter
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -451,6 +451,47 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &8296172668488189985
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8021261130364400372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31fe160606dbe6043a897e78b265bf34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 3
+  rotSpeed: 160
+  isRescuing: 0
+  backPoint: {fileID: 2049370281383512443}
+  rescuers: {fileID: 0}
+  attackDelay: 0
+  _camera: {fileID: 0}
+  currentItem: {fileID: 0}
+  itemcontroller: {fileID: 0}
+--- !u!114 &2049370282513406990
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8021261130364400372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51e6a2913e7a12b4885a5f87ca5059fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemInvt: {fileID: 2049370281135355926}
+  key1: {fileID: 0}
+  key1Item: {fileID: 0}
+  key2: {fileID: 0}
+  key2Item: {fileID: 0}
+  key3: {fileID: 0}
+  key3Item: {fileID: 0}
+  inventoryData: []
 --- !u!54 &2049370282513406984
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -480,47 +521,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.04149844, y: 0.09017322, z: 0.03846095}
   m_Center: {x: -0.00011770487, y: 0.043482263, z: -0.0007690674}
---- !u!114 &2049370282513406990
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8021261130364400372}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 51e6a2913e7a12b4885a5f87ca5059fd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemInvt: {fileID: 2049370281135355926}
-  key1: {fileID: 0}
-  key1Item: {fileID: 0}
-  key2: {fileID: 0}
-  key2Item: {fileID: 0}
-  key3: {fileID: 0}
-  key3Item: {fileID: 0}
-  inventoryData: []
---- !u!114 &8296172668488189985
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8021261130364400372}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31fe160606dbe6043a897e78b265bf34, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 3
-  rotSpeed: 80
-  isRescuing: 0
-  backPoint: {fileID: 2049370281383512443}
-  rescuers: {fileID: 0}
-  attackDelay: 0
-  _camera: {fileID: 2049370281368317194}
-  currentItem: {fileID: 0}
-  itemcontroller: {fileID: 0}
 --- !u!114 &2354528770163483278
 MonoBehaviour:
   m_ObjectHideFlags: 0
