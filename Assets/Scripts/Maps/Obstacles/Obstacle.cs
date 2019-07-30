@@ -1,4 +1,14 @@
-﻿using System.Collections;
+﻿/****************************************
+ * Obstacle.cs
+ * 제작: 김태윤
+ * 장애물 관련 함수
+ * (19.07.30) 플레이어 제거되지 않게 수정 및 카메라를 정상적으로 찾게 수정
+ * 함수 추가 및 수정 시 누가 작성했는지 꼭 해당 함수 주석으로 명시해주세요!
+ * 작성일자: 19.07.14
+ * 수정일자: 19.07.30
+ ***************************************/
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -22,9 +32,17 @@ public class Obstacle : MonoBehaviour
                 if (contact.point.y > 1.3f) // 스테이지에 배치된 장애물과의 충돌 지점의 y좌표는 0.55임을 이용, amon 위에서 떨어질 떄 충돌하면 amon 오브젝트 파괴
                 {
                     Debug.Log(contact.point);
-                    GameObject camera = collision.transform.GetChild(1).gameObject; 
+
+                    // (용현) 플레이어에게 달린 카메라 변수. 기존에 하드코딩으로 자식 번호 위치로 카메라 변수를 지정하니까 정상적으로 카메라를 못골랐었음
+                    GameObject camera = collision.gameObject.GetComponent<AmonController>()._camera.gameObject;
+
                     camera.transform.parent = null; // 상속된 카메라를 상속 해제하는 코드
-                    Destroy(collision.gameObject);
+
+                    // (용현) 플레이어 비활성화
+                    collision.gameObject.SetActive(false);
+
+                    // (용현) 결과창 업데이트
+                    /* Not Implemented */
                 }
             }
         }
