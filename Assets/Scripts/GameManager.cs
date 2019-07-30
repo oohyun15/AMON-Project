@@ -47,6 +47,7 @@ public class GameManager : MonoBehaviour
 
     public GameObject injuredParent;
     public AmonController player;
+    private DataManager dm;
 
     [Header("Game State")]
     [SerializeField]
@@ -67,12 +68,8 @@ public class GameManager : MonoBehaviour
     private IEnumerator timeCheckCoroutine;
 
 
-    // 스테이지 데이터 변수
-    private string stageDataPath = "Data/stage_data";       // 스테이지 데이터 csv 파일 경로
-    private List<Dictionary<string, object>> stageData;
 
-    private string sceneName;
-    private int dataIndex;
+    // 스테이지 데이터 변수
 
     /* PlayerPrefs 저장 키
      * Money - 플레이어 소지 돈
@@ -81,9 +78,13 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        LoadStageData();
+        dm = DataManager.Instance;
 
-        ShowPlayerInfo();
+        // 스테이지 데이터 설정
+        maxLeftToMiddleCondition = dm.MaxLeftToMiddleCondition;
+        maxLeftToLowCondition = dm.MaxLeftToLowCondition;
+
+        dm.ShowPlayerInfo();
 
         gameOver = false;
 
@@ -97,37 +98,6 @@ public class GameManager : MonoBehaviour
         foreach (GameObject ui in UI) ui.SetActive(false);
     }
 
-    // 스테이지 데이터 로드
-    private void LoadStageData()
-    {
-        dataIndex = -1;
-
-        sceneName = SceneManager.GetActiveScene().name;
-
-        stageData = CSVReader.Read(stageDataPath);
-
-        for (int i = 0; i < stageData.Count; i++)
-        {
-            if (stageData[i]["sceneName"].ToString() == sceneName)
-            {
-                dataIndex = i;
-
-                break;
-            }
-        }
-
-        if (dataIndex == -1) Debug.LogError("스테이지 데이터 로드 실패");
-        else Debug.Log("스테이지 데이터 로드 완료");
-
-        maxLeftToLowCondition = System.Convert.ToInt32(stageData[dataIndex]["maxLeftTolow"]);
-        maxLeftToMiddleCondition = System.Convert.ToInt32(stageData[dataIndex]["maxLeftTomid"]);
-    }
-
-    private void ShowPlayerInfo()
-    {
-        Debug.Log("Player Info. Money = " + PlayerPrefs.GetInt("Money", 0) +
-            ", Honor = " + PlayerPrefs.GetInt("Honor", 0));
-    }
 
     public void StartGame(GameObject startButton)
     {
@@ -196,14 +166,14 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Game Clear - Reward : " + state.ToString());
 
-        int money = 0, honor = 0;
-
-        money = System.Convert.ToInt32(stageData[dataIndex][state.ToString() + "RewardMoney"]);
-        honor = System.Convert.ToInt32(stageData[dataIndex][state.ToString() + "RewardHonor"]);
+        int money = dm.GetStageReward(DataManager.RewardType.Money, state);
+        int honor = dm.GetStageReward(DataManager.RewardType.Honor, state);
 
         Debug.Log("Reward - Money : " + money + ", Honor : " + honor);
 
-        SaveGameResult(money, honor);
+        dm.SaveGameResult(money, honor);
+
+        dm.ShowPlayerInfo();
 
         StopGame();
     }
@@ -217,13 +187,6 @@ public class GameManager : MonoBehaviour
     }
 
     // 플레이어 획득 보상 저장
-    private void SaveGameResult(int money, int honor)
-    {
-        PlayerPrefs.SetInt("Money", PlayerPrefs.GetInt("Money", 0) + money);
-        PlayerPrefs.SetInt("Honor", PlayerPrefs.GetInt("Honor", 0) + honor);
-
-        ShowPlayerInfo();
-    }
 
     private IEnumerator CheckTime()
     {
