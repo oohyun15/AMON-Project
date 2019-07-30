@@ -3,6 +3,7 @@
  * 제작: 조예진
  * 게임 클리어 조건 확인 스크립트
  * (19.07.30)  게임 시작 버튼을 누르면 UI(조이스틱 및 인터렉션 버튼)를 활성화함
+ * (19.07.30)  데이터 로드 및 저장 부분 추가
  * 함수 추가 및 수정 시 누가 작성했는지 꼭 해당 함수 주석으로 명시해주세요!
  * 작성일자: 19.07.26
  * 수정일자: 19.07.30
@@ -12,6 +13,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -19,7 +21,7 @@ public class GameManager : MonoBehaviour
     public enum ClearState
     {
         high,
-        medium,
+        mid,
         low
     }
 
@@ -64,8 +66,25 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator timeCheckCoroutine;
 
+
+    // 스테이지 데이터 변수
+    private string stageDataPath = "Data/stage_data";       // 스테이지 데이터 csv 파일 경로
+    private List<Dictionary<string, object>> stageData;
+
+    private string sceneName;
+    private int dataIndex;
+
+    /* PlayerPrefs 저장 키
+     * Money - 플레이어 소지 돈
+     * Honor - 플레이어 소지 명예
+     */
+
     private void Start()
     {
+        LoadStageData();
+
+        ShowPlayerInfo();
+
         gameOver = false;
 
         leftInjured = injuredParent.transform.childCount;
@@ -76,6 +95,38 @@ public class GameManager : MonoBehaviour
 
         // (용현) UI 비활성화
         foreach (GameObject ui in UI) ui.SetActive(false);
+    }
+
+    // 스테이지 데이터 로드
+    private void LoadStageData()
+    {
+        dataIndex = -1;
+
+        sceneName = SceneManager.GetActiveScene().name;
+
+        stageData = CSVReader.Read(stageDataPath);
+
+        for (int i = 0; i < stageData.Count; i++)
+        {
+            if (stageData[i]["sceneName"].ToString() == sceneName)
+            {
+                dataIndex = i;
+
+                break;
+            }
+        }
+
+        if (dataIndex == -1) Debug.LogError("스테이지 데이터 로드 실패");
+        else Debug.Log("스테이지 데이터 로드 완료");
+
+        maxLeftToLowCondition = System.Convert.ToInt32(stageData[dataIndex]["maxLeftTolow"]);
+        maxLeftToMiddleCondition = System.Convert.ToInt32(stageData[dataIndex]["maxLeftTomid"]);
+    }
+
+    private void ShowPlayerInfo()
+    {
+        Debug.Log("Player Info. Money = " + PlayerPrefs.GetInt("Money", 0) +
+            ", Honor = " + PlayerPrefs.GetInt("Honor", 0));
     }
 
     public void StartGame(GameObject startButton)
@@ -124,7 +175,7 @@ public class GameManager : MonoBehaviour
             {
                 // 게임 클리어 시 (플레이어 빠져 나옴)
                 if (leftInjured <= maxLeftToMiddleCondition)
-                    GameClear(ClearState.medium);
+                    GameClear(ClearState.mid);
 
                 else if (leftInjured <= maxLeftToLowCondition)
                     GameClear(ClearState.low);
@@ -143,7 +194,16 @@ public class GameManager : MonoBehaviour
     // 게임 클리어시
     private void GameClear(ClearState state)
     {
-        Debug.Log("game clear - " + state.ToString());
+        Debug.Log("Game Clear - Reward : " + state.ToString());
+
+        int money = 0, honor = 0;
+
+        money = System.Convert.ToInt32(stageData[dataIndex][state.ToString() + "RewardMoney"]);
+        honor = System.Convert.ToInt32(stageData[dataIndex][state.ToString() + "RewardHonor"]);
+
+        Debug.Log("Reward - Money : " + money + ", Honor : " + honor);
+
+        SaveGameResult(money, honor);
 
         StopGame();
     }
@@ -154,6 +214,15 @@ public class GameManager : MonoBehaviour
         Debug.Log("game over");
 
         StopGame();
+    }
+
+    // 플레이어 획득 보상 저장
+    private void SaveGameResult(int money, int honor)
+    {
+        PlayerPrefs.SetInt("Money", PlayerPrefs.GetInt("Money", 0) + money);
+        PlayerPrefs.SetInt("Honor", PlayerPrefs.GetInt("Honor", 0) + honor);
+
+        ShowPlayerInfo();
     }
 
     private IEnumerator CheckTime()
