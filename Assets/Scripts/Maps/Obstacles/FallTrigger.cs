@@ -1,5 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿/****************************************
+ * AmonController.cs
+ * 제작: 김태윤
+ * 트리거를 밟으면 장애물 추락하는 효과 추가 스크립트
+ * (19.07.31)자식 오브젝트를 찾을 때 순서보다는 Find를 통해 직접 찾는 걸로 수정, 
+ * 작성일자: 19.07.09
+ * 수정일자: 19.07.31
+ ***************************************/
+
+using System.Collections;
 using UnityEngine;
 
 
@@ -24,8 +32,8 @@ public class FallTrigger : MonoBehaviour
 
         //Instantiate(obstacle.gameObject, new Vector3(1.09f, 4.82f, -11.86f), Quaternion.identity);
 
-        GameObject fallObs = transform.GetChild(0).gameObject;
-        GameObject obs = transform.GetChild(1).gameObject;
+        GameObject fallObs = transform.Find("Fallobstacle").gameObject; // Find함수로 대체함
+        GameObject obs = transform.Find("obstacle").gameObject;
         fallObs.SetActive(true);
         fallObs.transform.parent = null;
 
