@@ -2,14 +2,16 @@
  * MinorInjured.cs
  * 제작: 조예진
  * 경상 부상자 캐릭터의 상세 상호작용 코드
+ * (19.08.01) 초기화 코드 추가
  * 작성일자: 19.07.11
+ * 수정일자: 19.08.01
  ***************************************/
 
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MinorInjured : Injured
+public class MinorInjured : Injured, IReset
 {
     private FollowPlayer follow;
 
@@ -18,6 +20,9 @@ public class MinorInjured : Injured
         follow = GetComponent<FollowPlayer>();
         base.Start();
         type = InjuryType.MINOR;
+
+        // (용현) 초기값 저장
+        GetInitValue();
     }
 
     public override void Rescue(AmonController player)
@@ -33,5 +38,41 @@ public class MinorInjured : Injured
     protected override void EnteredExit()
     {
 
+    }
+
+    public void GetInitValue()
+    {
+        initPos = gameObject.transform.position;
+
+        initRot = gameObject.transform.rotation;
+    }
+
+    public void SetInitValue()
+    {
+        gameObject.SetActive(true);
+
+        FollowPlayer follow = GetComponent<FollowPlayer>();
+
+        // 따라다니는 거 비활성화
+        follow.enabled = false;
+
+        // 부상자 목록으로 이동, 부상자랑 구조자 위치가 각각 GameManager, AmonController로 달라서 수정좀 해야할 듯
+        transform.SetParent(GameManager.Instance.injuredParent.transform);
+
+        // 초기값 위치
+        gameObject.transform.SetPositionAndRotation(initPos, initRot);
+
+        // 플레이어가 통과해 다닐 수 있도록 트리거 처리
+        GetComponent<Collider>().isTrigger = false;
+
+        // 미니맵 표시점 색깔 변경
+        minimapDot.color = Color.red;
+
+        // material 색깔 변경
+        meshRenderer.material.color = Color.red;
+
+        isRescued = false;
+
+        gameObject.tag = "Injured";
     }
 }

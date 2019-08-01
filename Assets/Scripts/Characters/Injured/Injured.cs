@@ -11,7 +11,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Injured : MonoBehaviour 
+public abstract class Injured : MonoBehaviour
 {
     public enum InjuryType { MINOR, SERIOUS }
 
@@ -23,6 +23,8 @@ public abstract class Injured : MonoBehaviour
     protected MeshRenderer meshRenderer;
 
     public float speed;                     // 플레이어 속도 변경값
+    public Vector3 initPos;             // 초기 Position 값
+    public Quaternion initRot;          // 초기 Rotation 값
 
     protected virtual void Start()
     {
@@ -82,4 +84,6 @@ public abstract class Injured : MonoBehaviour
     }
 
     protected abstract void EnteredExit();
+
+
 }

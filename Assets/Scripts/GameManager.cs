@@ -4,9 +4,10 @@
  * 게임 클리어 조건 확인 스크립트
  * (19.07.30)  게임 시작 버튼을 누르면 UI(조이스틱 및 인터렉션 버튼)를 활성화함
  * (19.07.30)  데이터 로드 및 저장 부분 추가
+ * (19,08.01)  게임 초기값을 저장하는 함수 추가
  * 함수 추가 및 수정 시 누가 작성했는지 꼭 해당 함수 주석으로 명시해주세요!
  * 작성일자: 19.07.26
- * 수정일자: 19.07.30
+ * 수정일자: 19.08.01
  ***************************************/
 
 using System.Collections;
@@ -45,8 +46,13 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public GameObject injuredParent;
-    public AmonController player;
+    [System.Serializable]
+    public class FieldObjects                   // 씬에 존재하는 오브젝트들
+    {
+        public string name;
+        public GameObject[] go;
+    }
+
     private DataManager dm;
 
     [Header("Game State")]
@@ -62,12 +68,18 @@ public class GameManager : MonoBehaviour
     public Text leftTimeText;
     public GameObject[] UI;                     // (용현) 0: Joystick, 1: Interaction
 
+
+    [Header("Field Objects")]
+    public AmonController player;
+    public GameObject Cam;
+    public GameObject injuredParent;
+    public FieldObjects[] objects;
+
+
     private float time;                         // 남은 시간, 초 단위
     private bool gameOver;
 
     private IEnumerator timeCheckCoroutine;
-
-
 
     // 스테이지 데이터 변수
 
@@ -79,18 +91,14 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         dm = DataManager.Instance;
-
+  
         // 스테이지 데이터 설정
         maxLeftToMiddleCondition = dm.MaxLeftToMiddleCondition;
         maxLeftToLowCondition = dm.MaxLeftToLowCondition;
 
         dm.ShowPlayerInfo();
 
-        gameOver = false;
-
-        leftInjured = injuredParent.transform.childCount;
-
-        time = timeLimit;
+        InitGame();
 
         SetTimeText(timeLimit);
 
@@ -98,6 +106,44 @@ public class GameManager : MonoBehaviour
         foreach (GameObject ui in UI) ui.SetActive(false);
     }
 
+    private void FixedUpdate()
+    {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            Debug.Log("RESTART");
+
+            InitGame();
+        }
+    }
+
+    public void InitGame()
+    {
+        CheckLeftInjured();
+
+        gameOver = false;
+
+        time = timeLimit;
+
+        player.SetInitValue();
+
+        foreach (FieldObjects fo in objects)
+        {
+            switch (fo.name)
+            {
+                case "Minor":
+                    foreach (GameObject go in fo.go)
+                        go.GetComponent<MinorInjured>().SetInitValue();
+                    break;
+                case "Serious":
+                    foreach (GameObject go in fo.go)
+                        go.GetComponent<SeriousInjured>().SetInitValue();
+                    break;
+
+                default:
+                    break;
+            }
+        }
+    }
 
     public void StartGame(GameObject startButton)
     {
@@ -105,7 +151,7 @@ public class GameManager : MonoBehaviour
 
         // (용현) UI 활성화
         foreach (GameObject ui in UI) ui.SetActive(true);
-        
+
         timeCheckCoroutine = CheckTime();
 
         StartCoroutine(timeCheckCoroutine);
@@ -137,7 +183,7 @@ public class GameManager : MonoBehaviour
             GameClear(ClearState.high);
         }
         // 시간이 다 된 경우 - 중, 하위 게임 클리어 혹은 게임 오버
-        else if (time <= 0) 
+        else if (time <= 0)
         {
             gameOver = true;
 
@@ -208,4 +254,5 @@ public class GameManager : MonoBehaviour
 
         leftTimeText.text = "남은 시간 : " + setTime.ToString("00.00");
     }
+
 }

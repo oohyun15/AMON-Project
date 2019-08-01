@@ -3,16 +3,17 @@
  * 제작: 김태윤, 조예진, 김용현
  * Amon캐릭터의 움직임 및 구조자와 아이템의 상호작용 코드
  * (19.07.30) UI 인터렉션 버튼을 구현을 위한 Interaction 함수 정의(Space 키)
+ * (19.08.01) IReset 클래스 상속, GetInitValue 추가
  * 함수 추가 및 수정 시 누가 작성했는지 꼭 해당 함수 주석으로 명시해주세요!
  * 작성일자: 19.07.14
- * 수정일자: 19.07.30
+ * 수정일자: 19.08.01
  ***************************************/
 
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AmonController : MonoBehaviour
+public class AmonController : MonoBehaviour, IReset
 {
     // 플레이어 상태 종류
     public enum InteractionState { Idle, Item, Obstacle, Rescue } 
@@ -21,6 +22,10 @@ public class AmonController : MonoBehaviour
     public float moveSpeed;
     public float rotSpeed;
     public int damage;                  // 장애물 공격 데미지
+    public float initMoveSpeed;
+    public float initRotSpeed;
+    public Vector3 initPos;             // 초기 Position 값
+    public Quaternion initRot;          // 초기 Rotation 값
 
     [Header("Player State")]
     public InteractionState state = InteractionState.Idle; // 현재 플레이어의 상태
@@ -63,6 +68,9 @@ public class AmonController : MonoBehaviour
         isRescuing = false;
 
         isEscaped = false;
+
+        // (용현) 초기값 저장
+        GetInitValue();
     }
 
     // Update is called once per frame
@@ -79,7 +87,6 @@ public class AmonController : MonoBehaviour
 
         // 아이템 사용 버튼 - space 키
         if (Input.GetKeyDown(KeyCode.Space)) Interaction();
-
     }
 
     private void OnCollisionStay(Collision collision)
@@ -104,6 +111,21 @@ public class AmonController : MonoBehaviour
 
                 // (용현) 부상자를 target으로 설정
                 target = collision.gameObject;
+
+                break;
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        switch(collision.gameObject.tag)
+        {
+            // 장애물 및 부상자일 때 동일하게 적용
+            case "Obstacle":
+            case "Injured":
+
+                // 상태를 Idle로 변경
+                state = InteractionState.Idle;
 
                 break;
         }
@@ -168,7 +190,14 @@ public class AmonController : MonoBehaviour
             // 코루틴 함수는 모두 게임매니저로 걸어놓음
             GameManager.Instance.StartCoroutine(_camera.Shake(0.01f, 0.3f));
 
-            Destroy(_obstacle.gameObject);
+            // 장애물 비활성화
+            _obstacle.gameObject.SetActive(false);
+            
+            // (용현) 구조 후 플레이어 상태 변경
+            state = currentItem ? InteractionState.Item : InteractionState.Idle;
+
+
+
         }
         yield return new WaitForSeconds(0.1f);
 
@@ -235,5 +264,37 @@ public class AmonController : MonoBehaviour
         } 
 
         
+    }
+
+    // (용현) 초기값 저장
+    public void GetInitValue()
+    {
+        initMoveSpeed = moveSpeed;
+
+        initRotSpeed = rotSpeed;
+
+        initPos = gameObject.transform.position;
+
+        initRot = gameObject.transform.rotation;
+    }
+    // (용현) 초기값 설정
+    public void SetInitValue()
+    {
+        // 플레이어가 죽었을 때
+        if (!gameObject.activeInHierarchy)
+        {
+            gameObject.SetActive(true);
+
+            GameManager.Instance.Cam.transform.SetParent(gameObject.transform);
+        }
+        isRescuing = false;
+
+        isEscaped = false;
+
+        gameObject.transform.SetPositionAndRotation(initPos, initRot);
+
+        moveSpeed = initMoveSpeed;
+
+        rotSpeed = initRotSpeed;
     }
 }
