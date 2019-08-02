@@ -166,16 +166,30 @@ public class AmonController : MonoBehaviour, IReset
     {
         attackDelay = true;
 
-        if (currentItem == null) _obstacle.hp -= damage;
+        // 맨손
+        if (!currentItem) _obstacle.hp -= damage;
 
-        // 무기 사용 시 추가 데미지가 있도록 별개로 구현
-        else if (currentItem.transform.GetComponent<ItemWeapon>() != null)
+        // 도끼
+        // (19.08.02 용현) 내구도가 있을때만 작동하도록 수정 
+        else if (currentItem.GetComponent<ItemWeapon>() &&
+                 currentItem.durability > 0)
         {
             _obstacle.hp -= currentItem.transform.GetComponent<ItemWeapon>().addDamage;
 
             currentItem.ItemActive();
         }
+
+        // 도끼가 아닌 아이템을 들고 있을 때 그 아이템 먼저 사용 (아직 3번키 아이템 적용 안됨!!)
+        else
+        {
+            state = InteractionState.Item;
+
+            currentItem.ItemActive();
+        }
+
+        /*
         // 맨손 또는 무기를 든 상태가 아닐 경우 장애물과의 상호작용이 없도록 함
+        // (19.08.02) 우선순위를 장애물 파괴로 올려둠
         else
         {
             yield return new WaitForSeconds(0.1f);
@@ -184,7 +198,9 @@ public class AmonController : MonoBehaviour, IReset
 
             yield break;
         }
+        */
 
+        // 이건 추후에 Obstacle 클래스에 추가해야 할 듯
         if (_obstacle.hp <= 0)
         {
             // 코루틴 함수는 모두 게임매니저로 걸어놓음
@@ -195,9 +211,6 @@ public class AmonController : MonoBehaviour, IReset
             
             // (용현) 구조 후 플레이어 상태 변경
             state = currentItem ? InteractionState.Item : InteractionState.Idle;
-
-
-
         }
         yield return new WaitForSeconds(0.1f);
 
@@ -290,6 +303,8 @@ public class AmonController : MonoBehaviour, IReset
         isRescuing = false;
 
         isEscaped = false;
+
+        state = InteractionState.Idle;
 
         gameObject.transform.SetPositionAndRotation(initPos, initRot);
 

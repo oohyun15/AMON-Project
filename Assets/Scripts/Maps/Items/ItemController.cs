@@ -1,4 +1,14 @@
-﻿using System.Collections;
+﻿/****************************************
+ * ItemController.cs
+ * 제작: 김태윤
+ * 아이템 컨트롤러
+ * (19,08.02) Item 클래스간 상호작용 수정 (내구도 다 달았을 때 부분)
+ * 함수 추가 및 수정 시 누가 작성했는지 꼭 해당 함수 주석으로 명시해주세요!
+ * 작성일자: 19.07.26
+ * 수정일자: 19.08.02
+ ***************************************/
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -53,49 +63,45 @@ public class ItemController : MonoBehaviour
         key2.SetActive(false);
         key3.SetActive(false);
 
+        // (용현) 현재 아이템도 일단 없는 상태로 해놓음
+        Player.currentItem = null;
+
         // (용현) 플레이어 상태를 Idle로 변경
         Player.state = AmonController.InteractionState.Idle;
 
         // itemNum에 맞는 숫자키만 활성화, 만약 그 숫자에 상속된 아이템이 없을 경우 keyItem에 null, 아니면 아이템 정보를 넘김
+        // (용현) 내구도 있을 때만 하도록 수정 -> Item 클래스에서 내구도 다 달았을 때 ItemController 링크된거 끊는 걸 없앰(주석처리함)
         // Axe
-        if (itemNum == 1)
+        if (itemNum == 1 && key1Item.durability > 0)
         {
             key1.SetActive(true);
-            if (key1Item == null) Player.currentItem = null;
-            else
-            {
-                key1Item.gameObject.SetActive(true);
 
-                // (용현) 음료수를 집었을 시, 플레이어의 인터렉션 상태를 Item으로 변경
-                Player.state = AmonController.InteractionState.Item;
-            }
+            key1Item.gameObject.SetActive(true);
+
+            // (용현) 음료수를 집었을 시, 플레이어의 인터렉션 상태를 Item으로 변경
+            Player.state = AmonController.InteractionState.Item;
 
             Player.currentItem = key1Item;
         }
-
         // Drink
-        else if (itemNum == 2)
+        else if (itemNum == 2 && key2Item.durability > 0)
         {
             key2.SetActive(true);
 
-            if (key2Item == null) Player.currentItem = null;
-            else
-            {
-                key2Item.gameObject.SetActive(true);
+            key2Item.gameObject.SetActive(true);
 
-                // (용현) 음료수를 집었을 시, 플레이어의 인터렉션 상태를 Item으로 변경
-                Player.state = AmonController.InteractionState.Item;
-            }
+            // (용현) 음료수를 집었을 시, 플레이어의 인터렉션 상태를 Item으로 변경
+            Player.state = AmonController.InteractionState.Item;
 
             Player.currentItem = key2Item;
         }
 
-        // Unknown
-        else if (itemNum == 3)
+        // Unknown. 때문에 플레이어 상태를 변경하지 않음
+        else if (itemNum == 3 && key3Item.durability > 0)
         {
             key3.SetActive(true);
-            if (key3Item == null) Player.currentItem = null;
-            else key3Item.gameObject.SetActive(true);
+
+            key3Item.gameObject.SetActive(true);
 
             Player.currentItem = key3Item;
         }
@@ -105,12 +111,12 @@ public class ItemController : MonoBehaviour
 
     public IEnumerator AddItem(Item _item)
     {
-        for(int i = 0; i < 3; i++)
+        for (int i = 0; i < 3; i++)
         {
             if (inventoryData[i] != null) yield return null; // 인벤토리에 아이템 있으면 그 아이템 창에는 아이템을 집어넣지않음
             else
             {
-                if(i == 0) // 아이템을 주우면 위치, 각도를 key1에 맞추고 key1에 상속시킴
+                if (i == 0) // 아이템을 주우면 위치, 각도를 key1에 맞추고 key1에 상속시킴
                 {
                     _item.gameObject.transform.position = key1.gameObject.transform.position;
                     _item.gameObject.transform.rotation = key1.gameObject.transform.rotation;
@@ -121,9 +127,9 @@ public class ItemController : MonoBehaviour
                     Player.currentItem = _item;
                     inventoryData[i] = key1Item;
 
-                   yield break; // 아이템을 주우는 행위를 했다면 코루틴에서 탈출
+                    yield break; // 아이템을 주우는 행위를 했다면 코루틴에서 탈출
                 }
-                else if(i == 1)
+                else if (i == 1)
                 {
                     _item.gameObject.transform.position = key2.gameObject.transform.position;
                     _item.gameObject.transform.rotation = key2.gameObject.transform.rotation;
