@@ -108,6 +108,7 @@ public class GameManager : MonoBehaviour
 
     private void FixedUpdate()
     {
+        // Debug: Reset
         if (Input.GetKeyDown(KeyCode.R))
         {
             Debug.Log("RESTART");
@@ -124,8 +125,10 @@ public class GameManager : MonoBehaviour
 
         time = timeLimit;
 
+        // 플레이어 관련 초기화
         player.SetInitValue();
 
+        // 필드 오브젝트 초기화
         foreach (FieldObjects fo in objects)
         {
             switch (fo.name)
@@ -137,6 +140,11 @@ public class GameManager : MonoBehaviour
                 case "Serious":
                     foreach (GameObject go in fo.go)
                         go.GetComponent<SeriousInjured>().SetInitValue();
+                    break;
+
+                case "Item":
+                    foreach (GameObject go in fo.go)
+                        go.GetComponent<Item>().SetInitValue();
                     break;
 
                 default:
