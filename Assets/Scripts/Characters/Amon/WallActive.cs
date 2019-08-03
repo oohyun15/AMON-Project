@@ -6,8 +6,10 @@
  * Foreach문은 오류도 뜨고 For문에 비해 2배 좀 안되게 느리대서 전부 For문으로 수정함
  * (!) 벽이 투명해질때 벽 뒤쪽이 보이게되므로 벽을 두껍게 만들어야 할 듯
  * (!) 투명도를 조절할 경우 투명해진 벽에 의한 그림자와 조명 역시 변경되므로 이 부분에 대한 논의 필요
+ * (08.03) target을 GameManager의 Player를 받아오도록 변경, _camera는 GameManager의 Cam을 받아오도록 설정
  * 함수 추가 및 수정 시 누가 작성했는지 꼭 해당 함수 주석으로 명시해주세요!
  * 작성일자: 19.07.30
+ * 수정일자 : 19.08.03
  ***************************************/
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,9 +22,11 @@ public class WallActive : MonoBehaviour
     private Vector3 targetPoint; //Ray설정을 위한 Target 위치
     private List<GameObject> listWall = new List<GameObject>(); //투명화된 벽을 받아오는 List
     private List<GameObject> listHitInfo;
+
     private void Start()
     {
-        _camera = transform.GetComponent<Camera>();
+        target = GameManager.Instance.player.gameObject;
+        _camera = GameManager.Instance.Cam.GetComponent<Camera>();
         listHitInfo = new List<GameObject>();
     }
 
@@ -51,7 +55,6 @@ public class WallActive : MonoBehaviour
                         = new Color(hitMat.color.r, hitMat.color.g, hitMat.color.b, 0f); // 알파값을 0으로 하여 투명하게 만듦
               }
            }
-           
         }
         Debug.DrawRay(ray.origin, ray.direction * 2, Color.red);
          

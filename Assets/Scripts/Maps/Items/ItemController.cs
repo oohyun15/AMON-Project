@@ -3,9 +3,10 @@
  * 제작: 김태윤
  * 아이템 컨트롤러
  * (19,08.02) Item 클래스간 상호작용 수정 (내구도 다 달았을 때 부분)
+ * (08.03) player 변수 삭제 및 GameManager로 수정, Array이용해서 깔끔하게 정리
  * 함수 추가 및 수정 시 누가 작성했는지 꼭 해당 함수 주석으로 명시해주세요!
  * 작성일자: 19.07.26
- * 수정일자: 19.08.02
+ * 수정일자: 19.08.03
  ***************************************/
 
 using System.Collections;
@@ -14,99 +15,69 @@ using UnityEngine;
 
 public class ItemController : MonoBehaviour
 {
-    public GameObject itemInvt; // 아이템들이 포함되어있는 게임오브젝트를 받아옴
-    private AmonController Player;
-
-    // private bool itemIsActive;
-
-    public GameObject key1; // 각 숫자 키와 그 키에 상속되어있는 아이템들을 받아오는 변수들
-    public Item key1Item;
-    public GameObject key2;
-    public Item key2Item;
-    public GameObject key3;
-    public Item key3Item;
+    private GameObject itemInvt; // 아이템들이 포함되어있는 게임오브젝트를 받아옴
+    public GameObject[] keys;  // 각 번호키 오브젝트 배열 번호키에 할당된 아이템을 받아오는 배열
+    public Item[] keyItems;
 
     public Item[] inventoryData;
 
     void Start()
     {
-        Player = gameObject.transform.GetComponent<AmonController>(); // player 캐릭터를 받아옴
-
-        key1 = itemInvt.transform.GetChild(0).gameObject; // key 오브젝트와 keyItem 정보를 받아옴
-        key1Item = key1.transform.GetChild(0).gameObject.GetComponent<Item>();
-
-        key2 = itemInvt.transform.GetChild(1).gameObject;
-        key2Item = key2.transform.GetChild(0).gameObject.GetComponent<Item>();
-
-        key3 = itemInvt.transform.GetChild(2).gameObject;
-        key3Item = key3.transform.GetChild(0).gameObject.GetComponent<Item>();
-
+        itemInvt = GameManager.Instance.Inventory; // (08.03) public 해제하고 GameManager를 통해서 변수에 할당
+        keys = new GameObject[3];
+        keyItems = new Item[3];
         inventoryData = new Item[3]; // 나중에 UI를 위해서 InventoryData array를 만들어놓았다.
 
-        inventoryData[0] = key1Item;
-        inventoryData[1] = key2Item;
-        inventoryData[2] = key3Item;
+        for (int i = 0; i < itemInvt.transform.childCount; i++) // 시작 시 각 번호키에 장착된 아이템 할당
+        {
+            keys[i] = itemInvt.transform.GetChild(i).gameObject;
+            keyItems[i] = keys[i].transform.GetChild(0).gameObject.GetComponent<Item>();
+            inventoryData[i] = keyItems[i];
+        }
     }
 
     void Update() // 각 숫자키를 누를때마다 현재 들고있는 아이템을 변경, 아이템이 없으면 null설정
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1)) ItemSwap(1);
-        else if (Input.GetKeyDown(KeyCode.Alpha2)) ItemSwap(2);
-        else if (Input.GetKeyDown(KeyCode.Alpha3)) ItemSwap(3);
-        else if (Input.GetKeyDown(KeyCode.Alpha4)) ItemSwap(4);
+        if (Input.GetKeyDown(KeyCode.Alpha1)) ItemSwap(0);
+        else if (Input.GetKeyDown(KeyCode.Alpha2)) ItemSwap(1);
+        else if (Input.GetKeyDown(KeyCode.Alpha3)) ItemSwap(2);
+        else if (Input.GetKeyDown(KeyCode.Alpha4)) ItemSwap(3);
     }
 
     void ItemSwap(int itemNum)
     {
+        for(int i = 0; i < keys.Length; i++)
+        {
+            keys[i].SetActive(false);
+        }
         // 아이템 변경 전 모든 key를 비활성화
-        key1.SetActive(false);
-        key2.SetActive(false);
-        key3.SetActive(false);
 
         // (용현) 현재 아이템도 일단 없는 상태로 해놓음
-        Player.currentItem = null;
+        GameManager.Instance.player.currentItem = null;
 
         // (용현) 플레이어 상태를 Idle로 변경
-        Player.state = AmonController.InteractionState.Idle;
+        GameManager.Instance.player.state = AmonController.InteractionState.Idle;
 
         // itemNum에 맞는 숫자키만 활성화, 만약 그 숫자에 상속된 아이템이 없을 경우 keyItem에 null, 아니면 아이템 정보를 넘김
         // (용현) 내구도 있을 때만 하도록 수정 -> Item 클래스에서 내구도 다 달았을 때 ItemController 링크된거 끊는 걸 없앰(주석처리함)
         // Axe
-        if (itemNum == 1 && key1Item.durability > 0)
+        if (itemNum == 3) GameManager.Instance.player.currentItem = null; // 4번키, 즉 배열의 3번째는 맨손으로 설정
+        else
         {
-            key1.SetActive(true);
+            if(keyItems[itemNum].durability > 0)
+            {
+                keys[itemNum].SetActive(true);
+                keyItems[itemNum].gameObject.SetActive(true);
 
-            key1Item.gameObject.SetActive(true);
+                // (용현)맨손이 아닐경우, 플레이어의 인터렉션 상태를 Item으로 변경
+                if (keyItems[itemNum] == null) GameManager.Instance.player.state = AmonController.InteractionState.Idle;
+                else GameManager.Instance.player.state = AmonController.InteractionState.Item;  
 
-            // (용현) 음료수를 집었을 시, 플레이어의 인터렉션 상태를 Item으로 변경
-            Player.state = AmonController.InteractionState.Item;
-
-            Player.currentItem = key1Item;
+                GameManager.Instance.player.currentItem = keyItems[itemNum];
+                Debug.Log(GameManager.Instance.player.state);
+            }
         }
-        // Drink
-        else if (itemNum == 2 && key2Item.durability > 0)
-        {
-            key2.SetActive(true);
-
-            key2Item.gameObject.SetActive(true);
-
-            // (용현) 음료수를 집었을 시, 플레이어의 인터렉션 상태를 Item으로 변경
-            Player.state = AmonController.InteractionState.Item;
-
-            Player.currentItem = key2Item;
-        }
-
-        // Unknown. 때문에 플레이어 상태를 변경하지 않음
-        else if (itemNum == 3 && key3Item.durability > 0)
-        {
-            key3.SetActive(true);
-
-            key3Item.gameObject.SetActive(true);
-
-            Player.currentItem = key3Item;
-        }
-        else if (itemNum == 4) Player.currentItem = null; // 4번키는 맨손을 의미함
-
+       
     }
 
     public IEnumerator AddItem(Item _item)
@@ -114,48 +85,19 @@ public class ItemController : MonoBehaviour
         for (int i = 0; i < 3; i++)
         {
             if (inventoryData[i] != null) yield return null; // 인벤토리에 아이템 있으면 그 아이템 창에는 아이템을 집어넣지않음
-            else
+            else // 위치, 회전, 상속을 부모 오브젝트에 설정함
             {
-                if (i == 0) // 아이템을 주우면 위치, 각도를 key1에 맞추고 key1에 상속시킴
-                {
-                    _item.gameObject.transform.position = key1.gameObject.transform.position;
-                    _item.gameObject.transform.rotation = key1.gameObject.transform.rotation;
-                    _item.gameObject.transform.parent = key1.transform;
+                _item.gameObject.transform.position = keys[i].gameObject.transform.position;
+                _item.gameObject.transform.rotation = keys[i].gameObject.transform.rotation;
+                _item.gameObject.transform.parent = keys[i].transform;
 
-                    //keyItem과 currentItem, inventoryData를 _item값으로 초기화
-                    key1Item = _item;
-                    Player.currentItem = _item;
-                    inventoryData[i] = key1Item;
+                keyItems[i] = _item;
+                GameManager.Instance.player.currentItem = _item;
+                inventoryData[i] = keyItems[i];
 
-                    yield break; // 아이템을 주우는 행위를 했다면 코루틴에서 탈출
-                }
-                else if (i == 1)
-                {
-                    _item.gameObject.transform.position = key2.gameObject.transform.position;
-                    _item.gameObject.transform.rotation = key2.gameObject.transform.rotation;
-                    _item.gameObject.transform.parent = key2.transform;
-
-                    key2Item = _item;
-                    Player.currentItem = _item;
-                    inventoryData[i] = key2Item;
-
-                    yield break;
-                }
-                else
-                {
-                    _item.gameObject.transform.position = key3.gameObject.transform.position;
-                    _item.gameObject.transform.rotation = key3.gameObject.transform.rotation;
-                    _item.gameObject.transform.parent = key3.transform;
-
-                    key3Item = _item;
-                    Player.currentItem = _item;
-                    inventoryData[i] = key3Item;
-
-                    yield break;
-                }
+                yield break; // 아이템을 집어넣으면 함수 탈출
             }
         }
-
         yield return new WaitForSeconds(0.1f); // space키의 딜레이를 위해서 설정
     }
 }

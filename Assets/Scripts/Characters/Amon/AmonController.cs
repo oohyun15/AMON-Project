@@ -38,7 +38,6 @@ public class AmonController : MonoBehaviour, IReset
     [SerializeField]
     private Obstacle obstacle;          // 충돌처리된 장애물을 받아올 변수
     public bool attackDelay = false;    // 장애물 공격 시 딜레이를 주기위한 변수
-    public CameraShake _camera;         // 화면 흔듦을 위해 카메라를 받아올 변수
 
     [Header("Rescue")]
     public bool isRescuing;             // 현재 중상 부상자 구조중인지 저장할 변수
@@ -112,6 +111,12 @@ public class AmonController : MonoBehaviour, IReset
         {
             // 장애물 및 부상자일 때 동일하게 적용
             case "Obstacle":
+
+                state = InteractionState.Idle; // (태윤)상태 idle로 변경
+                obstacle = null; // 충돌이 끝나도 obstacle 유지되던 부분 Fix
+
+                break;
+
             case "Injured":
 
                 // 상태를 Idle로 변경
@@ -194,7 +199,7 @@ public class AmonController : MonoBehaviour, IReset
         if (_obstacle.hp <= 0)
         {
             // 코루틴 함수는 모두 게임매니저로 걸어놓음
-            GameManager.Instance.StartCoroutine(_camera.Shake(0.01f, 0.3f));
+            GameManager.Instance.StartCoroutine(GameManager.Instance.Cam.transform.GetComponent<CameraShake>().Shake(0.01f, 0.3f));
 
             // 장애물 비활성화
             _obstacle.gameObject.SetActive(false);
