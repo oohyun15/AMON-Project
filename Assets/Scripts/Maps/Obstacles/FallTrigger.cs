@@ -10,6 +10,7 @@
  ***************************************/
 
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -25,11 +26,30 @@ public class FallTrigger : MonoBehaviour, IReset
     private Material initMaterial;
     private Vector3 initTriggerPos;
     private Vector3 initFallObsPos;
+
+    private GameManager gm;
+    private new readonly string name = "FallTrigger";
     
 
     void Start()
     {
+        gm = GameManager.Instance;
+
         renderer = transform.GetComponent<MeshRenderer>();
+
+        var go = new List<GameObject>();
+
+        // Object에 키가 있으면 추가
+        if (gm.temp.ContainsKey(name))
+            gm.temp[name].Add(gameObject);
+
+        // 키가 없을 경우 생성
+        else
+        {
+            gm.temp.Add(name, go);
+
+            gm.temp[name].Add(gameObject);
+        }
 
         GetInitValue();
     }

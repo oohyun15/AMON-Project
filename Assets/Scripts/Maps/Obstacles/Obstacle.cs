@@ -19,9 +19,28 @@ public class Obstacle : MonoBehaviour, IReset
     public int initHp;
     public int hp;                              // 장애물 체력
 
+    private GameManager gm;
+    private new readonly string name = "Obstacle";
+
     // Start is called before the first frame update
     void Start()
     {
+        gm = GameManager.Instance;
+
+        var go = new List<GameObject>();
+
+        // Object에 키가 있으면 추가
+        if (gm.temp.ContainsKey(name))
+            gm.temp[name].Add(gameObject);
+
+        // 키가 없을 경우 생성
+        else
+        {
+            gm.temp.Add(name, go);
+
+            gm.temp[name].Add(gameObject);
+        }
+
         GetInitValue();
     }
 

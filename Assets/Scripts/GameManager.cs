@@ -5,7 +5,7 @@
  * (19.07.30)  게임 시작 버튼을 누르면 UI(조이스틱 및 인터렉션 버튼)를 활성화함
  * (19.07.30)  데이터 로드 및 저장 부분 추가
  * (19.08.01)  게임 초기값을 저장하는 함수 추가
- * (19.08.03)  다시하기 추가
+ * (19.08.03)  다시하기 추가, 필드 오브젝트 자동으로 링크
  * 함수 추가 및 수정 시 누가 작성했는지 꼭 해당 함수 주석으로 명시해주세요!
  * 작성일자: 19.07.26
  * 수정일자: 19.08.03
@@ -79,7 +79,8 @@ public class GameManager : MonoBehaviour
     public GameObject Inventory;                 // (태윤) Player 오브젝트에 상속된 아이템 받는 오브젝트 변수
     public GameObject Cam;
     public GameObject injuredParent;
-    public FieldObjects[] objects;
+    // public FieldObjects[] objects;
+    public Dictionary<string, List<GameObject>> temp;
 
 
     private float time;                         // 남은 시간, 초 단위
@@ -93,6 +94,12 @@ public class GameManager : MonoBehaviour
      * Money - 플레이어 소지 돈
      * Honor - 플레이어 소지 명예
      */
+
+    private void Awake()
+    {
+        // 스크립트 실행 순서로 인해 Awake에서 선언
+        temp = new Dictionary<string, List<GameObject>>();
+    }
 
     private void Start()
     {
@@ -123,8 +130,6 @@ public class GameManager : MonoBehaviour
         // 실행되고 있는 모든 코루틴 종료
         StopAllCoroutines();
 
-        CheckLeftInjured();
-
         gameOver = false;
 
         time = timeLimit;
@@ -134,51 +139,40 @@ public class GameManager : MonoBehaviour
         // (용현) UI 비활성화
         foreach (GameObject ui in UI) ui.SetActive(false);
 
-        startButton.SetActive(true);
-
-        // 플레이어 관련 초기화
-        player.SetInitValue();
-
-        // 필드 오브젝트 초기화
-        foreach (FieldObjects fo in objects)
+        // 필드 오브젝트 초기화 (자동 버전)
+        foreach(var pair in temp)
         {
-            switch (fo.name)
+            Debug.Log(pair.Key);
+
+            foreach(var value in pair.Value)
             {
-                case "Minor":
-                    foreach (GameObject go in fo.go)
-                        go.GetComponent<MinorInjured>().SetInitValue();
-                    break;
-
-                case "Serious":
-                    foreach (GameObject go in fo.go)
-                        go.GetComponent<SeriousInjured>().SetInitValue();
-                    break;
-
-                case "Item":
-                    foreach (GameObject go in fo.go)
-                        go.GetComponent<Item>().SetInitValue();
-                    break;
-
-                case "Obstacle":
-                    foreach (GameObject go in fo.go)
-                        go.GetComponent<Obstacle>().SetInitValue();
-                    break;
-
-                case "FallTrigger":
-                    foreach (GameObject go in fo.go)
-                        go.GetComponent<FallTrigger>().SetInitValue();
-                    break;
-
-                default:
-                    break;
+                value.GetComponent<IReset>().SetInitValue(); 
             }
         }
 
+        startButton.SetActive(true);
+
+        /* 필드 오브젝트 초기화 (수동 버전)
+        // 플레이어 관련 초기화
+        player.SetInitValue();
+
+        // 필드 오브젝트 초기화  IReset으로 컴포넌트 변경
+        foreach (FieldObjects fo in objects)
+        {
+            foreach(GameObject go in fo.go)
+            {
+                go.GetComponent<IReset>().SetInitValue();
+            }
+        }
+        */
+
         // 게임 상태 변경: Ready
         gameState = GameState.Ready;
-}
 
-    public void StartGame(GameObject startButton)
+        CheckLeftInjured();
+    }
+
+    public void StartGame()
     {
         startButton.SetActive(false);
 

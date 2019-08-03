@@ -61,6 +61,20 @@ public class ItemController : MonoBehaviour
         // itemNum에 맞는 숫자키만 활성화, 만약 그 숫자에 상속된 아이템이 없을 경우 keyItem에 null, 아니면 아이템 정보를 넘김
         // (용현) 내구도 있을 때만 하도록 수정 -> Item 클래스에서 내구도 다 달았을 때 ItemController 링크된거 끊는 걸 없앰(주석처리함)
         // Axe
+
+        if (itemNum == 1 && key1Item.durability > 0)
+        {
+            key1.SetActive(true);
+
+            key1Item.gameObject.SetActive(true);
+
+            // (용현) 플레이어의 인터렉션 상태를 Item으로 변경
+            Player.state = AmonController.InteractionState.Item;
+
+            Player.currentItem = key1Item;
+        }
+        // Drink
+        else if (itemNum == 2 && key2Item.durability > 0)
         if (itemNum == 3) GameManager.Instance.player.currentItem = null; // 4번키, 즉 배열의 3번째는 맨손으로 설정
         else
         {
