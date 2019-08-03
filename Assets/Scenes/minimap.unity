@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -461,6 +461,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Firefighter
       objectReference: {fileID: 0}
+    - target: {fileID: 2049370281444755750, guid: 1d9d66c8fdb2791498c99d46269b8fc4,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8296172668488189985, guid: 1d9d66c8fdb2791498c99d46269b8fc4,
+        type: 3}
+      propertyPath: rescuers
+      value: 
+      objectReference: {fileID: 666463861}
     - target: {fileID: 6416054586260472039, guid: 1d9d66c8fdb2791498c99d46269b8fc4,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -516,11 +526,41 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8296172668488189985, guid: 1d9d66c8fdb2791498c99d46269b8fc4,
+    - target: {fileID: 8641721958319179437, guid: 1d9d66c8fdb2791498c99d46269b8fc4,
         type: 3}
-      propertyPath: rescuers
-      value: 
-      objectReference: {fileID: 666463861}
+      propertyPath: initDurability
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8641721958319179437, guid: 1d9d66c8fdb2791498c99d46269b8fc4,
+        type: 3}
+      propertyPath: durability
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2354528770163483278, guid: 1d9d66c8fdb2791498c99d46269b8fc4,
+        type: 3}
+      propertyPath: initDurability
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2049370281686368462, guid: 1d9d66c8fdb2791498c99d46269b8fc4,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2049370281899108966, guid: 1d9d66c8fdb2791498c99d46269b8fc4,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2049370282618606989, guid: 1d9d66c8fdb2791498c99d46269b8fc4,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2049370281444755745, guid: 1d9d66c8fdb2791498c99d46269b8fc4,
+        type: 3}
+      propertyPath: initDurability
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1d9d66c8fdb2791498c99d46269b8fc4, type: 3}
 --- !u!1001 &424888541
@@ -683,10 +723,10 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1669870402}
         m_MethodName: StartGame
-        m_Mode: 2
+        m_Mode: 1
         m_Arguments:
-          m_ObjectArgument: {fileID: 550034839}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -825,6 +865,12 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5787624010060231089, guid: bf57717aa4ffc8d47a7944981f5398d8,
     type: 3}
   m_PrefabInstance: {fileID: 696045863}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &603043043 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3803138625426028599, guid: 50795809e1b598d41ba3e175ec6a1c1d,
+    type: 3}
+  m_PrefabInstance: {fileID: 6932187837676859743}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &628762210
 GameObject:
@@ -1893,6 +1939,12 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 14
   m_Mesh: {fileID: -5546347261141537002, guid: 435482bf760d9514bbb7d58ea6db91a5, type: 3}
+--- !u!1 &1494096551 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8746568260142520784, guid: 1f29a5c69c9e51847bad9262da5e31db,
+    type: 3}
+  m_PrefabInstance: {fileID: 8746568259820885166}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1583723613 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8147176089953080744, guid: b12a4617002261643af610d2604a4bbf,
@@ -1955,17 +2007,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6022de7a80bc264ca092fa4233256d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leftInjured: 0
+  gameState: 0
   timeLimit: 60
   maxLeftToMiddleCondition: 0
   maxLeftToLowCondition: 0
   leftTimeText: {fileID: 1371842600}
+  startButton: {fileID: 550034839}
   UI:
   - {fileID: 1991787697}
   - {fileID: 594986260}
   player: {fileID: 74011747}
+  Cam: {fileID: 1966226957}
   injuredParent: {fileID: 985004582}
-  Characters: []
 --- !u!4 &1669870403
 Transform:
   m_ObjectHideFlags: 0
@@ -2146,6 +2199,12 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8324321381253189335, guid: 879a760028712be439ebdb144dfaa3ef,
     type: 3}
   m_PrefabInstance: {fileID: 424888541}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1966226957 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2049370281368317192, guid: 1d9d66c8fdb2791498c99d46269b8fc4,
+    type: 3}
+  m_PrefabInstance: {fileID: 355780014}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1991787697 stripped
 GameObject:
@@ -2551,6 +2610,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6932187837237896375, guid: 50795809e1b598d41ba3e175ec6a1c1d,
+        type: 3}
+      propertyPath: fallObs
+      value: 
+      objectReference: {fileID: 603043043}
+    - target: {fileID: 6932187837237896375, guid: 50795809e1b598d41ba3e175ec6a1c1d,
+        type: 3}
+      propertyPath: obs
+      value: 
+      objectReference: {fileID: 1494096551}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 50795809e1b598d41ba3e175ec6a1c1d, type: 3}
 --- !u!1001 &7568589311378184796
