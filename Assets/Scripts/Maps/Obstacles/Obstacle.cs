@@ -58,7 +58,6 @@ public class Obstacle : MonoBehaviour, IReset
 
                     // (용현) 플레이어에게 달린 카메라 변수. 기존에 하드코딩으로 자식 번호 위치로 카메라 변수를 지정하니까 정상적으로 카메라를 못골랐었음
                     GameObject camera = GameManager.Instance.Cam;
-
                     // 상속된 카메라를 상속 해제하는 코드
                     camera.transform.parent = null; 
 

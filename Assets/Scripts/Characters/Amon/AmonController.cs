@@ -127,14 +127,14 @@ public class AmonController : MonoBehaviour, IReset
     {
         switch(collision.gameObject.tag)
         {
-            // 장애물 및 부상자일 때 동일하게 적용
+            // 장애물일때
             case "Obstacle":
 
                 state = InteractionState.Idle; // (태윤)상태 idle로 변경
                 obstacle = null; // 충돌이 끝나도 obstacle 유지되던 부분 Fix
 
                 break;
-
+            // 부상자일때
             case "Injured":
 
                 // 상태를 Idle로 변경
@@ -217,9 +217,7 @@ public class AmonController : MonoBehaviour, IReset
         if (_obstacle.hp <= 0)
         {
             // 코루틴 함수는 모두 게임매니저로 걸어놓음
-
-            gm.StartCoroutine(_camera.Shake(0.01f, 0.3f));
-
+            gm.StartCoroutine(GameManager.Instance.Cam.transform.GetComponent<CameraShake>().Shake(0.01f, 0.3f));
 
             // 장애물 비활성화
             _obstacle.gameObject.SetActive(false);

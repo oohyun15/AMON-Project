@@ -9,7 +9,7 @@
  * (08.03) target을 GameManager의 Player를 받아오도록 변경, _camera는 GameManager의 Cam을 받아오도록 설정
  * 함수 추가 및 수정 시 누가 작성했는지 꼭 해당 함수 주석으로 명시해주세요!
  * 작성일자: 19.07.30
- * 수정일자 : 19.08.03
+ * 수정일자: 19.08.03
  ***************************************/
 using System.Collections.Generic;
 using UnityEngine;
@@ -22,7 +22,6 @@ public class WallActive : MonoBehaviour
     private Vector3 targetPoint; //Ray설정을 위한 Target 위치
     private List<GameObject> listWall = new List<GameObject>(); //투명화된 벽을 받아오는 List
     private List<GameObject> listHitInfo;
-
     private void Start()
     {
         target = GameManager.Instance.player.gameObject;

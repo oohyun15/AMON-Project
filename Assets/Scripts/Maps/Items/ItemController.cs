@@ -3,8 +3,8 @@
  * 제작: 김태윤
  * 아이템 컨트롤러
  * (19,08.02) Item 클래스간 상호작용 수정 (내구도 다 달았을 때 부분)
- * (08.03) player 변수 삭제 및 GameManager로 수정, Array이용해서 깔끔하게 정리
- * 함수 추가 및 수정 시 누가 작성했는지 꼭 해당 함수 주석으로 명시해주세요!
+ * (19.08.03) player 변수 삭제 및 GameManager로 수정, Array이용해서 깔끔하게 정리
+ *함수 추가 및 수정 시 누가 작성했는지 꼭 해당 함수 주석으로 명시해주세요!
  * 작성일자: 19.07.26
  * 수정일자: 19.08.03
  ***************************************/
@@ -18,7 +18,6 @@ public class ItemController : MonoBehaviour
     private GameObject itemInvt; // 아이템들이 포함되어있는 게임오브젝트를 받아옴
     public GameObject[] keys;  // 각 번호키 오브젝트 배열 번호키에 할당된 아이템을 받아오는 배열
     public Item[] keyItems;
-
     public Item[] inventoryData;
 
     void Start()
@@ -46,11 +45,10 @@ public class ItemController : MonoBehaviour
 
     void ItemSwap(int itemNum)
     {
-        for(int i = 0; i < keys.Length; i++)
+        for (int i = 0; i < keys.Length; i++)
         {
             keys[i].SetActive(false);
         }
-        // 아이템 변경 전 모든 key를 비활성화
 
         // (용현) 현재 아이템도 일단 없는 상태로 해놓음
         GameManager.Instance.player.currentItem = null;
@@ -62,36 +60,22 @@ public class ItemController : MonoBehaviour
         // (용현) 내구도 있을 때만 하도록 수정 -> Item 클래스에서 내구도 다 달았을 때 ItemController 링크된거 끊는 걸 없앰(주석처리함)
         // Axe
 
-        if (itemNum == 1 && key1Item.durability > 0)
-        {
-            key1.SetActive(true);
-
-            key1Item.gameObject.SetActive(true);
-
-            // (용현) 플레이어의 인터렉션 상태를 Item으로 변경
-            Player.state = AmonController.InteractionState.Item;
-
-            Player.currentItem = key1Item;
-        }
-        // Drink
-        else if (itemNum == 2 && key2Item.durability > 0)
         if (itemNum == 3) GameManager.Instance.player.currentItem = null; // 4번키, 즉 배열의 3번째는 맨손으로 설정
         else
         {
-            if(keyItems[itemNum].durability > 0)
+            if (keyItems[itemNum].durability > 0)
             {
                 keys[itemNum].SetActive(true);
                 keyItems[itemNum].gameObject.SetActive(true);
 
                 // (용현)맨손이 아닐경우, 플레이어의 인터렉션 상태를 Item으로 변경
                 if (keyItems[itemNum] == null) GameManager.Instance.player.state = AmonController.InteractionState.Idle;
-                else GameManager.Instance.player.state = AmonController.InteractionState.Item;  
+                else GameManager.Instance.player.state = AmonController.InteractionState.Item;
 
                 GameManager.Instance.player.currentItem = keyItems[itemNum];
                 Debug.Log(GameManager.Instance.player.state);
             }
         }
-       
     }
 
     public IEnumerator AddItem(Item _item)
@@ -109,7 +93,7 @@ public class ItemController : MonoBehaviour
                 GameManager.Instance.player.currentItem = _item;
                 inventoryData[i] = keyItems[i];
 
-                yield break; // 아이템을 집어넣으면 함수 탈출
+                yield break;
             }
         }
         yield return new WaitForSeconds(0.1f); // space키의 딜레이를 위해서 설정
