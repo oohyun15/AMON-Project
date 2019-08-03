@@ -78,7 +78,7 @@ public class ItemController : MonoBehaviour
 
             key1Item.gameObject.SetActive(true);
 
-            // (용현) 음료수를 집었을 시, 플레이어의 인터렉션 상태를 Item으로 변경
+            // (용현) 플레이어의 인터렉션 상태를 Item으로 변경
             Player.state = AmonController.InteractionState.Item;
 
             Player.currentItem = key1Item;

@@ -19,11 +19,28 @@ public class Item : MonoBehaviour, IReset
     public int durability;                              // 내구도
 
 
+    private GameManager gm;
+    private new readonly string name = "Item";
     protected AmonController player;                    // 플레이어
-    //protected ItemController inventory;                 // ItemController에 의해 아이템 사용이 관리됨
 
     void Start()
     {
+        gm = GameManager.Instance;
+
+        var go = new List<GameObject>();
+
+        // Object에 키가 있으면 추가
+        if (gm.temp.ContainsKey(name))
+            gm.temp[name].Add(gameObject);
+
+        // 키가 없을 경우 생성
+        else
+        {
+            gm.temp.Add(name, go);
+
+            gm.temp[name].Add(gameObject);
+        }
+
         GetInitValue();
     }
 
@@ -37,14 +54,6 @@ public class Item : MonoBehaviour, IReset
         durability -= 1;
         if (durability <= 0) // 내구도 다달면 keyItem을 null 설정
         {
-            /*
-            if (transform.parent.transform.name == "key1") inventory.key1Item = null;
-
-            else if (transform.parent.transform.name == "key2") inventory.key2Item = null;
-
-            else inventory.key3Item = null;
-            */
-
             gameObject.SetActive(false);
 
             // (용현) 19.07.30 아이템 사용 후 플레이어 상태 Idle로 변경

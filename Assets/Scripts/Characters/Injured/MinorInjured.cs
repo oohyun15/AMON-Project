@@ -3,8 +3,9 @@
  * 제작: 조예진
  * 경상 부상자 캐릭터의 상세 상호작용 코드
  * (19.08.01) 초기화 코드 추가
+ * (19.08.03) 게임 시작시 GameManager 클래스의 Field Object에 들어가도록 수정
  * 작성일자: 19.07.11
- * 수정일자: 19.08.01
+ * 수정일자: 19.08.03
  ***************************************/
 
 using System.Collections;
@@ -14,12 +15,32 @@ using UnityEngine;
 public class MinorInjured : Injured, IReset
 {
     private FollowPlayer follow;
+    private GameManager gm;            // GameManager 변수
+    private new readonly string name = "Minor";
 
     protected override void Start()
     {
         follow = GetComponent<FollowPlayer>();
+
+        gm = GameManager.Instance;
+
         base.Start();
+
         type = InjuryType.MINOR;
+
+        var go = new List<GameObject>();
+
+        // Object에 키가 있으면 추가
+        if (gm.temp.ContainsKey(name))
+            gm.temp[name].Add(gameObject);
+
+        // 키가 없을 경우 생성
+        else
+        {
+            gm.temp.Add(name, go);
+
+            gm.temp[name].Add(gameObject);
+        }
 
         // (용현) 초기값 저장
         GetInitValue();
