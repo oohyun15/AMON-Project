@@ -48,10 +48,8 @@ public class AmonController : MonoBehaviour, IReset
     private bool isEscaped;             // 플레이어 탈출 확인 변수
     public bool IsEscaped { get { return isEscaped; } }
     
-    [Header("Debug")]                   // 키보드로 이동할 때 사용하는 변수, 추후에 삭제해야함
-    [SerializeField]
+    // [Header("Debug")]                // 키보드로 이동할 때 사용하는 변수, 추후에 삭제해야함
     private float h = 0.0f;             // 좌,우
-    [SerializeField]
     private float v = 0.0f;             // 상,하
     private new Transform transform;
 
@@ -61,20 +59,12 @@ public class AmonController : MonoBehaviour, IReset
     {
         Debug.Log("Hello world!");
 
-        ItemController = gameObject.transform.GetComponent<ItemController>();
-
-        transform = GetComponent<Transform>();
-
-        isRescuing = false;
-
-        isEscaped = false;
-
         // (용현) 초기값 저장
         GetInitValue();
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         // Unity에서 디버깅용 버튼. 추후에 삭제해야함
         h = Input.GetAxis("Horizontal");
@@ -282,6 +272,14 @@ public class AmonController : MonoBehaviour, IReset
     // (용현) 초기값 저장
     public void GetInitValue()
     {
+        ItemController = gameObject.transform.GetComponent<ItemController>();
+
+        transform = GetComponent<Transform>();
+
+        isRescuing = false;
+
+        isEscaped = false;
+
         initMoveSpeed = moveSpeed;
 
         initRotSpeed = rotSpeed;

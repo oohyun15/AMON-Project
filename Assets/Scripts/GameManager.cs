@@ -4,10 +4,11 @@
  * 게임 클리어 조건 확인 스크립트
  * (19.07.30)  게임 시작 버튼을 누르면 UI(조이스틱 및 인터렉션 버튼)를 활성화함
  * (19.07.30)  데이터 로드 및 저장 부분 추가
- * (19,08.01)  게임 초기값을 저장하는 함수 추가
+ * (19.08.01)  게임 초기값을 저장하는 함수 추가
+ * (19.08.03)  다시하기 추가
  * 함수 추가 및 수정 시 누가 작성했는지 꼭 해당 함수 주석으로 명시해주세요!
  * 작성일자: 19.07.26
- * 수정일자: 19.08.01
+ * 수정일자: 19.08.03
  ***************************************/
 
 using System.Collections;
@@ -25,6 +26,9 @@ public class GameManager : MonoBehaviour
         mid,
         low
     }
+
+    // 게임 상태
+    public enum GameState { Ready, Playing, Over, Clear }
 
     // 게임 매니저 싱글톤
     private static GameManager instance = null;
@@ -57,6 +61,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Game State")]
     [SerializeField]
+    public GameState gameState = GameState.Ready;
     private int leftInjured;
     public float timeLimit;                     // 제한 시간, 초 단위
 
@@ -66,8 +71,8 @@ public class GameManager : MonoBehaviour
 
     [Header("UI")]
     public Text leftTimeText;
+    public GameObject startButton;
     public GameObject[] UI;                     // (용현) 0: Joystick, 1: Interaction
-
 
     [Header("Field Objects")]
     public AmonController player;
@@ -99,11 +104,6 @@ public class GameManager : MonoBehaviour
         dm.ShowPlayerInfo();
 
         InitGame();
-
-        SetTimeText(timeLimit);
-
-        // (용현) UI 비활성화
-        foreach (GameObject ui in UI) ui.SetActive(false);
     }
 
     private void FixedUpdate()
@@ -119,11 +119,21 @@ public class GameManager : MonoBehaviour
 
     public void InitGame()
     {
+        // 실행되고 있는 모든 코루틴 종료
+        StopAllCoroutines();
+
         CheckLeftInjured();
 
         gameOver = false;
 
         time = timeLimit;
+
+        SetTimeText(timeLimit);
+
+        // (용현) UI 비활성화
+        foreach (GameObject ui in UI) ui.SetActive(false);
+
+        startButton.SetActive(true);
 
         // 플레이어 관련 초기화
         player.SetInitValue();
@@ -137,6 +147,7 @@ public class GameManager : MonoBehaviour
                     foreach (GameObject go in fo.go)
                         go.GetComponent<MinorInjured>().SetInitValue();
                     break;
+
                 case "Serious":
                     foreach (GameObject go in fo.go)
                         go.GetComponent<SeriousInjured>().SetInitValue();
@@ -147,11 +158,24 @@ public class GameManager : MonoBehaviour
                         go.GetComponent<Item>().SetInitValue();
                     break;
 
+                case "Obstacle":
+                    foreach (GameObject go in fo.go)
+                        go.GetComponent<Obstacle>().SetInitValue();
+                    break;
+
+                case "FallTrigger":
+                    foreach (GameObject go in fo.go)
+                        go.GetComponent<FallTrigger>().SetInitValue();
+                    break;
+
                 default:
                     break;
             }
         }
-    }
+
+        // 게임 상태 변경: Ready
+        gameState = GameState.Ready;
+}
 
     public void StartGame(GameObject startButton)
     {
@@ -163,6 +187,8 @@ public class GameManager : MonoBehaviour
         timeCheckCoroutine = CheckTime();
 
         StartCoroutine(timeCheckCoroutine);
+
+        gameState = GameState.Playing;
     }
 
     public void StopGame()
@@ -229,6 +255,8 @@ public class GameManager : MonoBehaviour
 
         dm.ShowPlayerInfo();
 
+        gameState = GameState.Clear;
+
         StopGame();
     }
 
@@ -236,6 +264,8 @@ public class GameManager : MonoBehaviour
     private void GameOver()
     {
         Debug.Log("game over");
+
+        gameState = GameState.Over;
 
         StopGame();
     }

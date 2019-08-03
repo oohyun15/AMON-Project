@@ -4,6 +4,7 @@
  * 트리거를 밟으면 장애물 추락하는 효과 추가 스크립트
  * (19.07.31) 자식 오브젝트를 찾을 때 순서보다는 Find를 통해 직접 찾는 걸로 수정
  * (19.08.02) FInd 사용하지 않고 AmonController는 GameManager에서 불러와 사용함
+ * (19.08.03) IReset 인터페이스 추가
  * 작성일자: 19.07.09
  * 수정일자: 19.08.02
  ***************************************/
@@ -12,13 +13,26 @@ using System.Collections;
 using UnityEngine;
 
 
-public class FallTrigger : MonoBehaviour
+public class FallTrigger : MonoBehaviour, IReset
 {
     //public Obstacle obstacle; // 인스턴스화할 장애물을 받아오는 변수, 하이라키창에서 Object 직접 연결
 
-    public Material _material; // 하이라키창에서 material 직접 연결
+    public Material _material;                       // 하이라키창에서 material 직접 연결
     public GameObject fallObs;
     public GameObject obs;
+
+    private new Renderer renderer;
+    private Material initMaterial;
+    private Vector3 initTriggerPos;
+    private Vector3 initFallObsPos;
+    
+
+    void Start()
+    {
+        renderer = transform.GetComponent<MeshRenderer>();
+
+        GetInitValue();
+    }
     
     private void OnTriggerEnter(Collider other)
     {
@@ -28,8 +42,6 @@ public class FallTrigger : MonoBehaviour
 
     IEnumerator FallingObs()
     {
-        Renderer renderer = transform.GetComponent<MeshRenderer>();
-
         // Red material 적용
         renderer.material = _material;
 
@@ -38,20 +50,46 @@ public class FallTrigger : MonoBehaviour
 
         //Instantiate(obstacle.gameObject, new Vector3(1.09f, 4.82f, -11.86f), Quaternion.identity);
 
+        // Inspector 창에서 오브젝트 링크함
+        /*
         // Find함수로 대체함
         GameObject fallObs = transform.Find("Fallobstacle").gameObject; 
         GameObject obs = transform.Find("obstacle").gameObject;
+        */
+
         fallObs.SetActive(true);
-        fallObs.transform.parent = null;
 
         yield return new WaitForSeconds(0.9f);
 
-        Destroy(fallObs);
-        obs.SetActive(true);
-
-        // 떨어지는 오브젝트와 길막는 오브젝트를 시간 간격을 두고 생성 및 파괴
-        obs.transform.parent = null;
-
+        // 발판(트리거) 비활성화
         gameObject.SetActive(false);
+
+        // 떨어지는 장애물 비활성화
+        fallObs.SetActive(false);
+
+        // 기존에 있던 장애물 활성화
+        obs.SetActive(true);
+    }
+
+    public void GetInitValue()
+    {
+        initMaterial = renderer.material;
+
+        initTriggerPos = gameObject.transform.position;
+
+        initFallObsPos = fallObs.transform.position;
+    }
+
+    public void SetInitValue()
+    {
+        renderer.material = initMaterial;
+
+        gameObject.SetActive(true);
+
+        gameObject.transform.position = initTriggerPos;
+
+        fallObs.transform.position = initFallObsPos;
+
+        obs.GetComponent<Obstacle>().initActive = false;
     }
 }
