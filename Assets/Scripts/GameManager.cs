@@ -79,8 +79,7 @@ public class GameManager : MonoBehaviour
     public GameObject Inventory;                 // (태윤) Player 오브젝트에 상속된 아이템 받는 오브젝트 변수
     public GameObject Cam;
     public GameObject injuredParent;
-    // public FieldObjects[] objects;
-    public Dictionary<string, List<GameObject>> temp;
+    public Dictionary<string, List<GameObject>> objects;
 
 
     private float time;                         // 남은 시간, 초 단위
@@ -98,7 +97,7 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         // 스크립트 실행 순서로 인해 Awake에서 선언
-        temp = new Dictionary<string, List<GameObject>>();
+        objects = new Dictionary<string, List<GameObject>>();
     }
 
     private void Start()
@@ -140,7 +139,7 @@ public class GameManager : MonoBehaviour
         foreach (GameObject ui in UI) ui.SetActive(false);
 
         // 필드 오브젝트 초기화 (자동 버전)
-        foreach(var pair in temp)
+        foreach(var pair in objects)
         {
             Debug.Log(pair.Key);
 
@@ -151,20 +150,6 @@ public class GameManager : MonoBehaviour
         }
 
         startButton.SetActive(true);
-
-        /* 필드 오브젝트 초기화 (수동 버전)
-        // 플레이어 관련 초기화
-        player.SetInitValue();
-
-        // 필드 오브젝트 초기화  IReset으로 컴포넌트 변경
-        foreach (FieldObjects fo in objects)
-        {
-            foreach(GameObject go in fo.go)
-            {
-                go.GetComponent<IReset>().SetInitValue();
-            }
-        }
-        */
 
         // 게임 상태 변경: Ready
         gameState = GameState.Ready;

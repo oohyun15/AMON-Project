@@ -29,15 +29,15 @@ public class Item : MonoBehaviour, IReset
         var go = new List<GameObject>();
 
         // Object에 키가 있으면 추가
-        if (gm.temp.ContainsKey(name))
-            gm.temp[name].Add(gameObject);
+        if (gm.objects.ContainsKey(name))
+            gm.objects[name].Add(gameObject);
 
         // 키가 없을 경우 생성
         else
         {
-            gm.temp.Add(name, go);
+            gm.objects.Add(name, go);
 
-            gm.temp[name].Add(gameObject);
+            gm.objects[name].Add(gameObject);
         }
 
        // GetInitValue();
