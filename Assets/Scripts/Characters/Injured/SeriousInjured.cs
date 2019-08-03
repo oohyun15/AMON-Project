@@ -14,31 +14,13 @@ using UnityEngine;
 public class SeriousInjured : Injured, IReset
 {
     private BoxCollider col;
-    private GameManager gm;
-    private new readonly string name = "Serious";
 
     protected override void Start()
     {
-        gm = GameManager.Instance;
-
         col = GetComponent<BoxCollider>();
 
         base.Start();
         type = InjuryType.SERIOUS;
-
-        var go = new List<GameObject>();
-
-        // Object에 키가 있으면 추가
-        if (gm.temp.ContainsKey(name))
-            gm.temp[name].Add(gameObject);
-
-        // 키가 없을 경우 생성
-        else
-        {
-            gm.temp.Add(name, go);
-
-            gm.temp[name].Add(gameObject);
-        }
 
         // (용현) 초기값 저장
         GetInitValue();

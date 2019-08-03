@@ -51,30 +51,12 @@ public class AmonController : MonoBehaviour, IReset
     private float h = 0.0f;             // 좌,우
     private float v = 0.0f;             // 상,하
     private new Transform transform;
-    private GameManager gm;
-    private new readonly string name = "Player";
 
 
     // Start is called before the first frame update
     void Start()
     {
         Debug.Log("Hello world!");
-
-        gm = GameManager.Instance;
-
-        var go = new List<GameObject>();
-
-        // Object에 키가 있으면 추가
-        if (gm.temp.ContainsKey(name))
-            gm.temp[name].Add(gameObject);
-
-        // 키가 없을 경우 생성
-        else
-        {
-            gm.temp.Add(name, go);
-
-            gm.temp[name].Add(gameObject);
-        }
 
         // (용현) 초기값 저장
         GetInitValue();
@@ -217,9 +199,7 @@ public class AmonController : MonoBehaviour, IReset
         if (_obstacle.hp <= 0)
         {
             // 코루틴 함수는 모두 게임매니저로 걸어놓음
-
-            gm.StartCoroutine(_camera.Shake(0.01f, 0.3f));
-
+            GameManager.Instance.StartCoroutine(GameManager.Instance.Cam.transform.GetComponent<CameraShake>().Shake(0.01f, 0.3f));
 
             // 장애물 비활성화
             _obstacle.gameObject.SetActive(false);
@@ -235,6 +215,10 @@ public class AmonController : MonoBehaviour, IReset
     // 이동속도 및 회전 속도 증가
     public IEnumerator UpSpeed(int _addSpeed, int _timer)
     {
+        float orgMoveSpeed = moveSpeed;
+
+        float orgRotSpeed = rotSpeed;
+
         moveSpeed *= _addSpeed;
 
         // (용현) 회전속도 0.7 -> 0.5
@@ -245,9 +229,9 @@ public class AmonController : MonoBehaviour, IReset
 
         yield return new WaitForSeconds(_timer);
 
-        moveSpeed = initMoveSpeed;
+        moveSpeed = orgMoveSpeed;
 
-        rotSpeed = initRotSpeed;
+        rotSpeed = orgRotSpeed;
 
         // (용현) 조이스틱에서 이동속도 업데이트
         JoystickController.instance.UpdateSpeed();
@@ -275,7 +259,7 @@ public class AmonController : MonoBehaviour, IReset
             // 장애물 제거
             case InteractionState.Obstacle:
 
-                if (!attackDelay) gm.StartCoroutine(DestroyObs(obstacle));
+                if (!attackDelay) GameManager.Instance.StartCoroutine(DestroyObs(obstacle));
 
                 break;
            
@@ -317,7 +301,7 @@ public class AmonController : MonoBehaviour, IReset
         {
             gameObject.SetActive(true);
 
-            gm.Cam.transform.SetParent(gameObject.transform);
+            GameManager.Instance.Cam.transform.SetParent(gameObject.transform);
         }
         isRescuing = false;
 
