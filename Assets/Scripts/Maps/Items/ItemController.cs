@@ -63,20 +63,26 @@ public class ItemController : MonoBehaviour
         // Axe
 
         if (itemNum == 3) GameManager.Instance.player.currentItem = null; // 4번키, 즉 배열의 3번째는 맨손으로 설정
+
         else
         {
             if (keyItems[itemNum].durability > 0)
             {
                 keys[itemNum].SetActive(true);
+
                 keyItems[itemNum].gameObject.SetActive(true);
 
                 // (용현)맨손이 아닐경우, 플레이어의 인터렉션 상태를 Item으로 변경
                 if (keyItems[itemNum] == null) GameManager.Instance.player.state = AmonController.InteractionState.Idle;
+
                 else GameManager.Instance.player.state = AmonController.InteractionState.Item;
 
                 GameManager.Instance.player.currentItem = keyItems[itemNum];
             }
         }
+
+        // (용현) 장애물 바로 앞에서 아이템 변경 시 인터렉션 상태 Obstacle로 변경
+        if (GameManager.Instance.player.obstacle) GameManager.Instance.player.state = AmonController.InteractionState.Obstacle;
     }
 
     public IEnumerator AddItem(Item _item)

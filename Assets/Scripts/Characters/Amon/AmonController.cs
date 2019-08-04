@@ -4,6 +4,7 @@
  * Amon캐릭터의 움직임 및 구조자와 아이템의 상호작용 코드
  * (19.07.30) UI 인터렉션 버튼을 구현을 위한 Interaction 함수 정의(Space 키)
  * (19.08.01) IReset 클래스 상속, GetInitValue 추가
+ * (19.08.04) 장애물 충돌 시 플레이어 상태 수정(우선순위: 아이템 > 장애물)
  * 함수 추가 및 수정 시 누가 작성했는지 꼭 해당 함수 주석으로 명시해주세요!
  * 작성일자: 19.07.14
  * 수정일자: 19.08.01
@@ -35,8 +36,7 @@ public class AmonController : MonoBehaviour, IReset
     public ItemController ItemController;
 
     [Header("Obstacle")]
-    [SerializeField]
-    private Obstacle obstacle;          // 충돌처리된 장애물을 받아올 변수
+    public Obstacle obstacle;          // 충돌처리된 장애물을 받아올 변수
     public bool attackDelay = false;    // 장애물 공격 시 딜레이를 주기위한 변수
 
     [Header("Rescue")]
@@ -130,7 +130,9 @@ public class AmonController : MonoBehaviour, IReset
             // 장애물일때
             case "Obstacle":
 
-                state = InteractionState.Idle; // (태윤)상태 idle로 변경
+                // (용현) 구조 후 플레이어 상태 변경, 아이템 들고있을 때 고려함
+                state = currentItem ? InteractionState.Item : InteractionState.Idle;
+
                 obstacle = null; // 충돌이 끝나도 obstacle 유지되던 부분 Fix
 
                 break;
@@ -195,9 +197,9 @@ public class AmonController : MonoBehaviour, IReset
         // 도끼가 아닌 아이템을 들고 있을 때 그 아이템 먼저 사용 (아직 3번키 아이템 적용 안됨!!)
         else
         {
-            state = InteractionState.Item;
-
             currentItem.ItemActive();
+
+            state = InteractionState.Obstacle;
         }
 
         /*
