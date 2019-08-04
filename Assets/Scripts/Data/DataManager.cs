@@ -4,8 +4,9 @@
  * 게임 데이터 로드 및 저장 스크립트
  * 함수 추가 및 수정 시 누가 작성했는지 꼭 해당 함수 주석으로 명시해주세요!
  * (19.08.02) 유저 데이터 xml에서 불러오고 저장하는 부분 추가
+ * (19.08.03) 미니맵 스프라이트 불러오는 부분 추가
  * 작성일자: 19.07.30
- * 수정일자: 19.08.02
+ * 수정일자: 19.08.03
  ***************************************/
 
 using System.Collections;
@@ -40,13 +41,16 @@ public class DataManager : MonoBehaviour
         }
     }
 
-    private string stageDataPath = "Data/stage_data";       // 스테이지 데이터 csv 파일 경로
+    private readonly string stageDataPath = "Data/stage_data";       // 스테이지 데이터 csv 파일 경로
     private List<Dictionary<string, object>> stageData;
 
     private string sceneName;
     private int dataIndex;
 
     // Stage Data
+
+    public Sprite minimap;
+
     private int maxLeftToLowCondition;
     public int MaxLeftToLowCondition { get { return maxLeftToLowCondition; } }
 
@@ -72,6 +76,7 @@ public class DataManager : MonoBehaviour
         dataIndex = -1;
 
         sceneName = SceneManager.GetActiveScene().name;
+        Debug.Log("Scene name : " + sceneName);
 
         stageData = CSVReader.Read(stageDataPath);
 
@@ -85,8 +90,16 @@ public class DataManager : MonoBehaviour
             }
         }
 
-        if (dataIndex == -1) Debug.LogError("스테이지 데이터 로드 실패");
+        if (dataIndex == -1)
+        {
+            Debug.Log("스테이지 데이터 로드 실패 - (임시)minimap 데이터로 설정");
+            dataIndex = 0;
+            sceneName = "minimap";
+        }
         else Debug.Log("스테이지 데이터 로드 완료");
+
+        // 미니맵 프리뷰 스프라이트 불러오기 - 안될 경우 이미지의 텍스쳐 타입 Sprite인지 확인
+        minimap = Resources.Load<Sprite>("Minimap/" + sceneName);
 
         maxLeftToLowCondition = System.Convert.ToInt32(stageData[dataIndex]["maxLeftTolow"]);
         maxLeftToMiddleCondition = System.Convert.ToInt32(stageData[dataIndex]["maxLeftTomid"]);

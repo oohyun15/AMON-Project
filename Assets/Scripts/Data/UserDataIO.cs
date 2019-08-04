@@ -14,7 +14,7 @@ public class UserDataIO : MonoBehaviour
         // 저장할 값 늘어날 경우, WriteUserData와 ReadUserData에서 Set/GetAttribute 설정해 주어야 합니다
     }
 
-    private static string userDataFileName = "/userData.xml";
+    private readonly static string userDataFileName = "/userData.xml";
 
     // 유저 데이터 저장 시
     public static void WriteUserData(User user)
