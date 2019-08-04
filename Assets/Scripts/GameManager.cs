@@ -66,7 +66,10 @@ public class GameManager : MonoBehaviour
     [Header("UI")]
     public Text leftTimeText;
     public GameObject startButton;
+
     public GameObject[] UI;                     // (용현) 0: Joystick, 1: Interaction, 2: ItemSlots, 3: Minimap
+    public Image minimapPreview;
+
 
     [Header("Field Objects")]
     public AmonController player;
@@ -102,8 +105,13 @@ public class GameManager : MonoBehaviour
         maxLeftToMiddleCondition = dm.MaxLeftToMiddleCondition;
         maxLeftToLowCondition = dm.MaxLeftToLowCondition;
 
+        // playerPrefs로 저장된 데이터 보여주기
         dm.ShowPlayerInfo();
 
+        // 미니맵 프리뷰 스프라이트 불러와서 설정
+        minimapPreview.sprite = dm.minimap;
+
+        // 게임 초기화
         InitGame();
     }
 
