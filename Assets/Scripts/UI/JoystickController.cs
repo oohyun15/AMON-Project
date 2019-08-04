@@ -4,6 +4,7 @@
  * Amon캐릭터의 움직임을 조절하는 조이스틱 로직 코드
  * (19.07.14) 현재 Canvas내 Background 중심이 센터로 잡혀있음. 추후에 화면 좌측 하단으로 바꿔서 코드 수정해야함!
  * (19.07.30) 조이패드의 x좌표를 이용해 플레이어의 rotation 값을 설정해줌
+ * (19.08.04) 게임 종료 시 조이패드를 멈추는 함수 추가
  * 함수 추가 및 수정 시 누가 작성했는지 꼭 해당 함수 주석으로 명시해주세요!
  * 작성일자: 19.07.14
  * 수정일자: 19.07.30
@@ -25,7 +26,7 @@ public class JoystickController : MonoBehaviour, IPointerDownHandler, IPointerUp
     public RectTransform Joystick;              // 촤즉 하단 조이스틱 버튼
     private float radius;                       // 백그라운드 내에서 조이스틱이 이동가능한 범위의 반지름
 
-    public GameObject Player;                   // 이동시킬 플레이어 오브젝트
+    private GameObject Player;                   // 이동시킬 플레이어 오브젝트
     private float moveSpeed;                    // 플레이어의 이동속도. AmonController에서 가져올 예정
     private float rotSpeed;                     // 플레이어의 회전속도. AmonController에서 가져올 예정
     private bool isTouch = false;               // 터치를 눌렀는 지 확인하는 변수
@@ -39,6 +40,8 @@ public class JoystickController : MonoBehaviour, IPointerDownHandler, IPointerUp
 
         // 인스턴스가 this로 할당되있다면  게임오브젝트 삭제
         else if (instance != this) Destroy(gameObject);
+
+        Player = GameManager.Instance.player.gameObject;
 
         // AmonController에서 캐릭터의 이동속도 및 회전속도를 가져옴
         UpdateSpeed();
@@ -67,13 +70,7 @@ public class JoystickController : MonoBehaviour, IPointerDownHandler, IPointerUp
     // 터치 화면에서 땔 시 실행되는 함수
     public void OnPointerUp(PointerEventData eventData)
     {
-        isTouch = false;
-
-        // 조이스틱 위치를 초기 값으로 바꿔줌
-        Joystick.localPosition = Vector3.zero;
-
-        // 이전에 플레이어가 이동했던 방향 값을 제거해줌
-        movePosition = Vector3.zero;
+        StopJoystick();
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -111,5 +108,18 @@ public class JoystickController : MonoBehaviour, IPointerDownHandler, IPointerUp
         moveSpeed = Player.GetComponent<AmonController>().moveSpeed;
 
         rotSpeed = Player.GetComponent<AmonController>().rotSpeed;
+    }
+
+    public void StopJoystick()
+    {
+        isTouch = false;
+
+        // 조이스틱 위치를 초기 값으로 바꿔줌
+        Joystick.localPosition = Vector3.zero;
+
+        // 이전에 플레이어가 이동했던 방향 값을 제거해줌
+        movePosition = Vector3.zero;
+
+        rotPosition = Vector3.zero;
     }
 }

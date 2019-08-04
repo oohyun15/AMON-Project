@@ -6,10 +6,10 @@
  * (19.07.30)  데이터 로드 및 저장 부분 추가
  * (19.08.01)  게임 초기값을 저장하는 함수 추가
  * (19.08.03)  다시하기 추가, 필드 오브젝트 자동으로 링크
- * (19.08.04)  UI 추가(ItemSlots, Minimap)
+ * (19.08.04)  UI(ItemSlots, Minimap), 게임 결과창 추가
  * 함수 추가 및 수정 시 누가 작성했는지 꼭 해당 함수 주석으로 명시해주세요!
  * 작성일자: 19.07.26
- * 수정일자: 19.08.03
+ * 수정일자: 19.08.04
  ***************************************/
 
 using System.Collections;
@@ -66,7 +66,7 @@ public class GameManager : MonoBehaviour
     [Header("UI")]
     public Text leftTimeText;
     public GameObject startButton;
-
+    public GameObject gameResult;
     public GameObject[] UI;                     // (용현) 0: Joystick, 1: Interaction, 2: ItemSlots, 3: Minimap
     public Image minimapPreview;
 
@@ -140,8 +140,11 @@ public class GameManager : MonoBehaviour
         // (용현) UI 비활성화
         foreach (GameObject ui in UI) ui.SetActive(false);
 
+        // 게임 결과창 비활성화
+        gameResult.SetActive(false);
+
         // 필드 오브젝트 초기화 (자동 버전)
-        foreach(var pair in objects)
+        foreach (var pair in objects)
         {
             Debug.Log(pair.Key + " " + pair.Value.Count);
 
@@ -239,6 +242,17 @@ public class GameManager : MonoBehaviour
 
         gameState = GameState.Clear;
 
+        // 조이스틱 멈춤
+        JoystickController.instance.StopJoystick();
+
+        // 게임 결과창 비활성화
+        gameResult.SetActive(true);
+
+        // (용현) UI 비활성화
+        foreach (GameObject ui in UI) ui.SetActive(false);
+
+        
+
         StopGame();
     }
 
@@ -248,6 +262,15 @@ public class GameManager : MonoBehaviour
         Debug.Log("game over");
 
         gameState = GameState.Over;
+
+        // 조이스틱 멈춤
+        JoystickController.instance.StopJoystick();
+
+        // 게임 결과창 활성화
+        gameResult.SetActive(true);
+
+        // (용현) UI 비활성화
+        foreach (GameObject ui in UI) ui.SetActive(false);
 
         StopGame();
     }
