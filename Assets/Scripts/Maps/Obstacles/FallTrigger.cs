@@ -57,7 +57,7 @@ public class FallTrigger : MonoBehaviour, IReset
     private void OnTriggerEnter(Collider other)
     {
         // (용현) AmonController를 GameManager에서 가져오고 게임매니저가 코루틴돌게 수정
-        if (other.gameObject == GameManager.Instance.player.gameObject) GameManager.Instance.StartCoroutine(FallingObs());
+        if (other.gameObject == gm.player.gameObject) gm.StartCoroutine(FallingObs());
     }
 
     IEnumerator FallingObs()

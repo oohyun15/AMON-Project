@@ -6,6 +6,7 @@
  * (19.07.30)  데이터 로드 및 저장 부분 추가
  * (19.08.01)  게임 초기값을 저장하는 함수 추가
  * (19.08.03)  다시하기 추가, 필드 오브젝트 자동으로 링크
+ * (19.08.04)  UI 추가(ItemSlots, Minimap)
  * 함수 추가 및 수정 시 누가 작성했는지 꼭 해당 함수 주석으로 명시해주세요!
  * 작성일자: 19.07.26
  * 수정일자: 19.08.03
@@ -50,13 +51,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    [System.Serializable]
-    public class FieldObjects                   // 씬에 존재하는 오브젝트들
-    {
-        public string name;
-        public GameObject[] go;
-    }
-
     private DataManager dm;
 
     [Header("Game State")]
@@ -72,7 +66,7 @@ public class GameManager : MonoBehaviour
     [Header("UI")]
     public Text leftTimeText;
     public GameObject startButton;
-    public GameObject[] UI;                     // (용현) 0: Joystick, 1: Interaction
+    public GameObject[] UI;                     // (용현) 0: Joystick, 1: Interaction, 2: ItemSlots, 3: Minimap
 
     [Header("Field Objects")]
     public AmonController player;
@@ -141,7 +135,7 @@ public class GameManager : MonoBehaviour
         // 필드 오브젝트 초기화 (자동 버전)
         foreach(var pair in objects)
         {
-            Debug.Log(pair.Key);
+            Debug.Log(pair.Key + " " + pair.Value.Count);
 
             foreach(var value in pair.Value)
             {

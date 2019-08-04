@@ -4,6 +4,7 @@
  * 아이템 컨트롤러
  * (19,08.02) Item 클래스간 상호작용 수정 (내구도 다 달았을 때 부분)
  * (19.08.03) player 변수 삭제 및 GameManager로 수정, Array이용해서 깔끔하게 정리
+ * (19.08.04) 버튼 사용을 위해 ItemSwap 함수 public으로 변환
  *함수 추가 및 수정 시 누가 작성했는지 꼭 해당 함수 주석으로 명시해주세요!
  * 작성일자: 19.07.26
  * 수정일자: 19.08.03
@@ -43,7 +44,8 @@ public class ItemController : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.Alpha4)) ItemSwap(3);
     }
 
-    void ItemSwap(int itemNum)
+    // 버튼 사용을 위해 public으로 변환
+    public void ItemSwap(int itemNum)
     {
         for (int i = 0; i < keys.Length; i++)
         {
@@ -73,7 +75,6 @@ public class ItemController : MonoBehaviour
                 else GameManager.Instance.player.state = AmonController.InteractionState.Item;
 
                 GameManager.Instance.player.currentItem = keyItems[itemNum];
-                Debug.Log(GameManager.Instance.player.state);
             }
         }
     }

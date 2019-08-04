@@ -33,6 +33,7 @@ public class Obstacle : MonoBehaviour, IReset
         if (gm.objects.ContainsKey(name))
             gm.objects[name].Add(gameObject);
 
+
         // 키가 없을 경우 생성
         else
         {
@@ -54,8 +55,6 @@ public class Obstacle : MonoBehaviour, IReset
                 // 스테이지에 배치된 장애물과의 충돌 지점의 y좌표는 0.55임을 이용, amon 위에서 떨어질 떄 충돌하면 amon 오브젝트 파괴
                 if (contact.point.y > 1.3f) 
                 {
-                    Debug.Log(contact.point);
-
                     // (용현) 플레이어에게 달린 카메라 변수. 기존에 하드코딩으로 자식 번호 위치로 카메라 변수를 지정하니까 정상적으로 카메라를 못골랐었음
                     GameObject camera = GameManager.Instance.Cam;
                     // 상속된 카메라를 상속 해제하는 코드
