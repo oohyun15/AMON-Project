@@ -125,6 +125,16 @@ public class GameManager : MonoBehaviour
 
             InitGame();
         }
+
+        // Debug: Settings
+        else if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Debug.Log("Settings");
+
+            if (settings.activeInHierarchy) SettingButton(false);
+
+            else SettingButton(true);
+        }
     }
 
     public void InitGame()
@@ -249,7 +259,7 @@ public class GameManager : MonoBehaviour
         // 조이스틱 멈춤
         JoystickController.instance.StopJoystick();
 
-        // 게임 결과창 비활성화
+        // 게임 결과창 활성화
         gameResult.SetActive(true);
 
         // (용현) UI 비활성화
@@ -260,8 +270,8 @@ public class GameManager : MonoBehaviour
         StopGame();
     }
 
-    // 게임 클리어 실패시
-    private void GameOver()
+    // 게임 클리어 실패 시. (19.08.05) 플레이어가 장애물에 맞아 죽었을 시 접근하기 위해 public으로 변경
+    public void GameOver()
     {
         Debug.Log("game over");
 
@@ -335,7 +345,11 @@ public class GameManager : MonoBehaviour
             // 설정창 비활성화
             settings.SetActive(false);
         }
-
     }
 
+    // 씬 옮기기
+    public void MoveScene(string sceneName)
+    {
+        SceneManager.LoadScene(sceneName);
+    }
 }
