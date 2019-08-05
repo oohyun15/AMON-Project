@@ -21,12 +21,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     // 게임 클리어 시 보상 수준
-    public enum ClearState
-    {
-        high,
-        mid,
-        low
-    }
+    public enum ClearState { high, mid, low }
 
     // 게임 상태
     public enum GameState { Ready, Playing, Over, Clear }
@@ -170,6 +165,8 @@ public class GameManager : MonoBehaviour
 
         startButton.SetActive(true);
 
+        minimapPreview.gameObject.SetActive(true);
+
         // 게임 상태 변경: Ready
         gameState = GameState.Ready;
 
@@ -179,6 +176,8 @@ public class GameManager : MonoBehaviour
     public void StartGame()
     {
         startButton.SetActive(false);
+
+        minimapPreview.gameObject.SetActive(false);
 
         // (용현) UI 활성화
         foreach (GameObject ui in UI) ui.SetActive(true);
@@ -260,7 +259,7 @@ public class GameManager : MonoBehaviour
         JoystickController.instance.StopJoystick();
 
         // 게임 결과창 활성화
-        gameResult.SetActive(true);
+        ShowGameRessult(money, honor);
 
         // (용현) UI 비활성화
         foreach (GameObject ui in UI) ui.SetActive(false);
@@ -281,12 +280,44 @@ public class GameManager : MonoBehaviour
         JoystickController.instance.StopJoystick();
 
         // 게임 결과창 활성화
-        gameResult.SetActive(true);
+        ShowGameRessult(0, 0);
 
         // (용현) UI 비활성화
         foreach (GameObject ui in UI) ui.SetActive(false);
 
         StopGame();
+    }
+
+    // (예진 19.08.05) 게임 결과 보여주는 UI 창 설정
+    private void ShowGameRessult(int money, int honor)
+    {
+        Text stateText = gameResult.transform.Find("GameResult").GetChild(0).GetComponent<Text>();
+        Text stageText = gameResult.transform.Find("GameStage").GetChild(0).GetComponent<Text>();
+        Transform injured = gameResult.transform.Find("InjuredParent").transform;
+        Text moneyText = gameResult.transform.Find("Money").GetChild(1).GetComponent<Text>();
+        Text honorText = gameResult.transform.Find("Honor").GetChild(1).GetComponent<Text>();
+
+        // 게임 오버 시 GameResult 텍스트 Game Over로 변경
+        if (gameState == GameState.Over)
+        {
+            stateText.transform.parent.GetComponent<Image>().color = Color.red;
+            stateText.text = "Game Over"; 
+        }
+
+        // GameStage에 현재 씬 이름 설정
+        stageText.text = dm.GetStage();
+
+        // 구출한 부상자만큼 색깔 설정
+        int totalInjured = dm.totalInjuredCount;
+
+        for (int i = 0; i < totalInjured - leftInjured; i++)
+            injured.GetChild(i).GetComponent<Image>().color = Color.green;
+
+        // Money, Honor 텍스트 설정
+        moneyText.text = money + "";
+        honorText.text = honor + "";
+
+        gameResult.SetActive(true);
     }
 
     // 플레이어 획득 보상 저장

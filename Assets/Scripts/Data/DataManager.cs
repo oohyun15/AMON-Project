@@ -51,6 +51,8 @@ public class DataManager : MonoBehaviour
 
     public Sprite minimap;
 
+    public int totalInjuredCount = 5;
+
     private int maxLeftToLowCondition;
     public int MaxLeftToLowCondition { get { return maxLeftToLowCondition; } }
 
@@ -134,4 +136,5 @@ public class DataManager : MonoBehaviour
             ", Honor = " + PlayerPrefs.GetInt("Honor", 0));
     }
 
+    public string GetStage() { return sceneName; }
 }

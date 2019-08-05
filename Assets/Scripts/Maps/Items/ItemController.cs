@@ -17,6 +17,7 @@ using UnityEngine;
 public class ItemController : MonoBehaviour
 {
     private GameObject itemInvt; // 아이템들이 포함되어있는 게임오브젝트를 받아옴
+    private GameObject itemSlot; // 아이템 슬롯 UI
     public GameObject[] keys;  // 각 번호키 오브젝트 배열 번호키에 할당된 아이템을 받아오는 배열
     public Item[] keyItems;
     public Item[] inventoryData;
@@ -24,6 +25,7 @@ public class ItemController : MonoBehaviour
     void Start()
     {
         itemInvt = GameManager.Instance.Inventory; // (08.03) public 해제하고 GameManager를 통해서 변수에 할당
+        itemSlot = GameManager.Instance.UI[2];
         keys = new GameObject[3];
         keyItems = new Item[3];
         inventoryData = new Item[3]; // 나중에 UI를 위해서 InventoryData array를 만들어놓았다.
@@ -32,6 +34,7 @@ public class ItemController : MonoBehaviour
         {
             keys[i] = itemInvt.transform.GetChild(i).gameObject;
             keyItems[i] = keys[i].transform.GetChild(0).gameObject.GetComponent<Item>();
+            keyItems[i].SetController(this);
             inventoryData[i] = keyItems[i];
         }
     }
@@ -62,7 +65,7 @@ public class ItemController : MonoBehaviour
         // (용현) 내구도 있을 때만 하도록 수정 -> Item 클래스에서 내구도 다 달았을 때 ItemController 링크된거 끊는 걸 없앰(주석처리함)
         // Axe
 
-        if (itemNum == 3) GameManager.Instance.player.currentItem = null; // 4번키, 즉 배열의 3번째는 맨손으로 설정
+        if (itemNum == 3 || keyItems[itemNum] == null) GameManager.Instance.player.currentItem = null; // 4번키, 즉 배열의 3번째는 맨손으로 설정
 
         else
         {
@@ -104,5 +107,29 @@ public class ItemController : MonoBehaviour
             }
         }
         yield return new WaitForSeconds(0.1f); // space키의 딜레이를 위해서 설정
+    }
+
+    // (예진) 19.08.05. 아이템 내구도 다 닳았을 때  아이템 키에서 제거하고 슬롯에서 보이지 않게 함
+    public void DeleteItemKey(Item item)
+    {
+        int itemNum = -1;
+
+        for (int i = 0; i < keyItems.Length; i++)
+        {
+            if (keyItems[i] != null && keyItems[i].Equals(item))
+            {
+                itemNum = i;
+                break;
+            }
+        }
+
+        if (itemNum > -1)
+        {
+            itemSlot.transform.GetChild(itemNum).GetChild(0).gameObject.SetActive(false);
+
+            keyItems[itemNum] = null;
+        }
+        else
+            Debug.LogError("아이템 비활성화 오류");
     }
 }

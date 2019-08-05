@@ -28,8 +28,8 @@ public class Lobby : MonoBehaviour
 
     private void SetUIText()
     {
-        moneyText.text = "소지 금액 : " + userData.money;
-        honorText.text = "명예 점수 : " + userData.honor;
+        moneyText.text = userData.money + "";
+        honorText.text = userData.honor + "";
     }
 
     // (임시) 버튼 클릭 시 씬 이동 함수

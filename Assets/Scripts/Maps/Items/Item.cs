@@ -20,7 +20,11 @@ public class Item : MonoBehaviour, IReset
     public int durability;                              // 내구도
 
     private GameManager gm;
+    private ItemController controller;
     private new readonly string name = "Item";
+
+    // (예진) 아이템 키 제거를 위해 컨트롤러가 아이템 가져올 때 컨트롤러도 설정하도록 함
+    public void SetController(ItemController controller) { this.controller = controller; }
 
     void Start()
     {
@@ -53,13 +57,21 @@ public class Item : MonoBehaviour, IReset
         durability -= 1;
         if (durability <= 0) // 내구도 다달면 keyItem을 null 설정
         {
-            gameObject.SetActive(false);
-
-            // (용현) 19.07.30 아이템 사용 후 플레이어 상태 Idle로 변경
-            gm.player.state = AmonController.InteractionState.Idle;
-
-            gm.player.currentItem = null;
+            DestroyItem();
         }
+    }
+
+    // (예진) 19.08.05. 아이템 내구도 0 이하가 되었을 때 메소드화 + 슬롯에서 사라지게 하는 것 추가
+    public void DestroyItem()
+    {
+        gameObject.SetActive(false);
+
+        // (용현) 19.07.30 아이템 사용 후 플레이어 상태 Idle로 변경
+        gm.player.state = AmonController.InteractionState.Idle;
+
+        gm.player.currentItem = null;
+
+        controller.DeleteItemKey(this);
     }
 
     public void GetInitValue()
