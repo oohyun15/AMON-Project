@@ -67,6 +67,7 @@ public class GameManager : MonoBehaviour
     public Text leftTimeText;
     public GameObject startButton;
     public GameObject gameResult;
+    public GameObject settings;
     public GameObject[] UI;                     // (용현) 0: Joystick, 1: Interaction, 2: ItemSlots, 3: Minimap
     public Image minimapPreview;
 
@@ -142,6 +143,9 @@ public class GameManager : MonoBehaviour
 
         // 게임 결과창 비활성화
         gameResult.SetActive(false);
+
+        // 세팅창 비활성화
+        settings.SetActive(false);
 
         // 필드 오브젝트 초기화 (자동 버전)
         foreach (var pair in objects)
@@ -296,6 +300,42 @@ public class GameManager : MonoBehaviour
         if (setTime < 0) setTime = 0;
 
         leftTimeText.text = "남은 시간 : " + setTime.ToString("00.00");
+    }
+
+    // 설정창 온오프
+    public void SettingButton(bool OnOff)
+    {
+        // true: On. false: Off
+        if (OnOff)
+        {
+            // 설정 버튼을 중복해서 누를 수 있으므로 추가
+            if (settings.activeInHierarchy) return;
+
+            else
+            {
+                // 게임 정지
+                StopGame();
+
+                // (용현) UI 비활성화
+                foreach (GameObject ui in UI) ui.SetActive(false);
+
+                // 설정창 활성화
+                settings.SetActive(true);
+            }
+        }
+
+        else
+        {
+            // 게임 시작
+            StartCoroutine(timeCheckCoroutine);
+
+            // (용현) UI 활성화
+            foreach (GameObject ui in UI) ui.SetActive(true);
+
+            // 설정창 비활성화
+            settings.SetActive(false);
+        }
+
     }
 
 }
