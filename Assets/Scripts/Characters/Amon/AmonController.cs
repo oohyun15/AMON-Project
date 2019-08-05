@@ -7,7 +7,7 @@
  * (19.08.04) 장애물 충돌 시 플레이어 상태 수정(우선순위: 아이템 > 장애물)
  * 함수 추가 및 수정 시 누가 작성했는지 꼭 해당 함수 주석으로 명시해주세요!
  * 작성일자: 19.07.14
- * 수정일자: 19.08.01
+ * 수정일자: 19.08.04
  ***************************************/
 
 using System.Collections;
@@ -92,7 +92,7 @@ public class AmonController : MonoBehaviour, IReset
 
         transform.Rotate(Vector3.up * rotSpeed * h * Time.deltaTime);
 
-        // 아이템 사용 버튼 - space 키
+        // 아이템 사용 버튼 - Space 키
         if (Input.GetKeyDown(KeyCode.Space)) Interaction();
     }
 
@@ -202,19 +202,6 @@ public class AmonController : MonoBehaviour, IReset
             state = InteractionState.Obstacle;
         }
 
-        /*
-        // 맨손 또는 무기를 든 상태가 아닐 경우 장애물과의 상호작용이 없도록 함
-        // (19.08.02) 우선순위를 장애물 파괴로 올려둠
-        else
-        {
-            yield return new WaitForSeconds(0.1f);
-
-            attackDelay = false;
-
-            yield break;
-        }
-        */
-
         // 이건 추후에 Obstacle 클래스에 추가해야 할 듯
         if (_obstacle.hp <= 0)
         {
@@ -226,6 +213,9 @@ public class AmonController : MonoBehaviour, IReset
             
             // (용현) 구조 후 플레이어 상태 변경
             state = currentItem ? InteractionState.Item : InteractionState.Idle;
+
+            // 현재 장애물 null로 바꿈
+            obstacle = null;
         }
         yield return new WaitForSeconds(0.1f);
 

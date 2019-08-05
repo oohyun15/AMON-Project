@@ -143,6 +143,9 @@ public class GameManager : MonoBehaviour
 
         SetTimeText(timeLimit);
 
+        // 아이템 이미지 활성화. 수정 필요
+        UI[2].transform.GetChild(1).GetChild(0).gameObject.SetActive(true);
+
         // (용현) UI 비활성화
         foreach (GameObject ui in UI) ui.SetActive(false);
 
@@ -263,8 +266,6 @@ public class GameManager : MonoBehaviour
 
         // (용현) UI 비활성화
         foreach (GameObject ui in UI) ui.SetActive(false);
-
-        
 
         StopGame();
     }

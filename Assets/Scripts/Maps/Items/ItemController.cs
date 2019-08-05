@@ -7,7 +7,7 @@
  * (19.08.04) 버튼 사용을 위해 ItemSwap 함수 public으로 변환
  *함수 추가 및 수정 시 누가 작성했는지 꼭 해당 함수 주석으로 명시해주세요!
  * 작성일자: 19.07.26
- * 수정일자: 19.08.03
+ * 수정일자: 19.08.05
  ***************************************/
 
 using System.Collections;
@@ -109,7 +109,7 @@ public class ItemController : MonoBehaviour
         yield return new WaitForSeconds(0.1f); // space키의 딜레이를 위해서 설정
     }
 
-    // (예진) 19.08.05. 아이템 내구도 다 닳았을 때  아이템 키에서 제거하고 슬롯에서 보이지 않게 함
+    // (예진) 19.08.05. 아이템 내구도 다 닳았을 때 아이템 키에서 제거하고 슬롯에서 보이지 않게 함
     public void DeleteItemKey(Item item)
     {
         int itemNum = -1;
@@ -127,7 +127,8 @@ public class ItemController : MonoBehaviour
         {
             itemSlot.transform.GetChild(itemNum).GetChild(0).gameObject.SetActive(false);
 
-            keyItems[itemNum] = null;
+            // 연결 해제할 필요 없음.
+            // keyItems[itemNum] = null;
         }
         else
             Debug.LogError("아이템 비활성화 오류");

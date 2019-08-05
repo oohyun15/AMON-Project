@@ -68,15 +68,6 @@ public class FallTrigger : MonoBehaviour, IReset
         // 3초 뒤 장애물 생성, rigidbody에 의해 생성된 위치에서 자동으로 떨어짐
         yield return new WaitForSeconds(3f);
 
-        //Instantiate(obstacle.gameObject, new Vector3(1.09f, 4.82f, -11.86f), Quaternion.identity);
-
-        // Inspector 창에서 오브젝트 링크함
-        /*
-        // Find함수로 대체함
-        GameObject fallObs = transform.Find("Fallobstacle").gameObject; 
-        GameObject obs = transform.Find("obstacle").gameObject;
-        */
-
         fallObs.SetActive(true);
 
         yield return new WaitForSeconds(0.9f);
@@ -109,6 +100,8 @@ public class FallTrigger : MonoBehaviour, IReset
         gameObject.transform.position = initTriggerPos;
 
         fallObs.transform.position = initFallObsPos;
+
+        fallObs.SetActive(false);
 
         obs.GetComponent<Obstacle>().initActive = false;
     }
