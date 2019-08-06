@@ -64,7 +64,7 @@ public class UserDataIO : MonoBehaviour
 
     private static string GetPath(string fileName)
     {
-        string path = Application.dataPath + "/Data";       // Assets 경로 안에 저장됨 (테스트)
+        string path = Application.persistentDataPath + "/Data";       // Assets 경로 안에 저장됨 (테스트)
         DirectoryInfo di = new DirectoryInfo(path);
 
         // 경로 존재하는지 확인하고 Data 폴더 없으면 생성

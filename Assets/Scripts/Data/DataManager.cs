@@ -68,8 +68,8 @@ public class DataManager : MonoBehaviour
         LoadStageData();
 
         // xml 이용한 로딩
-        user = UserDataIO.ReadUserData();
-        UserDataIO.WriteUserData(user);     // 임시 테스트
+        user = UserDataIO.ReadUserData(); 
+        UserDataIO.WriteUserData(user);     // 임시 테스트 
     }
 
     // 스테이지 데이터 로드
@@ -119,7 +119,6 @@ public class DataManager : MonoBehaviour
 
         UserDataIO.WriteUserData(user);
     }
-
 
     public int GetStageReward(RewardType rewardType, GameManager.ClearState state)
     {

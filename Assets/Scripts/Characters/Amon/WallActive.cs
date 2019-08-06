@@ -55,7 +55,7 @@ public class WallActive : MonoBehaviour
               }
            }
         }
-        Debug.DrawRay(ray.origin, ray.direction * 2, Color.red);
+        // Debug.DrawRay(ray.origin, ray.direction * 2, Color.red);
          
 
         for(int k = 0; k < listWall.Count; k++) // 벽이 더이상 시야를 가리지 않을 경우 알파값을 원래대로 돌려놓는 For문

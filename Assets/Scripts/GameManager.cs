@@ -7,6 +7,7 @@
  * (19.08.01)  게임 초기값을 저장하는 함수 추가
  * (19.08.03)  다시하기 추가, 필드 오브젝트 자동으로 링크
  * (19.08.04)  UI(ItemSlots, Minimap), 게임 결과창 추가
+ * (19.08.05)  버전 빌드 위해서 Data 관련 코드는 모두 주석처리함
  * 함수 추가 및 수정 시 누가 작성했는지 꼭 해당 함수 주석으로 명시해주세요!
  * 작성일자: 19.07.26
  * 수정일자: 19.08.04
@@ -96,13 +97,18 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         dm = DataManager.Instance;
-  
+
         // 스테이지 데이터 설정
         maxLeftToMiddleCondition = dm.MaxLeftToMiddleCondition;
         maxLeftToLowCondition = dm.MaxLeftToLowCondition;
 
         // playerPrefs로 저장된 데이터 보여주기
         dm.ShowPlayerInfo();
+
+
+        // 스테이지 데이터 설정
+        maxLeftToMiddleCondition = dm.MaxLeftToMiddleCondition;     // 중간 보상 최대 인원
+        maxLeftToLowCondition = dm.MaxLeftToLowCondition;           // 최하 보상 최대 인원
 
         // 미니맵 프리뷰 스프라이트 불러와서 설정
         minimapPreview.sprite = dm.minimap;
@@ -148,23 +154,23 @@ public class GameManager : MonoBehaviour
 
         // (용현) UI 비활성화
         foreach (GameObject ui in UI) ui.SetActive(false);
-
-        // 게임 결과창 비활성화
-        gameResult.SetActive(false);
-
-        // 세팅창 비활성화
-        settings.SetActive(false);
-
+     
         // 필드 오브젝트 초기화 (자동 버전)
         foreach (var pair in objects)
         {
             Debug.Log(pair.Key + " " + pair.Value.Count);
 
-            foreach(var value in pair.Value)
+            foreach (var value in pair.Value)
             {
-                value.GetComponent<IReset>().SetInitValue(); 
+                value.GetComponent<IReset>().SetInitValue();
             }
         }
+        
+        // 게임 결과창 비활성화
+        gameResult.SetActive(false);
+
+        // 세팅창 비활성화
+        settings.SetActive(false);
 
         startButton.SetActive(true);
 
@@ -262,7 +268,7 @@ public class GameManager : MonoBehaviour
         JoystickController.instance.StopJoystick();
 
         // 게임 결과창 활성화
-        ShowGameRessult(money, honor);
+        ShowGameResult(money, honor); 
 
         // (용현) UI 비활성화
         foreach (GameObject ui in UI) ui.SetActive(false);
@@ -281,7 +287,7 @@ public class GameManager : MonoBehaviour
         JoystickController.instance.StopJoystick();
 
         // 게임 결과창 활성화
-        ShowGameRessult(0, 0);
+        ShowGameResult(0, 0);
 
         // (용현) UI 비활성화
         foreach (GameObject ui in UI) ui.SetActive(false);
@@ -290,7 +296,7 @@ public class GameManager : MonoBehaviour
     }
 
     // (예진 19.08.05) 게임 결과 보여주는 UI 창 설정
-    private void ShowGameRessult(int money, int honor)
+    private void ShowGameResult(int money, int honor)
     {
         Text stateText = gameResult.transform.Find("GameResult").GetChild(0).GetComponent<Text>();
         Text stageText = gameResult.transform.Find("GameStage").GetChild(0).GetComponent<Text>();
@@ -302,7 +308,7 @@ public class GameManager : MonoBehaviour
         if (gameState == GameState.Over)
         {
             stateText.transform.parent.GetComponent<Image>().color = Color.red;
-            stateText.text = "Game Over"; 
+            stateText.text = "Game Over";
         }
 
         // GameStage에 현재 씬 이름 설정
