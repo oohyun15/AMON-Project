@@ -2,16 +2,39 @@
  * FallObstacle.cs
  * 제작: 김용현
  * 떨어지는 장애물 관련 함수
+ * (19.08.07) 초기 위치값 저장(IReset 추가)
  * 함수 추가 및 수정 시 누가 작성했는지 꼭 해당 함수 주석으로 명시해주세요!
  * 작성일자: 19.08.05
+ * 수정일자: 19.08.07
  ***************************************/
 
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FallObstacle : MonoBehaviour
+public class FallObstacle : MonoBehaviour, IReset
 {
+    private Vector3 initPos;
+    private Quaternion initRot;
+
+    void Start()
+    {
+        GetInitValue();
+    }
+
+    public void GetInitValue()
+    {
+        initPos = gameObject.transform.position;
+
+        initRot = gameObject.transform.rotation;
+    }
+
+    public void SetInitValue()
+    {
+        // 초기값 위치
+        gameObject.transform.SetPositionAndRotation(initPos, initRot);
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.transform.tag == "Player")

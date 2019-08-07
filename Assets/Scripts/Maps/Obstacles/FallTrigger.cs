@@ -5,8 +5,9 @@
  * (19.07.31) 자식 오브젝트를 찾을 때 순서보다는 Find를 통해 직접 찾는 걸로 수정
  * (19.08.02) FInd 사용하지 않고 AmonController는 GameManager에서 불러와 사용함
  * (19.08.03) IReset 인터페이스 추가
+ * (19.08.07) 초기화 관련 수정
  * 작성일자: 19.07.09
- * 수정일자: 19.08.02
+ * 수정일자: 19.08.07
  ***************************************/
 
 using System.Collections;
@@ -100,6 +101,12 @@ public class FallTrigger : MonoBehaviour, IReset
         gameObject.transform.position = initTriggerPos;
 
         fallObs.transform.position = initFallObsPos;
+
+        for (int i =0; i < fallObs.transform.childCount; i++)
+        {
+            // 자식(벽돌)들에게 초기화 명령
+            fallObs.transform.GetChild(i).GetComponent<FallObstacle>().SetInitValue();
+        }
 
         fallObs.SetActive(false);
 
