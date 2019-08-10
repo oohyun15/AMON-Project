@@ -10,7 +10,7 @@
  * (19.08.05)  버전 빌드 위해서 Data 관련 코드는 모두 주석처리함
  * 함수 추가 및 수정 시 누가 작성했는지 꼭 해당 함수 주석으로 명시해주세요!
  * 작성일자: 19.07.26
- * 수정일자: 19.08.04
+ * 수정일자: 19.08.10
  ***************************************/
 
 using System.Collections;
@@ -47,6 +47,13 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    [System.Serializable]
+    public class UISet
+    {
+        public string name;
+        public GameObject UI;
+    }
+
     private DataManager dm;
 
     [Header("Game State")]
@@ -62,6 +69,7 @@ public class GameManager : MonoBehaviour
     [Header("UI")]
     public Text leftTimeText;
     public GameObject startButton;
+    public UISet[] gameResultPanel;                 // (예진) 게임 결과 패널 UI 접근 방식 변경
     public GameObject gameResult;
     public GameObject settings;
     public GameObject[] UI;                     // (용현) 0: Joystick, 1: Interaction, 2: ItemSlots, 3: Minimap
@@ -296,35 +304,58 @@ public class GameManager : MonoBehaviour
     }
 
     // (예진 19.08.05) 게임 결과 보여주는 UI 창 설정
+    // (19.08.10) Find 함수 >> 게임 패널 UI 안의 텍스트, 이미지 미리 연결해 두고 사용하는 식으로 변경
     private void ShowGameResult(int money, int honor)
     {
-        Text stateText = gameResult.transform.Find("GameResult").GetChild(0).GetComponent<Text>();
-        Text stageText = gameResult.transform.Find("GameStage").GetChild(0).GetComponent<Text>();
-        Transform injured = gameResult.transform.Find("InjuredParent").transform;
-        Text moneyText = gameResult.transform.Find("Money").GetChild(1).GetComponent<Text>();
-        Text honorText = gameResult.transform.Find("Honor").GetChild(1).GetComponent<Text>();
+        GameObject panel = null;
 
-        // 게임 오버 시 GameResult 텍스트 Game Over로 변경
-        if (gameState == GameState.Over)
+        for (int i = 0; i < gameResultPanel.Length; i++)
         {
-            stateText.transform.parent.GetComponent<Image>().color = Color.red;
-            stateText.text = "Game Over";
+            switch (gameResultPanel[i].name)
+            {
+                // 게임 클리어 상태에 따라 텍스트와 배경 색 변경
+                case "Result":
+                    if (gameState == GameState.Over)
+                    {
+                        gameResultPanel[i].UI.transform.parent.GetComponent<Image>().color = Color.red;
+                        gameResultPanel[i].UI.GetComponent<Text>().text = "Game Over";
+                    }
+                    else
+                    {
+                        gameResultPanel[i].UI.transform.parent.GetComponent<Image>().color = Color.yellow;
+                        gameResultPanel[i].UI.GetComponent<Text>().text = "Game Clear";
+                    }
+                    break;
+
+                // GameStage에 현재 씬 이름(스테이지) 설정
+                case "Stage":
+                    gameResultPanel[i].UI.GetComponent<Text>().text = dm.GetStage();
+                    break;
+
+                // Money, Honor 텍스트 설정
+                case "Money":
+                    gameResultPanel[i].UI.GetComponent<Text>().text = money + "";
+                    break;
+                case "Honor":
+                    gameResultPanel[i].UI.GetComponent<Text>().text = honor + "";
+                    break;
+
+                // 구출한 부상자만큼 색깔 설정
+                case "Injured":
+                    for (int j = 0; j < dm.totalInjuredCount - leftInjured; j++)
+                        gameResultPanel[i].UI.transform.GetChild(j).GetComponent<Image>().color = Color.green;
+                    for (int j = 0; j < leftInjured; j++)
+                        gameResultPanel[i].UI.transform.GetChild(dm.totalInjuredCount - j - 1).GetComponent<Image>().color 
+                            = Color.red;
+                    break;
+                case "Panel":
+                    panel = gameResultPanel[i].UI;
+                    break;
+            }
         }
 
-        // GameStage에 현재 씬 이름 설정
-        stageText.text = dm.GetStage();
-
-        // 구출한 부상자만큼 색깔 설정
-        int totalInjured = dm.totalInjuredCount;
-
-        for (int i = 0; i < totalInjured - leftInjured; i++)
-            injured.GetChild(i).GetComponent<Image>().color = Color.green;
-
-        // Money, Honor 텍스트 설정
-        moneyText.text = money + "";
-        honorText.text = honor + "";
-
-        gameResult.SetActive(true);
+        // 다른 UI 설정 끝나면 패널 열기
+        panel.SetActive(true);
     }
 
     // 플레이어 획득 보상 저장

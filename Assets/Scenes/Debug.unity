@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.4465782, g: 0.49641252, b: 0.5748167, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -703,11 +703,6 @@ PrefabInstance:
       propertyPath: rescuers
       value: 
       objectReference: {fileID: 666463861}
-    - target: {fileID: 2049370281444755750, guid: 1d9d66c8fdb2791498c99d46269b8fc4,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6416054586260472039, guid: 1d9d66c8fdb2791498c99d46269b8fc4,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -762,6 +757,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2049370281444755750, guid: 1d9d66c8fdb2791498c99d46269b8fc4,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8641721958319179437, guid: 1d9d66c8fdb2791498c99d46269b8fc4,
         type: 3}
@@ -2005,6 +2005,19 @@ MonoBehaviour:
   maxLeftToLowCondition: 0
   leftTimeText: {fileID: 1371842600}
   startButton: {fileID: 550034839}
+  gameResultPanel:
+  - name: Result
+    UI: {fileID: 6425059884534832420}
+  - name: Stage
+    UI: {fileID: 6425059884534832419}
+  - name: Money
+    UI: {fileID: 6425059884534832418}
+  - name: Honor
+    UI: {fileID: 6425059884534832417}
+  - name: Injured
+    UI: {fileID: 6425059884534832416}
+  - name: Panel
+    UI: {fileID: 1858414905}
   gameResult: {fileID: 1858414905}
   settings: {fileID: 480369755}
   UI:
@@ -3788,6 +3801,36 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!1 &6425059884534832416 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7223567019802775209, guid: 1423fc149117a1943ab328ee3ecaf1e8,
+    type: 3}
+  m_PrefabInstance: {fileID: 6425059884534832412}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6425059884534832417 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6425059884528076068, guid: 1423fc149117a1943ab328ee3ecaf1e8,
+    type: 3}
+  m_PrefabInstance: {fileID: 6425059884534832412}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6425059884534832418 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6425059883128871323, guid: 1423fc149117a1943ab328ee3ecaf1e8,
+    type: 3}
+  m_PrefabInstance: {fileID: 6425059884534832412}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6425059884534832419 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6425059883032159621, guid: 1423fc149117a1943ab328ee3ecaf1e8,
+    type: 3}
+  m_PrefabInstance: {fileID: 6425059884534832412}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6425059884534832420 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6425059884558556486, guid: 1423fc149117a1943ab328ee3ecaf1e8,
+    type: 3}
+  m_PrefabInstance: {fileID: 6425059884534832412}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6779513175748731440
 PrefabInstance:
   m_ObjectHideFlags: 0
