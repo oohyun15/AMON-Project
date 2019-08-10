@@ -8,6 +8,7 @@
  * (19.08.03)  다시하기 추가, 필드 오브젝트 자동으로 링크
  * (19.08.04)  UI(ItemSlots, Minimap), 게임 결과창 추가
  * (19.08.05)  버전 빌드 위해서 Data 관련 코드는 모두 주석처리함
+ * (19.08.10)  아이템 슬롯 변수 추가 및 설정 버튼 추가
  * 함수 추가 및 수정 시 누가 작성했는지 꼭 해당 함수 주석으로 명시해주세요!
  * 작성일자: 19.07.26
  * 수정일자: 19.08.10
@@ -69,12 +70,12 @@ public class GameManager : MonoBehaviour
     [Header("UI")]
     public Text leftTimeText;
     public GameObject startButton;
+    public GameObject settingsButton;
     public UISet[] gameResultPanel;                 // (예진) 게임 결과 패널 UI 접근 방식 변경
     public GameObject gameResult;
     public GameObject settings;
     public GameObject[] UI;                     // (용현) 0: Joystick, 1: Interaction, 2: ItemSlots, 3: Minimap
     public Image minimapPreview;
-
 
     [Header("Field Objects")]
     public AmonController player;
@@ -157,8 +158,16 @@ public class GameManager : MonoBehaviour
 
         SetTimeText(timeLimit);
 
-        // 아이템 이미지 활성화. 수정 필요
-        UI[2].transform.GetChild(1).GetChild(0).gameObject.SetActive(true);
+        // (19.08.10) 아이템 이미지가 있을 경우에만 아이템 이미지 활성화.
+        // 추후에 아이템이 추가되고 조건들이 많아질 경우 함수로 빼놔야 할 듯
+        for (int i = 0; i < UI[2].transform.childCount; i++)
+        {
+            Transform currentItem = UI[2].transform.GetChild(i);
+
+            // 아이템 이미지가 있는지 확인
+            if (currentItem.childCount == 1)
+                currentItem.GetChild(0).gameObject.SetActive(true);
+        }        
 
         // (용현) UI 비활성화
         foreach (GameObject ui in UI) ui.SetActive(false);
@@ -174,8 +183,11 @@ public class GameManager : MonoBehaviour
             }
         }
         
-        // 게임 결과창 비활성화
+        // 게임 결과창 비활성화  -> gameResultPanel로 수정해야 할 듯
         gameResult.SetActive(false);
+
+        // 세팅 버튼 비활성화
+        settingsButton.SetActive(false);
 
         // 세팅창 비활성화
         settings.SetActive(false);
@@ -195,6 +207,9 @@ public class GameManager : MonoBehaviour
         startButton.SetActive(false);
 
         minimapPreview.gameObject.SetActive(false);
+
+        // 세팅 버튼 활성화
+        settingsButton.SetActive(true);
 
         // (용현) UI 활성화
         foreach (GameObject ui in UI) ui.SetActive(true);
@@ -276,7 +291,10 @@ public class GameManager : MonoBehaviour
         JoystickController.instance.StopJoystick();
 
         // 게임 결과창 활성화
-        ShowGameResult(money, honor); 
+        ShowGameResult(money, honor);
+
+        // 세팅 버튼 비활성화
+        settingsButton.SetActive(false);
 
         // (용현) UI 비활성화
         foreach (GameObject ui in UI) ui.SetActive(false);
@@ -296,6 +314,9 @@ public class GameManager : MonoBehaviour
 
         // 게임 결과창 활성화
         ShowGameResult(0, 0);
+
+        // 세팅 버튼 비활성화
+        settingsButton.SetActive(false);
 
         // (용현) UI 비활성화
         foreach (GameObject ui in UI) ui.SetActive(false);
@@ -342,6 +363,7 @@ public class GameManager : MonoBehaviour
 
                 // 구출한 부상자만큼 색깔 설정
                 case "Injured":
+                    // (수정 필요) 소방관이 부상자를 업고 있을때도 구출된 걸로 나오게됨!
                     for (int j = 0; j < dm.totalInjuredCount - leftInjured; j++)
                         gameResultPanel[i].UI.transform.GetChild(j).GetComponent<Image>().color = Color.green;
                     for (int j = 0; j < leftInjured; j++)

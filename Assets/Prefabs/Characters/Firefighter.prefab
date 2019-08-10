@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1802286484
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1802286485}
+  m_Layer: 0
+  m_Name: InitCamPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1802286485
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1802286484}
+  m_LocalRotation: {x: -0, y: -1, z: -0, w: 0}
+  m_LocalPosition: {x: 0, y: 0.09650002, z: -0.087}
+  m_LocalScale: {x: 0.04, y: 0.04, z: 0.04}
+  m_Children: []
+  m_Father: {fileID: 6416054586260472039}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2049370281135355926
 GameObject:
   m_ObjectHideFlags: 0
@@ -45,6 +75,7 @@ GameObject:
   - component: {fileID: 2049370281368317236}
   - component: {fileID: 2049370281368317195}
   - component: {fileID: 2049370281368317194}
+  - component: {fileID: 1966226959}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -129,6 +160,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8c1bbbdaab896d4ba5372276b04aeb5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1966226959
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2049370281368317192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3013dbe803997394b932538b21852c00, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initPos: {fileID: 1802286484}
+  spd: 10
 --- !u!1 &2049370281383512442
 GameObject:
   m_ObjectHideFlags: 0
@@ -178,7 +223,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2049370281444755751
 Transform:
   m_ObjectHideFlags: 0
@@ -250,6 +295,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16b4fd9509c341449b36dd4be1652988, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initDurability: 10
   durability: 0
 --- !u!65 &2049370281444755744
 BoxCollider:
@@ -279,7 +325,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2049370281686368463
 Transform:
   m_ObjectHideFlags: 0
@@ -310,7 +356,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2049370281899108967
 Transform:
   m_ObjectHideFlags: 0
@@ -341,7 +387,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2049370282618606990
 Transform:
   m_ObjectHideFlags: 0
@@ -369,7 +415,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcf0c840c2012c54383e0232aa353cdd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  durability: 100
+  initDurability: 100
+  durability: 0
   addDamage: 3
 --- !u!1 &8021261130364400372
 GameObject:
@@ -408,6 +455,7 @@ Transform:
   - {fileID: 2049370281383512443}
   - {fileID: 4864546791568798229}
   - {fileID: 2049370281135355927}
+  - {fileID: 1802286485}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
@@ -425,18 +473,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 3
   rotSpeed: 100
-  damage: 1
+  damage: 0
+  initMoveSpeed: 0
+  initRotSpeed: 0
+  initPos: {x: 0, y: 0, z: 0}
+  initRot: {x: 0, y: 0, z: 0, w: 0}
   state: 0
   currentItem: {fileID: 0}
   ItemController: {fileID: 0}
   obstacle: {fileID: 0}
   attackDelay: 0
-  _camera: {fileID: 2049370281368317194}
   isRescuing: 0
   backPoint: {fileID: 2049370281383512443}
   rescuers: {fileID: 0}
-  h: 0
-  v: 0
 --- !u!114 &2049370282513406990
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -449,13 +498,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51e6a2913e7a12b4885a5f87ca5059fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemInvt: {fileID: 2049370281135355926}
-  key1: {fileID: 0}
-  key1Item: {fileID: 0}
-  key2: {fileID: 0}
-  key2Item: {fileID: 0}
-  key3: {fileID: 0}
-  key3Item: {fileID: 0}
+  keys: []
+  keyItems: []
   inventoryData: []
 --- !u!54 &2049370282513406984
 Rigidbody:
@@ -552,6 +596,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e3a76f98a3e215448f76ee83f859128, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initDurability: 1
   durability: 0
   addSpeed: 3
   dopingTime: 5
@@ -624,15 +669,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d6462039dee74e94f934a9fa6e40b8e8, type: 3}
---- !u!1 &8570972279124404056 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7861558269713634139, guid: d6462039dee74e94f934a9fa6e40b8e8,
-    type: 3}
-  m_PrefabInstance: {fileID: 2011957262586672131}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4659374279739626827 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6575963820098199880, guid: d6462039dee74e94f934a9fa6e40b8e8,
+    type: 3}
+  m_PrefabInstance: {fileID: 2011957262586672131}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8570972279124404056 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7861558269713634139, guid: d6462039dee74e94f934a9fa6e40b8e8,
     type: 3}
   m_PrefabInstance: {fileID: 2011957262586672131}
   m_PrefabAsset: {fileID: 0}
@@ -643,11 +688,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6416054586260472039}
     m_Modifications:
-    - target: {fileID: 6913734481027277300, guid: 36edb56a0fcc5b94488a13adf9a74e2d,
-        type: 3}
-      propertyPath: m_Name
-      value: MinimapDot
-      objectReference: {fileID: 0}
     - target: {fileID: 6913734481027277301, guid: 36edb56a0fcc5b94488a13adf9a74e2d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -712,6 +752,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.y
       value: 0.5000003
+      objectReference: {fileID: 0}
+    - target: {fileID: 6913734481027277300, guid: 36edb56a0fcc5b94488a13adf9a74e2d,
+        type: 3}
+      propertyPath: m_Name
+      value: MinimapDot
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 36edb56a0fcc5b94488a13adf9a74e2d, type: 3}

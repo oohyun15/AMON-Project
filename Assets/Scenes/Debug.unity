@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -340,12 +340,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51e6a2913e7a12b4885a5f87ca5059fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &74011753 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6416054586260472039, guid: 1d9d66c8fdb2791498c99d46269b8fc4,
-    type: 3}
-  m_PrefabInstance: {fileID: 355780014}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &75573732 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8158367339783898565, guid: a97f145a573b8334893edbf48d01c609,
@@ -499,11 +493,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1606147684}
     m_Modifications:
-    - target: {fileID: 6913734481027277300, guid: 36edb56a0fcc5b94488a13adf9a74e2d,
-        type: 3}
-      propertyPath: m_Name
-      value: MinimapDot
-      objectReference: {fileID: 0}
     - target: {fileID: 6913734481027277301, guid: 36edb56a0fcc5b94488a13adf9a74e2d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -573,6 +562,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6913734481027277300, guid: 36edb56a0fcc5b94488a13adf9a74e2d,
+        type: 3}
+      propertyPath: m_Name
+      value: MinimapDot
       objectReference: {fileID: 0}
     - target: {fileID: 6913734481027277302, guid: 36edb56a0fcc5b94488a13adf9a74e2d,
         type: 3}
@@ -757,46 +751,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2049370281444755750, guid: 1d9d66c8fdb2791498c99d46269b8fc4,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8641721958319179437, guid: 1d9d66c8fdb2791498c99d46269b8fc4,
-        type: 3}
-      propertyPath: initDurability
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 8641721958319179437, guid: 1d9d66c8fdb2791498c99d46269b8fc4,
-        type: 3}
-      propertyPath: durability
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2354528770163483278, guid: 1d9d66c8fdb2791498c99d46269b8fc4,
-        type: 3}
-      propertyPath: initDurability
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2049370281686368462, guid: 1d9d66c8fdb2791498c99d46269b8fc4,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2049370281899108966, guid: 1d9d66c8fdb2791498c99d46269b8fc4,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2049370282618606989, guid: 1d9d66c8fdb2791498c99d46269b8fc4,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2049370281444755745, guid: 1d9d66c8fdb2791498c99d46269b8fc4,
-        type: 3}
-      propertyPath: initDurability
-      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1d9d66c8fdb2791498c99d46269b8fc4, type: 3}
@@ -1727,6 +1681,12 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 14
   m_Mesh: {fileID: 2381890483179193753, guid: 435482bf760d9514bbb7d58ea6db91a5, type: 3}
+--- !u!1 &1042026021 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2189111552187442581, guid: 080f0090c81fe084b8ee667000fd7529,
+    type: 3}
+  m_PrefabInstance: {fileID: 2189111552967629460}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &1063698473 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7025529670735609503, guid: 6232d8239753ff9449b2f00df5b6b623,
@@ -2005,6 +1965,7 @@ MonoBehaviour:
   maxLeftToLowCondition: 0
   leftTimeText: {fileID: 1371842600}
   startButton: {fileID: 550034839}
+  settingsButton: {fileID: 1042026021}
   gameResultPanel:
   - name: Result
     UI: {fileID: 6425059884534832420}
@@ -2084,36 +2045,6 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 696045863}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1802286484
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1802286485}
-  m_Layer: 0
-  m_Name: InitCamPos
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1802286485
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1802286484}
-  m_LocalRotation: {x: -0, y: -1, z: -0, w: 0}
-  m_LocalPosition: {x: 0, y: 0.09650002, z: -0.087}
-  m_LocalScale: {x: 0.04, y: 0.04, z: 0.04}
-  m_Children: []
-  m_Father: {fileID: 74011753}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1805072861
 GameObject:
   m_ObjectHideFlags: 0
@@ -2421,20 +2352,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 355780014}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1966226959
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1966226957}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3013dbe803997394b932538b21852c00, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  initPos: {fileID: 1802286484}
-  spd: 10
 --- !u!1 &1991787697 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7025529670735609488, guid: 6232d8239753ff9449b2f00df5b6b623,
@@ -2818,7 +2735,7 @@ PrefabInstance:
     - target: {fileID: 2189111552187442581, guid: 080f0090c81fe084b8ee667000fd7529,
         type: 3}
       propertyPath: m_Name
-      value: SettingIcon
+      value: SettingsButton
       objectReference: {fileID: 0}
     - target: {fileID: 2189111552187442582, guid: 080f0090c81fe084b8ee667000fd7529,
         type: 3}
