@@ -1,20 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &4218261035288221314
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8324321381253189338}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a6af2803fb4d80c41927341c0def0220, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isRescued: 0
-  type: 0
-  speed: 0.3
 --- !u!114 &6928876913664464487
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29,6 +14,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   distance: 2
   speed: 0.7
+--- !u!114 &5792721185564287052
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8324321381253189338}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b008485168b30f144b0efcf264a5d9a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isRescued: 0
+  type: 0
+  speed: 0
+  initPos: {x: 0, y: 0, z: 0}
+  initRot: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1001 &7887092217136165263
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -111,17 +113,16 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 25
       objectReference: {fileID: 0}
-    - target: {fileID: 4252750737936603404, guid: 09e6dcf84d57f904c862264efef1e928,
+    - target: {fileID: 6627200356215859420, guid: 09e6dcf84d57f904c862264efef1e928,
         type: 3}
-      propertyPath: m_Constraints
-      value: 112
+      propertyPath: m_LocalPosition.y
+      value: -0.1
       objectReference: {fileID: 0}
-    - target: {fileID: 2229698136743296857, guid: 09e6dcf84d57f904c862264efef1e928,
+    - target: {fileID: 2229698136743296854, guid: 09e6dcf84d57f904c862264efef1e928,
         type: 3}
-      propertyPath: m_Mesh
+      propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 3369316746193770658, guid: ea8a0d647b3fde94cb8d413927473a73,
-        type: 3}
+      objectReference: {fileID: 2100000, guid: 6a2dc48262a966a4abeb00022dc736da, type: 2}
     - target: {fileID: 2229698136743296855, guid: 09e6dcf84d57f904c862264efef1e928,
         type: 3}
       propertyPath: m_Size.x
@@ -152,15 +153,16 @@ PrefabInstance:
       propertyPath: m_Center.z
       value: -0.00002143204
       objectReference: {fileID: 0}
-    - target: {fileID: 2229698136743296854, guid: 09e6dcf84d57f904c862264efef1e928,
+    - target: {fileID: 2229698136743296857, guid: 09e6dcf84d57f904c862264efef1e928,
         type: 3}
-      propertyPath: m_Materials.Array.data[0]
+      propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: 2100000, guid: 6a2dc48262a966a4abeb00022dc736da, type: 2}
-    - target: {fileID: 6627200356215859420, guid: 09e6dcf84d57f904c862264efef1e928,
+      objectReference: {fileID: 3369316746193770658, guid: ea8a0d647b3fde94cb8d413927473a73,
         type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.1
+    - target: {fileID: 4252750737936603404, guid: 09e6dcf84d57f904c862264efef1e928,
+        type: 3}
+      propertyPath: m_Constraints
+      value: 112
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 09e6dcf84d57f904c862264efef1e928, type: 3}
