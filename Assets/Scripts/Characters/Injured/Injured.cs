@@ -5,6 +5,7 @@
  * 작성일자: 19.07.11
  * 19. 07. 14 수정 - 구조 시 초록색으로 바뀌도록 함, 플레이어 속도 조절
  * 19. 07. 30 수정(용현) - 이동속도 관련 조이스틱 속도 수정할 수 있게 변경
+ * 19. 08. 11 수정(용현) - Exit 트리거에 닿았을 때 LeftInjured 수 감소시킴
  ***************************************/
 
 using System.Collections;
@@ -67,6 +68,9 @@ public abstract class Injured : MonoBehaviour
         // 출구 트리거 발생 시
         if (col.tag == "Exit")
         {
+            // 부상자 수 감소
+            GameManager.Instance.leftInjured--;
+
             // 부상자 구조 체크
             GameManager.Instance.CheckGameClear();
 

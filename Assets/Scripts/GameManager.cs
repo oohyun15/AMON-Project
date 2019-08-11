@@ -9,9 +9,10 @@
  * (19.08.04)  UI(ItemSlots, Minimap), 게임 결과창 추가
  * (19.08.05)  버전 빌드 위해서 Data 관련 코드는 모두 주석처리함
  * (19.08.10)  아이템 슬롯 변수 추가 및 설정 버튼 추가
+ * (19.08.11)  LeftInjured 변수 수정. Injured가 Exit 트리거에 나왔을 때 감소하도록 설정
  * 함수 추가 및 수정 시 누가 작성했는지 꼭 해당 함수 주석으로 명시해주세요!
  * 작성일자: 19.07.26
- * 수정일자: 19.08.10
+ * 수정일자: 19.08.11
  ***************************************/
 
 using System.Collections;
@@ -58,9 +59,8 @@ public class GameManager : MonoBehaviour
     private DataManager dm;
 
     [Header("Game State")]
-    [SerializeField]
     public GameState gameState = GameState.Ready;
-    private int leftInjured;
+    public int leftInjured;
     public float timeLimit;                     // 제한 시간, 초 단위
 
     [Header("Clear Requirements")]              // 구조되지 않고 남아 있는 부상자 인원 기준
@@ -199,6 +199,7 @@ public class GameManager : MonoBehaviour
         // 게임 상태 변경: Ready
         gameState = GameState.Ready;
 
+        // 초기 부상자 수 확인
         CheckLeftInjured();
     }
 
@@ -234,7 +235,8 @@ public class GameManager : MonoBehaviour
     // 게임 클리어 여부와 보상 수준 확인
     public void CheckGameClear()
     {
-        CheckLeftInjured();
+        // (19.08.11) 사용 잠시 보류
+        // CheckLeftInjured();
 
         // 플레이어 탈출 여부 확인
         bool isPlayerEscaped = player.IsEscaped;
