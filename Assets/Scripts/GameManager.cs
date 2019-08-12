@@ -10,6 +10,7 @@
  * (19.08.05)  버전 빌드 위해서 Data 관련 코드는 모두 주석처리함
  * (19.08.10)  아이템 슬롯 변수 추가 및 설정 버튼 추가
  * (19.08.11)  LeftInjured 변수 수정. Injured가 Exit 트리거에 나왔을 때 감소하도록 설정
+ * (19.08.12)  leftInjured 변수 계산 방식 수정 - 부상자 오브젝트 리스트에서 활성화 여부 확인하도록 함
  * 함수 추가 및 수정 시 누가 작성했는지 꼭 해당 함수 주석으로 명시해주세요!
  * 작성일자: 19.07.26
  * 수정일자: 19.08.11
@@ -72,7 +73,6 @@ public class GameManager : MonoBehaviour
     public GameObject startButton;
     public GameObject settingsButton;
     public UISet[] gameResultPanel;                 // (예진) 게임 결과 패널 UI 접근 방식 변경
-    public GameObject gameResult;
     public GameObject settings;
     public GameObject[] UI;                     // (용현) 0: Joystick, 1: Interaction, 2: ItemSlots, 3: Minimap
     public Image minimapPreview;
@@ -183,8 +183,8 @@ public class GameManager : MonoBehaviour
             }
         }
         
-        // 게임 결과창 비활성화  -> gameResultPanel로 수정해야 할 듯
-        gameResult.SetActive(false);
+        // 게임 결과창 비활성화
+        gameResultPanel[0].UI.SetActive(false);
 
         // 세팅 버튼 비활성화
         settingsButton.SetActive(false);
@@ -242,7 +242,6 @@ public class GameManager : MonoBehaviour
     // 게임 클리어 여부와 보상 수준 확인
     public void CheckGameClear()
     {
-        // (19.08.11) 사용 잠시 보류
         CheckLeftInjured();
 
         // 플레이어 탈출 여부 확인
@@ -335,6 +334,7 @@ public class GameManager : MonoBehaviour
 
     // (예진 19.08.05) 게임 결과 보여주는 UI 창 설정
     // (19.08.10) Find 함수 >> 게임 패널 UI 안의 텍스트, 이미지 미리 연결해 두고 사용하는 식으로 변경
+    // (19.08.12) 탈출 못한 부상자도 초록색으로 바뀌는 것 수정
     private void ShowGameResult(int money, int honor)
     {
         GameObject panel = null;
@@ -372,8 +372,6 @@ public class GameManager : MonoBehaviour
 
                 // 구출한 부상자만큼 색깔 설정
                 case "Injured":
-                    Debug.Log(dm.totalInjuredCount - leftInjured);
-                    // (수정 필요) 소방관이 부상자를 업고 있을때도 구출된 걸로 나오게됨!
                     for (int j = 0; j < dm.totalInjuredCount - leftInjured; j++)
                         gameResultPanel[i].UI.transform.GetChild(j).GetComponent<Image>().color = Color.green;
                     for (int j = 0; j < leftInjured; j++)

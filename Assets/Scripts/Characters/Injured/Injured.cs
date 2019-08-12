@@ -67,31 +67,24 @@ public abstract class Injured : MonoBehaviour
     }
 
     // (19.08.12 예진) 플레이어의 출구 트리거 발생 시 함수 호출하는 방식으로 변경
-    public virtual void TriggerEnter() // collider col
+    public virtual void Escaped()
     {
-        // 출구 트리거 발생 시
-        //if (col.tag == "Exit")
-        //{
-            // 부상자 수 감소
-            // GameManager.Instance.leftInjured--;
+        // 부상자 구조 체크
+        GameManager.Instance.CheckGameClear();
 
-            // 부상자 구조 체크
-            GameManager.Instance.CheckGameClear();
+        // 플레이어 속도 정상화
+        player.moveSpeed += speed;
 
-            // 플레이어 속도 정상화
-            player.moveSpeed += speed;
+        // (용현) 조이스틱에서의 플레이어 속도 업데이트
+        JoystickController.instance.UpdateSpeed();
 
-            // (용현) 조이스틱에서의 플레이어 속도 업데이트
-            JoystickController.instance.UpdateSpeed();
+        // 부상 타입별 출구 도착 시 행동 구현
+        EnteredExitTrigger();
 
-            // 부상 타입별 출구 도착 시 행동 구현
-            EnteredExit();
-
-            gameObject.SetActive(false);
-        //}
+        gameObject.SetActive(false);
     }
 
-    protected abstract void EnteredExit();
+    protected abstract void EnteredExitTrigger();
 
 
 }

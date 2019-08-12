@@ -57,7 +57,7 @@ public class SeriousInjured : Injured, IReset
         transform.rotation = new Quaternion(0, 0, 0, 0);
     }
 
-    protected override void EnteredExit()
+    protected override void EnteredExitTrigger()
     {
         player.isRescuing = false;
     }
