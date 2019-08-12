@@ -40,6 +40,9 @@ public abstract class Injured : MonoBehaviour
         isRescued = true;
         gameObject.tag = "Rescued";
 
+        // (19.08.12. 예진) 플레이어가 구조된 부상자 리스트 가지고 있도록 함
+        player.rescuers.Add(gameObject);
+
         // 플레이어가 통과해 다닐 수 있도록 트리거 처리
         GetComponent<Collider>().isTrigger = true;
 
@@ -63,13 +66,14 @@ public abstract class Injured : MonoBehaviour
         meshRenderer.material.color = Color.green;
     }
 
-    protected virtual void OnTriggerEnter(Collider col)
+    // (19.08.12 예진) 플레이어의 출구 트리거 발생 시 함수 호출하는 방식으로 변경
+    public virtual void TriggerEnter() // collider col
     {
         // 출구 트리거 발생 시
-        if (col.tag == "Exit")
-        {
+        //if (col.tag == "Exit")
+        //{
             // 부상자 수 감소
-            GameManager.Instance.leftInjured--;
+            // GameManager.Instance.leftInjured--;
 
             // 부상자 구조 체크
             GameManager.Instance.CheckGameClear();
@@ -84,7 +88,7 @@ public abstract class Injured : MonoBehaviour
             EnteredExit();
 
             gameObject.SetActive(false);
-        }
+        //}
     }
 
     protected abstract void EnteredExit();

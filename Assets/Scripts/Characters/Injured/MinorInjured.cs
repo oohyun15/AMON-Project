@@ -51,7 +51,7 @@ public class MinorInjured : Injured, IReset
         base.Rescue(player);
 
         // 따라다니게 하기
-        transform.SetParent(player.rescuers);   // 구조된 오브젝트 확인 위해 parent 변경
+        //transform.SetParent(player.rescuers);   // 구조된 오브젝트 확인 위해 parent 변경
         follow.SetTarget(player.transform);     // 부상자가 따라다닐 타겟 설정
         follow.enabled = true;                  // 플레이어를 따라다니도록 함
     }

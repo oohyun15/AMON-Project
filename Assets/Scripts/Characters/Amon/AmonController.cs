@@ -42,7 +42,7 @@ public class AmonController : MonoBehaviour, IReset
     [Header("Rescue")]
     public bool isRescuing;             // 현재 중상 부상자 구조중인지 저장할 변수
     public Transform backPoint;         // 부상자 업었을 때 위치 받아올 변수
-    public Transform rescuers;
+    //public Transform rescuers;
     private GameObject target;          // (용현) 부상자(충돌체) 타겟 변수
     private bool isEscaped;             // 플레이어 탈출 확인 변수
     public bool IsEscaped { get { return isEscaped; } }
@@ -53,6 +53,8 @@ public class AmonController : MonoBehaviour, IReset
     private new Transform transform;
     private GameManager gm;
     private new readonly string name = "Player";
+
+    public List<GameObject> rescuers;
 
 
     // Start is called before the first frame update
@@ -146,11 +148,21 @@ public class AmonController : MonoBehaviour, IReset
         }
     }
 
-    // (예진) 플레이어 탈출 확인
+    // (예진) 플레이어 탈출 
+    // (19.08.12. 예진) 탈출 시 따라오는 부상자 있으면 구출 처리 하도록 함
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Exit"))
+        {
             isEscaped = true;
+
+            // 따라오는 부상자 있으면 구출 처리
+            foreach (GameObject g in rescuers)
+                if (g.activeInHierarchy)
+                    g.GetComponent<Injured>().TriggerEnter();
+
+            rescuers.Clear();
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -302,6 +314,8 @@ public class AmonController : MonoBehaviour, IReset
     // (용현) 초기값 설정
     public void SetInitValue()
     {
+        rescuers = new List<GameObject>();
+
         // 플레이어가 죽었을 때
         if (!gameObject.activeInHierarchy)
         {

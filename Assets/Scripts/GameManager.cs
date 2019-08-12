@@ -229,14 +229,21 @@ public class GameManager : MonoBehaviour
 
     private void CheckLeftInjured()
     {
-        leftInjured = injuredParent.transform.childCount;
+        leftInjured = 0;
+
+        List<GameObject> injureds = new List<GameObject>();
+        injureds.AddRange(objects["Serious"]);
+        injureds.AddRange(objects["Minor"]);
+
+        foreach (GameObject i in injureds)
+            if (i.activeInHierarchy) leftInjured++;
     }
 
     // 게임 클리어 여부와 보상 수준 확인
     public void CheckGameClear()
     {
         // (19.08.11) 사용 잠시 보류
-        // CheckLeftInjured();
+        CheckLeftInjured();
 
         // 플레이어 탈출 여부 확인
         bool isPlayerEscaped = player.IsEscaped;
@@ -365,6 +372,7 @@ public class GameManager : MonoBehaviour
 
                 // 구출한 부상자만큼 색깔 설정
                 case "Injured":
+                    Debug.Log(dm.totalInjuredCount - leftInjured);
                     // (수정 필요) 소방관이 부상자를 업고 있을때도 구출된 걸로 나오게됨!
                     for (int j = 0; j < dm.totalInjuredCount - leftInjured; j++)
                         gameResultPanel[i].UI.transform.GetChild(j).GetComponent<Image>().color = Color.green;
