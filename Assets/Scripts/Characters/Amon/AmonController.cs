@@ -5,6 +5,7 @@
  * (19.07.30) UI 인터렉션 버튼을 구현을 위한 Interaction 함수 정의(Space 키)
  * (19.08.01) IReset 클래스 상속, GetInitValue 추가
  * (19.08.04) 장애물 충돌 시 플레이어 상태 수정(우선순위: 아이템 > 장애물)
+ * (19.08.16) 태윤 : 플레이어 애니메이션 변수 및 함수 추가 
  * 함수 추가 및 수정 시 누가 작성했는지 꼭 해당 함수 주석으로 명시해주세요!
  * 작성일자: 19.07.14
  * 수정일자: 19.08.04
@@ -46,7 +47,12 @@ public class AmonController : MonoBehaviour, IReset
     private GameObject target;          // (용현) 부상자(충돌체) 타겟 변수
     private bool isEscaped;             // 플레이어 탈출 확인 변수
     public bool IsEscaped { get { return isEscaped; } }
-    
+
+    [Header("Animation")]
+    public Animator playerAnim; // 애니메이터 받아오는 변수
+    public enum AnimationName { Idle, Drink, Walk, Strike } // 애니메이션 상태 변수들
+    public AnimationName animState = AnimationName.Idle; // 현재 애니메이션 상태
+
     // [Header("Debug")]                // 키보드로 이동할 때 사용하는 변수, 추후에 삭제해야함
     private float h = 0.0f;             // 좌,우
     private float v = 0.0f;             // 상,하
@@ -63,6 +69,8 @@ public class AmonController : MonoBehaviour, IReset
         Debug.Log("Hello world!");
 
         gm = GameManager.Instance;
+        playerAnim = GetComponent<Animator>();
+        playerAnim.SetBool("IsIdle", true);
 
         var go = new List<GameObject>();
 
@@ -94,7 +102,6 @@ public class AmonController : MonoBehaviour, IReset
 
         transform.Rotate(Vector3.up * rotSpeed * h * Time.deltaTime);
 
-        // 아이템 사용 버튼 - Space 키
         if (Input.GetKeyDown(KeyCode.Space)) Interaction();
     }
 
@@ -288,8 +295,6 @@ public class AmonController : MonoBehaviour, IReset
 
                 break;
         } 
-
-        
     }
 
     // (용현) 초기값 저장
@@ -334,5 +339,43 @@ public class AmonController : MonoBehaviour, IReset
         moveSpeed = initMoveSpeed;
 
         rotSpeed = initRotSpeed;
+    }
+
+    public void PlayerAnimation()
+    {
+        switch (animState)
+        {
+            case AnimationName.Walk:
+
+                playerAnim.SetBool("IsIdle", false);
+                playerAnim.SetBool("IsWalk", true);
+
+                break;
+
+            case AnimationName.Strike:
+
+                playerAnim.SetBool("IsIdle", false);
+                playerAnim.SetBool("IsStrike", true);
+
+                break;
+
+            case AnimationName.Drink:
+
+                playerAnim.SetBool("IsIdle", false);
+                playerAnim.SetBool("IsDrink", true);
+                
+                break;
+        }
+    }
+
+    public void AnimationIdle()
+    {
+        animState = AnimationName.Idle;
+
+        foreach (AnimatorControllerParameter prmt in playerAnim.parameters)
+        {
+            playerAnim.SetBool(prmt.name, false);
+        }
+        playerAnim.SetBool("IsIdle", true);
     }
 }

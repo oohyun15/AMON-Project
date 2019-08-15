@@ -3,6 +3,7 @@
 * 제작: 김태윤
 * 이동속도 증가용 아이템
 * (19.08.03) player 수정 및 GameManager로 수정
+* (19.08.16) Interaction시 해당 player 애니메이션을 실행하도록 코드 수정
 * 함수 추가 및 수정 시 누가 작성했는지 꼭 해당 함수 주석으로 명시해주세요!
 * 작성일자: 19.07.26
 * 수정일자: 19.08.03
@@ -19,6 +20,8 @@ public class ItemDrink : Item
 
     public override void ItemActive()
     {
+        GameManager.Instance.player.animState = AmonController.AnimationName.Drink; // 애니메이션 상태 설정 
+        GameManager.Instance.player.PlayerAnimation(); // 애니메이션 실행
         GameManager.Instance.player.StartCoroutine(GameManager.Instance.player.UpSpeed(addSpeed, dopingTime));
 
         DurabilityManage();

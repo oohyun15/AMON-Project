@@ -5,6 +5,7 @@
  * (19.07.14) 현재 Canvas내 Background 중심이 센터로 잡혀있음. 추후에 화면 좌측 하단으로 바꿔서 코드 수정해야함!
  * (19.07.30) 조이패드의 x좌표를 이용해 플레이어의 rotation 값을 설정해줌
  * (19.08.04) 게임 종료 시 조이패드를 멈추는 함수 추가
+ * (19.08.16) 애니메이션 코드 추가
  * 함수 추가 및 수정 시 누가 작성했는지 꼭 해당 함수 주석으로 명시해주세요!
  * 작성일자: 19.07.14
  * 수정일자: 19.07.30
@@ -55,6 +56,9 @@ public class JoystickController : MonoBehaviour, IPointerDownHandler, IPointerUp
         // 터치 중에는 movePosition 값으로 캐릭터가 이동
         if (isTouch)
         {
+            GameManager.Instance.player.animState = AmonController.AnimationName.Walk; // 애니메이션 상태 설정
+            GameManager.Instance.player.PlayerAnimation(); // 애니메이션 실행
+
             Player.transform.Translate(movePosition);
 
             Player.transform.Rotate(rotPosition);
@@ -64,12 +68,15 @@ public class JoystickController : MonoBehaviour, IPointerDownHandler, IPointerUp
     // 터치 시 실행되는 함수
     public void OnPointerDown(PointerEventData eventData)
     {
-        isTouch = true;
+        if (GameManager.Instance.player.playerAnim.GetBool("IsIdle") || GameManager.Instance.player.playerAnim.GetBool("IsWalk")) 
+            isTouch = true; // 다른 애니메이션 실행중이면 조이스틱 실행 안되도록 만듦
+        else return;
     }
 
     // 터치 화면에서 땔 시 실행되는 함수
     public void OnPointerUp(PointerEventData eventData)
     {
+        GameManager.Instance.player.AnimationIdle(); // 움직임이 없을 경우 애니메이션 Idle로 바꿈
         StopJoystick();
     }
 
