@@ -103,8 +103,9 @@ public class DataManager : MonoBehaviour
         // 미니맵 프리뷰 스프라이트 불러오기 - 안될 경우 이미지의 텍스쳐 타입 Sprite인지 확인
         minimap = Resources.Load<Sprite>("Minimap/" + sceneName);
 
-        maxLeftToLowCondition = System.Convert.ToInt32(stageData[dataIndex]["maxLeftTolow"]);
-        maxLeftToMiddleCondition = System.Convert.ToInt32(stageData[dataIndex]["maxLeftTomid"]);
+        totalInjuredCount = System.Convert.ToInt32(stageData[dataIndex]["total"]);
+        maxLeftToLowCondition = totalInjuredCount - System.Convert.ToInt32(stageData[dataIndex]["low"]);
+        maxLeftToMiddleCondition = totalInjuredCount - System.Convert.ToInt32(stageData[dataIndex]["mid"]);
     }
 
     public void SaveGameResult(int money, int honor)
