@@ -53,6 +53,10 @@ public class AmonController : MonoBehaviour, IReset
     public enum AnimationName { Idle, Drink, Walk, Strike } // 애니메이션 상태 변수들
     public AnimationName animState = AnimationName.Idle; // 현재 애니메이션 상태
 
+    [Header("CameraShake")]
+    public float CSAmount;
+    public float CSDuration;
+
     // [Header("Debug")]                // 키보드로 이동할 때 사용하는 변수, 추후에 삭제해야함
     private float h = 0.0f;             // 좌,우
     private float v = 0.0f;             // 상,하
@@ -225,7 +229,7 @@ public class AmonController : MonoBehaviour, IReset
         if (_obstacle.hp <= 0)
         {
             // 코루틴 함수는 모두 게임매니저로 걸어놓음
-            gm.StartCoroutine(GameManager.Instance.Cam.transform.GetComponent<CameraShake>().Shake(0.01f, 0.3f));
+            gm.StartCoroutine(GameManager.Instance.Cam.transform.GetComponent<CameraShake>().Shake(CSAmount, CSDuration));
 
             // 장애물 비활성화
             _obstacle.gameObject.SetActive(false);
