@@ -6,6 +6,7 @@
  * (19.08.01) IReset 클래스 상속, GetInitValue 추가
  * (19.08.04) 장애물 충돌 시 플레이어 상태 수정(우선순위: 아이템 > 장애물)
  * (19.08.16) 태윤 : 플레이어 애니메이션 변수 및 함수 추가 
+ * (19.08.19) attackDelay를 공격 애니메이션에 맞게 수정
  * 함수 추가 및 수정 시 누가 작성했는지 꼭 해당 함수 주석으로 명시해주세요!
  * 작성일자: 19.07.14
  * 수정일자: 19.08.04
@@ -240,7 +241,9 @@ public class AmonController : MonoBehaviour, IReset
             // 현재 장애물 null로 바꿈
             obstacle = null;
         }
-        yield return new WaitForSeconds(0.1f);
+
+        // (19.08.19) 공격 애니메이션 총 길이로 설정
+        yield return new WaitForSeconds(1f);
 
         attackDelay = false;
     }
