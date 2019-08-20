@@ -4,6 +4,7 @@
  * 아이템
  * (19,08.02) Item 내구도 다 썻을 때 Current Item 변경
  * (19.08.03) player 수정 및 GameManager로 수정, Start(), GetInitValue() 삭제
+ * (19.08.20) Item 번호 추가
  * 함수 추가 및 수정 시 누가 작성했는지 꼭 해당 함수 주석으로 명시해주세요!
  * 작성일자: 19.07.26
  * 수정일자: 19.08.03
@@ -16,6 +17,7 @@ using UnityEngine;
 // Item들의 기본 속성을 가져 인터페이스로 사용될 클래스
 public class Item : MonoBehaviour, IReset
 {
+    public int ID_num;                                  // 아이템 번호
     public int initDurability;
     public int durability;                              // 내구도
 
@@ -24,7 +26,7 @@ public class Item : MonoBehaviour, IReset
     private new readonly string name = "Item";
 
     // (예진) 아이템 키 제거를 위해 컨트롤러가 아이템 가져올 때 컨트롤러도 설정하도록 함
-    public void SetController(ItemController controller) { this.controller = controller; }
+     public void SetController(ItemController controller) { this.controller = controller; }
 
     void Start()
     {
@@ -49,7 +51,9 @@ public class Item : MonoBehaviour, IReset
 
     public virtual void ItemActive() // 각 Item의 기능은 이 함수를 상속받아서 사용
     {
+        DurabilityManage();
 
+        controller.UpdateItemCount(this);
     }
 
     protected void DurabilityManage() // 내구도 관리
@@ -71,7 +75,8 @@ public class Item : MonoBehaviour, IReset
 
         gm.player.currentItem = null;
 
-        controller.DeleteItemKey(this);
+        // (19.08.20) 아이콘 사라지지 않게 함
+        // controller.DeleteItemKey(this);
     }
 
     public void GetInitValue()
@@ -85,5 +90,7 @@ public class Item : MonoBehaviour, IReset
         gameObject.SetActive(false);
 
         durability = initDurability;
+
+        controller.UpdateItemCount(this);
     }
 }

@@ -11,6 +11,7 @@
  * (19.08.10)  아이템 슬롯 변수 추가 및 설정 버튼 추가
  * (19.08.11)  LeftInjured 변수 수정. Injured가 Exit 트리거에 나왔을 때 감소하도록 설정
  * (19.08.12)  leftInjured 변수 계산 방식 수정 - 부상자 오브젝트 리스트에서 활성화 여부 확인하도록 함
+ * (19.08.20)  아이템 관련 코드 수정
  * 함수 추가 및 수정 시 누가 작성했는지 꼭 해당 함수 주석으로 명시해주세요!
  * 작성일자: 19.07.26
  * 수정일자: 19.08.11
@@ -165,7 +166,7 @@ public class GameManager : MonoBehaviour
             Transform currentItem = UI[2].transform.GetChild(i);
 
             // 아이템 이미지가 있는지 확인
-            if (currentItem.childCount == 1)
+            if (currentItem.childCount == 2)
                 currentItem.GetChild(0).gameObject.SetActive(true);
         }        
 

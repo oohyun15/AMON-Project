@@ -7,6 +7,7 @@
  * (19.08.04) 장애물 충돌 시 플레이어 상태 수정(우선순위: 아이템 > 장애물)
  * (19.08.16) 태윤 : 플레이어 애니메이션 변수 및 함수 추가 
  * (19.08.19) attackDelay를 공격 애니메이션에 맞게 수정
+ * (19.08.20) 캐릭터 초기화 시 currentItem = null로 수정
  * 함수 추가 및 수정 시 누가 작성했는지 꼭 해당 함수 주석으로 명시해주세요!
  * 작성일자: 19.07.14
  * 수정일자: 19.08.04
@@ -174,6 +175,28 @@ public class AmonController : MonoBehaviour, IReset
                     g.GetComponent<Injured>().Escaped();
 
             rescuers.Clear();
+        }
+
+        // (19.08.20) 아이템 획득 시
+        else if(other.CompareTag("FieldItem"))
+        {
+            FieldItem fi = other.GetComponent<FieldItem>();
+
+            for (int index = 0; index < ItemController.TIN; index++)
+            {
+                Item item = ItemController.keyItems[index];
+
+                if (fi.ID_num == item.ID_num)
+                {
+                    item.durability += fi.itemCount;
+
+                    ItemController.UpdateItemCount(item);
+
+                    other.gameObject.SetActive(false);
+
+                    break;
+                }
+            }
         }
     }
 
@@ -346,6 +369,8 @@ public class AmonController : MonoBehaviour, IReset
         moveSpeed = initMoveSpeed;
 
         rotSpeed = initRotSpeed;
+
+        currentItem = null;
     }
 
     public void PlayerAnimation()

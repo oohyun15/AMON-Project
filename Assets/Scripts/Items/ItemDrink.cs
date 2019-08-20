@@ -24,6 +24,6 @@ public class ItemDrink : Item
         GameManager.Instance.player.PlayerAnimation(); // 애니메이션 실행
         GameManager.Instance.player.StartCoroutine(GameManager.Instance.player.UpSpeed(addSpeed, dopingTime));
 
-        DurabilityManage();
+        base.ItemActive();
     }
 }
