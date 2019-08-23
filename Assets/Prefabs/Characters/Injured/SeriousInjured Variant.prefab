@@ -14,7 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isRescued: 0
   type: 1
-  speed: 0.7
+  playerSpeedChange: 0.7
+  timeLimit: 5
+  initPos: {x: 0, y: 0, z: 0}
+  initRot: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1001 &8061988521794775792
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -97,27 +100,16 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 25
       objectReference: {fileID: 0}
-    - target: {fileID: 4252750737936603404, guid: 09e6dcf84d57f904c862264efef1e928,
+    - target: {fileID: 6627200356215859420, guid: 09e6dcf84d57f904c862264efef1e928,
         type: 3}
-      propertyPath: m_UseGravity
-      value: 0
+      propertyPath: m_LocalPosition.y
+      value: -0.1
       objectReference: {fileID: 0}
-    - target: {fileID: 4252750737936603404, guid: 09e6dcf84d57f904c862264efef1e928,
+    - target: {fileID: 2229698136743296854, guid: 09e6dcf84d57f904c862264efef1e928,
         type: 3}
-      propertyPath: m_IsKinematic
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4252750737936603404, guid: 09e6dcf84d57f904c862264efef1e928,
-        type: 3}
-      propertyPath: m_Constraints
-      value: 126
-      objectReference: {fileID: 0}
-    - target: {fileID: 2229698136743296857, guid: 09e6dcf84d57f904c862264efef1e928,
-        type: 3}
-      propertyPath: m_Mesh
+      propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 6788383922943872000, guid: f1ef218f44a9ae245b1348b8fc5a10a0,
-        type: 3}
+      objectReference: {fileID: 2100000, guid: 6a2dc48262a966a4abeb00022dc736da, type: 2}
     - target: {fileID: 2229698136743296855, guid: 09e6dcf84d57f904c862264efef1e928,
         type: 3}
       propertyPath: m_Size.x
@@ -148,20 +140,31 @@ PrefabInstance:
       propertyPath: m_Center.z
       value: 0.00033393144
       objectReference: {fileID: 0}
-    - target: {fileID: 2229698136743296854, guid: 09e6dcf84d57f904c862264efef1e928,
+    - target: {fileID: 2229698136743296857, guid: 09e6dcf84d57f904c862264efef1e928,
         type: 3}
-      propertyPath: m_Materials.Array.data[0]
+      propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: 2100000, guid: 6a2dc48262a966a4abeb00022dc736da, type: 2}
+      objectReference: {fileID: 6788383922943872000, guid: f1ef218f44a9ae245b1348b8fc5a10a0,
+        type: 3}
     - target: {fileID: 1248259015488736561, guid: 09e6dcf84d57f904c862264efef1e928,
         type: 3}
       propertyPath: m_UseGravity
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6627200356215859420, guid: 09e6dcf84d57f904c862264efef1e928,
+    - target: {fileID: 4252750737936603404, guid: 09e6dcf84d57f904c862264efef1e928,
         type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.1
+      propertyPath: m_UseGravity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4252750737936603404, guid: 09e6dcf84d57f904c862264efef1e928,
+        type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4252750737936603404, guid: 09e6dcf84d57f904c862264efef1e928,
+        type: 3}
+      propertyPath: m_Constraints
+      value: 126
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 09e6dcf84d57f904c862264efef1e928, type: 3}

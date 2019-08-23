@@ -93,5 +93,8 @@ public class SeriousInjured : Injured, IReset
 
         // 태그 변경
         gameObject.tag = "Injured";
+
+        // 부상자 상태 설정
+        state = InjuredState.LIVE;
     }
 }

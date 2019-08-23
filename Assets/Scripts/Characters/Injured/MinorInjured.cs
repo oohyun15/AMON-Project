@@ -94,5 +94,8 @@ public class MinorInjured : Injured, IReset
         isRescued = false;
 
         gameObject.tag = "Injured";
+
+        // 부상자 상태 설정
+        state = InjuredState.LIVE;
     }
 }

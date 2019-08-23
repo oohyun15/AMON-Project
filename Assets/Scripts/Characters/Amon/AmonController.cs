@@ -212,8 +212,10 @@ public class AmonController : MonoBehaviour, IReset
         Injured nearInjured = nearObject.gameObject.GetComponent<Injured>();
 
         // 현재 부상자 업고 있을 경우 구조 불가능. (용현) 이중 if절을 한개로 합침
+        // (예진) 부상자 생사여부 확인 조건 추가
         if (!nearInjured.isRescued &&
-            !(isRescuing && nearInjured.type == Injured.InjuryType.SERIOUS))
+            !(isRescuing && nearInjured.type == Injured.InjuryType.SERIOUS) &&
+            nearInjured.state != Injured.InjuredState.DEAD)
         {
             // 부상자 구조
             nearInjured.Rescue(this);

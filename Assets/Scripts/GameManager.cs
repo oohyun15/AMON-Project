@@ -218,6 +218,14 @@ public class GameManager : MonoBehaviour
 
         timeCheckCoroutine = CheckTime();
 
+        List<GameObject> injureds = new List<GameObject>();
+        injureds.AddRange(objects["Serious"]);
+        injureds.AddRange(objects["Minor"]);
+
+        // (예진) 부상자 시간 체크 시작
+        foreach (GameObject i in injureds)
+            i.GetComponent<Injured>().StartTimeCheck();
+
         StartCoroutine(timeCheckCoroutine);
 
         gameState = GameState.Playing;
