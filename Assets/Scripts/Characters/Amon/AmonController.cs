@@ -366,6 +366,8 @@ public class AmonController : MonoBehaviour, IReset
 
         state = InteractionState.Idle;
 
+        AnimationIdle();
+
         gameObject.transform.SetPositionAndRotation(initPos, initRot);
 
         moveSpeed = initMoveSpeed;
