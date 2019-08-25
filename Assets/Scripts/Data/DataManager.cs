@@ -5,8 +5,9 @@
  * 함수 추가 및 수정 시 누가 작성했는지 꼭 해당 함수 주석으로 명시해주세요!
  * (19.08.02) 유저 데이터 xml에서 불러오고 저장하는 부분 추가
  * (19.08.03) 미니맵 스프라이트 불러오는 부분 추가
+ * (19.08.25) 클리어 횟수 추가
  * 작성일자: 19.07.30
- * 수정일자: 19.08.03
+ * 수정일자: 19.08.25
  ***************************************/
 
 using System.Collections;
@@ -117,6 +118,9 @@ public class DataManager : MonoBehaviour
         // (19. 08. 02) xml 이용한 저장
         user.honor += honor;
         user.money += money;
+
+        // (19.08.25) 클리어 횟수 증가
+        user.clearCount++;
 
         UserDataIO.WriteUserData(user);
     }

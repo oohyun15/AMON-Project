@@ -1803,6 +1803,8 @@ MonoBehaviour:
   keys: []
   keyItems: []
   inventoryData: []
+  itemCountText: []
+  TIN: 0
 --- !u!1 &5323126278774748725
 GameObject:
   m_ObjectHideFlags: 0
@@ -2488,7 +2490,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16b4fd9509c341449b36dd4be1652988, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initDurability: 10
+  ID_num: 12
+  initDurability: 0
   durability: 0
 --- !u!65 &6614978437021186773
 BoxCollider:
@@ -3176,6 +3179,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6614978436146165169}
     m_Modifications:
+    - target: {fileID: 7861558269713634139, guid: d6462039dee74e94f934a9fa6e40b8e8,
+        type: 3}
+      propertyPath: m_Name
+      value: Drink
+      objectReference: {fileID: 0}
     - target: {fileID: 6575963820098199880, guid: d6462039dee74e94f934a9fa6e40b8e8,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3230,11 +3238,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7861558269713634139, guid: d6462039dee74e94f934a9fa6e40b8e8,
-        type: 3}
-      propertyPath: m_Name
-      value: Drink
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d6462039dee74e94f934a9fa6e40b8e8, type: 3}

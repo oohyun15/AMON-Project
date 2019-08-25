@@ -300,12 +300,20 @@ public class GameManager : MonoBehaviour
 
         dm.SaveGameResult(money, honor);
 
+        // (19.08.25) 플레이 횟수 증가
+        UserDataIO.User user = UserDataIO.ReadUserData();
+        user.playCount++;
+        UserDataIO.WriteUserData(user);
+
         dm.ShowPlayerInfo();
 
         gameState = GameState.Clear;
 
         // 조이스틱 멈춤
         JoystickController.instance.StopJoystick();
+
+        // 애니메이션 멈춤
+        player.AnimationIdle();
 
         // 게임 결과창 활성화
         ShowGameResult(money, honor);
@@ -322,12 +330,26 @@ public class GameManager : MonoBehaviour
     // 게임 클리어 실패 시. (19.08.05) 플레이어가 장애물에 맞아 죽었을 시 접근하기 위해 public으로 변경
     public void GameOver()
     {
+        if (gameState == GameState.Over)
+        {
+            Debug.Log("GameOver 중복 호출");
+
+            return;
+        }
         Debug.Log("game over");
 
         gameState = GameState.Over;
 
+        // (19.08.25) 플레이 횟수 증가
+        UserDataIO.User user = UserDataIO.ReadUserData();
+        user.playCount++;
+        UserDataIO.WriteUserData(user);
+
         // 조이스틱 멈춤
         JoystickController.instance.StopJoystick();
+
+        // 애니메이션 멈춤
+        player.AnimationIdle();
 
         // 게임 결과창 활성화
         ShowGameResult(0, 0);

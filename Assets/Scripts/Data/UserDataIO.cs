@@ -1,4 +1,14 @@
-﻿using System.Collections;
+﻿/****************************************
+ * UserDataIO.cs
+ * 제작: 조예진
+ * 유저 데이터 관리
+ * (19,08.25) 플레이 횟수 추가
+ *함수 추가 및 수정 시 누가 작성했는지 꼭 해당 함수 주석으로 명시해주세요!
+ * 작성일자: 19.0X.XX
+ * 수정일자: 19.08.25
+ ***************************************/
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
@@ -11,6 +21,8 @@ public class UserDataIO : MonoBehaviour
     {
         public int money;       // 소지 금액
         public int honor;       // 소지 명예 점수
+        public int playCount;   // 플레이 횟수
+        public int clearCount;  // 클리어 횟수
         // 저장할 값 늘어날 경우, WriteUserData와 ReadUserData에서 Set/GetAttribute 설정해 주어야 합니다
     }
 
@@ -26,6 +38,8 @@ public class UserDataIO : MonoBehaviour
 
         userElement.SetAttribute("money", user.money.ToString());
         userElement.SetAttribute("honor", user.honor.ToString());
+        userElement.SetAttribute("playCount", user.playCount.ToString());
+        userElement.SetAttribute("clearCount", user.clearCount.ToString());
 
         doc.AppendChild(userElement);
         doc.Save(path);
@@ -42,7 +56,9 @@ public class UserDataIO : MonoBehaviour
             user = new User
             {
                 money = 0,
-                honor = 0
+                honor = 0,
+                playCount = 0,
+                clearCount = 0
             };
             WriteUserData(user);
         }
@@ -54,8 +70,10 @@ public class UserDataIO : MonoBehaviour
 
             user = new User
             {
-                money = System.Convert.ToInt32(userElement.GetAttribute("money")),
-                honor = System.Convert.ToInt32(userElement.GetAttribute("honor"))
+                money = userElement.HasAttribute("money") ? System.Convert.ToInt32(userElement.GetAttribute("money")) : 0,
+                honor = userElement.HasAttribute("honor") ? System.Convert.ToInt32(userElement.GetAttribute("honor")) : 0,
+                playCount = userElement.HasAttribute("playCount") ? System.Convert.ToInt32(userElement.GetAttribute("playCount")) : 0,
+                clearCount = userElement.HasAttribute("clearCount") ? System.Convert.ToInt32(userElement.GetAttribute("clearCount")) : 0,
             };
         }
 
