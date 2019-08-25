@@ -71,6 +71,10 @@ public class MinorInjured : Injured, IReset
     {
         gameObject.SetActive(true);
 
+        StopCoroutine(timeChecker);
+
+        time = timeLimit;
+
         FollowPlayer follow = GetComponent<FollowPlayer>();
 
         // 따라다니는 거 비활성화

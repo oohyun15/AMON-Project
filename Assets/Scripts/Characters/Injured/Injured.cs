@@ -29,6 +29,7 @@ public abstract class Injured : MonoBehaviour
 
     public float playerSpeedChange;     // 플레이어 속도 변화량
     public float timeLimit;
+    protected float time;
     public Vector3 initPos;             // 초기 Position 값
     public Quaternion initRot;          // 초기 Rotation 값
 
@@ -39,6 +40,8 @@ public abstract class Injured : MonoBehaviour
         isRescued = false;
         minimapDot = transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>();
         meshRenderer = GetComponent<MeshRenderer>();
+
+        timeChecker = TimeChecker();
     }
 
     // 부상자 구조 시
@@ -107,15 +110,17 @@ public abstract class Injured : MonoBehaviour
     // (19.08.23. 예진) 부상자 제한시간 체크 추가
     public void StartTimeCheck()
     {
-        timeChecker = TimeChecker();
-
         StartCoroutine(timeChecker);
     }
 
+    public void StopTimeCheck()
+    {
+        StopCoroutine(timeChecker);
+    }
+            
+
     private IEnumerator TimeChecker()
     {
-        float time = timeLimit;
-
         while (time > 0)
         {
             time -= Time.deltaTime;

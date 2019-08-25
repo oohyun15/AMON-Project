@@ -73,6 +73,10 @@ public class SeriousInjured : Injured, IReset
     {
         gameObject.SetActive(true);
 
+        StopCoroutine(timeChecker);
+
+        time = timeLimit;
+
         // 부상자 목록으로 이동, 부상자랑 구조자 위치가 각각 GameManager, AmonController로 달라서 수정좀 해야할 듯
         transform.SetParent(GameManager.Instance.injuredParent.transform);
 

@@ -62,6 +62,21 @@ public class UserDataIO : MonoBehaviour
         return user;
     }
 
+    // 유저 소지액 차감, 증가
+    public static bool ChangeUserMoney(int change)
+    {
+        User user = ReadUserData();
+
+        if (user.money + change < 0) return false;
+
+        user.money += change;
+
+        WriteUserData(user);
+
+        return true;
+    }
+
+
     private static string GetPath(string fileName)
     {
         string path = Application.persistentDataPath + "/Data";       // Assets 경로 안에 저장됨 (테스트)

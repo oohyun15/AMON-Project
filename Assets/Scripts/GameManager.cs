@@ -109,19 +109,12 @@ public class GameManager : MonoBehaviour
         dm = DataManager.Instance;
 
         // 스테이지 데이터 설정
-        maxLeftToMiddleCondition = dm.MaxLeftToMiddleCondition;
-        maxLeftToLowCondition = dm.MaxLeftToLowCondition;
-
-        // playerPrefs로 저장된 데이터 보여주기
-        dm.ShowPlayerInfo();
-
-
-        // 스테이지 데이터 설정
         maxLeftToMiddleCondition = dm.MaxLeftToMiddleCondition;     // 중간 보상 최대 인원
         maxLeftToLowCondition = dm.MaxLeftToLowCondition;           // 최하 보상 최대 인원
 
         // 미니맵 프리뷰 스프라이트 불러와서 설정
         minimapPreview.sprite = dm.minimap;
+        
 
         // 게임 초기화
         InitGame();
@@ -155,6 +148,9 @@ public class GameManager : MonoBehaviour
 
         gameOver = false;
 
+        // 장착 아이템 효과 적용
+        ApplyEquipItemEffect();
+
         time = timeLimit;
 
         SetTimeText(timeLimit);
@@ -168,7 +164,7 @@ public class GameManager : MonoBehaviour
             // 아이템 이미지가 있는지 확인
             if (currentItem.childCount == 2)
                 currentItem.GetChild(0).gameObject.SetActive(true);
-        }        
+        }
 
         // (용현) UI 비활성화
         foreach (GameObject ui in UI) ui.SetActive(false);
@@ -204,6 +200,20 @@ public class GameManager : MonoBehaviour
         CheckLeftInjured();
     }
 
+    private void ApplyEquipItemEffect()
+    {
+        int oxygenLv = PlayerPrefs.GetInt("oxygenlv", 0);
+        int oxygenEffect = 0;
+
+        if (oxygenLv != 0)
+        {
+            List<Dictionary<string, object>> data = ItemDataManager.Instance.GetEquipItemData();
+            oxygenEffect = System.Convert.ToInt32(data[oxygenLv - 1]["effect"]);
+        }
+
+        timeLimit += oxygenEffect;
+    }
+
     public void StartGame()
     {
         startButton.SetActive(false);
@@ -233,7 +243,38 @@ public class GameManager : MonoBehaviour
 
     public void StopGame()
     {
+        // 제한 시간 체크 일시 중단
         StopCoroutine(timeCheckCoroutine);
+
+        // 부상자 시간 제한 체크 일시 중단
+        List<GameObject> injureds = new List<GameObject>();
+        injureds.AddRange(objects["Serious"]);
+        injureds.AddRange(objects["Minor"]);
+
+        foreach (GameObject i in injureds)
+        {
+            Injured injured = i.GetComponent<Injured>();
+
+            if (!injured.isRescued)
+                injured.StopTimeCheck();
+        }
+    }
+
+    // (예진) 부상자 시간 제한 재개 부분 추가 위해 메소드 추가
+    public void ResumeGame()
+    {
+        // 제한 시간 체크 재개
+        StartCoroutine(timeCheckCoroutine);
+
+        // 부상자 시간 체크 재개
+        List<GameObject> injureds = new List<GameObject>();
+        injureds.AddRange(objects["Serious"]);
+        injureds.AddRange(objects["Minor"]);
+
+        foreach (GameObject i in injureds)
+        {
+            i.GetComponent<Injured>().StartTimeCheck();
+        }
     }
 
     private void CheckLeftInjured()
@@ -445,7 +486,7 @@ public class GameManager : MonoBehaviour
         else
         {
             // 게임 시작
-            StartCoroutine(timeCheckCoroutine);
+            ResumeGame();
 
             // (용현) UI 활성화
             foreach (GameObject ui in UI) ui.SetActive(true);
