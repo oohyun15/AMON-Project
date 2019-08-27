@@ -26,11 +26,13 @@ public class Item : MonoBehaviour, IReset
     private new readonly string name = "Item";
 
     // (예진) 아이템 키 제거를 위해 컨트롤러가 아이템 가져올 때 컨트롤러도 설정하도록 함
-     public void SetController(ItemController controller) { this.controller = controller; }
+    // (19.08.27. 예진) 초기화 때 컨트롤러가 연결되지 않은 것 때문에 오류 발생해서 컨트롤러를 싱글톤 처리함
+    // public void SetController(ItemController controller) { this.controller = controller; }
 
     void Start()
     {
         gm = GameManager.Instance;
+        controller = ItemController.Instance;
 
         var go = new List<GameObject>();
 

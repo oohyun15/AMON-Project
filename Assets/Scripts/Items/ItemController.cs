@@ -6,6 +6,7 @@
  * (19.08.03) player 변수 삭제 및 GameManager로 수정, Array이용해서 깔끔하게 정리
  * (19.08.04) 버튼 사용을 위해 ItemSwap 함수 public으로 변환
  * (19.08.20) 아이템 UI에서 개수 추가
+ * (19.08.27) 싱글톤으로 만듦
  *함수 추가 및 수정 시 누가 작성했는지 꼭 해당 함수 주석으로 명시해주세요!
  * 작성일자: 19.07.26
  * 수정일자: 19.08.20
@@ -18,6 +19,27 @@ using UnityEngine.UI;
 
 public class ItemController : MonoBehaviour
 {
+    // (19.08.27. 예진) 초기화 때 컨트롤러가 연결되지 않은 것 때문에 오류 발생해서 싱글톤 처리함
+    private static ItemController instance;
+    public static ItemController Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                instance = FindObjectOfType(typeof(ItemController)) as ItemController;
+
+                if (instance == null)
+                {
+                    Debug.LogError("There's no active ItemController object");
+                }
+            }
+
+            return instance;
+
+        }
+    }
+
     private GameObject itemInvt;            // 아이템들이 포함되어있는 게임오브젝트를 받아옴
     private GameObject itemSlot;            // 아이템 슬롯 UI
     public GameObject[] keys;               // 각 번호키 오브젝트 배열 번호키에 할당된 아이템을 받아오는 배열
@@ -45,8 +67,6 @@ public class ItemController : MonoBehaviour
             keys[i] = itemInvt.transform.GetChild(i).gameObject;
 
             keyItems[i] = keys[i].transform.GetChild(0).gameObject.GetComponent<Item>();
-
-            keyItems[i].SetController(this);
 
             inventoryData[i] = keyItems[i];
 

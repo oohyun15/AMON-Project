@@ -148,12 +148,12 @@ public class GameManager : MonoBehaviour
 
         gameOver = false;
 
+        time = timeLimit;
+
         // 장착 아이템 효과 적용
         ApplyEquipItemEffect();
 
-        time = timeLimit;
-
-        SetTimeText(timeLimit);
+        SetTimeText(time);
 
         // (19.08.10) 아이템 이미지가 있을 경우에만 아이템 이미지 활성화.
         // 추후에 아이템이 추가되고 조건들이 많아질 경우 함수로 빼놔야 할 듯
@@ -211,7 +211,7 @@ public class GameManager : MonoBehaviour
             oxygenEffect = System.Convert.ToInt32(data[oxygenLv - 1]["effect"]);
         }
 
-        timeLimit += oxygenEffect;
+        time += oxygenEffect;
     }
 
     public void StartGame()
