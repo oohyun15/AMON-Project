@@ -8,9 +8,10 @@
  * (19.08.16) 태윤 : 플레이어 애니메이션 변수 및 함수 추가 
  * (19.08.19) attackDelay를 공격 애니메이션에 맞게 수정
  * (19.08.20) 캐릭터 초기화 시 currentItem = null로 수정
+ * (19.09.02) 인터렉션 버튼에 아이템 이미지 추가
  * 함수 추가 및 수정 시 누가 작성했는지 꼭 해당 함수 주석으로 명시해주세요!
  * 작성일자: 19.07.14
- * 수정일자: 19.08.04
+ * 수정일자: 19.09.02
  ***************************************/
 
 using System.Collections;
@@ -123,6 +124,14 @@ public class AmonController : MonoBehaviour, IReset
 
                 obstacle = collision.gameObject.GetComponent<Obstacle>();
 
+                // 아이템이 도끼일 경우, 인터렉션 아이템 이미지 활성화
+                if (currentItem && currentItem.ID_num == 10)
+                {
+                    gm.interactionImage.gameObject.SetActive(true);
+
+                    // 0: Axe
+                    gm.interactionImage.sprite = gm.itemImages[0];
+                }
                 break;
 
             // collision 부상자일 경우 부상자 종류에 따라 상호작용
@@ -147,6 +156,12 @@ public class AmonController : MonoBehaviour, IReset
 
                 // (용현) 구조 후 플레이어 상태 변경, 아이템 들고있을 때 고려함
                 state = currentItem ? InteractionState.Item : InteractionState.Idle;
+
+                // (19.09.02) 현재 아이템이 도끼거나 없을 시 인터렉션 아이템 이미지 비활성화
+                if (!currentItem || currentItem && currentItem.ID_num == 10)
+                {
+                    gm.interactionImage.gameObject.SetActive(false);
+                }
 
                 obstacle = null; // 충돌이 끝나도 obstacle 유지되던 부분 Fix
 
@@ -175,6 +190,8 @@ public class AmonController : MonoBehaviour, IReset
                     g.GetComponent<Injured>().Escaped();
 
             rescuers.Clear();
+
+            gm.CheckGameClear();
         }
 
         // (19.08.20) 아이템 획득 시
@@ -235,9 +252,10 @@ public class AmonController : MonoBehaviour, IReset
 
         // 도끼
         // (19.08.02 용현) 내구도가 있을때만 작동하도록 수정 
-        else if (currentItem.GetComponent<ItemWeapon>() &&
+        else if (currentItem.ID_num == 10 &&
                  currentItem.durability > 0)
         {
+            // 도끼 데미지 넣는 코드인데 수정 필요할 거 같음
             _obstacle.hp -= currentItem.transform.GetComponent<ItemWeapon>().addDamage;
 
             currentItem.ItemActive();
@@ -262,6 +280,9 @@ public class AmonController : MonoBehaviour, IReset
             
             // (용현) 구조 후 플레이어 상태 변경
             state = currentItem ? InteractionState.Item : InteractionState.Idle;
+
+            // (19.09.02) 인터렉션 버튼 아이템 이미지 비활성화
+            gm.interactionImage.gameObject.SetActive(false);
 
             // 현재 장애물 null로 바꿈
             obstacle = null;
@@ -311,6 +332,9 @@ public class AmonController : MonoBehaviour, IReset
 
                 currentItem.ItemActive();
 
+                // (19.09.02) 아이템 이미지 비활성화
+                if (!currentItem) gm.interactionImage.gameObject.SetActive(false);
+
                 break;
 
             // 장애물 제거
@@ -348,6 +372,7 @@ public class AmonController : MonoBehaviour, IReset
 
         initRot = gameObject.transform.rotation;
     }
+
     // (용현) 초기값 설정
     public void SetInitValue()
     {

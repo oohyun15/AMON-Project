@@ -18,10 +18,15 @@ public class AchievementController : MonoBehaviour
     public Text _name;                          // 도전과제 이름
     public Text contents;                       // 내용
 
+    private UserDataIO.User user;               // 유저 데이터
 
     private void Start()
     {
-        UserDataIO.User user = UserDataIO.ReadUserData();
+        user = UserDataIO.ReadUserData();
+
+        Debug.Log("PlayCount: " + user.playCount);
+
+        Debug.Log("ClearCount: " + user.clearCount);
 
         // 도전과제 개수 하드코딩함
         for (int index = 0; index < 5; index++)
@@ -53,23 +58,23 @@ public class AchievementController : MonoBehaviour
         {
             case 0:
                 _name.text = "도전과제 1";
-                contents.text = "플레이 횟수 10회";
+                contents.text = "플레이 횟수 10회\n현재 " + user.playCount +"/10";
 
                 break;
 
             case 1:
                 _name.text = "도전과제 2";
-                contents.text = "클리어 횟수 10회";
+                contents.text = "클리어 횟수 10회\n현재 " + user.clearCount + "/10";
                 break;
 
             case 2:
                 _name.text = "도전과제 3";
-                contents.text = "돈 10000 모으기";
+                contents.text = "돈 10000 모으기\n현재 " + user.money + "/10000";
                 break;
 
             case 3:
                 _name.text = "도전과제 4";
-                contents.text = "명예 20 달성";
+                contents.text = "명예 20 달성\n현재 " + user.honor + "/20";
                 break;
 
             case 4:

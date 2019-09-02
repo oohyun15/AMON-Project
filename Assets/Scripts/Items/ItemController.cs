@@ -7,9 +7,10 @@
  * (19.08.04) 버튼 사용을 위해 ItemSwap 함수 public으로 변환
  * (19.08.20) 아이템 UI에서 개수 추가
  * (19.08.27) 싱글톤으로 만듦
+ * (19.09.02) 인터렉션 아이템 이미지 추가
  *함수 추가 및 수정 시 누가 작성했는지 꼭 해당 함수 주석으로 명시해주세요!
  * 작성일자: 19.07.26
- * 수정일자: 19.08.20
+ * 수정일자: 19.09.02
  ***************************************/
 
 using System.Collections;
@@ -54,7 +55,7 @@ public class ItemController : MonoBehaviour
         TIN = GameManager.Instance.objects["Item"].Count;
 
         // (08.03) public 해제하고 GameManager를 통해서 변수에 할당
-        itemInvt = GameManager.Instance.Inventory; 
+        itemInvt = GameManager.Instance.Inventory;
         itemSlot = GameManager.Instance.UI[2];
         keys = new GameObject[TIN];
         keyItems = new Item[TIN];
@@ -101,26 +102,47 @@ public class ItemController : MonoBehaviour
         // (용현) 내구도 있을 때만 하도록 수정 -> Item 클래스에서 내구도 다 달았을 때 ItemController 링크된거 끊는 걸 없앰(주석처리함)
         // Axe
 
-        if (itemNum == 3 || keyItems[itemNum] == null) GameManager.Instance.player.currentItem = null; // 4번키, 즉 배열의 3번째는 맨손으로 설정
+        // 4번키, 즉 배열의 3번째는 맨손으로 설정
+        if (itemNum == 3 || keyItems[itemNum].durability <= 0)
+        {
+            GameManager.Instance.player.currentItem = null;
 
+            // 이미지 비활성화
+            GameManager.Instance.interactionImage.gameObject.SetActive(false);
+        }
         else
         {
-            if (keyItems[itemNum].durability > 0)
+            keys[itemNum].SetActive(true);
+
+            keyItems[itemNum].gameObject.SetActive(true);
+
+            GameManager.Instance.player.state = AmonController.InteractionState.Item;
+
+            GameManager.Instance.player.currentItem = keyItems[itemNum];
+
+            // (19.09.02) 도끼 선택 시 플레이어 상태에 따라 이미지 나타냄
+            if (itemNum == 0 && GameManager.Instance.player.obstacle)
             {
-                keys[itemNum].SetActive(true);
+                GameManager.Instance.interactionImage.gameObject.SetActive(true);
 
-                keyItems[itemNum].gameObject.SetActive(true);
-
-                // (용현)맨손이 아닐경우, 플레이어의 인터렉션 상태를 Item으로 변경
-                if (keyItems[itemNum] == null) GameManager.Instance.player.state = AmonController.InteractionState.Idle;
-
-                else GameManager.Instance.player.state = AmonController.InteractionState.Item;
-
-                GameManager.Instance.player.currentItem = keyItems[itemNum];
+                // 0: Axe
+                GameManager.Instance.interactionImage.sprite = GameManager.Instance.itemImages[0];
             }
 
+            // (19.09.02) 드링크 선택 시 이미지 나타냄
+            else if (itemNum == 1)
+            {
+                GameManager.Instance.interactionImage.gameObject.SetActive(true);
+
+                // 1: Drink
+                GameManager.Instance.interactionImage.sprite = GameManager.Instance.itemImages[1];
+            }
             // (19.08.20) 내구도가 없을 시 아이템을 변경하지 않음
-            else return;
+            else
+            {
+                // 이미지 비활성화
+                GameManager.Instance.interactionImage.gameObject.SetActive(false);
+            }
         }
 
         // (용현) 장애물 바로 앞에서 아이템 변경 시 인터렉션 상태 Obstacle로 변경
@@ -188,7 +210,7 @@ public class ItemController : MonoBehaviour
         }
 
         if (itemNum > -1) itemCountText[itemNum].text = keyItems[itemNum].durability.ToString();
-        
+
         else Debug.LogError("아이템 비활성화 오류");
     }
 }

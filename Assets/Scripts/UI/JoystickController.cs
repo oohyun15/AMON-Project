@@ -6,9 +6,10 @@
  * (19.07.30) 조이패드의 x좌표를 이용해 플레이어의 rotation 값을 설정해줌
  * (19.08.04) 게임 종료 시 조이패드를 멈추는 함수 추가
  * (19.08.16) 애니메이션 코드 추가
+ * (19.09.02) StopJoystickController에 애니메이션 상태 변경 추가
  * 함수 추가 및 수정 시 누가 작성했는지 꼭 해당 함수 주석으로 명시해주세요!
  * 작성일자: 19.07.14
- * 수정일자: 19.07.30
+ * 수정일자: 19.09.02
  ***************************************/
 
 
@@ -128,5 +129,8 @@ public class JoystickController : MonoBehaviour, IPointerDownHandler, IPointerUp
         movePosition = Vector3.zero;
 
         rotPosition = Vector3.zero;
+
+        // (19.09.02) 애니메이션 상태 변경
+        GameManager.Instance.player.animState = AmonController.AnimationName.Idle;
     }
 }

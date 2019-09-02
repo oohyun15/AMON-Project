@@ -12,9 +12,10 @@
  * (19.08.11)  LeftInjured 변수 수정. Injured가 Exit 트리거에 나왔을 때 감소하도록 설정
  * (19.08.12)  leftInjured 변수 계산 방식 수정 - 부상자 오브젝트 리스트에서 활성화 여부 확인하도록 함
  * (19.08.20)  아이템 관련 코드 수정
+ * (19.09.02)  인터렉션 버튼 아이템 이미지 추가
  * 함수 추가 및 수정 시 누가 작성했는지 꼭 해당 함수 주석으로 명시해주세요!
  * 작성일자: 19.07.26
- * 수정일자: 19.08.11
+ * 수정일자: 19.09.02
  ***************************************/
 
 using System.Collections;
@@ -73,14 +74,17 @@ public class GameManager : MonoBehaviour
     public Text leftTimeText;
     public GameObject startButton;
     public GameObject settingsButton;
-    public UISet[] gameResultPanel;                 // (예진) 게임 결과 패널 UI 접근 방식 변경
+    public UISet[] gameResultPanel;             // (예진) 게임 결과 패널 UI 접근 방식 변경
     public GameObject settings;
     public GameObject[] UI;                     // (용현) 0: Joystick, 1: Interaction, 2: ItemSlots, 3: Minimap
     public Image minimapPreview;
+    public Image interactionImage;              // (용현) 인터렉션 아이템 이미지
+    public Sprite[] itemImages;                 // (용현) 인터렉션 아이템 이미지 종류
+                                                // 0: Axe, 1: Drink, 2: Coin(임시)
 
     [Header("Field Objects")]
     public AmonController player;
-    public GameObject Inventory;                 // (태윤) Player 오브젝트에 상속된 아이템 받는 오브젝트 변수
+    public GameObject Inventory;                // (태윤) Player 오브젝트에 상속된 아이템 받는 오브젝트 변수
     public GameObject Cam;
     public GameObject injuredParent;
     public Dictionary<string, List<GameObject>> objects;
@@ -114,7 +118,6 @@ public class GameManager : MonoBehaviour
 
         // 미니맵 프리뷰 스프라이트 불러와서 설정
         minimapPreview.sprite = dm.minimap;
-        
 
         // 게임 초기화
         InitGame();
