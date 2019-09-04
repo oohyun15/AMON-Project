@@ -17,6 +17,7 @@ public class CameraMove : MonoBehaviour
     public GameObject initPos; 
     // 부상자의 BackPoint처럼 카메라의 원래 위치가 변하지않도록 하는 빈 게임오브젝트를 받아옴, position값이 카메라의 처음 위치와 동일
     public float spd; //Lerp함수 속도 변수
+    public float rayLength; // Ray의 길이를 정하는 변수
 
     private GameObject player; 
     void Start()
@@ -28,7 +29,7 @@ public class CameraMove : MonoBehaviour
     {
         Ray ray = new Ray(player.transform.position + Vector3.up * 1.9f, initPos.transform.position - (player.transform.position + Vector3.up * 1.9f));
         // ray를 player에서 initPos오브젝트 방향으로 발사하여 player와 가장 가까이 있는 벽을 hit으로 받도록 하였음
-        RaycastHit[] hits = Physics.RaycastAll(ray, 2f); // Ray와 충돌하는 모든 오브젝트 정보를 받아옴
+        RaycastHit[] hits = Physics.RaycastAll(ray, rayLength); // Ray와 충돌하는 모든 오브젝트 정보를 받아옴
         List<RaycastHit> wallList = new List<RaycastHit>();
         for (int i = 0; i < hits.Length; i++) // tag가 Wall인 오브젝트를 wallList에 집어넣는 For문
         {
@@ -59,6 +60,6 @@ public class CameraMove : MonoBehaviour
             transform.position = Vector3.Lerp(transform.position, initPos.transform.position, spd * Time.deltaTime);
             //만약 충돌이 일어나지않는다면 카메라를 원래 위치로 되돌림
         }
-        Debug.DrawRay(ray.origin, ray.direction * 2, Color.red);
+        Debug.DrawRay(ray.origin, ray.direction * rayLength, Color.red);
     }
 }
