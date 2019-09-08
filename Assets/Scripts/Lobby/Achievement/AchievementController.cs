@@ -2,9 +2,10 @@
 * AcheivementController.cs
 * 제작: 김용현
 * 로비 도전과제 패널 컨트롤러
+* (19.09.08) 옵저버 패턴 추가
 * 함수 추가 및 수정 시 누가 작성했는지 꼭 해당 함수 주석으로 명시해주세요!
 * 작성일자: 19.08.25
-* 수정일자: 19.08.25
+* 수정일자: 19.09.08
 ***************************************/
 
 using System.Collections;
@@ -14,11 +15,21 @@ using UnityEngine.UI;
 
 public class AchievementController : MonoBehaviour
 {
+    public static AchievementController instance = null;
+
     public GameObject[] achievements;           // 도전과제 목록
     public Text _name;                          // 도전과제 이름
     public Text contents;                       // 내용
-
     private UserDataIO.User user;               // 유저 데이터
+
+    private void Awake()
+    {
+        if (instance == null) instance = this;
+
+        else if (instance != this) Destroy(gameObject);
+
+        DontDestroyOnLoad(gameObject);
+    }
 
     private void Start()
     {

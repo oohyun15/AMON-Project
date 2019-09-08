@@ -3,6 +3,7 @@
  * 제작: 조예진
  * 유저 데이터 관리
  * (19,08.25) 플레이 횟수 추가
+ * (19.09.08) 도전과제 구현을 위한 옵저버 패턴 추가(ISubject)
  *함수 추가 및 수정 시 누가 작성했는지 꼭 해당 함수 주석으로 명시해주세요!
  * 작성일자: 19.0X.XX
  * 수정일자: 19.08.25
@@ -14,19 +15,20 @@ using UnityEngine;
 using System.IO;
 using System.Xml;
 
-public class UserDataIO : MonoBehaviour
+public class UserDataIO : MonoBehaviour, ISubject
 {
     // 유저 데이터로 저장할 값 클래스
     public class User
     {
-        public int money;       // 소지 금액
-        public int honor;       // 소지 명예 점수
-        public int playCount;   // 플레이 횟수
-        public int clearCount;  // 클리어 횟수
+        public int money;                   // 소지 금액
+        public int honor;                   // 소지 명예 점수
+        public int playCount;               // 플레이 횟수
+        public int clearCount;              // 클리어 횟수
         // 저장할 값 늘어날 경우, WriteUserData와 ReadUserData에서 Set/GetAttribute 설정해 주어야 합니다
     }
 
     private readonly static string userDataFileName = "/userData.xml";
+    private User _user;                     // 옵저버 패턴 시 사용되는 user
 
     // 유저 데이터 저장 시
     public static void WriteUserData(User user)
@@ -109,5 +111,22 @@ public class UserDataIO : MonoBehaviour
         Debug.Log(fileName + " 저장 경로 : " + path);
 
         return path;
+    }
+
+    void ISubject.RegisterObserver(IObserver observer)
+    {
+        AchievementController.instance.observers.Add(observer);
+    }
+
+    void ISubject.RemoveObserver(IObserver observer)
+    {
+        if (AchievementController.instance.observers.Contains(observer))
+            AchievementController.instance.observers.Remove(observer);
+    }
+
+    void ISubject.NotifyObservers()
+    {
+        foreach (var obs in AchievementController.instance.observers)
+            obs._update(_user);
     }
 }
