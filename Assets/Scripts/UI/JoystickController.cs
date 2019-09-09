@@ -7,9 +7,10 @@
  * (19.08.04) 게임 종료 시 조이패드를 멈추는 함수 추가
  * (19.08.16) 애니메이션 코드 추가
  * (19.09.02) StopJoystickController에 애니메이션 상태 변경 추가
+ * (19.09.09) 이동 중 애니메이션 변경에 isTouch 접근이 필요해서 이 변수를 Public으로 설정
  * 함수 추가 및 수정 시 누가 작성했는지 꼭 해당 함수 주석으로 명시해주세요!
  * 작성일자: 19.07.14
- * 수정일자: 19.09.02
+ * 수정일자: 19.09.09
  ***************************************/
 
 
@@ -27,11 +28,11 @@ public class JoystickController : MonoBehaviour, IPointerDownHandler, IPointerUp
     public RectTransform Background;            // 좌측 하단 백그라운드
     public RectTransform Joystick;              // 촤즉 하단 조이스틱 버튼
     private float radius;                       // 백그라운드 내에서 조이스틱이 이동가능한 범위의 반지름
+    public bool isTouch = false;               // 터치를 눌렀는 지 확인하는 변수
 
     private GameObject Player;                   // 이동시킬 플레이어 오브젝트
     private float moveSpeed;                    // 플레이어의 이동속도. AmonController에서 가져올 예정
     private float rotSpeed;                     // 플레이어의 회전속도. AmonController에서 가져올 예정
-    private bool isTouch = false;               // 터치를 눌렀는 지 확인하는 변수
     private Vector3 movePosition;
     private Vector3 rotPosition;
 

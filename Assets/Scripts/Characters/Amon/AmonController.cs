@@ -9,9 +9,10 @@
  * (19.08.19) attackDelay를 공격 애니메이션에 맞게 수정
  * (19.08.20) 캐릭터 초기화 시 currentItem = null로 수정
  * (19.09.02) 인터렉션 버튼에 아이템 이미지 추가
+ * (19.09.09) 이동 중 애니메이션 버그 수정
  * 함수 추가 및 수정 시 누가 작성했는지 꼭 해당 함수 주석으로 명시해주세요!
  * 작성일자: 19.07.14
- * 수정일자: 19.09.02
+ * 수정일자: 19.09.09
  ***************************************/
 
 using System.Collections;
@@ -59,6 +60,9 @@ public class AmonController : MonoBehaviour, IReset
     [Header("CameraShake")]
     public float CSAmount;
     public float CSDuration;
+
+    [Header("ETC")]
+    private bool isTouchBack = false; // 이동 중에 애니메이션을 받아왔는지를 알려주는 변수
 
     // [Header("Debug")]                // 키보드로 이동할 때 사용하는 변수, 추후에 삭제해야함
     private float h = 0.0f;             // 좌,우
@@ -318,6 +322,12 @@ public class AmonController : MonoBehaviour, IReset
     // (용현) 인터렉션 버튼
     public void Interaction()
     {
+        if(JoystickController.instance.isTouch) // (9.9 태윤, 이동 중에 인터렉션 시 움직임을 멈추도록 조건문 추가)
+        {
+            JoystickController.instance.isTouch = false;
+            isTouchBack = true;
+        }
+
         switch (state)
         {
             // 기본 상태
@@ -402,7 +412,7 @@ public class AmonController : MonoBehaviour, IReset
         currentItem = null;
     }
 
-    public void PlayerAnimation()
+    public void PlayerAnimation() // (9.9 태윤, 움직이다가 애니메이션 바뀌는 것때문에 IsWalk도 false로 바꾸도록 함)
     {
         switch (animState)
         {
@@ -416,6 +426,7 @@ public class AmonController : MonoBehaviour, IReset
             case AnimationName.Strike:
 
                 playerAnim.SetBool("IsIdle", false);
+                playerAnim.SetBool("IsWalk", false);
                 playerAnim.SetBool("IsStrike", true);
 
                 break;
@@ -423,6 +434,7 @@ public class AmonController : MonoBehaviour, IReset
             case AnimationName.Drink:
 
                 playerAnim.SetBool("IsIdle", false);
+                playerAnim.SetBool("IsWalk", false);
                 playerAnim.SetBool("IsDrink", true);
                 
                 break;
@@ -438,5 +450,15 @@ public class AmonController : MonoBehaviour, IReset
             playerAnim.SetBool(prmt.name, false);
         }
         playerAnim.SetBool("IsIdle", true);
+    }
+
+    private void TouchBack() // 인터렉션 때 움직임을 멈춘 부분을 다시 되돌려 조이스틱을 다시 클릭하지 않아도 움직이도록 하는 함수 
+    {
+        if (isTouchBack)
+        {
+            JoystickController.instance.isTouch = true;
+            isTouchBack = false;
+        }
+        else return;
     }
 }
