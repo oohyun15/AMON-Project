@@ -205,16 +205,28 @@ public class GameManager : MonoBehaviour
 
     private void ApplyEquipItemEffect()
     {
-        int oxygenLv = PlayerPrefs.GetInt("oxygenlv", 0);
-        int oxygenEffect = 0;
-
-        if (oxygenLv != 0)
-        {
-            List<Dictionary<string, object>> data = ItemDataManager.Instance.GetEquipItemData();
-            oxygenEffect = System.Convert.ToInt32(data[oxygenLv - 1]["effect"]);
-        }
+        int oxygenEffect = GetEquipedItemEffect("oxygen");
+        int glovesEffect = GetEquipedItemEffect("gloves");
 
         time += oxygenEffect;
+        player.damage = glovesEffect;
+    }
+
+    private int GetEquipedItemEffect(string item)
+    {
+        int itemLv = PlayerPrefs.GetInt(item + "lv", 0);
+        int itemEffect = 0;
+
+        if (itemLv != 0)
+        {
+            Dictionary<string, object> data = ItemDataManager.Instance.GetEquipItemData();
+
+            object effectData = ((List<Dictionary<string, object>>)data[item])[itemLv - 1]["effect"];
+
+            itemEffect = System.Convert.ToInt32(effectData);
+        }
+
+        return itemEffect;
     }
 
     public void StartGame()

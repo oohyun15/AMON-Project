@@ -6,6 +6,7 @@
  * Lobby 씬을 거치지 않고 Debug 씬에서만 실행할 것을 대비, Debug 씬에도 따로 오브젝트를 만들어 두었고
  * 로비 씬으로 들어갈 때마다 Data 오브젝트가 쌓이는 것을 대비하여 start 함수에서 instance를 확인하여 
  * ItemDataManager 컴포넌트가 하나만 존재하도록 해두었습니다
+ * (19.09.11) 
  * 함수 추가 및 수정 시 누가 작성했는지 꼭 해당 함수 주석으로 명시해주세요!
  * 작성일자: 19.08.07
  * 수정일자: 19.08.11
@@ -35,28 +36,31 @@ public class ItemDataManager : MonoBehaviour
         }
     }
 
-    List<Dictionary<string, object>> itemDataList;
+    //List<Dictionary<string, object>> itemDataList;
+    Dictionary<string, object> itemDataList;
 
     void Start()
     {
         if (instance == null)
             instance = this;
-        else Destroy(this);
+        else Destroy(gameObject);
 
         DontDestroyOnLoad(gameObject);
 
-        LoadItemData();
     }
 
-    public List<Dictionary<string,object>> GetEquipItemData()
+    // (19.09.11.) 장착 아이템 개수 추가 -> 검색 편의를 위해 딕셔너리 리스트 형식으로 변경
+    public Dictionary<string,object> GetEquipItemData()
     {
-        if (itemDataList == null) LoadItemData();
+        if (itemDataList == null)
+        {
+            itemDataList = new Dictionary<string, object>
+            {
+                ["oxygen"] = CSVReader.Read("Data/oxygen_data"),
+                ["gloves"] = CSVReader.Read("Data/gloves_data")
+            };
+        }
 
         return itemDataList;
-    }
-
-    private void LoadItemData()
-    {
-        itemDataList = CSVReader.Read("Data/oxygen_data");
     }
 }

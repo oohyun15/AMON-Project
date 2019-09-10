@@ -95,8 +95,9 @@ public class Lobby : MonoBehaviour
     public void ResetItemData()
     {
         PlayerPrefs.DeleteKey("oxygenlv");
+        PlayerPrefs.DeleteKey("gloveslv");
 
-        GetComponent<ItemUpgrade>().SetContent();
+        GetComponent<ItemUpgrade>().UpdateEquipViewport();
     }
 
     // (임시) 버튼 클릭 시 씬 이동 함수

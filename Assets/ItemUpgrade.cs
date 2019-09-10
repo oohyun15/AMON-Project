@@ -14,7 +14,7 @@ using UnityEngine.UI;
 
 public class ItemUpgrade : MonoBehaviour
 {
-    List<Dictionary<string, object>> itemDataList;
+    Dictionary<string, object> itemDataList;
 
     public GameManager.UISet[] content;
 
@@ -27,7 +27,7 @@ public class ItemUpgrade : MonoBehaviour
         itemDataList = ItemDataManager.Instance.GetEquipItemData();
 
         // 업그레이드 스크롤 뷰 업데이트
-        SetContent();
+        UpdateEquipViewport();
     }
 
     public void UpgradeItem(string item)
@@ -35,10 +35,13 @@ public class ItemUpgrade : MonoBehaviour
         // 아이템 현재 레벨 불러오기
         int lv = PlayerPrefs.GetInt(item + "lv", 0);
 
+        int maxLv = ((List<Dictionary<string, object>>)itemDataList[item]).Count;
+
+
         // 아이템 다음 레벨 구입 가격 불러오기
-        if (lv < itemDataList.Count)
+        if (lv < maxLv)
         {
-            int price = System.Convert.ToInt32(itemDataList[lv]["price"]);
+            int price = System.Convert.ToInt32(GetDataValue(item, lv, "price"));
 
             // 돈 부족할 경우 업그레이드 되지 않음 
             if (!UserDataIO.ChangeUserMoney(-price))
@@ -50,37 +53,42 @@ public class ItemUpgrade : MonoBehaviour
             {
                 PlayerPrefs.SetInt(item + "lv", lv + 1);
 
-                StartCoroutine(lobby.Notify("업그레이드 성공\n현재 " + itemDataList[0]["name"] + " 아이템 레벨은 " + (lv + 1)));
+                StartCoroutine(lobby.Notify("업그레이드 성공\n현재 " + GetDataValue(item, 0, "name") + " 아이템 레벨은 " + (lv + 1)));
 
-                SetContent();
+                UpdateEquipViewport();
             }
         }
         // 최대 강화 상태일 경우
         else
         {
-            StartCoroutine(lobby.Notify("아이템이 최대 강화 상태입니다\n현재 " + itemDataList[0]["name"] + " 아이템 레벨은 " + lv));
+            StartCoroutine(lobby.Notify(
+                "아이템이 최대 강화 상태입니다\n현재 " + GetDataValue(item, 0, "name")+ " 아이템 레벨은 " + lv)
+            );
         }
     }
 
-    public void SetContent()
+    public void SetContent(GameManager.UISet content)
     {
         UserDataIO.User userData = UserDataIO.ReadUserData();
 
-        int lv = PlayerPrefs.GetInt("oxygen" + "lv", 0);
-        int honor = System.Convert.ToInt32(itemDataList[lv]["honor"]);
+        string item = content.name;
 
-        content[3].UI.SetActive(false);
+        int lv = PlayerPrefs.GetInt(content.name + "lv", 0);
+        int honor = System.Convert.ToInt32(GetDataValue(item, lv, "honor"));
+        int maxLv = ((List<Dictionary<string, object>>)itemDataList[item]).Count;
+
+        content.UI.transform.GetChild(3).gameObject.SetActive(false);
 
         // 최대 레벨일 경우 강화 버튼 사용 불가능
-        if (lv >= itemDataList.Count)
+        if (lv >= maxLv)
         {
-            content[2].UI.GetComponent<Button>().interactable = false;
+            content.UI.transform.GetChild(2).GetComponent<Button>().interactable = false;
         }
         // 명예 점수 부족할 시 업그레이드 잠금
         else if (userData.honor < honor)
         {
-            content[3].UI.SetActive(true);
-            content[3].UI.transform.GetChild(0).GetComponent<Text>().text
+            content.UI.transform.GetChild(3).gameObject.SetActive(true);
+            content.UI.transform.GetChild(3).GetChild(0).GetComponent<Text>().text
                 = "명예점수 " + honor + "점 필요";
         }
 
@@ -90,18 +98,29 @@ public class ItemUpgrade : MonoBehaviour
         if (lv == 0)
             nowLv = "";
         else
-            nowLv = "\n현재 레벨 : " + lv + " 효과 : " + itemDataList[lv - 1]["effect"];
+            nowLv = "\n현재 레벨 : " + lv + " 효과 : " + GetDataValue(item, lv - 1, "effect");
 
         string nextLv;
 
-        if (lv >= itemDataList.Count)
+        if (lv >= maxLv)
             nextLv = "\n최대 레벨입니다";
         else
-            nextLv = "\n다음 레벨 : " + (lv + 1) + " 효과 : " + itemDataList[lv]["effect"];
+            nextLv = "\n다음 레벨 : " + (lv + 1) + " 효과 : " + GetDataValue(item, lv, "effect");
 
-        content[1].UI.GetComponent<Text>().text =
-            itemDataList[0]["name"] +
+        content.UI.transform.GetChild(1).GetComponent<Text>().text =
+            GetDataValue(item, 0, "name") +
             nowLv +
             nextLv;
+    }
+
+    private object GetDataValue(string item, int lv, string key)
+    {
+        return ((List<Dictionary<string, object>>)itemDataList[item])[lv][key];
+    }
+
+    public void UpdateEquipViewport()
+    {
+        foreach (GameManager.UISet go in content)
+            SetContent(go);
     }
 }
