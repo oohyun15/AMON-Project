@@ -72,6 +72,7 @@ public class GameManager : MonoBehaviour
 
     [Header("UI")]
     public Text leftTimeText;
+    public Slider oxygenSlider;                 // (예진) 산소통 테스트
     public GameObject startButton;
     public GameObject settingsButton;
     public UISet[] gameResultPanel;             // (예진) 게임 결과 패널 UI 접근 방식 변경
@@ -153,6 +154,21 @@ public class GameManager : MonoBehaviour
 
         time = timeLimit;
 
+        // (19.09.11. 예진) 산소통 테스트 - debug 씬에 추가 시 if문 삭제
+        if (SceneManager.GetActiveScene().name == "OxygenBarTest")
+        {
+            // 시간에 따라 산소통 크기 다르게 해줌
+            RectTransform rt = oxygenSlider.GetComponent<RectTransform>();
+
+            rt.sizeDelta = new Vector2(timeLimit * 10, 100);
+
+            rt.anchoredPosition = new Vector3(150 + rt.rect.width / 2, -80, 0);
+
+            oxygenSlider.maxValue = timeLimit;
+
+            oxygenSlider.value = timeLimit;
+        }
+
         // 장착 아이템 효과 적용
         ApplyEquipItemEffect();
 
@@ -205,16 +221,28 @@ public class GameManager : MonoBehaviour
 
     private void ApplyEquipItemEffect()
     {
-        int oxygenLv = PlayerPrefs.GetInt("oxygenlv", 0);
-        int oxygenEffect = 0;
-
-        if (oxygenLv != 0)
-        {
-            List<Dictionary<string, object>> data = ItemDataManager.Instance.GetEquipItemData();
-            oxygenEffect = System.Convert.ToInt32(data[oxygenLv - 1]["effect"]);
-        }
+        int oxygenEffect = GetEquipedItemEffect("oxygen");
+        int glovesEffect = GetEquipedItemEffect("gloves");
 
         time += oxygenEffect;
+        player.damage = glovesEffect;
+    }
+
+    private int GetEquipedItemEffect(string item)
+    {
+        int itemLv = PlayerPrefs.GetInt(item + "lv", 0);
+        int itemEffect = 0;
+
+        if (itemLv != 0)
+        {
+            Dictionary<string, object> data = ItemDataManager.Instance.GetEquipItemData();
+
+            object effectData = ((List<Dictionary<string, object>>)data[item])[itemLv - 1]["effect"];
+
+            itemEffect = System.Convert.ToInt32(effectData);
+        }
+
+        return itemEffect;
     }
 
     public void StartGame()
@@ -470,6 +498,12 @@ public class GameManager : MonoBehaviour
         while ((time -= Time.deltaTime) > 0 && !gameOver)
         {
             SetTimeText(time);
+
+            // (19.09.11. 예진) 산소통 테스트 - debug 씬에 추가 시 if문 삭제
+            if (SceneManager.GetActiveScene().name == "OxygenBarTest")
+            {
+                oxygenSlider.value -= Time.deltaTime;
+            }
 
             yield return null;
         }
