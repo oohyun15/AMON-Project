@@ -10,9 +10,10 @@
  * (19.08.20) 캐릭터 초기화 시 currentItem = null로 수정
  * (19.09.02) 인터렉션 버튼에 아이템 이미지 추가
  * (19.09.09) 이동 중 애니메이션 버그 수정
+ * (19.09.13) 주변에 장애물 있을 때만 애니메이션 실행되도록 변수 추가 및 Collision 함수 수정
  * 함수 추가 및 수정 시 누가 작성했는지 꼭 해당 함수 주석으로 명시해주세요!
  * 작성일자: 19.07.14
- * 수정일자: 19.09.09
+ * 수정일자: 19.09.13
  ***************************************/
 
 using System.Collections;
@@ -56,13 +57,13 @@ public class AmonController : MonoBehaviour, IReset
     public Animator playerAnim; // 애니메이터 받아오는 변수
     public enum AnimationName { Idle, Drink, Walk, Strike } // 애니메이션 상태 변수들
     public AnimationName animState = AnimationName.Idle; // 현재 애니메이션 상태
+    public bool isCollisionObs = false; // 장애물 충돌 확인 변수
+    private bool isTouchBack = false; // 이동 중에 애니메이션을 받아왔는지를 알려주는 변수
+
 
     [Header("CameraShake")]
     public float CSAmount;
     public float CSDuration;
-
-    [Header("ETC")]
-    private bool isTouchBack = false; // 이동 중에 애니메이션을 받아왔는지를 알려주는 변수
 
     // [Header("Debug")]                // 키보드로 이동할 때 사용하는 변수, 추후에 삭제해야함
     private float h = 0.0f;             // 좌,우
@@ -125,6 +126,7 @@ public class AmonController : MonoBehaviour, IReset
 
                 // 장애물 제거 모드로 변경
                 state = InteractionState.Obstacle;
+                isCollisionObs = true;
 
                 obstacle = collision.gameObject.GetComponent<Obstacle>();
 
@@ -168,6 +170,7 @@ public class AmonController : MonoBehaviour, IReset
                 }
 
                 obstacle = null; // 충돌이 끝나도 obstacle 유지되던 부분 Fix
+                isCollisionObs = false;
 
                 break;
             // 부상자일때
@@ -290,6 +293,7 @@ public class AmonController : MonoBehaviour, IReset
 
             // 현재 장애물 null로 바꿈
             obstacle = null;
+            isCollisionObs = false;
         }
 
         // (19.08.19) 공격 애니메이션 총 길이로 설정
