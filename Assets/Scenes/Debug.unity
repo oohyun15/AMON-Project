@@ -430,6 +430,16 @@ PrefabInstance:
       propertyPath: rightHand
       value: 
       objectReference: {fileID: 555636884}
+    - target: {fileID: 6614978436739518908, guid: be1a75b51ca7d364087fdaecd9f7fc1a,
+        type: 3}
+      propertyPath: CSDuration
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6614978436739518908, guid: be1a75b51ca7d364087fdaecd9f7fc1a,
+        type: 3}
+      propertyPath: CSAmount
+      value: 0.02
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: be1a75b51ca7d364087fdaecd9f7fc1a, type: 3}
 --- !u!114 &95640758 stripped
@@ -2539,6 +2549,7 @@ MonoBehaviour:
   maxLeftToMiddleCondition: 0
   maxLeftToLowCondition: 0
   leftTimeText: {fileID: 1371842600}
+  oxygenSlider: {fileID: 0}
   startButton: {fileID: 550034839}
   settingsButton: {fileID: 1042026021}
   gameResultPanel:

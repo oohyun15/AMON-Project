@@ -25,8 +25,9 @@ public class ItemWeapon : Item
         if (GameManager.Instance.player.isCollisionObs)
         {
             GameManager.Instance.player.animState = AmonController.AnimationName.Strike; // 애니메이션 상태 설정
-            GameManager.Instance.player.PlayerAnimation(); // 애니메이션 실행\
+            GameManager.Instance.player.PlayerAnimation(); // 애니메이션 실행
         }
+        else GameManager.Instance.player.TouchBack();
         // (19.08.20) 도끼는 내구도 안닮
         /*
         // (19.08.03) (용현) 플레이어 상태가 장애물일 때만 내구도 닳게 변경

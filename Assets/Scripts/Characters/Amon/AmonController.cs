@@ -337,6 +337,7 @@ public class AmonController : MonoBehaviour, IReset
             // 기본 상태
             case InteractionState.Idle:
 
+                TouchBack(); // Idle 상태에서 인터렉션 버튼 사용 시 이동이 끊기지 않도록 수정
                 Debug.Log("Do Nothing");
 
                 break;
@@ -456,7 +457,7 @@ public class AmonController : MonoBehaviour, IReset
         playerAnim.SetBool("IsIdle", true);
     }
 
-    private void TouchBack() // 인터렉션 때 움직임을 멈춘 부분을 다시 되돌려 조이스틱을 다시 클릭하지 않아도 움직이도록 하는 함수 
+    public void TouchBack() // 인터렉션 때 움직임을 멈춘 부분을 다시 되돌려 조이스틱을 다시 클릭하지 않아도 움직이도록 하는 함수 
     {
         if (isTouchBack)
         {
