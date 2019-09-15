@@ -3,9 +3,10 @@
  * 제작: 조예진
  * 유저 데이터 관리
  * (19,08.25) 플레이 횟수 추가
+ * (19.09.15) User 클래스에 옵저버 패턴 추가
  *함수 추가 및 수정 시 누가 작성했는지 꼭 해당 함수 주석으로 명시해주세요!
  * 작성일자: 19.0X.XX
- * 수정일자: 19.08.25
+ * 수정일자: 19.09.15
  ***************************************/
 
 using System.Collections;
@@ -17,12 +18,28 @@ using System.Xml;
 public class UserDataIO : MonoBehaviour
 {
     // 유저 데이터로 저장할 값 클래스
-    public class User
+    public class User : ISubject
     {
-        public int money;       // 소지 금액
-        public int honor;       // 소지 명예 점수
-        public int playCount;   // 플레이 횟수
-        public int clearCount;  // 클리어 횟수
+        public int money;                   // 소지 금액
+        public int honor;                   // 소지 명예 점수
+        public int playCount;               // 플레이 횟수
+        public int clearCount;              // 클리어 횟수
+        public IObserver observer;          // 옵저버
+
+        public void NotifyObservers()
+        {
+            this.observer.UpdateUserData(this);
+        }
+
+        public void RegisterObserver(IObserver observer)
+        {
+           this.observer = observer;
+        }
+
+        public void RemoveObserver(IObserver observer)
+        {
+            this.observer = null;
+        }
         // 저장할 값 늘어날 경우, WriteUserData와 ReadUserData에서 Set/GetAttribute 설정해 주어야 합니다
     }
 
@@ -49,7 +66,7 @@ public class UserDataIO : MonoBehaviour
     {
         string path = GetPath(userDataFileName);
 
-        User user = new User();
+        User user;
 
         if (!File.Exists(path))
         {
@@ -58,8 +75,9 @@ public class UserDataIO : MonoBehaviour
                 money = 0,
                 honor = 0,
                 playCount = 0,
-                clearCount = 0
+                clearCount = 0,
             };
+
             WriteUserData(user);
         }
         else
@@ -76,6 +94,8 @@ public class UserDataIO : MonoBehaviour
                 clearCount = userElement.HasAttribute("clearCount") ? System.Convert.ToInt32(userElement.GetAttribute("clearCount")) : 0,
             };
         }
+
+        // user.observer = GameManager.Instance.observer;
 
         return user;
     }

@@ -13,9 +13,10 @@
  * (19.08.12)  leftInjured 변수 계산 방식 수정 - 부상자 오브젝트 리스트에서 활성화 여부 확인하도록 함
  * (19.08.20)  아이템 관련 코드 수정
  * (19.09.02)  인터렉션 버튼 아이템 이미지 추가
+ * (19.09.15)  옵저버 추가
  * 함수 추가 및 수정 시 누가 작성했는지 꼭 해당 함수 주석으로 명시해주세요!
  * 작성일자: 19.07.26
- * 수정일자: 19.09.02
+ * 수정일자: 19.09.15
  ***************************************/
 
 using System.Collections;
@@ -90,6 +91,9 @@ public class GameManager : MonoBehaviour
     public GameObject injuredParent;
     public Dictionary<string, List<GameObject>> objects;
 
+    [Header("Observer")]
+    public IObserver observer;
+
 
     private float time;                         // 남은 시간, 초 단위
     private bool gameOver;
@@ -119,6 +123,9 @@ public class GameManager : MonoBehaviour
 
         // 미니맵 프리뷰 스프라이트 불러와서 설정
         minimapPreview.sprite = dm.minimap;
+
+        // 옵저버 추가
+        
 
         // 게임 초기화
         InitGame();
@@ -377,6 +384,9 @@ public class GameManager : MonoBehaviour
         user.playCount++;
         UserDataIO.WriteUserData(user);
 
+        // (19.09.15) 옵저버에게 user데이터 전달
+        user.NotifyObservers();
+
         dm.ShowPlayerInfo();
 
         gameState = GameState.Clear;
@@ -416,6 +426,9 @@ public class GameManager : MonoBehaviour
         UserDataIO.User user = UserDataIO.ReadUserData();
         user.playCount++;
         UserDataIO.WriteUserData(user);
+
+        // (19.09.15) 옵저버에게 user데이터 전달
+        user.NotifyObservers();
 
         // 조이스틱 멈춤
         JoystickController.instance.StopJoystick();

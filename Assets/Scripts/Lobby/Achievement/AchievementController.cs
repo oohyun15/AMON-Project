@@ -3,8 +3,9 @@
 * 제작: 김용현
 * 로비 도전과제 패널 컨트롤러
 * 함수 추가 및 수정 시 누가 작성했는지 꼭 해당 함수 주석으로 명시해주세요!
+* (19.09.15) 도전과제 패널 스크롤 형태로 변경
 * 작성일자: 19.08.25
-* 수정일자: 19.08.25
+* 수정일자: 19.09.15
 ***************************************/
 
 using System.Collections;
@@ -14,73 +15,78 @@ using UnityEngine.UI;
 
 public class AchievementController : MonoBehaviour
 {
-    public GameObject[] achievements;           // 도전과제 목록
-    public Text _name;                          // 도전과제 이름
-    public Text contents;                       // 내용
+    public GameObject achievementList;
+    public Achievement[] achievements;           // 도전과제 목록
+    public Achievement achievement;
+    public Text _name;                           // 도전과제 이름
+    public Text content;                         // 내용
 
-    private UserDataIO.User user;               // 유저 데이터
+    private UserDataIO.User user;                // 유저 데이터
+    private readonly string achievementDataPath = "Data/achievement_data";
+    private List<Dictionary<string, object>> achievementData;
+    private int achievementCount;
 
     private void Start()
     {
         user = UserDataIO.ReadUserData();
 
-        Debug.Log("PlayCount: " + user.playCount);
+        LoadAchievementData();
+    }
 
-        Debug.Log("ClearCount: " + user.clearCount);
+    private void LoadAchievementData()
+    {
+        achievementData = CSVReader.Read(achievementDataPath);
 
-        // 도전과제 개수 하드코딩함
-        for (int index = 0; index < 5; index++)
+        achievementCount = achievementData.Count;
+
+        // 28을 더한 이유는 도전과제간 간격을 고려해 더한 것
+        achievementList.GetComponent<RectTransform>().sizeDelta 
+            = new Vector2(0, (28 + achievement.GetComponent<RectTransform>().rect.height) * achievementCount);
+
+        achievements = new Achievement[achievementCount];
+
+        for (int index = 0; index < achievementCount; index++)
         {
-            switch (index)
-            {
-                case 0:
-                   if (user.playCount >= 10) achievements[index].GetComponent<Image>().color = Color.green;
-                    break;
-                case 1:
-                    if (user.clearCount >= 10) achievements[index].GetComponent<Image>().color = Color.green;
-                    break;
-                case 2:
-                    if (user.money >= 10000) achievements[index].GetComponent<Image>().color = Color.green;
-                    break;
-                case 3:
-                    if (user.honor >= 20) achievements[index].GetComponent<Image>().color = Color.green;
-                    break;
-                case 4:
-                    /* Not Implemented */
-                    break;
-            }
+            Achievement _achievement = Instantiate(InitAchievement(index));
+
+            _achievement.transform.SetParent(achievementList.transform);
+      
+            achievements[index] = _achievement;
         }
     }
 
-    public void AchievementBtn(int num)
+    private Achievement InitAchievement(int index)
     {
-        switch (num)
-        {
-            case 0:
-                _name.text = "도전과제 1";
-                contents.text = "플레이 횟수 10회\n현재 " + user.playCount +"/10";
+        Achievement _achievement = achievement;
 
-                break;
+        _achievement._name = achievementData[index]["Name"].ToString();
 
-            case 1:
-                _name.text = "도전과제 2";
-                contents.text = "클리어 횟수 10회\n현재 " + user.clearCount + "/10";
-                break;
+        _achievement._content = achievementData[index]["Content"].ToString();
 
-            case 2:
-                _name.text = "도전과제 3";
-                contents.text = "돈 10000 모으기\n현재 " + user.money + "/10000";
-                break;
+        _achievement.achievementName.text = _achievement._name;
 
-            case 3:
-                _name.text = "도전과제 4";
-                contents.text = "명예 20 달성\n현재 " + user.honor + "/20";
-                break;
+        _achievement.name = _achievement._name;
 
-            case 4:
-                _name.text = "도전과제 5";
-                contents.text = "도전과제 5은 뭘까요?";
-                break;
-        }
+        return _achievement;
+    }
+
+    // 패널을 끌 때 패널 초기화를 위해 함수로 구현했음
+    public void PanelOff()
+    {
+        _name.text = "도전 과제를 선택해 주세요.";
+
+        content.text = "";
+
+        achievementList.GetComponent<RectTransform>().anchoredPosition
+            = new Vector2(0, 0);
+
+        gameObject.SetActive(false);
+    }
+
+    public void AchievementBtn(Achievement _achievement)
+    {
+        _name.text = _achievement._name;
+
+        content.text = _achievement._content;
     }
 }
