@@ -385,7 +385,7 @@ public class GameManager : MonoBehaviour
         UserDataIO.WriteUserData(user);
 
         // (19.09.15) 옵저버에게 user데이터 전달
-        user.NotifyObservers();
+        // user.NotifyObservers();
 
         dm.ShowPlayerInfo();
 
@@ -428,7 +428,7 @@ public class GameManager : MonoBehaviour
         UserDataIO.WriteUserData(user);
 
         // (19.09.15) 옵저버에게 user데이터 전달
-        user.NotifyObservers();
+        // user.NotifyObservers();
 
         // 조이스틱 멈춤
         JoystickController.instance.StopJoystick();

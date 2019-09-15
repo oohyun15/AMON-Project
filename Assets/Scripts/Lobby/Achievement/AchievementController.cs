@@ -22,7 +22,7 @@ public class AchievementController : MonoBehaviour
     public Text content;                         // 내용
 
     private UserDataIO.User user;                // 유저 데이터
-    private readonly string achievementDataPath = "Data/achievement_data";
+    private readonly string achievementDataPath = "Data/achievements_data";
     private List<Dictionary<string, object>> achievementData;
     private int achievementCount;
 
