@@ -57,7 +57,8 @@ public class ItemDataManager : MonoBehaviour
             itemDataList = new Dictionary<string, object>
             {
                 ["oxygen"] = CSVReader.Read("Data/oxygen_data"),
-                ["gloves"] = CSVReader.Read("Data/gloves_data")
+                ["gloves"] = CSVReader.Read("Data/gloves_data"),
+                ["axe"] = CSVReader.Read("Data/axe_data")
             };
         }
 

@@ -162,19 +162,17 @@ public class GameManager : MonoBehaviour
         time = timeLimit;
 
         // (19.09.11. 예진) 산소통 테스트 - debug 씬에 추가 시 if문 삭제
-        if (SceneManager.GetActiveScene().name == "OxygenBarTest")
-        {
-            // 시간에 따라 산소통 크기 다르게 해줌
-            RectTransform rt = oxygenSlider.GetComponent<RectTransform>();
+        // (19.09.21.) Debug 씬에 산소통 추가됨
+        // 시간에 따라 산소통 크기 다르게 해줌
+        RectTransform rt = oxygenSlider.GetComponent<RectTransform>();
 
-            rt.sizeDelta = new Vector2(timeLimit * 10, 100);
+        rt.sizeDelta = new Vector2(timeLimit * 10, 100);
 
-            rt.anchoredPosition = new Vector3(150 + rt.rect.width / 2, -80, 0);
+        rt.anchoredPosition = new Vector3(150 + rt.rect.width / 2, -80, 0);
 
-            oxygenSlider.maxValue = timeLimit;
+        oxygenSlider.maxValue = timeLimit;
 
-            oxygenSlider.value = timeLimit;
-        }
+        oxygenSlider.value = timeLimit;
 
         // 장착 아이템 효과 적용
         ApplyEquipItemEffect();
@@ -237,7 +235,25 @@ public class GameManager : MonoBehaviour
 
     private int GetEquipedItemEffect(string item)
     {
-        int itemLv = PlayerPrefs.GetInt(item + "lv", 0);
+        //int itemLv = PlayerPrefs.GetInt(item + "lv", 0);
+
+        UserDataIO.User user = UserDataIO.ReadUserData();
+
+        // 아이템 현재 레벨 불러오기
+        // int lv = PlayerPrefs.GetInt(item + "lv", 0);
+        int itemLv = 0;
+
+        switch (item)
+        {
+            case "oxygen":
+                itemLv = user.oxygenlv;
+                break;
+
+            case "gloves":
+                itemLv = user.gloveslv;
+                break;
+        }
+
         int itemEffect = 0;
 
         if (itemLv != 0)
@@ -268,7 +284,7 @@ public class GameManager : MonoBehaviour
 
         List<GameObject> injureds = new List<GameObject>();
         injureds.AddRange(objects["Serious"]);
-        injureds.AddRange(objects["Minor"]);
+        //injureds.AddRange(objects["Minor"]);
 
         // (예진) 부상자 시간 체크 시작
         foreach (GameObject i in injureds)
@@ -287,7 +303,7 @@ public class GameManager : MonoBehaviour
         // 부상자 시간 제한 체크 일시 중단
         List<GameObject> injureds = new List<GameObject>();
         injureds.AddRange(objects["Serious"]);
-        injureds.AddRange(objects["Minor"]);
+        //injureds.AddRange(objects["Minor"]);
 
         foreach (GameObject i in injureds)
         {
@@ -307,7 +323,7 @@ public class GameManager : MonoBehaviour
         // 부상자 시간 체크 재개
         List<GameObject> injureds = new List<GameObject>();
         injureds.AddRange(objects["Serious"]);
-        injureds.AddRange(objects["Minor"]);
+        //injureds.AddRange(objects["Minor"]);
 
         foreach (GameObject i in injureds)
         {
@@ -321,7 +337,7 @@ public class GameManager : MonoBehaviour
 
         List<GameObject> injureds = new List<GameObject>();
         injureds.AddRange(objects["Serious"]);
-        injureds.AddRange(objects["Minor"]);
+        //injureds.AddRange(objects["Minor"]);
 
         foreach (GameObject i in injureds)
             if (i.activeInHierarchy) leftInjured++;

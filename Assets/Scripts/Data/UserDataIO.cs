@@ -26,6 +26,11 @@ public class UserDataIO : MonoBehaviour
         public int clearCount;              // 클리어 횟수
         public IObserver observer;          // 옵저버
 
+        /* 장착 아이템 레벨 */
+        public int oxygenlv;                // 산소통 레벨
+        public int gloveslv;                // 장갑 레벨
+        public int axelv;
+
         public void NotifyObservers()
         {
             this.observer.UpdateUserData(this);
@@ -57,6 +62,11 @@ public class UserDataIO : MonoBehaviour
         userElement.SetAttribute("honor", user.honor.ToString());
         userElement.SetAttribute("playCount", user.playCount.ToString());
         userElement.SetAttribute("clearCount", user.clearCount.ToString());
+        userElement.SetAttribute("oxygenlv", user.oxygenlv.ToString());
+        userElement.SetAttribute("gloveslv", user.gloveslv.ToString());
+        userElement.SetAttribute("axelv", user.axelv.ToString());
+
+
 
         doc.AppendChild(userElement);
         doc.Save(path);
@@ -76,6 +86,9 @@ public class UserDataIO : MonoBehaviour
                 honor = 0,
                 playCount = 0,
                 clearCount = 0,
+                oxygenlv = 0,
+                gloveslv = 0,
+                axelv = 0
             };
 
             WriteUserData(user);
@@ -92,6 +105,10 @@ public class UserDataIO : MonoBehaviour
                 honor = userElement.HasAttribute("honor") ? System.Convert.ToInt32(userElement.GetAttribute("honor")) : 0,
                 playCount = userElement.HasAttribute("playCount") ? System.Convert.ToInt32(userElement.GetAttribute("playCount")) : 0,
                 clearCount = userElement.HasAttribute("clearCount") ? System.Convert.ToInt32(userElement.GetAttribute("clearCount")) : 0,
+                oxygenlv = userElement.HasAttribute("oxygenlv") ? System.Convert.ToInt32(userElement.GetAttribute("oxygenlv")) : 0,
+                gloveslv = userElement.HasAttribute("gloveslv") ? System.Convert.ToInt32(userElement.GetAttribute("gloveslv")) : 0,
+                axelv = userElement.HasAttribute("axelv") ? System.Convert.ToInt32(userElement.GetAttribute("axelv")) : 0
+
             };
         }
 

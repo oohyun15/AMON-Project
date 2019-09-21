@@ -35,13 +35,16 @@ public abstract class Injured : MonoBehaviour
 
     protected IEnumerator timeChecker;
 
+    private void Awake()
+    {
+        timeChecker = TimeChecker();
+    }
+
     protected virtual void Start()
     {
         isRescued = false;
         minimapDot = transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>();
         meshRenderer = GetComponent<MeshRenderer>();
-
-        timeChecker = TimeChecker();
     }
 
     // 부상자 구조 시

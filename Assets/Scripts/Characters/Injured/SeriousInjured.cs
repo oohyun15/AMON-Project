@@ -39,7 +39,7 @@ public class SeriousInjured : Injured, IReset
 
             gm.objects[name].Add(gameObject);
         }
-
+        Debug.Log("AAA");
         // (용현) 초기값 저장
         GetInitValue();
     }

@@ -32,8 +32,26 @@ public class ItemUpgrade : MonoBehaviour
 
     public void UpgradeItem(string item)
     {
+        UserDataIO.User user = UserDataIO.ReadUserData();
+
         // 아이템 현재 레벨 불러오기
-        int lv = PlayerPrefs.GetInt(item + "lv", 0);
+        // int lv = PlayerPrefs.GetInt(item + "lv", 0);
+        int lv = 0;
+
+        switch (item)
+        {
+            case "oxygen":
+                lv = user.oxygenlv;
+                break;
+
+            case "gloves":
+                lv = user.gloveslv;
+                break;
+
+            case "axe":
+                lv = user.axelv;
+                break;
+        }
 
         int maxLv = ((List<Dictionary<string, object>>)itemDataList[item]).Count;
 
@@ -51,7 +69,24 @@ public class ItemUpgrade : MonoBehaviour
             // 돈 충분할 경우 업그레이드 완료
             else
             {
-                PlayerPrefs.SetInt(item + "lv", lv + 1);
+                // PlayerPrefs.SetInt(item + "lv", lv + 1);
+                switch (item)
+                {
+                    case "oxygen":
+                        user.oxygenlv++;
+                        break;
+
+                    case "gloves":
+                        user.gloveslv++;
+                        break;
+
+                    case "axe":
+                        user.axelv++;
+                        break;
+                }
+
+                UserDataIO.WriteUserData(user);
+
 
                 StartCoroutine(lobby.Notify("업그레이드 성공\n현재 " + GetDataValue(item, 0, "name") + " 아이템 레벨은 " + (lv + 1)));
 
@@ -72,8 +107,23 @@ public class ItemUpgrade : MonoBehaviour
         UserDataIO.User userData = UserDataIO.ReadUserData();
 
         string item = content.name;
+        int lv = 0;
 
-        int lv = PlayerPrefs.GetInt(content.name + "lv", 0);
+        switch (content.name)
+        {
+            case "oxygen":
+                lv = userData.oxygenlv;
+                break;
+
+            case "gloves":
+                lv = userData.gloveslv;
+                break;
+
+            case "axe":
+                lv = userData.axelv;
+                break;
+        }
+        
         int honor = System.Convert.ToInt32(GetDataValue(item, lv, "honor"));
         int maxLv = ((List<Dictionary<string, object>>)itemDataList[item]).Count;
 
