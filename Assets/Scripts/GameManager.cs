@@ -14,9 +14,10 @@
  * (19.08.20)  아이템 관련 코드 수정
  * (19.09.02)  인터렉션 버튼 아이템 이미지 추가
  * (19.09.15)  옵저버 추가
+ * (19.09.22)  인게임 UI 수정
  * 함수 추가 및 수정 시 누가 작성했는지 꼭 해당 함수 주석으로 명시해주세요!
  * 작성일자: 19.07.26
- * 수정일자: 19.09.15
+ * 수정일자: 19.09.22
  ***************************************/
 
 using System.Collections;
@@ -179,6 +180,8 @@ public class GameManager : MonoBehaviour
 
         SetTimeText(time);
 
+        // (19.09.22) 아이템 슬롯 임시 비활성화
+        /*
         // (19.08.10) 아이템 이미지가 있을 경우에만 아이템 이미지 활성화.
         // 추후에 아이템이 추가되고 조건들이 많아질 경우 함수로 빼놔야 할 듯
         for (int i = 0; i < UI[2].transform.childCount; i++)
@@ -189,6 +192,7 @@ public class GameManager : MonoBehaviour
             if (currentItem.childCount == 2)
                 currentItem.GetChild(0).gameObject.SetActive(true);
         }
+        */
 
         // (용현) UI 비활성화
         foreach (GameObject ui in UI) ui.SetActive(false);
@@ -280,6 +284,9 @@ public class GameManager : MonoBehaviour
         // (용현) UI 활성화
         foreach (GameObject ui in UI) ui.SetActive(true);
 
+        // (19.09.22) 아이템 슬롯 임시 비활성화
+        UI[2].SetActive(false);
+
         timeCheckCoroutine = CheckTime();
 
         List<GameObject> injureds = new List<GameObject>();
@@ -348,6 +355,20 @@ public class GameManager : MonoBehaviour
     {
         CheckLeftInjured();
 
+        gameOver = true;
+
+        if (time <= 0) GameOver();
+
+        else if (leftInjured == 0) GameClear(ClearState.high);
+
+        else if (leftInjured <= maxLeftToMiddleCondition) GameClear(ClearState.mid);
+
+        else if (leftInjured <= maxLeftToLowCondition) GameClear(ClearState.low);
+
+        else GameOver();
+        
+     /*
+
         // 플레이어 탈출 여부 확인
         bool isPlayerEscaped = player.IsEscaped;
 
@@ -381,6 +402,8 @@ public class GameManager : MonoBehaviour
                 GameOver();
             }
         }
+
+     */
     }
 
     // 게임 클리어시

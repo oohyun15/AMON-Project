@@ -11,9 +11,10 @@
  * (19.09.02) 인터렉션 버튼에 아이템 이미지 추가
  * (19.09.09) 이동 중 애니메이션 버그 수정
  * (19.09.13) 주변에 장애물 있을 때만 애니메이션 실행되도록 변수 추가 및 Collision 함수 수정
+ * (19.09.22) 인게임 UI 수정. 인터렉션 관련 행동들은 모두 function call 형태로 바꿈
  * 함수 추가 및 수정 시 누가 작성했는지 꼭 해당 함수 주석으로 명시해주세요!
  * 작성일자: 19.07.14
- * 수정일자: 19.09.13
+ * 수정일자: 19.09.22
  ***************************************/
 
 using System.Collections;
@@ -50,7 +51,7 @@ public class AmonController : MonoBehaviour, IReset
     public Transform backPoint;         // 부상자 업었을 때 위치 받아올 변수
     //public Transform rescuers;
     private GameObject target;          // (용현) 부상자(충돌체) 타겟 변수
-    private bool isEscaped;             // 플레이어 탈출 확인 변수
+    private bool isEscaped;             // 플레이어 탈출 확인 변수        // (19.09.22) 이제 필요 없을 듯
     public bool IsEscaped { get { return isEscaped; } }
 
     [Header("Animation")]
@@ -68,6 +69,7 @@ public class AmonController : MonoBehaviour, IReset
     // [Header("Debug")]                // 키보드로 이동할 때 사용하는 변수, 추후에 삭제해야함
     private float h = 0.0f;             // 좌,우
     private float v = 0.0f;             // 상,하
+    private bool checkBuff;             // 버프상태인지 확인하는 변수
     private new Transform transform;
     private GameManager gm;
     private new readonly string name = "Player";
@@ -114,7 +116,7 @@ public class AmonController : MonoBehaviour, IReset
 
         transform.Rotate(Vector3.up * rotSpeed * h * Time.deltaTime);
 
-        if (Input.GetKeyDown(KeyCode.Space)) Interaction();
+        // if (Input.GetKeyDown(KeyCode.Space)) Interaction();
     }
 
     private void OnCollisionStay(Collision collision)
@@ -129,7 +131,9 @@ public class AmonController : MonoBehaviour, IReset
                 isCollisionObs = true;
 
                 obstacle = collision.gameObject.GetComponent<Obstacle>();
-
+                
+                // (19.09.22) 인터렉션 UI 변경으로 인한 비활성화
+                /*
                 // 아이템이 도끼일 경우, 인터렉션 아이템 이미지 활성화
                 if (currentItem && currentItem.ID_num == 10)
                 {
@@ -138,6 +142,8 @@ public class AmonController : MonoBehaviour, IReset
                     // 0: Axe
                     gm.interactionImage.sprite = gm.itemImages[0];
                 }
+                */
+
                 break;
 
             // collision 부상자일 경우 부상자 종류에 따라 상호작용
@@ -163,11 +169,15 @@ public class AmonController : MonoBehaviour, IReset
                 // (용현) 구조 후 플레이어 상태 변경, 아이템 들고있을 때 고려함
                 state = currentItem ? InteractionState.Item : InteractionState.Idle;
 
+                
+                // (19.09.22) 인터렉션 UI 변경으로 인해 비활성화
+                /*
                 // (19.09.02) 현재 아이템이 도끼거나 없을 시 인터렉션 아이템 이미지 비활성화
                 if (!currentItem || currentItem && currentItem.ID_num == 10)
                 {
                     gm.interactionImage.gameObject.SetActive(false);
                 }
+                */
 
                 obstacle = null; // 충돌이 끝나도 obstacle 유지되던 부분 Fix
                 isCollisionObs = false;
@@ -187,7 +197,8 @@ public class AmonController : MonoBehaviour, IReset
     // (19.08.12. 예진) 탈출 시 따라오는 부상자 있으면 구출 처리 하도록 함
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Exit"))
+        // (19.09.22) 태그 이름 바꿈 "Exit" -> "Save"
+        if (other.CompareTag("Save"))
         {
             isEscaped = true;
 
@@ -197,7 +208,11 @@ public class AmonController : MonoBehaviour, IReset
                     g.GetComponent<Injured>().Escaped();
 
             rescuers.Clear();
+        }
 
+        // (19.09.22) 소방관 탈출 시
+        else if (other.CompareTag("Exit"))
+        {
             gm.CheckGameClear();
         }
 
@@ -231,9 +246,13 @@ public class AmonController : MonoBehaviour, IReset
     }
 
     // (예진) 부상자 구조 상호작용
-    private void RescueInjured(GameObject nearObject)
+    // (19.09.22) Unity 내에서 버튼에 연결하기 위해 public으로 바꿈
+    public void RescueInjured()
     {
-        Injured nearInjured = nearObject.gameObject.GetComponent<Injured>();
+        // 구조 상태가 아닐 경우 함수 반환
+        if (state != InteractionState.Rescue) return;
+
+        Injured nearInjured = target.gameObject.GetComponent<Injured>();
 
         // 현재 부상자 업고 있을 경우 구조 불가능. (용현) 이중 if절을 한개로 합침
         // (예진) 부상자 생사여부 확인 조건 추가
@@ -247,6 +266,36 @@ public class AmonController : MonoBehaviour, IReset
             // (용현) 구조 후 플레이어 상태 변경
             state = currentItem ? InteractionState.Item : InteractionState.Idle;
         }
+    }
+
+    // (19.09.22) 장애물 파괴
+    public void DestroyObstacle()
+    {
+        if (state != InteractionState.Obstacle) return;
+
+        Debug.Log("swap 1");
+
+        // 도끼로 무기 교체
+        // ItemController.ItemSwap 사용
+        if (!currentItem || currentItem.ID_num != 10) ItemController.Instance.ItemSwap(0);
+
+        if (!attackDelay) gm.StartCoroutine(DestroyObs(obstacle));
+    }
+
+    // (19.09.22) 드링크 사용
+    public void UseDrink()
+    {
+        // 버프 중이면 사용 X
+        if (checkBuff) return;
+
+        Debug.Log("swap 2");
+
+        // 드링크로 무기 교체
+        ItemController.Instance.ItemSwap(1);
+
+        if (!currentItem || currentItem.durability <= 0) return;
+
+        currentItem.ItemActive();
     }
 
     // 딜레이를 위해 코루틴을 사용하였다.
@@ -268,6 +317,8 @@ public class AmonController : MonoBehaviour, IReset
             currentItem.ItemActive();
         }
 
+        // (19.09.22) 도끼 이외를 사용할 일이 없어졌으므로 주석처리함
+        /*
         // 도끼가 아닌 아이템을 들고 있을 때 그 아이템 먼저 사용 (아직 3번키 아이템 적용 안됨!!)
         else
         {
@@ -275,6 +326,7 @@ public class AmonController : MonoBehaviour, IReset
 
             state = InteractionState.Obstacle;
         }
+        */
 
         // 이건 추후에 Obstacle 클래스에 추가해야 할 듯
         if (_obstacle.hp <= 0)
@@ -288,8 +340,11 @@ public class AmonController : MonoBehaviour, IReset
             // (용현) 구조 후 플레이어 상태 변경
             state = currentItem ? InteractionState.Item : InteractionState.Idle;
 
+            /*
             // (19.09.02) 인터렉션 버튼 아이템 이미지 비활성화
             gm.interactionImage.gameObject.SetActive(false);
+            */
+
 
             // 현재 장애물 null로 바꿈
             obstacle = null;
@@ -305,6 +360,8 @@ public class AmonController : MonoBehaviour, IReset
     // 이동속도 및 회전 속도 증가
     public IEnumerator UpSpeed(int _addSpeed, int _timer)
     {
+        checkBuff = true;
+
         moveSpeed *= _addSpeed;
 
         // (용현) 회전속도 0.7 -> 0.5
@@ -315,6 +372,8 @@ public class AmonController : MonoBehaviour, IReset
 
         yield return new WaitForSeconds(_timer);
 
+        checkBuff = false;
+
         moveSpeed = initMoveSpeed;
 
         rotSpeed = initRotSpeed;
@@ -323,10 +382,12 @@ public class AmonController : MonoBehaviour, IReset
         JoystickController.instance.UpdateSpeed();
     }
 
+    // (19.09.22) 인터렉션 버튼 미사용
     // (용현) 인터렉션 버튼
     public void Interaction()
     {
-        if(JoystickController.instance.isTouch) // (9.9 태윤, 이동 중에 인터렉션 시 움직임을 멈추도록 조건문 추가)
+        // (9.9 태윤, 이동 중에 인터렉션 시 움직임을 멈추도록 조건문 추가)
+        if (JoystickController.instance.isTouch) 
         {
             JoystickController.instance.isTouch = false;
             isTouchBack = true;
@@ -345,28 +406,33 @@ public class AmonController : MonoBehaviour, IReset
             // 아이템 사용
             case InteractionState.Item:
 
-                currentItem.ItemActive();
-
+                UseDrink();
+                
+                // (19.09.22) 이미지를 바꿀 필요가 없으므로 주석처리함
+                /*
                 // (19.09.02) 아이템 이미지 비활성화
                 if (!currentItem) gm.interactionImage.gameObject.SetActive(false);
-
+                */
                 break;
 
             // 장애물 제거
             case InteractionState.Obstacle:
 
-                if (!attackDelay) gm.StartCoroutine(DestroyObs(obstacle));
+                DestroyObstacle();
 
                 break;
            
             // 부상자 구출
             case InteractionState.Rescue:
 
-                RescueInjured(target);
+                RescueInjured();
 
                 break;
         } 
     }
+
+
+
 
     // (용현) 초기값 저장
     public void GetInitValue()
@@ -415,6 +481,8 @@ public class AmonController : MonoBehaviour, IReset
         rotSpeed = initRotSpeed;
 
         currentItem = null;
+
+        checkBuff = false;
     }
 
     public void PlayerAnimation() // (9.9 태윤, 움직이다가 애니메이션 바뀌는 것때문에 IsWalk도 false로 바꾸도록 함)

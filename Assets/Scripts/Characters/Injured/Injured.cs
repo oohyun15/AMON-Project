@@ -93,9 +93,6 @@ public abstract class Injured : MonoBehaviour
     // (19.08.12 예진) 플레이어의 출구 트리거 발생 시 함수 호출하는 방식으로 변경
     public virtual void Escaped()
     {
-        // 부상자 구조 체크
-        GameManager.Instance.CheckGameClear();
-
         // 플레이어 속도 정상화
         player.moveSpeed += playerSpeedChange;
 

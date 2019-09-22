@@ -107,8 +107,11 @@ public class ItemController : MonoBehaviour
         {
             GameManager.Instance.player.currentItem = null;
 
+            // (19.09.22) 인터렉션 UI 변경으로 인해 비활성화
+            /*
             // 이미지 비활성화
             GameManager.Instance.interactionImage.gameObject.SetActive(false);
+            */
         }
         else
         {
@@ -120,6 +123,8 @@ public class ItemController : MonoBehaviour
 
             GameManager.Instance.player.currentItem = keyItems[itemNum];
 
+            // (19.09.22) 인터렉션 UI 변경으로 인해 비활성화
+            /*
             // (19.09.02) 도끼 선택 시 플레이어 상태에 따라 이미지 나타냄
             if (itemNum == 0 && GameManager.Instance.player.obstacle)
             {
@@ -143,6 +148,7 @@ public class ItemController : MonoBehaviour
                 // 이미지 비활성화
                 GameManager.Instance.interactionImage.gameObject.SetActive(false);
             }
+            */
         }
 
         // (용현) 장애물 바로 앞에서 아이템 변경 시 인터렉션 상태 Obstacle로 변경
