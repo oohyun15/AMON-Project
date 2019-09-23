@@ -213,7 +213,9 @@ public class AmonController : MonoBehaviour, IReset
         // (19.09.22) 소방관 탈출 시
         else if (other.CompareTag("Exit"))
         {
-            gm.CheckGameClear();
+            // gm.CheckGameClear();
+            // (19.09.23) 탈출 트리거에 들어가면 즉시 탈출하지 않고 탈출 버튼 나타나도록 함
+            gm.escapeButton.SetActive(true);
         }
 
         // (19.08.20) 아이템 획득 시
@@ -242,7 +244,11 @@ public class AmonController : MonoBehaviour, IReset
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Exit"))
+        {
+            gm.escapeButton.SetActive(false);
+
             isEscaped = false;
+        }
     }
 
     // (예진) 부상자 구조 상호작용

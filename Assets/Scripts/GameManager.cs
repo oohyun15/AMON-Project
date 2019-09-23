@@ -77,6 +77,7 @@ public class GameManager : MonoBehaviour
     public Slider oxygenSlider;                 // (예진) 산소통 테스트
     public GameObject startButton;
     public GameObject settingsButton;
+    public GameObject escapeButton;              // (예진) 탈출 버튼
     public UISet[] gameResultPanel;             // (예진) 게임 결과 패널 UI 접근 방식 변경
     public GameObject settings;
     public GameObject[] UI;                     // (용현) 0: Joystick, 1: Interaction, 2: ItemSlots, 3: Minimap
@@ -91,6 +92,7 @@ public class GameManager : MonoBehaviour
     public GameObject Cam;
     public GameObject injuredParent;
     public Dictionary<string, List<GameObject>> objects;
+    public Animator resultCharacterAnimator;    // (예진) 게임 결과창에 렌더되는 캐릭터 오브젝트 애니메이터
 
     [Header("Observer")]
     public IObserver observer;
@@ -210,6 +212,11 @@ public class GameManager : MonoBehaviour
         
         // 게임 결과창 비활성화
         gameResultPanel[0].UI.SetActive(false);
+
+        // 결과창 캐릭터 렌더링 애니메이션 초기화
+        resultCharacterAnimator.SetBool("Victory", false);
+        resultCharacterAnimator.SetBool("Fail", false);
+
 
         // 세팅 버튼 비활성화
         settingsButton.SetActive(false);
@@ -418,6 +425,9 @@ public class GameManager : MonoBehaviour
 
         dm.SaveGameResult(money, honor);
 
+        // (19.09.23.) 결과창 애니메이션 설정
+        resultCharacterAnimator.SetBool("Victory", true);
+
         // (19.08.25) 플레이 횟수 증가
         UserDataIO.User user = UserDataIO.ReadUserData();
         user.playCount++;
@@ -460,6 +470,9 @@ public class GameManager : MonoBehaviour
         Debug.Log("game over");
 
         gameState = GameState.Over;
+
+        // (19.09.23.) 결과창 애니메이션 설정
+        resultCharacterAnimator.SetBool("Fail", true);
 
         // (19.08.25) 플레이 횟수 증가
         UserDataIO.User user = UserDataIO.ReadUserData();
