@@ -97,6 +97,12 @@ public class Lobby : MonoBehaviour
         PlayerPrefs.DeleteKey("oxygenlv");
         PlayerPrefs.DeleteKey("gloveslv");
 
+        userData.oxygenlv = 0;
+        userData.gloveslv = 0;
+        userData.axelv = 0;
+
+        UserDataIO.WriteUserData(userData);
+
         GetComponent<ItemUpgrade>().UpdateEquipViewport();
     }
 

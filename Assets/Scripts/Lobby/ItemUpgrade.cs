@@ -59,7 +59,7 @@ public class ItemUpgrade : MonoBehaviour
         // 아이템 다음 레벨 구입 가격 불러오기
         if (lv < maxLv)
         {
-            int price = System.Convert.ToInt32(GetDataValue(item, lv, "price"));
+            int price = System.Convert.ToInt32(GetDataValue(item, lv + 1, "price"));
 
             // 돈 부족할 경우 업그레이드 되지 않음 
             if (!UserDataIO.ChangeUserMoney(-price))
@@ -88,7 +88,7 @@ public class ItemUpgrade : MonoBehaviour
                 UserDataIO.WriteUserData(user);
 
 
-                StartCoroutine(lobby.Notify("업그레이드 성공\n현재 " + GetDataValue(item, 0, "name") + " 아이템 레벨은 " + (lv + 1)));
+                StartCoroutine(lobby.Notify("업그레이드 성공\n현재 " + GetDataValue(item, 1, "name") + " 아이템 레벨은 " + (lv + 1)));
 
                 UpdateEquipViewport();
             }
@@ -97,7 +97,7 @@ public class ItemUpgrade : MonoBehaviour
         else
         {
             StartCoroutine(lobby.Notify(
-                "아이템이 최대 강화 상태입니다\n현재 " + GetDataValue(item, 0, "name")+ " 아이템 레벨은 " + lv)
+                "아이템이 최대 강화 상태입니다\n현재 " + GetDataValue(item, 1, "name")+ " 아이템 레벨은 " + lv)
             );
         }
     }
@@ -123,9 +123,13 @@ public class ItemUpgrade : MonoBehaviour
                 lv = userData.axelv;
                 break;
         }
-        
-        int honor = System.Convert.ToInt32(GetDataValue(item, lv, "honor"));
+
         int maxLv = ((List<Dictionary<string, object>>)itemDataList[item]).Count;
+
+        int honor = 0;
+
+        if (lv != maxLv)
+            honor = System.Convert.ToInt32(GetDataValue(item, lv + 1, "honor"));
 
         content.UI.transform.GetChild(3).gameObject.SetActive(false);
 
@@ -148,24 +152,27 @@ public class ItemUpgrade : MonoBehaviour
         if (lv == 0)
             nowLv = "";
         else
-            nowLv = "\n현재 레벨 : " + lv + " 효과 : " + GetDataValue(item, lv - 1, "effect");
+            nowLv = "\n현재 레벨 : " + lv + " 효과 : " + GetDataValue(item, lv, "effect");
 
         string nextLv;
 
-        if (lv >= maxLv)
+        if (lv == maxLv)
             nextLv = "\n최대 레벨입니다";
         else
-            nextLv = "\n다음 레벨 : " + (lv + 1) + " 효과 : " + GetDataValue(item, lv, "effect");
+            nextLv = "\n다음 레벨 : " + (lv + 1) + " 효과 : " + GetDataValue(item, lv + 1, "effect");
+
+
 
         content.UI.transform.GetChild(1).GetComponent<Text>().text =
-            GetDataValue(item, 0, "name") +
+            GetDataValue(item, 1, "name") +
             nowLv +
             nextLv;
     }
 
     private object GetDataValue(string item, int lv, string key)
     {
-        return ((List<Dictionary<string, object>>)itemDataList[item])[lv][key];
+        Debug.Log(lv - 1);
+        return ((List<Dictionary<string, object>>)itemDataList[item])[lv - 1][key];
     }
 
     public void UpdateEquipViewport()
