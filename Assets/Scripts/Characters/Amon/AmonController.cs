@@ -29,7 +29,6 @@ public class AmonController : MonoBehaviour, IReset
     [Header("Player Info")]
     public float moveSpeed;
     public float rotSpeed;
-    public int damage;                  // 장애물 공격 데미지
     public float initMoveSpeed;
     public float initRotSpeed;
     public Vector3 initPos;             // 초기 Position 값
@@ -61,7 +60,6 @@ public class AmonController : MonoBehaviour, IReset
     public bool isCollisionObs = false; // 장애물 충돌 확인 변수
     private bool isTouchBack = false; // 이동 중에 애니메이션을 받아왔는지를 알려주는 변수
 
-
     [Header("CameraShake")]
     public float CSAmount;
     public float CSDuration;
@@ -74,8 +72,16 @@ public class AmonController : MonoBehaviour, IReset
     private GameManager gm;
     private new readonly string name = "Player";
 
-    public List<GameObject> rescuers;
+    [Header("Destory")]
+    private int shoeLv;
+    private int axeLv;
+    public int damage;                  // 장애물 공격 데미지
+    private int axeDamage;
 
+
+    public List<GameObject> rescuers;
+    Dictionary<string, object> itemDataList;
+    UserDataIO.User user;
 
     // Start is called before the first frame update
     void Start()
@@ -99,6 +105,9 @@ public class AmonController : MonoBehaviour, IReset
 
             gm.objects[name].Add(gameObject);
         }
+
+        itemDataList = ItemDataManager.Instance.GetEquipItemData();
+        user = UserDataIO.ReadUserData();
 
         // (용현) 초기값 저장
         GetInitValue();
@@ -283,8 +292,12 @@ public class AmonController : MonoBehaviour, IReset
 
         // 도끼로 무기 교체
         // ItemController.ItemSwap 사용
-        if (!currentItem || currentItem.ID_num != 10) ItemController.Instance.ItemSwap(0);
-
+        if (isRescuing) ItemController.Instance.ItemSwap(3);
+        else
+        {
+            if (!currentItem || currentItem.ID_num != 10) ItemController.Instance.ItemSwap(0);
+        }
+    
         if (!attackDelay) gm.StartCoroutine(DestroyObs(obstacle));
     }
 
@@ -310,16 +323,19 @@ public class AmonController : MonoBehaviour, IReset
         attackDelay = true;
 
         // 맨손
-        if (!currentItem) _obstacle.hp -= damage;
+        if (!currentItem)
+        {
+            _obstacle.hp -= damage;
+            Debug.Log("발차기! 데미지는 = " + damage);
+        }
 
         // 도끼
         // (19.08.02 용현) 내구도가 있을때만 작동하도록 수정 
         else if (currentItem.ID_num == 10 &&
                  currentItem.durability > 0)
         {
-            // 도끼 데미지 넣는 코드인데 수정 필요할 거 같음
-            _obstacle.hp -= currentItem.transform.GetComponent<ItemWeapon>().addDamage;
-
+            _obstacle.hp -= axeDamage;
+            Debug.Log("도끼질! 데미지는 = " + damage);
             currentItem.ItemActive();
         }
 
@@ -489,6 +505,16 @@ public class AmonController : MonoBehaviour, IReset
         currentItem = null;
 
         checkBuff = false;
+
+        shoeLv = 1; // user.gloveslv;
+
+        damage = System.Convert.ToInt32(((List<Dictionary<string, object>>)itemDataList["gloves"])[shoeLv - 1]["effect"]);
+
+        axeLv = 1;//user.axelv;
+
+        axeDamage = System.Convert.ToInt32(((List<Dictionary<string, object>>)itemDataList["axe"])[axeLv - 1]["effect"]);
+
+
     }
 
     public void PlayerAnimation() // (9.9 태윤, 움직이다가 애니메이션 바뀌는 것때문에 IsWalk도 false로 바꾸도록 함)
