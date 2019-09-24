@@ -61,6 +61,8 @@ public class ItemUpgrade : MonoBehaviour
         {
             int price = System.Convert.ToInt32(GetDataValue(item, lv + 1, "price"));
 
+            Debug.Log(price);
+
             // 돈 부족할 경우 업그레이드 되지 않음 
             if (!UserDataIO.ChangeUserMoney(-price))
             {
@@ -69,6 +71,8 @@ public class ItemUpgrade : MonoBehaviour
             // 돈 충분할 경우 업그레이드 완료
             else
             {
+                user.money -= price;
+
                 // PlayerPrefs.SetInt(item + "lv", lv + 1);
                 switch (item)
                 {
@@ -87,10 +91,11 @@ public class ItemUpgrade : MonoBehaviour
 
                 UserDataIO.WriteUserData(user);
 
-
                 StartCoroutine(lobby.Notify("업그레이드 성공\n현재 " + GetDataValue(item, 1, "name") + " 아이템 레벨은 " + (lv + 1)));
 
                 UpdateEquipViewport();
+
+                lobby.SetUIText();
             }
         }
         // 최대 강화 상태일 경우
@@ -171,7 +176,6 @@ public class ItemUpgrade : MonoBehaviour
 
     private object GetDataValue(string item, int lv, string key)
     {
-        Debug.Log(lv - 1);
         return ((List<Dictionary<string, object>>)itemDataList[item])[lv - 1][key];
     }
 

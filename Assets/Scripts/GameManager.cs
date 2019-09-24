@@ -170,8 +170,11 @@ public class GameManager : MonoBehaviour
         RectTransform rt = oxygenSlider.GetComponent<RectTransform>();
 
         rt.sizeDelta = new Vector2(timeLimit * 10, 100);
-
-        rt.anchoredPosition = new Vector3(150 + rt.rect.width / 2, -80, 0);
+        
+        // (19.09.24) 예진
+        // 테스트 씬에서는 슬라이더 중심을 기준으로 줄어들어서 위치 설정을 해두었는데
+        // 디버그 씬에 오니 맨 왼쪽을 기준으로 줄어들어 주석 처리
+        //rt.anchoredPosition = new Vector3(150 + rt.rect.width / 2, -80, 0);
 
         oxygenSlider.maxValue = timeLimit;
 
@@ -556,20 +559,14 @@ public class GameManager : MonoBehaviour
         panel.SetActive(true);
     }
 
-    // 플레이어 획득 보상 저장
-
     private IEnumerator CheckTime()
     {
         while ((time -= Time.deltaTime) > 0 && !gameOver)
         {
             SetTimeText(time);
 
-            // (19.09.11. 예진) 산소통 테스트 - debug 씬에 추가 시 if문 삭제
-            if (SceneManager.GetActiveScene().name == "OxygenBarTest")
-            {
-                oxygenSlider.value -= Time.deltaTime;
-            }
-
+            oxygenSlider.value -= Time.deltaTime;
+            
             yield return null;
         }
 
