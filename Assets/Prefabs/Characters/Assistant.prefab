@@ -73,6 +73,7 @@ GameObject:
   - component: {fileID: 3642118161410427237}
   - component: {fileID: 1725526640966640041}
   - component: {fileID: 1725526640966640040}
+  - component: {fileID: 3297833441549267140}
   m_Layer: 0
   m_Name: Assistant
   m_TagString: Player
@@ -114,7 +115,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 126
   m_CollisionDetection: 0
 --- !u!65 &1725526640966640040
 BoxCollider:
@@ -129,6 +130,25 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.120913506, y: 0.23726335, z: 0.14358087}
   m_Center: {x: -0.006088829, y: 0.11532791, z: 0.0034516098}
+--- !u!95 &3297833441549267140
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 346846385364597622}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 69c26b8da12399b4fb04897a75dd2626, type: 3}
+  m_Controller: {fileID: 22100000, guid: 7ccf9e3463fe5314b966cfa3ece6a5b1, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &353963806651698963
 GameObject:
   m_ObjectHideFlags: 0
