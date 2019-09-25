@@ -336,6 +336,8 @@ public class AmonController : MonoBehaviour, IReset
         {
             _obstacle.hp -= damage;
             Debug.Log("발차기! 데미지는 = " + damage);
+            animState = AnimationName.Strike;
+            PlayerAnimation();
         }
 
         // 도끼
@@ -533,22 +535,41 @@ public class AmonController : MonoBehaviour, IReset
             case AnimationName.Walk:
 
                 playerAnim.SetBool("IsIdle", false);
-                playerAnim.SetBool("IsWalk", true);
+                playerAnim.SetBool("IsIdleResc", false);
 
+                if (isRescuing)
+                {
+                    if (playerAnim.GetBool("IsWalk")) playerAnim.SetBool("IsWalk", false);
+
+                    playerAnim.SetBool("IsWalkResc", true);
+                }
+                else
+                {
+                    if (playerAnim.GetBool("IsWalkResc")) playerAnim.SetBool("IsWalkResc", false);
+
+                    playerAnim.SetBool("IsWalk", true);
+                }
                 break;
 
             case AnimationName.Strike:
 
                 playerAnim.SetBool("IsIdle", false);
+                playerAnim.SetBool("IsIdleResc", false);
                 playerAnim.SetBool("IsWalk", false);
-                playerAnim.SetBool("IsStrike", true);
+                playerAnim.SetBool("IsWalkResc", false);
+
+                if (isRescuing) playerAnim.SetBool("IsKick", true);
+                else playerAnim.SetBool("IsStrike", true);
 
                 break;
 
             case AnimationName.Drink:
 
                 playerAnim.SetBool("IsIdle", false);
+                playerAnim.SetBool("IsIdleResc", false);
                 playerAnim.SetBool("IsWalk", false);
+                playerAnim.SetBool("IsWalkResc", false);
+
                 playerAnim.SetBool("IsDrink", true);
                 
                 break;
@@ -563,7 +584,8 @@ public class AmonController : MonoBehaviour, IReset
         {
             playerAnim.SetBool(prmt.name, false);
         }
-        playerAnim.SetBool("IsIdle", true);
+        if(isRescuing) playerAnim.SetBool("IsIdleResc", true);
+        else playerAnim.SetBool("IsIdle", true);
     }
 
     public void TouchBack() // 인터렉션 때 움직임을 멈춘 부분을 다시 되돌려 조이스틱을 다시 클릭하지 않아도 움직이도록 하는 함수 
