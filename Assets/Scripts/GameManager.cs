@@ -77,7 +77,7 @@ public class GameManager : MonoBehaviour
     public Slider oxygenSlider;                 // (예진) 산소통 테스트
     public GameObject startButton;
     public GameObject settingsButton;
-    public GameObject escapeButton;              // (예진) 탈출 버튼
+    public GameObject warningPanel;              // (예진) 탈출 버튼
     public UISet[] gameResultPanel;             // (예진) 게임 결과 패널 UI 접근 방식 변경
     public GameObject settings;
     public GameObject[] UI;                     // (용현) 0: Joystick, 1: Interaction, 2: ItemSlots, 3: Minimap
@@ -96,6 +96,10 @@ public class GameManager : MonoBehaviour
 
     [Header("Observer")]
     public IObserver observer;
+
+    [Header("Sprites")]
+    public Sprite[] resultRescuerSprites;       // (예진) 결과 패널에 부상자 구조 여부 스프라이트 받아둠
+                                                // 0 --> 구조 실패 / 1 --> 구조 성공
 
 
     private float time;                         // 남은 시간, 초 단위
@@ -164,17 +168,21 @@ public class GameManager : MonoBehaviour
 
         time = timeLimit;
 
+        int defaultTime = 60;
+
         // (19.09.11. 예진) 산소통 테스트 - debug 씬에 추가 시 if문 삭제
         // (19.09.21.) Debug 씬에 산소통 추가됨
         // 시간에 따라 산소통 크기 다르게 해줌
+        // (19.09.26) 산소통 슬라이더 백그라운드 Sliced Sprite 처리하고 위치와 크기 조정하도록 함
         RectTransform rt = oxygenSlider.GetComponent<RectTransform>();
+        RectTransform bgrt = oxygenSlider.transform.GetChild(0).GetComponent<RectTransform>();
 
-        rt.sizeDelta = new Vector2(timeLimit * 10, 100);
+        float temp = (timeLimit - defaultTime) * 10;
+
+        rt.sizeDelta = new Vector2(rt.sizeDelta.x + temp, rt.sizeDelta.y);
+        bgrt.sizeDelta = new Vector2(bgrt.sizeDelta.x + temp, bgrt.sizeDelta.y);
         
-        // (19.09.24) 예진
-        // 테스트 씬에서는 슬라이더 중심을 기준으로 줄어들어서 위치 설정을 해두었는데
-        // 디버그 씬에 오니 맨 왼쪽을 기준으로 줄어들어 주석 처리
-        //rt.anchoredPosition = new Vector3(150 + rt.rect.width / 2, -80, 0);
+        bgrt.anchoredPosition = new Vector3(bgrt.anchoredPosition.x + temp / 2, bgrt.anchoredPosition.y, 0);
 
         oxygenSlider.maxValue = timeLimit;
 
@@ -348,7 +356,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void CheckLeftInjured()
+    public int CheckLeftInjured()
     {
         leftInjured = 0;
 
@@ -358,6 +366,8 @@ public class GameManager : MonoBehaviour
 
         foreach (GameObject i in injureds)
             if (i.activeInHierarchy) leftInjured++;
+
+        return leftInjured;
     }
 
     // 게임 클리어 여부와 보상 수준 확인
@@ -518,13 +528,13 @@ public class GameManager : MonoBehaviour
                 case "Result":
                     if (gameState == GameState.Over)
                     {
-                        gameResultPanel[i].UI.transform.parent.GetComponent<Image>().color = Color.red;
-                        gameResultPanel[i].UI.GetComponent<Text>().text = "Game Over";
+                        gameResultPanel[i].UI.transform.GetChild(0).gameObject.SetActive(false);
+                        gameResultPanel[i].UI.transform.GetChild(1).gameObject.SetActive(true);
                     }
                     else
                     {
-                        gameResultPanel[i].UI.transform.parent.GetComponent<Image>().color = Color.yellow;
-                        gameResultPanel[i].UI.GetComponent<Text>().text = "Game Clear";
+                        gameResultPanel[i].UI.transform.GetChild(0).gameObject.SetActive(true);
+                        gameResultPanel[i].UI.transform.GetChild(1).gameObject.SetActive(false);
                     }
                     break;
 
@@ -534,20 +544,46 @@ public class GameManager : MonoBehaviour
                     break;
 
                 // Money, Honor 텍스트 설정
+                case "Reward":
+                    if (gameState == GameState.Over)
+                    {
+                        gameResultPanel[i].UI.transform.GetChild(0).gameObject.SetActive(false);
+                        gameResultPanel[i].UI.transform.GetChild(1).gameObject.SetActive(true);
+                    }
+                    else
+                    {
+                        gameResultPanel[i].UI.transform.GetChild(0).gameObject.SetActive(true);
+                        gameResultPanel[i].UI.transform.GetChild(1).gameObject.SetActive(false);
+                    }
+                    break;
+
                 case "Money":
-                    gameResultPanel[i].UI.GetComponent<Text>().text = money + "";
+                    if (gameState == GameState.Clear)
+                        gameResultPanel[i].UI.GetComponent<Text>().text = "+" + money;
                     break;
                 case "Honor":
-                    gameResultPanel[i].UI.GetComponent<Text>().text = honor + "";
+                    if (gameState == GameState.Clear)
+                        gameResultPanel[i].UI.GetComponent<Text>().text = "+" + honor;
                     break;
 
                 // 구출한 부상자만큼 색깔 설정
                 case "Injured":
                     for (int j = 0; j < dm.totalInjuredCount - leftInjured; j++)
-                        gameResultPanel[i].UI.transform.GetChild(j).GetComponent<Image>().color = Color.green;
+                    {
+                        Transform injured = gameResultPanel[i].UI.transform.GetChild(j);
+                        injured.GetComponent<Image>().sprite
+                            = resultRescuerSprites[1];
+                        injured.GetChild(0).gameObject.SetActive(true);
+
+                    }
                     for (int j = 0; j < leftInjured; j++)
-                        gameResultPanel[i].UI.transform.GetChild(dm.totalInjuredCount - j - 1).GetComponent<Image>().color 
-                            = Color.red;
+                    {
+
+                        Transform injured = gameResultPanel[i].UI.transform.GetChild(dm.totalInjuredCount - 1 - j);
+                        injured.GetComponent<Image>().sprite
+                            = resultRescuerSprites[0];
+                        injured.GetChild(0).gameObject.SetActive(false);
+                    }       
                     break;
                 case "Panel":
                     panel = gameResultPanel[i].UI;

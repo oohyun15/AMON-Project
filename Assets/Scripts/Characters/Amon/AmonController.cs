@@ -223,8 +223,17 @@ public class AmonController : MonoBehaviour, IReset
         else if (other.CompareTag("Exit"))
         {
             // gm.CheckGameClear();
-            // (19.09.23) 탈출 트리거에 들어가면 즉시 탈출하지 않고 탈출 버튼 나타나도록 함
-            gm.escapeButton.SetActive(true);
+            // (19.09.26) 탈출 트리거 들어가면 경고 패널 나오도록 설정
+
+            if (gm.CheckLeftInjured() == 0)
+                gm.CheckGameClear();
+            else
+            {
+                gm.warningPanel.SetActive(true);
+
+                // 게임 일시 정지
+                gm.StopGame();
+            }
         }
 
         // (19.08.20) 아이템 획득 시
@@ -254,7 +263,7 @@ public class AmonController : MonoBehaviour, IReset
     {
         if (other.CompareTag("Exit"))
         {
-            gm.escapeButton.SetActive(false);
+            gm.warningPanel.SetActive(false);
 
             isEscaped = false;
         }
