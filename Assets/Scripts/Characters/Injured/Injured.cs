@@ -72,13 +72,15 @@ public abstract class Injured : MonoBehaviour
         JoystickController.instance.UpdateSpeed();
     }
 
-    public void ChangeMaterialRescued()
+    public virtual void ChangeMaterialRescued()
     {
+        
         // 미니맵 표시점 색깔 변경
         minimapDot.color = Color.green;
 
         // material 색깔 변경
         meshRenderer.material.color = Color.green;
+        
     }
 
     public void ChangeMaterialDead()

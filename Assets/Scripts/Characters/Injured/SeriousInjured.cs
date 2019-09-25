@@ -101,4 +101,9 @@ public class SeriousInjured : Injured, IReset
         // 부상자 상태 설정
         state = InjuredState.LIVE;
     }
+
+    public override void ChangeMaterialRescued()
+    {
+        minimapDot.gameObject.SetActive(false);
+    }
 }

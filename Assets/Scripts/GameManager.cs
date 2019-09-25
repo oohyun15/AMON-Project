@@ -365,8 +365,9 @@ public class GameManager : MonoBehaviour
         //injureds.AddRange(objects["Minor"]);
 
         foreach (GameObject i in injureds)
-            if (i.activeInHierarchy) leftInjured++;
-
+            if (i.activeInHierarchy)
+                leftInjured++;
+            
         return leftInjured;
     }
 
@@ -568,18 +569,28 @@ public class GameManager : MonoBehaviour
 
                 // 구출한 부상자만큼 색깔 설정
                 case "Injured":
+                    Transform uiTransform = gameResultPanel[i].UI.transform;
+
+                    // 구조된ㄴ 부상자
+                    for (int j = uiTransform.childCount - 1; j >= dm.totalInjuredCount; j--)
+                    {
+                        Debug.Log(dm.totalInjuredCount);
+                        uiTransform.GetChild(j).gameObject.SetActive(false);
+                    }
+
                     for (int j = 0; j < dm.totalInjuredCount - leftInjured; j++)
                     {
-                        Transform injured = gameResultPanel[i].UI.transform.GetChild(j);
+                        Transform injured = uiTransform.GetChild(j);
                         injured.GetComponent<Image>().sprite
                             = resultRescuerSprites[1];
                         injured.GetChild(0).gameObject.SetActive(true);
 
                     }
+                    // 구조 실패한 부상자
                     for (int j = 0; j < leftInjured; j++)
                     {
-
-                        Transform injured = gameResultPanel[i].UI.transform.GetChild(dm.totalInjuredCount - 1 - j);
+                        Debug.Log(leftInjured);
+                        Transform injured = uiTransform.GetChild(dm.totalInjuredCount - 1 - j);
                         injured.GetComponent<Image>().sprite
                             = resultRescuerSprites[0];
                         injured.GetChild(0).gameObject.SetActive(false);
