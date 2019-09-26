@@ -553,6 +553,12 @@ public class AmonController : MonoBehaviour, IReset
 
             case AnimationName.Strike:
 
+                if (JoystickController.instance.isTouch)
+                {
+                    JoystickController.instance.isTouch = false;
+                    isTouchBack = true;
+                }
+
                 playerAnim.SetBool("IsIdle", false);
                 playerAnim.SetBool("IsIdleResc", false);
                 playerAnim.SetBool("IsWalk", false);

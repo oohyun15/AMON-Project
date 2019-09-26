@@ -42,6 +42,7 @@ public class FallObstacle : MonoBehaviour, IReset
             // 충돌 위치를 알아내기 위한 코드, 유니티에 collision.contacts 검색
             foreach (ContactPoint contact in collision.contacts)
             {
+                Debug.Log(contact);
                 // 스테이지에 배치된 장애물과의 충돌 지점의 y좌표는 0.55임을 이용, amon 위에서 떨어질 떄 충돌하면 amon 오브젝트 파괴
                 if (contact.point.y > 1.3f)
                 {
