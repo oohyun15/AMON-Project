@@ -320,7 +320,7 @@ public class AmonController : MonoBehaviour, IReset
     
     public void CalculateDamage()
     {
-        if(currentItem == null)
+        if (currentItem == null)
         {
             obstacle.hp -= damage;
             Debug.Log("발차기! 데미지는 = " + damage);
@@ -331,7 +331,11 @@ public class AmonController : MonoBehaviour, IReset
             Debug.Log("도끼질! 데미지는 = " + axeDamage);
         }
 
-        if (obstacle.hp <= 0)
+        if (obstacle.hp > 0)
+        {
+            gm.StartCoroutine(GameManager.Instance.Cam.transform.GetComponent<CameraShake>().Shake(CSAmount/4, CSDuration));
+        }
+        else
         {
             // 코루틴 함수는 모두 게임매니저로 걸어놓음
             gm.StartCoroutine(GameManager.Instance.Cam.transform.GetComponent<CameraShake>().Shake(CSAmount, CSDuration));
