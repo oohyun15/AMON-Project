@@ -140,9 +140,23 @@ public class UserDataIO : MonoBehaviour
     {
         User user = ReadUserData();
 
-        if (user.stress + change < 0) return true;
+        if (user.stress + change < 0)
+        {
+            user.stress = 0;
 
-        else if (user.stress + change > 100) return false;
+            WriteUserData(user);
+
+            return true;
+        }
+
+        else if (user.stress + change > 100)
+        {
+            user.stress = 100;
+
+            WriteUserData(user);
+
+            return false;
+        }
 
         user.stress += change;
 
