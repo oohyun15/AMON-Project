@@ -297,7 +297,7 @@ public class AmonController : MonoBehaviour, IReset
     {
         if (state != InteractionState.Obstacle) return;
 
-        Debug.Log("swap 1");
+        if (animState == AnimationName.Strike) return;
 
         // 도끼로 무기 교체
         // ItemController.ItemSwap 사용
@@ -307,7 +307,54 @@ public class AmonController : MonoBehaviour, IReset
             if (!currentItem || currentItem.ID_num != 10) ItemController.Instance.ItemSwap(0);
         }
     
-        if (!attackDelay) gm.StartCoroutine(DestroyObs(obstacle));
+        if(currentItem == null)
+        {
+            animState = AnimationName.Strike;
+            PlayerAnimation();
+        }
+        else
+        {
+            currentItem.ItemActive();
+        }
+    }
+    
+    public void CalculateDamage()
+    {
+        if (currentItem == null)
+        {
+            obstacle.hp -= damage;
+            Debug.Log("발차기! 데미지는 = " + damage);
+        }
+        else
+        {
+            obstacle.hp -= axeDamage;
+            Debug.Log("도끼질! 데미지는 = " + axeDamage);
+        }
+
+        if (obstacle.hp > 0)
+        {
+            gm.StartCoroutine(GameManager.Instance.Cam.transform.GetComponent<CameraShake>().Shake(CSAmount/4, CSDuration));
+        }
+        else
+        {
+            // 코루틴 함수는 모두 게임매니저로 걸어놓음
+            gm.StartCoroutine(GameManager.Instance.Cam.transform.GetComponent<CameraShake>().Shake(CSAmount, CSDuration));
+
+            // 장애물 비활성화
+            obstacle.gameObject.SetActive(false);
+
+            // (용현) 구조 후 플레이어 상태 변경
+            state = currentItem ? InteractionState.Item : InteractionState.Idle;
+
+            /*
+            // (19.09.02) 인터렉션 버튼 아이템 이미지 비활성화
+            gm.interactionImage.gameObject.SetActive(false);
+            */
+            
+            // 현재 장애물 null로 바꿈
+            obstacle = null;
+            isCollisionObs = false;
+        }
     }
 
     // (19.09.22) 드링크 사용
@@ -324,70 +371,6 @@ public class AmonController : MonoBehaviour, IReset
         if (!currentItem || currentItem.durability <= 0) return;
 
         currentItem.ItemActive();
-    }
-
-    // 딜레이를 위해 코루틴을 사용하였다.
-    private IEnumerator DestroyObs(Obstacle _obstacle)
-    {
-        attackDelay = true;
-
-        // 맨손
-        if (!currentItem)
-        {
-            _obstacle.hp -= damage;
-            Debug.Log("발차기! 데미지는 = " + damage);
-            animState = AnimationName.Strike;
-            PlayerAnimation();
-        }
-
-        // 도끼
-        // (19.08.02 용현) 내구도가 있을때만 작동하도록 수정 
-        else if (currentItem.ID_num == 10 &&
-                 currentItem.durability > 0)
-        {
-            _obstacle.hp -= axeDamage;
-            Debug.Log("도끼질! 데미지는 = " + damage);
-            currentItem.ItemActive();
-        }
-
-        // (19.09.22) 도끼 이외를 사용할 일이 없어졌으므로 주석처리함
-        /*
-        // 도끼가 아닌 아이템을 들고 있을 때 그 아이템 먼저 사용 (아직 3번키 아이템 적용 안됨!!)
-        else
-        {
-            currentItem.ItemActive();
-
-            state = InteractionState.Obstacle;
-        }
-        */
-
-        // 이건 추후에 Obstacle 클래스에 추가해야 할 듯
-        if (_obstacle.hp <= 0)
-        {
-            // 코루틴 함수는 모두 게임매니저로 걸어놓음
-            gm.StartCoroutine(GameManager.Instance.Cam.transform.GetComponent<CameraShake>().Shake(CSAmount, CSDuration));
-
-            // 장애물 비활성화
-            _obstacle.gameObject.SetActive(false);
-            
-            // (용현) 구조 후 플레이어 상태 변경
-            state = currentItem ? InteractionState.Item : InteractionState.Idle;
-
-            /*
-            // (19.09.02) 인터렉션 버튼 아이템 이미지 비활성화
-            gm.interactionImage.gameObject.SetActive(false);
-            */
-
-
-            // 현재 장애물 null로 바꿈
-            obstacle = null;
-            isCollisionObs = false;
-        }
-
-        // (19.08.19) 공격 애니메이션 총 길이로 설정
-        yield return new WaitForSeconds(1f);
-
-        attackDelay = false;
     }
 
     // 이동속도 및 회전 속도 증가
@@ -463,10 +446,7 @@ public class AmonController : MonoBehaviour, IReset
                 break;
         } 
     }
-
-
-
-
+    
     // (용현) 초기값 저장
     public void GetInitValue()
     {
