@@ -107,6 +107,8 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator timeCheckCoroutine;
 
+
+
     // 스테이지 데이터 변수
 
     /* PlayerPrefs 저장 키
@@ -427,9 +429,43 @@ public class GameManager : MonoBehaviour
      */
     }
 
+    // (19.10.03 예진) 게임 클리어, 실패 공통 실행 부분 합침
+    public void GameEnd()
+    {
+        int rescuedCount = dm.totalInjuredCount - leftInjured;
+        int stress = dm.stressData[rescuedCount];
+
+        // (19.08.25) 플레이 횟수 증가
+        UserDataIO.User user = UserDataIO.ReadUserData();
+        user.playCount++;
+        UserDataIO.WriteUserData(user);
+
+        // (19.10.03 예진) 피로도 업데이트
+        if (!UserDataIO.ChangeUserStress(stress))
+            Debug.Log("스트레스 100 초과, 게임 오버");
+            
+        // (19.09.15) 옵저버에게 user데이터 전달
+        // user.NotifyObservers();
+
+        // 조이스틱 멈춤
+        JoystickController.instance.StopJoystick();
+
+        // 애니메이션 멈춤
+        player.AnimationIdle();
+
+        // 세팅 버튼 비활성화
+        settingsButton.SetActive(false);
+
+        // (용현) UI 비활성화
+        foreach (GameObject ui in UI) ui.SetActive(false);
+
+    }
+
     // 게임 클리어시
     private void GameClear(ClearState state)
     {
+        GameEnd();
+
         Debug.Log("Game Clear - Reward : " + state.ToString());
 
         int money = dm.GetStageReward(DataManager.RewardType.Money, state);
@@ -442,32 +478,12 @@ public class GameManager : MonoBehaviour
         // (19.09.23.) 결과창 애니메이션 설정
         resultCharacterAnimator.SetBool("Victory", true);
 
-        // (19.08.25) 플레이 횟수 증가
-        UserDataIO.User user = UserDataIO.ReadUserData();
-        user.playCount++;
-        UserDataIO.WriteUserData(user);
-
-        // (19.09.15) 옵저버에게 user데이터 전달
-        // user.NotifyObservers();
-
         dm.ShowPlayerInfo();
 
         gameState = GameState.Clear;
 
-        // 조이스틱 멈춤
-        JoystickController.instance.StopJoystick();
-
-        // 애니메이션 멈춤
-        player.AnimationIdle();
-
         // 게임 결과창 활성화
         ShowGameResult(money, honor);
-
-        // 세팅 버튼 비활성화
-        settingsButton.SetActive(false);
-
-        // (용현) UI 비활성화
-        foreach (GameObject ui in UI) ui.SetActive(false);
 
         StopGame();
     }
@@ -475,6 +491,8 @@ public class GameManager : MonoBehaviour
     // 게임 클리어 실패 시. (19.08.05) 플레이어가 장애물에 맞아 죽었을 시 접근하기 위해 public으로 변경
     public void GameOver()
     {
+        GameEnd();
+
         if (gameState == GameState.Over)
         {
             Debug.Log("GameOver 중복 호출");
@@ -488,28 +506,8 @@ public class GameManager : MonoBehaviour
         // (19.09.23.) 결과창 애니메이션 설정
         resultCharacterAnimator.SetBool("Fail", true);
 
-        // (19.08.25) 플레이 횟수 증가
-        UserDataIO.User user = UserDataIO.ReadUserData();
-        user.playCount++;
-        UserDataIO.WriteUserData(user);
-
-        // (19.09.15) 옵저버에게 user데이터 전달
-        // user.NotifyObservers();
-
-        // 조이스틱 멈춤
-        JoystickController.instance.StopJoystick();
-
-        // 애니메이션 멈춤
-        player.AnimationIdle();
-
         // 게임 결과창 활성화
         ShowGameResult(0, 0);
-
-        // 세팅 버튼 비활성화
-        settingsButton.SetActive(false);
-
-        // (용현) UI 비활성화
-        foreach (GameObject ui in UI) ui.SetActive(false);
 
         StopGame();
     }

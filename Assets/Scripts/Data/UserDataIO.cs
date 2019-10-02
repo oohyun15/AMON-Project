@@ -22,6 +22,7 @@ public class UserDataIO : MonoBehaviour
     {
         public int money;                   // 소지 금액
         public int honor;                   // 소지 명예 점수
+        public int stress;                  // 피로도
         public int playCount;               // 플레이 횟수
         public int clearCount;              // 클리어 횟수
         public IObserver observer;          // 옵저버
@@ -60,6 +61,7 @@ public class UserDataIO : MonoBehaviour
 
         userElement.SetAttribute("money", user.money.ToString());
         userElement.SetAttribute("honor", user.honor.ToString());
+        userElement.SetAttribute("stress", user.stress.ToString());
         userElement.SetAttribute("playCount", user.playCount.ToString());
         userElement.SetAttribute("clearCount", user.clearCount.ToString());
         userElement.SetAttribute("oxygenlv", user.oxygenlv.ToString());
@@ -84,6 +86,7 @@ public class UserDataIO : MonoBehaviour
             {
                 money = 0,
                 honor = 0,
+                stress = 0,
                 playCount = 0,
                 clearCount = 0,
                 oxygenlv = 0,
@@ -103,6 +106,7 @@ public class UserDataIO : MonoBehaviour
             {
                 money = userElement.HasAttribute("money") ? System.Convert.ToInt32(userElement.GetAttribute("money")) : 0,
                 honor = userElement.HasAttribute("honor") ? System.Convert.ToInt32(userElement.GetAttribute("honor")) : 0,
+                stress = userElement.HasAttribute("stress") ? System.Convert.ToInt32(userElement.GetAttribute("stress")) : 0,
                 playCount = userElement.HasAttribute("playCount") ? System.Convert.ToInt32(userElement.GetAttribute("playCount")) : 0,
                 clearCount = userElement.HasAttribute("clearCount") ? System.Convert.ToInt32(userElement.GetAttribute("clearCount")) : 0,
                 oxygenlv = userElement.HasAttribute("oxygenlv") ? System.Convert.ToInt32(userElement.GetAttribute("oxygenlv")) : 0,
@@ -128,6 +132,24 @@ public class UserDataIO : MonoBehaviour
 
         WriteUserData(user);
 
+        return true;
+    }
+
+    // 유저 피로도 차감, 증가 - false return 시 게임 오버
+    public static bool ChangeUserStress(int change)
+    {
+        User user = ReadUserData();
+
+        if (user.stress + change < 0) return true;
+
+        else if (user.stress + change > 100) return false;
+
+        user.stress += change;
+
+        WriteUserData(user);
+
+        Debug.Log("현재 피로도 : " + ReadUserData().stress);
+        
         return true;
     }
 
