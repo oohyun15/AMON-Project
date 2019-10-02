@@ -233,6 +233,8 @@ public class AmonController : MonoBehaviour, IReset
 
                 // 게임 일시 정지
                 gm.StopGame();
+
+                JoystickController.instance.StopJoystick();
             }
         }
 
