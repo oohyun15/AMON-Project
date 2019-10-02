@@ -8,7 +8,7 @@
  * (19.08.16) 애니메이션 코드 추가
  * (19.09.02) StopJoystickController에 애니메이션 상태 변경 추가
  * (19.09.09) 이동 중 애니메이션 변경에 isTouch 접근이 필요해서 이 변수를 Public으로 설정
- * (19.10.02) 캐릭터 회전 변경 
+ * (19.10.02) 캐릭터 회전 삭제 
  * 함수 추가 및 수정 시 누가 작성했는지 꼭 해당 함수 주석으로 명시해주세요!
  * 작성일자: 19.07.14
  * 수정일자: 19.10.02
@@ -32,7 +32,6 @@ public class JoystickController : MonoBehaviour, IPointerDownHandler, IPointerUp
     private float radius;                       // 백그라운드 내에서 조이스틱이 이동가능한 범위의 반지름
     public bool isTouch = false;                // 터치를 눌렀는 지 확인하는 변수
 
-    private Vector2 t_initPos;                  // 터치 포인트 첫 시작점
     private GameObject Player;                  // 이동시킬 플레이어 오브젝트
     private float moveSpeed;                    // 플레이어의 이동속도. AmonController에서 가져올 예정
     private float rotSpeed;                     // 플레이어의 회전속도. AmonController에서 가져올 예정
@@ -93,9 +92,6 @@ public class JoystickController : MonoBehaviour, IPointerDownHandler, IPointerUp
         // 터치 포인트와 백그라운드 사이의 거리
         Vector2 trans_value = eventData.position - (Vector2)Background.position;
 
-        // (19.10.02) 터치 포인트와 초기 위치값 사이의 거리
-        Vector2 rot_value = eventData.position - t_initPos;
-
         // 백그라운드 이미지 밖으로 나오지 않게 설정
         trans_value = Vector2.ClampMagnitude(trans_value, radius);
 
@@ -104,9 +100,6 @@ public class JoystickController : MonoBehaviour, IPointerDownHandler, IPointerUp
 
         // value normalized
         trans_value = trans_value.normalized;
-        rot_value = rot_value.normalized;
-
-        Debug.Log(rot_value);
 
         // 조이스틱의 위치에 따른 백그라운드 거리. 캐릭터 속도차이를 주기위해 선언
         float distance = Vector2.Distance(Background.position, Joystick.position) / radius;
@@ -116,12 +109,6 @@ public class JoystickController : MonoBehaviour, IPointerDownHandler, IPointerUp
             trans_value.x * moveSpeed * distance * Time.deltaTime, 
             0f, 
             trans_value.y * moveSpeed * distance * Time.deltaTime);
-
-        // 캐릭터의 회전 위치를 변경
-        rotPosition = new Vector3(
-            -rot_value.y * rotSpeed * Time.deltaTime,
-            rot_value.x * rotSpeed * Time.deltaTime,
-            0f);
     }
 
     public void UpdateSpeed()

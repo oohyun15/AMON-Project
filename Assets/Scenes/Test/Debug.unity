@@ -290,6 +290,11 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 8570381478880589645, guid: 30a2de22838e76d45a34231c5bf18a75,
+        type: 3}
+      propertyPath: initCamPos
+      value: 
+      objectReference: {fileID: 1706769802}
     - target: {fileID: 4659894470715983196, guid: 30a2de22838e76d45a34231c5bf18a75,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -910,7 +915,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f65ae6d9c84ba5e4aaa839d69ec0bb84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotSpeed: 0
+  isTouch: 0
 --- !u!114 &710385370
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1594,6 +1599,12 @@ MonoBehaviour:
   stressData: 190000000f0000000a0000000500000000000000ecffffff
   minimap: {fileID: 0}
   totalInjuredCount: 5
+--- !u!1 &1706769802 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7177665652446560492, guid: 30a2de22838e76d45a34231c5bf18a75,
+    type: 3}
+  m_PrefabInstance: {fileID: 320786241}
+  m_PrefabAsset: {fileID: 0}
 --- !u!95 &1801736478 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: -6057140222963153312, guid: cb87c288c47801e4b8361b35339ee1e1,

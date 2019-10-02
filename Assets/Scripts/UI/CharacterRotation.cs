@@ -17,7 +17,9 @@ public class CharacterRotation : MonoBehaviour, IPointerDownHandler, IPointerUpH
     public bool isTouch = false;                // 터치를 눌렀는 지 확인하는 변수
 
     private GameObject player;
-    private Vector3 rotPosition;
+    private GameObject cam;
+    private Vector3 playerRot;
+    private Vector3 camRot;
     private Vector2 t_initPos;
     private float rotSpeed;
 
@@ -28,12 +30,18 @@ public class CharacterRotation : MonoBehaviour, IPointerDownHandler, IPointerUpH
         value = value.normalized;
 
         // 캐릭터의 회전 위치를 변경
-        rotPosition = new Vector3(
+        playerRot = new Vector3(
             0f,
             value.x * rotSpeed * Time.deltaTime,
             0f);
 
-        Debug.Log(rotPosition);
+        // 카메라의 회전 위치를 변경
+        camRot = new Vector3(
+            value.y * rotSpeed * Time.deltaTime,
+            0f,
+            0f);
+
+        Debug.Log(playerRot);
     }
 
     void IPointerDownHandler.OnPointerDown(PointerEventData eventData)
@@ -55,6 +63,8 @@ public class CharacterRotation : MonoBehaviour, IPointerDownHandler, IPointerUpH
     {
         player = GameManager.Instance.player.gameObject;
 
+        cam = player.GetComponent<AmonController>().initCamPos;
+
         rotSpeed = player.GetComponent<AmonController>().rotSpeed;
     }
 
@@ -62,6 +72,6 @@ public class CharacterRotation : MonoBehaviour, IPointerDownHandler, IPointerUpH
     void Update()
     {
         if (GameManager.Instance.gameState == GameManager.GameState.Playing && isTouch)
-            player.transform.Rotate(rotPosition);
+            player.transform.Rotate(playerRot);
     }
 }
