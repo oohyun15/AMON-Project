@@ -597,6 +597,25 @@ public class GameManager : MonoBehaviour
                 case "Panel":
                     panel = gameResultPanel[i].UI;
                     break;
+
+                case "Evidence":
+                    GameObject ui = gameResultPanel[i].UI;
+
+                    if (leftInjured == 0)
+                    {
+                        // 단서 획득
+
+                        Dictionary<string, object> eviData = dm.LoadEvidenceData();
+
+                        ui.transform.GetChild(1).GetComponent<Text>().text
+                            = eviData["evidenceName"].ToString();
+
+                        ui.SetActive(true);
+                    }
+                    else
+                        ui.SetActive(false);
+                    
+                    break;
             }
         }
 
