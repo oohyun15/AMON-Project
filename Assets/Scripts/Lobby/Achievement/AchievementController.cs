@@ -20,15 +20,19 @@ public class AchievementController : MonoBehaviour
     public Achievement achievement;
     public Text _name;                           // 도전과제 이름
     public Text content;                         // 내용
+    public Text info;
 
     private UserDataIO.User user;                // 유저 데이터
-    private readonly string achievementDataPath = "Data/achievements_data";
+    public readonly static string achievementDataPath = "Data/achievements_data";
     private List<Dictionary<string, object>> achievementData;
     private int achievementCount;
+    private Color initColor;
 
     private void Start()
     {
         user = UserDataIO.ReadUserData();
+
+        initColor = achievement._icon.color;
 
         LoadAchievementData();
     }
@@ -40,8 +44,8 @@ public class AchievementController : MonoBehaviour
         achievementCount = achievementData.Count;
 
         // 28을 더한 이유는 도전과제간 간격을 고려해 더한 것
-        achievementList.GetComponent<RectTransform>().sizeDelta 
-            = new Vector2(0, (28 + achievement.GetComponent<RectTransform>().rect.height) * achievementCount);
+        achievementList.GetComponent<RectTransform>().sizeDelta
+            = new Vector2(0, (28 + achievement.GetComponent<RectTransform>().rect.height) * (achievementCount + 1));
 
         achievements = new Achievement[achievementCount];
 
@@ -49,8 +53,10 @@ public class AchievementController : MonoBehaviour
         {
             Achievement _achievement = Instantiate(InitAchievement(index));
 
+            if (user.achievementList[index] == 1) _achievement._icon.color = Color.green;
+
             _achievement.transform.SetParent(achievementList.transform);
-      
+
             achievements[index] = _achievement;
         }
     }
@@ -59,9 +65,13 @@ public class AchievementController : MonoBehaviour
     {
         Achievement _achievement = achievement;
 
+        _achievement.index = index;
+
         _achievement._name = achievementData[index]["Name"].ToString();
 
         _achievement._content = achievementData[index]["Content"].ToString();
+
+        _achievement._info = achievementData[index]["Condition"].ToString();
 
         _achievement.achievementName.text = _achievement._name;
 
@@ -73,9 +83,7 @@ public class AchievementController : MonoBehaviour
     // 패널을 끌 때 패널 초기화를 위해 함수로 구현했음
     public void PanelOff()
     {
-        _name.text = "도전 과제를 선택해 주세요.";
-
-        content.text = "";
+        InitText();
 
         achievementList.GetComponent<RectTransform>().anchoredPosition
             = new Vector2(0, 0);
@@ -85,8 +93,63 @@ public class AchievementController : MonoBehaviour
 
     public void AchievementBtn(Achievement _achievement)
     {
+        int index = _achievement.index;
+
         _name.text = _achievement._name;
 
         content.text = _achievement._content;
+
+        switch (index)
+        {
+            case 2:
+                info.text = user.rescuedCount + " / " + _achievement._info;
+                break;
+
+            case 3:
+                info.text = user.destroyCount + " / " + _achievement._info;
+                break;
+
+            case 4:
+                info.text = user.playCount + " / " + _achievement._info;
+                break;
+
+            case 5:
+                info.text = user.deathCount + " / " + _achievement._info;
+                break;
+        }
+    }
+
+    public void ResetAchievement()
+    {
+        for (int index = 0; index < achievementCount; index++)
+        {
+            if (user.achievementList[index] == 1)
+            {
+                user.achievementList[index] = 0;
+
+                // 하드코딩
+                achievementList.transform.GetChild(index + 1).GetComponent<Achievement>()._icon.color = initColor;
+            }
+        }
+
+        user.playCount = 0;
+        user.clearCount = 0;
+        user.rescuedCount = 0;
+        user.destroyCount = 0;
+        user.resetCount = 0;
+        user.deathCount = 0;
+
+        UserDataIO.WriteUserData(user);
+
+        InitText();
+    }
+
+    private void InitText()
+    {
+        _name.text = "도전 과제를 선택해주세요.";
+
+        content.text = "";
+
+        info.text = "";
     }
 }

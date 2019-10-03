@@ -13,9 +13,10 @@
  * (19.09.13) 주변에 장애물 있을 때만 애니메이션 실행되도록 변수 추가 및 Collision 함수 수정
  * (19.09.22) 인게임 UI 수정. 인터렉션 관련 행동들은 모두 function call 형태로 바꿈
  * (19.10.03) 카메라 위치값 변수 추가
+ * (19.10.04) 장애물 파괴 카운팅
  * 함수 추가 및 수정 시 누가 작성했는지 꼭 해당 함수 주석으로 명시해주세요!
  * 작성일자: 19.07.14
- * 수정일자: 19.09.22
+ * 수정일자: 19.10.04
  ***************************************/
 
 using System.Collections;
@@ -358,6 +359,13 @@ public class AmonController : MonoBehaviour, IReset
             // 현재 장애물 null로 바꿈
             obstacle = null;
             isCollisionObs = false;
+
+            // (19.10.04) 장애물 파괴 카운트
+            UserDataIO.User user = UserDataIO.ReadUserData();
+
+            user.destroyCount++;
+
+            UserDataIO.WriteUserData(user);
         }
     }
 

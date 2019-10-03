@@ -3,6 +3,7 @@
  * 제작: 김용현
  * 떨어지는 장애물 관련 함수
  * (19.08.07) 초기 위치값 저장(IReset 추가)
+ * (19.10.04) 죽었을 때 유저데이터에 죽은 횟수 저장
  * 함수 추가 및 수정 시 누가 작성했는지 꼭 해당 함수 주석으로 명시해주세요!
  * 작성일자: 19.08.05
  * 수정일자: 19.08.07
@@ -54,8 +55,16 @@ public class FallObstacle : MonoBehaviour, IReset
                     // (용현) 플레이어 비활성화
                     collision.gameObject.SetActive(false);
 
+                    UserDataIO.User user = UserDataIO.ReadUserData();
+
+                    user.deathCount++;
+
+                    UserDataIO.WriteUserData(user);
+                    
                     // 게임 오버
                     GameManager.Instance.GameOver();
+
+                    break;
 
                     // (용현) 결과창 업데이트
                     /* Not Implemented */

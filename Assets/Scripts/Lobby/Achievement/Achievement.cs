@@ -14,7 +14,10 @@ using UnityEngine.UI;
 
 public class Achievement : MonoBehaviour
 {
+    public int index;
     public Text achievementName;
     public string _name;
     public string _content;
+    public string _info;
+    public Image _icon;
 }

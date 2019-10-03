@@ -26,7 +26,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviour
+public class GameManager : MonoBehaviour, IObserver
 {
     // 게임 클리어 시 보상 수준
     public enum ClearState { high, mid, low }
@@ -382,51 +382,18 @@ public class GameManager : MonoBehaviour
 
         if (time <= 0) GameOver();
 
-        else if (leftInjured == 0) GameClear(ClearState.high);
+        else if (leftInjured == 0)
+        {
+            GameClear(ClearState.high);
 
+            // 0번째 도전과제 달성
+            UpdateAchievement(0);
+        }
         else if (leftInjured <= maxLeftToMiddleCondition) GameClear(ClearState.mid);
 
         else if (leftInjured <= maxLeftToLowCondition) GameClear(ClearState.low);
 
         else GameOver();
-        
-     /*
-
-        // 플레이어 탈출 여부 확인
-        bool isPlayerEscaped = player.IsEscaped;
-
-        // 완전 게임 클리어 (최고 보상)
-        if (leftInjured == 0 && isPlayerEscaped)
-        {
-            gameOver = true;
-
-            GameClear(ClearState.high);
-        }
-        // 시간이 다 된 경우 - 중, 하위 게임 클리어 혹은 게임 오버
-        else if (time <= 0)
-        {
-            gameOver = true;
-
-            if (isPlayerEscaped)
-            {
-                // 게임 클리어 시 (플레이어 빠져 나옴)
-                if (leftInjured <= maxLeftToMiddleCondition)
-                    GameClear(ClearState.mid);
-
-                else if (leftInjured <= maxLeftToLowCondition)
-                    GameClear(ClearState.low);
-
-                // 최소 인원 구하지 못한 경우 게임 오버
-                else GameOver();
-            }
-            else
-            {
-                // 게임 오버 시 (플레이어 빠져 나오지 못함)
-                GameOver();
-            }
-        }
-
-     */
     }
 
     // (19.10.03 예진) 게임 클리어, 실패 공통 실행 부분 합침
@@ -438,14 +405,14 @@ public class GameManager : MonoBehaviour
         // (19.08.25) 플레이 횟수 증가
         UserDataIO.User user = UserDataIO.ReadUserData();
         user.playCount++;
+        user.rescuedCount += rescuedCount;
         UserDataIO.WriteUserData(user);
+
+        CheckAchievements(user);
 
         // (19.10.03 예진) 피로도 업데이트
         if (!UserDataIO.ChangeUserStress(stress))
             Debug.Log("스트레스 100 초과, 게임 오버");
-            
-        // (19.09.15) 옵저버에게 user데이터 전달
-        // user.NotifyObservers();
 
         // 조이스틱 멈춤
         JoystickController.instance.StopJoystick();
@@ -493,12 +460,6 @@ public class GameManager : MonoBehaviour
     {
         GameEnd();
 
-        if (gameState == GameState.Over)
-        {
-            Debug.Log("GameOver 중복 호출");
-
-            return;
-        }
         Debug.Log("game over");
 
         gameState = GameState.Over;
@@ -569,7 +530,7 @@ public class GameManager : MonoBehaviour
                 case "Injured":
                     Transform uiTransform = gameResultPanel[i].UI.transform;
 
-                    // 구조된ㄴ 부상자
+                    // 구조된 부상자
                     for (int j = uiTransform.childCount - 1; j >= dm.totalInjuredCount; j--)
                     {
                         Debug.Log(dm.totalInjuredCount);
@@ -688,5 +649,55 @@ public class GameManager : MonoBehaviour
     public void MoveScene(string sceneName)
     {
         SceneManager.LoadScene(sceneName);
+    }
+
+    // 도전과제 성공 여부 조건
+    public void CheckAchievements(UserDataIO.User user)
+    {
+        for (int index = 0; index < UserDataIO.achievementCount; index++)
+        {
+            if (user.achievementList[index] == 1) continue;
+
+            var temp = CSVReader.Read(AchievementController.achievementDataPath);
+
+            int condition = System.Convert.ToInt32(temp[index]["Condition"]);
+
+            switch(index)
+            {
+                case 0:
+                    if (leftInjured == 0) UpdateAchievement(0);
+                    break;
+
+                case 1:
+                    /* Not Implemented */
+                    break;
+
+                case 2:
+                    if (user.rescuedCount >= condition) UpdateAchievement(2);
+                    break;
+
+                case 3:
+                    if (user.destroyCount >= condition) UpdateAchievement(3);
+                    break;
+
+                case 4:
+                    if (user.playCount >= condition) UpdateAchievement(4);
+                    break;
+
+                case 5:
+                    if (user.deathCount >= condition) UpdateAchievement(5);
+                    break;
+            }
+        }
+    }
+
+    public void UpdateAchievement(int index)
+    {
+        // (19.10.04) 도전과제 성공 여부 업데이트
+        UserDataIO.User user = UserDataIO.ReadUserData();
+
+        user.achievementList[index] = 1;
+
+        UserDataIO.WriteUserData(user);
     }
 }
