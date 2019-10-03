@@ -2532,11 +2532,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
-  rotSpeed: 100
+  rotSpeed: 120
   initMoveSpeed: 0
   initRotSpeed: 0
   initPos: {x: 0, y: 0, z: 0}
   initRot: {x: 0, y: 0, z: 0, w: 0}
+  initCamPos: {fileID: 7177665652446560492}
   state: 0
   currentItem: {fileID: 0}
   ItemController: {fileID: 0}
@@ -2720,11 +2721,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4659894470715983196}
     m_Modifications:
-    - target: {fileID: 6913734481027277300, guid: 36edb56a0fcc5b94488a13adf9a74e2d,
-        type: 3}
-      propertyPath: m_Name
-      value: MinimapDot
-      objectReference: {fileID: 0}
     - target: {fileID: 6913734481027277301, guid: 36edb56a0fcc5b94488a13adf9a74e2d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2794,6 +2790,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 0.5018838
+      objectReference: {fileID: 0}
+    - target: {fileID: 6913734481027277300, guid: 36edb56a0fcc5b94488a13adf9a74e2d,
+        type: 3}
+      propertyPath: m_Name
+      value: MinimapDot
       objectReference: {fileID: 0}
     - target: {fileID: 6913734481027277302, guid: 36edb56a0fcc5b94488a13adf9a74e2d,
         type: 3}

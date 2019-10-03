@@ -676,6 +676,9 @@ public class GameManager : MonoBehaviour
             // (용현) UI 활성화
             foreach (GameObject ui in UI) ui.SetActive(true);
 
+            // (19.09.22) 아이템 슬롯 임시 비활성화
+            UI[2].SetActive(false);
+
             // 설정창 비활성화
             settings.SetActive(false);
         }

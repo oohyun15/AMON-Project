@@ -30,6 +30,7 @@ public class JoystickController : MonoBehaviour, IPointerDownHandler, IPointerUp
     public RectTransform Background;            // 좌측 하단 백그라운드
     public RectTransform Joystick;              // 촤즉 하단 조이스틱 버튼
     private float radius;                       // 백그라운드 내에서 조이스틱이 이동가능한 범위의 반지름
+    [HideInInspector]
     public bool isTouch = false;                // 터치를 눌렀는 지 확인하는 변수
 
     private GameObject Player;                  // 이동시킬 플레이어 오브젝트
