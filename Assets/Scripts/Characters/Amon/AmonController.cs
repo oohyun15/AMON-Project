@@ -217,8 +217,13 @@ public class AmonController : MonoBehaviour, IReset
             // 따라오는 부상자 있으면 구출 처리
             foreach (GameObject g in rescuers)
                 if (g.activeInHierarchy)
+                {
                     g.GetComponent<Injured>().Escaped();
 
+                    UserDataIO.User user = UserDataIO.ReadUserData();
+                    user.rescuedCount++;
+                    UserDataIO.WriteUserData(user);
+                }
             rescuers.Clear();
         }
 

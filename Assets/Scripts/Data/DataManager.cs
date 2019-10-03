@@ -6,8 +6,9 @@
  * (19.08.02) 유저 데이터 xml에서 불러오고 저장하는 부분 추가
  * (19.08.03) 미니맵 스프라이트 불러오는 부분 추가
  * (19.08.25) 클리어 횟수 추가
+ * (19.10.02) SaveGameResult 시 유저데이터 읽어옴
  * 작성일자: 19.07.30
- * 수정일자: 19.08.25
+ * 수정일자: 19.10.02
  ***************************************/
 
 using System.Collections;
@@ -123,6 +124,8 @@ public class DataManager : MonoBehaviour
 
     public void SaveGameResult(int money, int honor)
     {
+        user = UserDataIO.ReadUserData();
+
         // PlayerPrefs 이용한 저장
         PlayerPrefs.SetInt("Money", PlayerPrefs.GetInt("Money", 0) + money);
         PlayerPrefs.SetInt("Honor", PlayerPrefs.GetInt("Honor", 0) + honor);

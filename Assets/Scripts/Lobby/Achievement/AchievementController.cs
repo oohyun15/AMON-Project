@@ -116,6 +116,10 @@ public class AchievementController : MonoBehaviour
             case 5:
                 info.text = user.deathCount + " / " + _achievement._info;
                 break;
+
+            default:
+                info.text = "";
+                break;
         }
     }
 

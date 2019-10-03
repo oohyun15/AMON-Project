@@ -385,10 +385,8 @@ public class GameManager : MonoBehaviour, IObserver
         else if (leftInjured == 0)
         {
             GameClear(ClearState.high);
-
-            // 0번째 도전과제 달성
-            UpdateAchievement(0);
         }
+
         else if (leftInjured <= maxLeftToMiddleCondition) GameClear(ClearState.mid);
 
         else if (leftInjured <= maxLeftToLowCondition) GameClear(ClearState.low);
@@ -405,7 +403,6 @@ public class GameManager : MonoBehaviour, IObserver
         // (19.08.25) 플레이 횟수 증가
         UserDataIO.User user = UserDataIO.ReadUserData();
         user.playCount++;
-        user.rescuedCount += rescuedCount;
         UserDataIO.WriteUserData(user);
 
         CheckAchievements(user);
@@ -654,6 +651,8 @@ public class GameManager : MonoBehaviour, IObserver
     // 도전과제 성공 여부 조건
     public void CheckAchievements(UserDataIO.User user)
     {
+        
+
         for (int index = 0; index < UserDataIO.achievementCount; index++)
         {
             if (user.achievementList[index] == 1) continue;
