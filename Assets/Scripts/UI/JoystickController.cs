@@ -122,6 +122,7 @@ public class JoystickController : MonoBehaviour, IPointerDownHandler, IPointerUp
     public void StopJoystick()
     {
         isTouch = false;
+        GameManager.Instance.player.isTouchBack = false;
 
         // 조이스틱 위치를 초기 값으로 바꿔줌
         Joystick.localPosition = Vector3.zero;
