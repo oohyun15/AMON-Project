@@ -2548,6 +2548,7 @@ MonoBehaviour:
   playerAnim: {fileID: 0}
   animState: 0
   isCollisionObs: 0
+  isTouchBack: 0
   CSAmount: 0.02
   CSDuration: 0.1
   damage: 0
@@ -2721,6 +2722,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4659894470715983196}
     m_Modifications:
+    - target: {fileID: 6913734481027277300, guid: 36edb56a0fcc5b94488a13adf9a74e2d,
+        type: 3}
+      propertyPath: m_Name
+      value: MinimapDot
+      objectReference: {fileID: 0}
     - target: {fileID: 6913734481027277301, guid: 36edb56a0fcc5b94488a13adf9a74e2d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2779,22 +2785,17 @@ PrefabInstance:
     - target: {fileID: 6913734481027277301, guid: 36edb56a0fcc5b94488a13adf9a74e2d,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.2509419
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 6913734481027277301, guid: 36edb56a0fcc5b94488a13adf9a74e2d,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.25094193
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 6913734481027277301, guid: 36edb56a0fcc5b94488a13adf9a74e2d,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.5018838
-      objectReference: {fileID: 0}
-    - target: {fileID: 6913734481027277300, guid: 36edb56a0fcc5b94488a13adf9a74e2d,
-        type: 3}
-      propertyPath: m_Name
-      value: MinimapDot
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 6913734481027277302, guid: 36edb56a0fcc5b94488a13adf9a74e2d,
         type: 3}

@@ -3,8 +3,9 @@
 * 제작: 조예진
 * 중상 부상자 캐릭터의 상세 상호작용 코드
 * (19.08.01) 초기화 함수 추가
+* (19.10.05) 초기화 시 미니맵 점 활성화
 * 작성일자: 19.07.11
-* 수정일자: 19.08.01
+* 수정일자: 19.10.05
 ***************************************/
 
 using System.Collections;
@@ -85,6 +86,9 @@ public class SeriousInjured : Injured, IReset
 
         // 플레이어가 통과해 다닐 수 있도록 트리거 처리
         GetComponent<Collider>().isTrigger = false;
+
+        // 미니맵 표시점 활성화
+        minimapDot.gameObject.SetActive(true);
 
         // 미니맵 표시점 색깔 변경
         minimapDot.color = Color.red;
