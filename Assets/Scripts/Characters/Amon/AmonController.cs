@@ -61,7 +61,7 @@ public class AmonController : MonoBehaviour, IReset
     public enum AnimationName { Idle, Drink, Walk, Strike } // 애니메이션 상태 변수들
     public AnimationName animState = AnimationName.Idle; // 현재 애니메이션 상태
     public bool isCollisionObs = false; // 장애물 충돌 확인 변수
-    private bool isTouchBack = false; // 이동 중에 애니메이션을 받아왔는지를 알려주는 변수
+    public bool isTouchBack = false; // 이동 중에 애니메이션을 받아왔는지를 알려주는 변수
 
     [Header("CameraShake")]
     public float CSAmount;
