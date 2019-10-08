@@ -39,6 +39,8 @@ public class JoystickController : MonoBehaviour, IPointerDownHandler, IPointerUp
     private Vector3 movePosition;
     private Vector3 rotPosition;
 
+    public bool isBackMove = false;
+
     void Start()
     {
         // 싱글톤 구현, 인스턴스가 이미 있는지 확인, 없으면 인스턴스를 this로 할당
@@ -93,6 +95,10 @@ public class JoystickController : MonoBehaviour, IPointerDownHandler, IPointerUp
         // 터치 포인트와 백그라운드 사이의 거리
         Vector2 trans_value = eventData.position - (Vector2)Background.position;
 
+        //앞 뒤 판별해주는 변수
+        if (trans_value.y < 0) isBackMove = true;
+        else isBackMove = false;
+
         // 백그라운드 이미지 밖으로 나오지 않게 설정
         trans_value = Vector2.ClampMagnitude(trans_value, radius);
 
@@ -106,11 +112,17 @@ public class JoystickController : MonoBehaviour, IPointerDownHandler, IPointerUp
         float distance = Vector2.Distance(Background.position, Joystick.position) / radius;
 
         // 캐릭터의 포지션 위치를 변경
+        if(isBackMove)
         movePosition = new Vector3(
-            trans_value.x * moveSpeed * distance * Time.deltaTime, 
+            trans_value.x * moveSpeed/2 * distance * Time.deltaTime, 
             0f, 
+            trans_value.y * moveSpeed/2 * distance * Time.deltaTime);
+        else
+        movePosition = new Vector3(
+            trans_value.x * moveSpeed * distance * Time.deltaTime,
+            0f,
             trans_value.y * moveSpeed * distance * Time.deltaTime);
-    }
+}
 
     public void UpdateSpeed()
     {
