@@ -230,6 +230,8 @@ public class GameManager : MonoBehaviour, IObserver
         resultCharacterAnimator.SetBool("Victory", false);
         resultCharacterAnimator.SetBool("Fail", false);
 
+        // 결과창 캐릭터 렌더링 비활성화
+        resultCharacterAnimator.gameObject.SetActive(false);
 
         // 세팅 버튼 비활성화
         settingsButton.SetActive(false);
@@ -421,6 +423,8 @@ public class GameManager : MonoBehaviour, IObserver
         // (용현) UI 비활성화
         foreach (GameObject ui in UI) ui.SetActive(false);
 
+        // 결과창 캐릭터 렌더링 활성화
+        resultCharacterAnimator.gameObject.SetActive(true);
     }
 
     // 게임 클리어시
