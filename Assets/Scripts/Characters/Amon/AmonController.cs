@@ -62,6 +62,8 @@ public class AmonController : MonoBehaviour, IReset
     public AnimationName animState = AnimationName.Idle; // 현재 애니메이션 상태
     public bool isCollisionObs = false; // 장애물 충돌 확인 변수
     public bool isTouchBack = false; // 이동 중에 애니메이션을 받아왔는지를 알려주는 변수
+    public AnimationClip frontWalk;
+    public AnimationClip backWalk;
 
     [Header("CameraShake")]
     public float CSAmount;
@@ -538,12 +540,16 @@ public class AmonController : MonoBehaviour, IReset
                     if (playerAnim.GetBool("IsWalk")) playerAnim.SetBool("IsWalk", false);
 
                     playerAnim.SetBool("IsWalkResc", true);
+                    if (JoystickController.instance.isBackMove) playerAnim.SetBool("IsBackMove", true);
+                    else playerAnim.SetBool("IsBackMove", false);
                 }
                 else
                 {
                     if (playerAnim.GetBool("IsWalkResc")) playerAnim.SetBool("IsWalkResc", false);
 
                     playerAnim.SetBool("IsWalk", true);
+                    if (JoystickController.instance.isBackMove) playerAnim.SetBool("IsBackMove", true);
+                    else playerAnim.SetBool("IsBackMove", false);
                 }
                 break;
 
