@@ -409,7 +409,7 @@ public class GameManager : MonoBehaviour, IObserver
 
         // (19.10.03 예진) 피로도 업데이트
         if (!UserDataIO.ChangeUserStress(stress))
-            Debug.Log("스트레스 100 초과, 게임 오버");
+            SceneManager.LoadScene("GameOver_test");        // 피로도 100 이상일 때 초기화 씬으로 이동
 
         // 조이스틱 멈춤
         JoystickController.instance.StopJoystick();
