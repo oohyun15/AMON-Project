@@ -68,17 +68,11 @@ public class DataManager : MonoBehaviour
 
     private UserDataIO.User user;
 
-    public UserDataIO.User GetUser() { return user; }
-
     private void Awake()
     {
         LoadStageData();
 
         evidenceData = CSVReader.Read(evidenceDataPath);
-
-        // xml 이용한 로딩
-        user = UserDataIO.ReadUserData(); 
-        UserDataIO.WriteUserData(user);     // 임시 테스트 
     }
 
     // 스테이지 데이터 로드

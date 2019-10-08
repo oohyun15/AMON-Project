@@ -250,21 +250,19 @@ public class GameManager : MonoBehaviour, IObserver
 
     private void ApplyEquipItemEffect()
     {
-        int oxygenEffect = GetEquipedItemEffect("oxygen");
-        int glovesEffect = GetEquipedItemEffect("gloves");
+        UserDataIO.User user = UserDataIO.ReadUserData();
+
+        int oxygenEffect = GetEquipedItemEffect("oxygen", user);
+        int glovesEffect = GetEquipedItemEffect("gloves", user);
 
         time += oxygenEffect;
         player.damage = glovesEffect;
     }
 
-    private int GetEquipedItemEffect(string item)
+    private int GetEquipedItemEffect(string item, UserDataIO.User user)
     {
-        //int itemLv = PlayerPrefs.GetInt(item + "lv", 0);
-
-        UserDataIO.User user = UserDataIO.ReadUserData();
 
         // 아이템 현재 레벨 불러오기
-        // int lv = PlayerPrefs.GetInt(item + "lv", 0);
         int itemLv = 0;
 
         switch (item)

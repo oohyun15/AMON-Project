@@ -110,8 +110,7 @@ public class AmonController : MonoBehaviour, IReset
         }
 
         itemDataList = ItemDataManager.Instance.GetEquipItemData();
-        user = UserDataIO.ReadUserData();
-
+        
         // (용현) 초기값 저장
         GetInitValue();
     }
