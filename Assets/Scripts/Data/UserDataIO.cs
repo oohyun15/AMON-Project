@@ -5,6 +5,7 @@
  * (19,08.25) 플레이 횟수 추가
  * (19.09.15) User 클래스에 옵저버 패턴 추가
  * (19.10.04) 도전과제 추가
+ * (19.10.10) 랭크 추가
  *함수 추가 및 수정 시 누가 작성했는지 꼭 해당 함수 주석으로 명시해주세요!
  * 작성일자: 19.0X.XX
  * 수정일자: 19.09.15
@@ -24,6 +25,7 @@ public class UserDataIO : MonoBehaviour
         public int money;                   // 소지 금액
         public int honor;                   // 소지 명예 점수
         public int stress;                  // 피로도
+        public int rank;
 
         /* 도전과제 카운트 변수 */
         public int playCount;               // 플레이 횟수
@@ -59,6 +61,7 @@ public class UserDataIO : MonoBehaviour
         userElement.SetAttribute("money", user.money.ToString());
         userElement.SetAttribute("honor", user.honor.ToString());
         userElement.SetAttribute("stress", user.stress.ToString());
+        userElement.SetAttribute("rank", user.rank.ToString());
 
         /* 도전과제 카운트 변수 */
         userElement.SetAttribute("playCount", user.playCount.ToString());
@@ -100,6 +103,7 @@ public class UserDataIO : MonoBehaviour
                 money = 0,
                 honor = 0,
                 stress = 0,
+                rank = 0,
 
                 /* 도전과제 카운트 변수 */
                 playCount = 0,
@@ -131,6 +135,7 @@ public class UserDataIO : MonoBehaviour
                 money = userElement.HasAttribute("money") ? System.Convert.ToInt32(userElement.GetAttribute("money")) : 0,
                 honor = userElement.HasAttribute("honor") ? System.Convert.ToInt32(userElement.GetAttribute("honor")) : 0,
                 stress = userElement.HasAttribute("stress") ? System.Convert.ToInt32(userElement.GetAttribute("stress")) : 0,
+                rank = userElement.HasAttribute("rank") ? System.Convert.ToInt32(userElement.GetAttribute("rank")) : 0,
 
                 /* 도전과제 카운트 변수 */
                 playCount = userElement.HasAttribute("playCount") ? System.Convert.ToInt32(userElement.GetAttribute("playCount")) : 0,

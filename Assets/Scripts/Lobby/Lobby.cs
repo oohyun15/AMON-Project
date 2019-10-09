@@ -2,7 +2,9 @@
  * Lobby.cs
  * 제작: 조예진
  * 로비 씬 UI 관리 스크립트
+ * (19.10.10) 예진 - 계급 UI 표시 추가
  * 작성일자: 19.08.03.
+ * 수정일자: 19.10.10.
  ***************************************/
 
 using System.Collections;
@@ -15,7 +17,9 @@ public class Lobby : MonoBehaviour
 {
     [Header("Top")]
     public Text moneyText;
-    public Text honorText;
+    public Text rankName;
+    public Image rankImg;
+    public Image rankGaze;
 
     [Header("Evidence")]
     public Image eviImage;
@@ -24,17 +28,28 @@ public class Lobby : MonoBehaviour
     public Transform eviContents;
     public Sprite[] eviSprites;
 
+    [Header("Rank Up")]
+    public GameObject RankUpPanel;
+    public Sprite[] rankSprites;
+    public Image preRank;
+    public Image nowRank;
+
     [Header("Panel")]
     public GameObject NotifiPanel;
     public GameObject EvidencePanel;
 
     private UserDataIO.User userData;
+    List<Dictionary<string, object>> rankData;
+    int nextRankHonor;
     private ItemDataManager idm;
 
     private void Start()
     {
         idm = ItemDataManager.Instance;
         userData = UserDataIO.ReadUserData();
+        rankData = idm.GetRankData();
+
+        CheckUserRankUpped();
 
         SetUIText();
 
@@ -48,6 +63,40 @@ public class Lobby : MonoBehaviour
         }
     }
 
+    private void CheckUserRankUpped()
+    {
+
+        if (userData.rank >= rankData.Count - 1)
+            return;
+
+        nextRankHonor = System.Convert.ToInt32(rankData[userData.rank + 1]["honor"]);
+
+        if (userData.honor > nextRankHonor)
+        {
+            OpenRankupPanel(userData.rank, rankData);
+
+            userData.rank++;
+
+            UserDataIO.WriteUserData(userData);
+        }
+    }
+
+    private void OpenRankupPanel(int preLv, List<Dictionary<string, object>> rankData)
+    {
+        preRank.sprite = rankSprites[preLv];
+        nowRank.sprite = rankSprites[preLv + 1];
+
+        preRank.SetNativeSize();
+        nowRank.SetNativeSize();
+
+        preRank.transform.GetChild(0).GetComponent<Text>().text = rankData[preLv]["name"].ToString();
+        nowRank.transform.GetChild(0).GetComponent<Text>().text = rankData[preLv + 1]["name"].ToString();
+        
+        RankUpPanel.SetActive(true);
+        
+        SetUIText();
+    }
+
 
     /* TOP UI */
 
@@ -56,7 +105,21 @@ public class Lobby : MonoBehaviour
         userData = UserDataIO.ReadUserData();
 
         moneyText.text = userData.money + "";
-        honorText.text = userData.honor + "";
+        
+        rankName.text = rankData[userData.rank]["name"].ToString();
+        rankImg.sprite = rankSprites[userData.rank];
+        rankImg.SetNativeSize();
+
+        int preRankHonor = 0;
+
+        if (userData.rank != 0)
+            preRankHonor = System.Convert.ToInt32(rankData[userData.rank - 1]["honor"]);
+
+        if (userData.rank != rankData.Count - 1)
+        {
+            rankGaze.fillAmount = 1f * (userData.honor - preRankHonor) / nextRankHonor;
+            rankGaze.transform.GetChild(0).GetComponent<Text>().text = (int)(rankGaze.fillAmount * 100) + "%";
+        }
     }
 
     /* LOCKER ROOM */

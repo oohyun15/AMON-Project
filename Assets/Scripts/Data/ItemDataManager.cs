@@ -41,6 +41,9 @@ public class ItemDataManager : MonoBehaviour
     private readonly string evidenceDataPath = "Data/evidence_data";
     public List<Dictionary<string, object>> evidenceData;
 
+    private readonly string rankDataPath = "Data/rank_data";
+    public List<Dictionary<string, object>> rankData;
+
 
     void Start()
     {
@@ -49,9 +52,6 @@ public class ItemDataManager : MonoBehaviour
         else Destroy(gameObject);
 
         DontDestroyOnLoad(gameObject);
-
-        LoadEquipItemData();
-
     }
 
     public void LoadEquipItemData()
@@ -73,6 +73,11 @@ public class ItemDataManager : MonoBehaviour
         evidenceData = CSVReader.Read(evidenceDataPath);
     }
 
+    public void LoadRankData()
+    {
+        rankData = CSVReader.Read(rankDataPath);
+    }
+
     // (19.09.11.) 장착 아이템 개수 추가 -> 검색 편의를 위해 딕셔너리 리스트 형식으로 변경
     public Dictionary<string,object> GetEquipItemData()
     {
@@ -88,5 +93,13 @@ public class ItemDataManager : MonoBehaviour
             LoadEvidenceData();
 
         return evidenceData;
+    }
+
+    public List<Dictionary<string, object>> GetRankData()
+    {
+        if (rankData == null)
+            LoadRankData();
+
+        return rankData;
     }
 }
