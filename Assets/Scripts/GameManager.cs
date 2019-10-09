@@ -565,7 +565,7 @@ public class GameManager : MonoBehaviour, IObserver
                     {
                         // 단서 획득
 
-                        Dictionary<string, object> eviData = dm.LoadEvidenceData();
+                        Dictionary<string, object> eviData = ItemDataManager.Instance.GetEvidenceData()[dm.DataIndex];
 
                         ui.transform.GetChild(1).GetComponent<Text>().text
                             = eviData["evidenceName"].ToString();

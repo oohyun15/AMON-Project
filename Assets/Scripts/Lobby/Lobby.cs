@@ -13,19 +13,33 @@ using UnityEngine.SceneManagement;
 
 public class Lobby : MonoBehaviour
 {
-    [Header("UI")]
+    [Header("Top")]
     public Text moneyText;
     public Text honorText;
-    public GameObject NotifiPanel;
 
+    [Header("Evidence")]
+    public Image eviImage;
+    public Text eviName;
+    public Text eviInfo;
+    public Transform eviContents;
+    public Sprite[] eviSprites;
+
+    [Header("Panel")]
+    public GameObject NotifiPanel;
+    public GameObject EvidencePanel;
 
     private UserDataIO.User userData;
+    private ItemDataManager idm;
 
     private void Start()
     {
+        idm = ItemDataManager.Instance;
         userData = UserDataIO.ReadUserData();
 
         SetUIText();
+
+        InitEvidenceScroll();
+        InitEviInfo();
 
         // 피로도 100 이상인데 게임 초기화 되지 않았을 경우/초기화 씬으로 이동하지 않았을 경우 초기화 씬으로 이동
         if (userData.stress >= 100)
@@ -33,6 +47,9 @@ public class Lobby : MonoBehaviour
             SceneManager.LoadScene("GameOver_test");
         }
     }
+
+
+    /* TOP UI */
 
     public void SetUIText()
     {
@@ -42,12 +59,56 @@ public class Lobby : MonoBehaviour
         honorText.text = userData.honor + "";
     }
 
-    // 점점 투명해지는 알림창
-    /*
-    public void Notify (string notification)
+    /* LOCKER ROOM */
+
+    // 디버깅 용 버튼 
+    public void ResetItemData()
     {
-        StartCoroutine(OpenNotifyPanel(notification));
-    }*/
+        PlayerPrefs.DeleteKey("oxygenlv");
+        PlayerPrefs.DeleteKey("gloveslv");
+
+        userData.oxygenlv = 0;
+        userData.gloveslv = 0;
+        userData.axelv = 0;
+
+        UserDataIO.WriteUserData(userData);
+
+        GetComponent<ItemUpgrade>().UpdateEquipViewport();
+    }
+
+    /* EVIDENCE PANEL */
+
+    public void InitEvidenceScroll()
+    {
+        List<Dictionary<string, object>> eviList = idm.GetEvidenceData();
+        Evidence[] eviArr = eviContents.GetComponentsInChildren<Evidence>();
+
+        for (int i = 0; i < eviArr.Length; i++)
+        {
+            Dictionary<string, object> eviData = eviList[i];
+            Evidence evi = eviArr[i];
+            evi.SetEvidence(eviData, eviSprites[i]);
+            evi.btn.onClick.AddListener(() => OnClickEvidence(evi.Name, evi.Explain, evi.Img));
+        }
+
+        EvidencePanel.SetActive(false);
+    }
+
+    public void InitEviInfo()
+    {
+        eviImage.sprite = null;
+        eviName.text = "";
+        eviInfo.text = "단서를 선택해 주세요";
+    }
+
+    public void OnClickEvidence(string name, string explain, Sprite sprite)
+    {
+        eviImage.sprite = sprite;
+        eviName.text = name;
+        eviInfo.text = explain;
+    }
+
+
 
     public IEnumerator Notify (string notification)
     {
@@ -95,21 +156,6 @@ public class Lobby : MonoBehaviour
         }
 
         NotifiPanel.SetActive(false);
-    }
-
-    // 테스트 버튼 
-    public void ResetItemData()
-    {
-        PlayerPrefs.DeleteKey("oxygenlv");
-        PlayerPrefs.DeleteKey("gloveslv");
-
-        userData.oxygenlv = 0;
-        userData.gloveslv = 0;
-        userData.axelv = 0;
-
-        UserDataIO.WriteUserData(userData);
-
-        GetComponent<ItemUpgrade>().UpdateEquipViewport();
     }
 
     // (임시) 버튼 클릭 시 씬 이동 함수

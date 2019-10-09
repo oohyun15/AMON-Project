@@ -46,13 +46,14 @@ public class DataManager : MonoBehaviour
     private readonly string stageDataPath = "Data/stage_data";       // 스테이지 데이터 csv 파일 경로
     private List<Dictionary<string, object>> stageData;
 
-    private readonly string evidenceDataPath = "Data/evidence_data";
-    public List<Dictionary<string, object>> evidenceData;
-
     public List<int> stressData = new List<int> { 25, 15, 10, 5, 0, -20 };
 
     private string sceneName;
     private int dataIndex;
+    public int DataIndex
+    {
+        get { return dataIndex; }
+    }
 
     // Stage Data
 
@@ -71,8 +72,6 @@ public class DataManager : MonoBehaviour
     private void Awake()
     {
         LoadStageData();
-
-        evidenceData = CSVReader.Read(evidenceDataPath);
     }
 
     // 스테이지 데이터 로드
@@ -109,11 +108,6 @@ public class DataManager : MonoBehaviour
         totalInjuredCount = System.Convert.ToInt32(stageData[dataIndex]["total"]);
         maxLeftToLowCondition = totalInjuredCount - System.Convert.ToInt32(stageData[dataIndex]["low"]);
         maxLeftToMiddleCondition = totalInjuredCount - System.Convert.ToInt32(stageData[dataIndex]["mid"]);
-    }
-
-    public Dictionary<string, object> LoadEvidenceData()
-    {
-        return evidenceData[dataIndex];
     }
 
     public void SaveGameResult(int money, int honor)
