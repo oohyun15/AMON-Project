@@ -44,6 +44,8 @@ public class ItemDataManager : MonoBehaviour
     private readonly string rankDataPath = "Data/rank_data";
     public List<Dictionary<string, object>> rankData;
 
+    public Sprite[] eviSprites;
+
 
     void Start()
     {

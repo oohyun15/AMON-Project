@@ -78,6 +78,7 @@ public class GameManager : MonoBehaviour, IObserver
     public GameObject startButton;
     public GameObject settingsButton;
     public GameObject warningPanel;              // (예진) 탈출 버튼
+    public GameObject notifyPanel;
     public UISet[] gameResultPanel;             // (예진) 게임 결과 패널 UI 접근 방식 변경
     public GameObject settings;
     public GameObject[] UI;                     // (용현) 0: Joystick, 1: Interaction, 2: ItemSlots, 3: Minimap
@@ -483,6 +484,8 @@ public class GameManager : MonoBehaviour, IObserver
         {
             switch (gameResultPanel[i].name)
             {
+                // (19.10.10) 예진 게임 클리어/실패 없어져 필요 없는 부분 --> 씬 안에서 직접 설정할 것
+                /* 
                 // 게임 클리어 상태에 따라 텍스트와 배경 색 변경
                 case "Result":
                     if (gameState == GameState.Over)
@@ -501,6 +504,7 @@ public class GameManager : MonoBehaviour, IObserver
                 case "Stage":
                     gameResultPanel[i].UI.GetComponent<Text>().text = dm.GetStage();
                     break;
+                
 
                 // Money, Honor 텍스트 설정
                 case "Reward":
@@ -515,14 +519,14 @@ public class GameManager : MonoBehaviour, IObserver
                         gameResultPanel[i].UI.transform.GetChild(1).gameObject.SetActive(false);
                     }
                     break;
-
+                */
                 case "Money":
-                    if (gameState == GameState.Clear)
-                        gameResultPanel[i].UI.GetComponent<Text>().text = "+" + money;
+                    //if (gameState == GameState.Clear)
+                    gameResultPanel[i].UI.GetComponent<Text>().text = "+" + money;
                     break;
                 case "Honor":
-                    if (gameState == GameState.Clear)
-                        gameResultPanel[i].UI.GetComponent<Text>().text = "+" + honor;
+                    //if (gameState == GameState.Clear)
+                    gameResultPanel[i].UI.GetComponent<Text>().text = "+" + honor;
                     break;
 
                 // 구출한 부상자만큼 색깔 설정
@@ -561,19 +565,14 @@ public class GameManager : MonoBehaviour, IObserver
                 case "Evidence":
                     GameObject ui = gameResultPanel[i].UI;
 
-                    if (leftInjured == 0)
-                    {
-                        // 단서 획득
-
-                        Dictionary<string, object> eviData = ItemDataManager.Instance.GetEvidenceData()[dm.DataIndex];
-
-                        ui.transform.GetChild(1).GetComponent<Text>().text
-                            = eviData["evidenceName"].ToString();
-
-                        ui.SetActive(true);
-                    }
+                    // 단서 획득
+                    if (leftInjured == 0)                    
+                        GetEvidence(ui);                    
                     else
-                        ui.SetActive(false);
+                    {
+                        ui.transform.GetChild(0).GetComponent<Image>().sprite = null;
+                        ui.transform.GetChild(1).GetComponent<Text>().text = "단서\n획득 실패";
+                    }
                     
                     break;
             }
@@ -581,6 +580,21 @@ public class GameManager : MonoBehaviour, IObserver
 
         // 다른 UI 설정 끝나면 패널 열기
         panel.SetActive(true);
+    }
+
+    private void GetEvidence(GameObject ui)
+    {
+        Dictionary<string, object> eviData = ItemDataManager.Instance.GetEvidenceData()[dm.DataIndex];
+
+        ui.transform.GetChild(1).GetComponent<Text>().text
+            = eviData["evidenceName"].ToString();
+        ui.transform.GetChild(0).GetComponent<Image>().sprite = ItemDataManager.Instance.eviSprites[dm.DataIndex];
+
+        notifyPanel.transform.GetChild(0).GetComponent<Text>().text =
+            "단서를 획득했습니다!\n로비의 단서 창에서 확인하세요";
+        notifyPanel.SetActive(true);
+
+        ui.SetActive(true);
     }
 
     private IEnumerator CheckTime()

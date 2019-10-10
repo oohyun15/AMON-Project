@@ -1296,6 +1296,10 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 885380700, guid: 5c028d2e617be6d41a9a8f556bb5b8bc, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0.000023920255
+      objectReference: {fileID: 0}
     - target: {fileID: 233511015, guid: 5c028d2e617be6d41a9a8f556bb5b8bc, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -1367,10 +1371,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 885380700, guid: 5c028d2e617be6d41a9a8f556bb5b8bc, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0.062821746
       objectReference: {fileID: 0}
     - target: {fileID: 5698660505727319375, guid: 5c028d2e617be6d41a9a8f556bb5b8bc,
         type: 3}
@@ -3217,6 +3217,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7bb66af9710fdd4d900032e2ec08040, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  eviSprites:
+  - {fileID: 21300000, guid: 38e1a751d10cf124eadafed57aeaa79d, type: 3}
+  - {fileID: 21300000, guid: 98a862bcd8e569049ba385fc189d0031, type: 3}
 --- !u!4 &1167113232
 Transform:
   m_ObjectHideFlags: 0
