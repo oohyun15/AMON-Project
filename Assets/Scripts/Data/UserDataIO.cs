@@ -6,9 +6,10 @@
  * (19.09.15) User 클래스에 옵저버 패턴 추가
  * (19.10.04) 도전과제 추가
  * (19.10.10) 랭크 추가
+ * (19.10.12) Stage 클래스 추가
  *함수 추가 및 수정 시 누가 작성했는지 꼭 해당 함수 주석으로 명시해주세요!
  * 작성일자: 19.0X.XX
- * 수정일자: 19.09.15
+ * 수정일자: 19.10.12
  ***************************************/
 
 using System.Collections;
@@ -45,10 +46,19 @@ public class UserDataIO : MonoBehaviour
         // 저장할 값 늘어날 경우, WriteUserData와 ReadUserData에서 Set/GetAttribute 설정해 주어야 합니다
     }
 
+    public class Stage
+    {
+        public int[] isPlayed;
+        public int[] rescueNum;
+    }
+
     private readonly static string userDataFileName = "/userData.xml";
+    private readonly static string stageDataFileName = "/stageData.xml";
     private readonly static string achievementDataPath = "Data/achievements_data";
-    private static List<Dictionary<string, object>> achievementData;
+    private readonly static string stageDataPath = "Data/stage_data";
+    private static List<Dictionary<string, object>> achievementData, stageData;
     public static int achievementCount = 0;
+    public static int stageCount = 0;
 
     // 유저 데이터 저장 시
     public static void WriteUserData(User user)
@@ -94,7 +104,7 @@ public class UserDataIO : MonoBehaviour
 
         User user;
 
-        if (achievementCount == 0) achievementCount = FindAchievementCount();
+        if (achievementCount == 0) achievementCount = FindCount(achievementData, achievementDataPath);
 
         if (!File.Exists(path))
         {
@@ -168,6 +178,69 @@ public class UserDataIO : MonoBehaviour
         return user;
     }
 
+    public static void WriteStageData(Stage stage)
+    {
+        string path = GetPath(stageDataFileName);
+
+        XmlDocument doc = new XmlDocument();
+        XmlElement userElement = doc.CreateElement("stage");
+
+        for (int index = 0; index < stageCount; index++)
+        {
+            string number = "Stage" + index.ToString() + "RescueNumber";
+            string name = "Stage" + index.ToString() + "isPlayed";
+
+            userElement.SetAttribute(number, stage.rescueNum[index].ToString());
+            userElement.SetAttribute(name, stage.isPlayed[index].ToString());
+        }
+
+        doc.AppendChild(userElement);
+        doc.Save(path);
+    }
+
+    public static Stage ReadStageData()
+    {
+        string path = GetPath(stageDataFileName);
+
+        Stage stage;
+
+        if (stageCount == 0) stageCount = FindCount(stageData, stageDataPath);
+
+        if (!File.Exists(path))
+        {
+            stage = new Stage
+            {
+                isPlayed = new int[stageCount],
+                rescueNum = new int[stageCount]
+            };
+
+            WriteStageData(stage);
+        }
+        else
+        {
+            XmlDocument doc = new XmlDocument();
+            doc.Load(path);
+            XmlElement userElement = doc["stage"];
+
+            stage = new Stage
+            {
+                isPlayed = new int[stageCount],
+                rescueNum = new int[stageCount]
+            };
+
+            // 도전과제 달성 여부 확인
+            for (int index = 0; index < stageCount; index++)
+            {
+                string number = "Stage" + index.ToString() + "RescueNumber";
+                string name = "Stage" + index.ToString() + "isPlayed";
+
+                stage.rescueNum[index] = userElement.HasAttribute(number) ? System.Convert.ToInt32(userElement.GetAttribute(number)) : 0;
+                stage.isPlayed[index] = userElement.HasAttribute(name) ? System.Convert.ToInt32(userElement.GetAttribute(name)) : 0;
+            }
+        }
+        return stage;
+    }
+
     // 유저 소지액 차감, 증가
     public static bool ChangeUserMoney(int change)
     {
@@ -231,10 +304,10 @@ public class UserDataIO : MonoBehaviour
         return path;
     }
 
-    private static int FindAchievementCount()
+    private static int FindCount(List<Dictionary<string, object>> data, string path)
     {
-        achievementData = CSVReader.Read(achievementDataPath);
+        data = CSVReader.Read(path);
 
-        return achievementData.Count;
+        return data.Count;
     }
 }

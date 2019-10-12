@@ -15,41 +15,50 @@ using UnityEngine.UI;
 public class StagePanel : MonoBehaviour
 {   
     public StageLevel[] stageLevel;
-    public Sprite[] stageSprite;
-    public Sprite[] rescueSprite;
+    public Sprite[] stageSprite;        // 0: FastFood, 1: temp
+    public Sprite[] rescueSprite;       // 0: Before, 1: Success, 2: Fail
     public Image stageImage;
     public Text stageTitle;
 
     public int totalStageNum;
     private int index = 0;
 
-    private UserDataIO.User user;
+    private UserDataIO.Stage stage;
     private List<Dictionary<string, object>> stageData;
     private readonly string stageDataPath = "Data/stage_data";
 
     // Start is called before the first frame update
     void Start()
     {
-        user = UserDataIO.ReadUserData();
+        stage = UserDataIO.ReadStageData();
 
         stageData = CSVReader.Read(stageDataPath);
 
         SetStage(0);
     }
 
-    // 아직 스테이지 1만 있어서 이런식으로 구현함
+    // 아직 Stage01만 있어서 이런식으로 구현함
     // 이후에는 totalStageNum에 따라서 ChangeStage 함수에서 스테이지 3개 설정 해줘야함
     public void SetStage(int stageNum)
     {
         int stageCount = stageNum*3;
 
-        int temp = 0;
-
-        for (int index = stageCount; index < stageCount+3; index++)
+        for (int idx_data = stageCount, idx_level = 0; idx_data < stageCount+3; idx_data++, idx_level++)
         {
-            stageLevel[temp++].stageName.text = stageData[index]["sceneName"].ToString();
+            stageLevel[idx_level].stageName.text = stageData[idx_data]["sceneName"].ToString();
 
-            Debug.Log(index);
+            int rescueNum = stage.rescueNum[idx_data];
+
+            if (stage.isPlayed[idx_data] == 0)
+            {
+                for (int idx = 0; idx < 3; idx++) stageLevel[idx_level].rescueImage[idx].sprite = rescueSprite[0];
+            }
+            else
+            {
+                for (int idx = 0; idx < rescueNum; idx++) stageLevel[idx_level].rescueImage[idx].sprite = rescueSprite[1];
+
+                for (int idx = 2; idx >= rescueNum; idx--) stageLevel[idx_level].rescueImage[idx].sprite = rescueSprite[2];
+            }
         }
     }
 
@@ -58,7 +67,11 @@ public class StagePanel : MonoBehaviour
         if (index+num >= 0 && index+num < totalStageNum)
         {
             index += num;
+
             stageImage.sprite = stageSprite[index];
+
+            stageTitle.text = stageData[index]["stageTitle"].ToString();
+
             SetStage(index);
         }
     }

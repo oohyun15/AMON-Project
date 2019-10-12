@@ -15,6 +15,7 @@
  * (19.09.02)  인터렉션 버튼 아이템 이미지 추가
  * (19.09.15)  옵저버 추가
  * (19.09.22)  인게임 UI 수정
+ * (19.10.13)  Stage 클래스 관련 부상자수 저장 추가
  * 함수 추가 및 수정 시 누가 작성했는지 꼭 해당 함수 주석으로 명시해주세요!
  * 작성일자: 19.07.26
  * 수정일자: 19.09.22
@@ -64,6 +65,7 @@ public class GameManager : MonoBehaviour, IObserver
     private DataManager dm;
 
     [Header("Game State")]
+    public int stageNum;                        // 스테이지 번호, (Ex. Stage 1-1 => stageNum = 0, Stage 2-2 => stageNum = 4 (= 1*3 + 1)) 
     public GameState gameState = GameState.Ready;
     public int leftInjured;
     public float timeLimit;                     // 제한 시간, 초 단위
@@ -400,6 +402,12 @@ public class GameManager : MonoBehaviour, IObserver
     {
         int rescuedCount = dm.totalInjuredCount - leftInjured;
         int stress = dm.stressData[rescuedCount];
+        
+        // (19.10.13) 이번 스테이지에서 구출한 인원 저장
+        UserDataIO.Stage stage = UserDataIO.ReadStageData();
+        stage.rescueNum[stageNum] = rescuedCount;
+        stage.isPlayed[stageNum] = 1;
+        UserDataIO.WriteStageData(stage);
 
         // (19.08.25) 플레이 횟수 증가
         UserDataIO.User user = UserDataIO.ReadUserData();

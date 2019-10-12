@@ -692,7 +692,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uB3C4\uC804\uACFC\uC81C \uB370\uC774\uD130 \uC0AD\uC81C"
+  m_Text: "stageData.xml \uC0AD\uC81C"
 --- !u!222 &427076844
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -868,12 +868,12 @@ GameObject:
   - component: {fileID: 539086379}
   - component: {fileID: 539086378}
   m_Layer: 5
-  m_Name: btnResetAchivement
+  m_Name: btnResetStage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &539086377
 RectTransform:
   m_ObjectHideFlags: 0
@@ -887,11 +887,11 @@ RectTransform:
   m_Children:
   - {fileID: 427076842}
   m_Father: {fileID: 1471073717}
-  m_RootOrder: 5
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -29}
+  m_AnchoredPosition: {x: 0, y: 332}
   m_SizeDelta: {x: 430.5, y: 95.8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &539086378
@@ -937,9 +937,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 776026812}
-        m_MethodName: 
-        m_Mode: 6
+      - m_Target: {fileID: 776026814}
+        m_MethodName: ResetStageData
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1019,7 +1019,7 @@ RectTransform:
   m_Children:
   - {fileID: 1553255821}
   m_Father: {fileID: 1471073717}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1973,11 +1973,11 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1620569496}
+  - {fileID: 539086377}
   - {fileID: 1875513700}
   - {fileID: 1947970453}
   - {fileID: 608694306}
   - {fileID: 1687049117}
-  - {fileID: 539086377}
   - {fileID: 187606270}
   m_Father: {fileID: 623640704}
   m_RootOrder: 5
@@ -2478,7 +2478,7 @@ RectTransform:
   m_Children:
   - {fileID: 1345385667}
   m_Father: {fileID: 1471073717}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2610,7 +2610,7 @@ RectTransform:
   m_Children:
   - {fileID: 935545777}
   m_Father: {fileID: 1471073717}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2742,7 +2742,7 @@ RectTransform:
   m_Children:
   - {fileID: 819668143}
   m_Father: {fileID: 1471073717}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}

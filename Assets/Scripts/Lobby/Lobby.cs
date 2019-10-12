@@ -53,7 +53,7 @@ public class Lobby : MonoBehaviour
         // 피로도 100 이상인데 게임 초기화 되지 않았을 경우/초기화 씬으로 이동하지 않았을 경우 초기화 씬으로 이동
         if (userData.stress >= 100)
         {
-            SceneManager.LoadScene("GameOver_test");
+            SceneManager.LoadScene("GameOver");
         }
     }
 
