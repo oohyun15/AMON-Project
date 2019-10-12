@@ -17,7 +17,7 @@ public class Evidence : MonoBehaviour
     private Text txtName;
     public Button btn;
 
-    private void Start()
+    private void Awake()
     {
         image = gameObject.transform.GetChild(0).GetComponent<Image>();
         btn = gameObject.transform.GetChild(0).GetComponent<Button>();
