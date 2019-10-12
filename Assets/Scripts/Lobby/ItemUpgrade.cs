@@ -131,10 +131,10 @@ public class ItemUpgrade : MonoBehaviour
 
         int maxLv = ((List<Dictionary<string, object>>)itemDataList[item]).Count;
 
-        int honor = 0;
+        int rank = 0;
 
         if (lv != maxLv)
-            honor = System.Convert.ToInt32(GetDataValue(item, lv + 1, "honor"));
+            rank = System.Convert.ToInt32(GetDataValue(item, lv + 1, "rank"));
 
         content.UI.transform.GetChild(3).gameObject.SetActive(false);
 
@@ -143,12 +143,12 @@ public class ItemUpgrade : MonoBehaviour
         {
             content.UI.transform.GetChild(2).GetComponent<Button>().interactable = false;
         }
-        // 명예 점수 부족할 시 업그레이드 잠금
-        else if (userData.honor < honor)
+        // 계급 조건보다 낮을 시 업그레이드 잠금
+        else if (userData.rank < rank)
         {
             content.UI.transform.GetChild(3).gameObject.SetActive(true);
             content.UI.transform.GetChild(3).GetChild(0).GetComponent<Text>().text
-                = "명예점수 " + honor + "점 필요";
+                = ItemDataManager.Instance.rankData[rank]["name"].ToString() + " 이상 구입 가능";
         }
 
         // 아이템 설명 텍스트 설정

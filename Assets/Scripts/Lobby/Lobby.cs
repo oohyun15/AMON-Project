@@ -188,4 +188,9 @@ public class Lobby : MonoBehaviour
     {
         SceneManager.LoadScene(sceneName);
     }
+
+    public void OnClickMoveScene(string sceneName)
+    {
+        SceneManager.LoadScene(sceneName);
+    }
 }
