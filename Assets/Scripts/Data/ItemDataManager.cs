@@ -47,11 +47,16 @@ public class ItemDataManager : MonoBehaviour
     public Sprite[] eviSprites;
 
 
-    void Start()
+    void Awake()
     {
         if (instance == null)
+        {
             instance = this;
-        else Destroy(gameObject);
+        }
+        else if (instance != this)
+        {
+            Destroy(gameObject);
+        }
 
         DontDestroyOnLoad(gameObject);
     }
