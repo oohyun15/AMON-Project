@@ -3,8 +3,9 @@
  * 제작: 조예진
  * 로비 씬 UI 관리 스크립트
  * (19.10.10) 예진 - 계급 UI 표시 추가
+ * (19.10.12) 용현 - MoveScene 함수 static으로 변경
  * 작성일자: 19.08.03.
- * 수정일자: 19.10.10.
+ * 수정일자: 19.10.12.
  ***************************************/
 
 using System.Collections;
@@ -171,8 +172,6 @@ public class Lobby : MonoBehaviour
         eviInfo.text = explain;
     }
 
-
-
     public IEnumerator Notify (string notification)
     {
         // 알림창 텍스트 설정
@@ -223,7 +222,7 @@ public class Lobby : MonoBehaviour
 
     // (임시) 버튼 클릭 시 씬 이동 함수
     // 우선은 버튼에 onClick 함수 설정할 때 스트링으로 연결된 씬 입력하도록 설정
-    public void MoveScene(string sceneName)
+    public static void MoveScene(string sceneName)
     {
         SceneManager.LoadScene(sceneName);
     }
