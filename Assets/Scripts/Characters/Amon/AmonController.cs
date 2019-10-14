@@ -295,6 +295,8 @@ public class AmonController : MonoBehaviour, IReset
             !(isRescuing && nearInjured.type == Injured.InjuryType.SERIOUS) &&
             nearInjured.state != Injured.InjuredState.DEAD)
         {
+            nearInjured.lyingBody.SetActive(false);
+            nearInjured.huggedBody.SetActive(true);
             // 부상자 구조
             nearInjured.Rescue(this);
 

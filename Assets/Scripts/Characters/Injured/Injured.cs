@@ -23,6 +23,9 @@ public abstract class Injured : MonoBehaviour
     public InjuryType type;
     public InjuredState state;
 
+    public GameObject lyingBody;
+    public GameObject huggedBody;
+
     protected AmonController player;
     protected SpriteRenderer minimapDot;    // 미니맵 표시 점
     protected MeshRenderer meshRenderer;
