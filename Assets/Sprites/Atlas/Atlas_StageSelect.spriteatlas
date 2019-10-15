@@ -16,7 +16,7 @@ SpriteAtlas:
       maxTextureSize: 2048
       textureCompression: 0
       filterMode: 1
-      generateMipMaps: 0
+      generateMipMaps: 1
       readable: 0
       crunchedCompression: 0
       sRGB: 1
@@ -37,15 +37,16 @@ SpriteAtlas:
       padding: 4
       blockOffset: 1
       allowAlphaSplitting: 0
-      enableRotation: 1
-      enableTightPacking: 1
+      enableRotation: 0
+      enableTightPacking: 0
     variantMultiplier: 1
     packables:
     - {fileID: 102900000, guid: fb7453742e08c464f908e2e3cbd14d90, type: 3}
-    totalSpriteSurfaceArea: 6145201
+    totalSpriteSurfaceArea: 4167588
     bindAsDefault: 1
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
+  - {fileID: 21300000, guid: 3a71fc107af3be74489b1519e5d7dc5e, type: 3}
   - {fileID: 21300000, guid: cb71da60b57d98146b01f2ba139f46c6, type: 3}
   - {fileID: 21300000, guid: a7605e90ca7ace040a5b17abce957e46, type: 3}
   - {fileID: 21300000, guid: 89c03b52158206340938ff45b70d90dd, type: 3}
@@ -54,9 +55,11 @@ SpriteAtlas:
   - {fileID: 21300000, guid: d8cad0c67c47a8c4999607a8f36d8d6e, type: 3}
   - {fileID: 21300000, guid: 4c423dc6ec7042f469955d8740e78610, type: 3}
   - {fileID: 21300000, guid: 78114af7942fb2f4b80df1b039b7367a, type: 3}
+  - {fileID: 21300000, guid: bdd786b863d12c247807301d22aa9311, type: 3}
   - {fileID: 21300000, guid: 1d73fb0a6311eef4d9e293a915b11e9a, type: 3}
   - {fileID: 21300000, guid: 990cc84ab5f6b0c4a9c5eafb94af5fbe, type: 3}
   m_PackedSpriteNamesToIndex:
+  - Back_Button
   - Button_Right
   - People_Icon_Fail
   - Fastfood_Icon
@@ -65,6 +68,7 @@ SpriteAtlas:
   - BottomLine
   - Box_Skyblue
   - Box_Boarder(IpadStyle)
+  - TopLine
   - Button_Left
   - People_Icon_before
   m_Tag: Atlas_StageSelect
