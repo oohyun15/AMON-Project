@@ -91,7 +91,7 @@ public class GameManager : MonoBehaviour, IObserver
 
     [Header("Field Objects")]
     public AmonController player;
-    public GameObject Inventory;                // (태윤) Player 오브젝트에 상속된 아이템 받는 오브젝트 변수
+    //public GameObject Inventory;                // (태윤) Player 오브젝트에 상속된 아이템 받는 오브젝트 변수
     public GameObject Cam;
     public GameObject injuredParent;
     public Dictionary<string, List<GameObject>> objects;

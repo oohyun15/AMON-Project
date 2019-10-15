@@ -55,7 +55,7 @@ public class ItemController : MonoBehaviour
         TIN = GameManager.Instance.objects["Item"].Count;
 
         // (08.03) public 해제하고 GameManager를 통해서 변수에 할당
-        itemInvt = GameManager.Instance.Inventory;
+       // itemInvt = GameManager.Instance.Inventory;
         itemSlot = GameManager.Instance.UI[2];
         keys = new GameObject[TIN];
         keyItems = new Item[TIN];
@@ -93,7 +93,7 @@ public class ItemController : MonoBehaviour
         }
 
         // (용현) 현재 아이템도 일단 없는 상태로 해놓음
-        GameManager.Instance.player.currentItem = null;
+        //GameManager.Instance.player.currentItem = null;
 
         // (용현) 플레이어 상태를 Idle로 변경
         GameManager.Instance.player.state = AmonController.InteractionState.Idle;
@@ -105,7 +105,7 @@ public class ItemController : MonoBehaviour
         // 4번키, 즉 배열의 3번째는 맨손으로 설정
         if (itemNum == 3 || keyItems[itemNum].durability <= 0)
         {
-            GameManager.Instance.player.currentItem = null;
+          //  GameManager.Instance.player.currentItem = null;
 
             // (19.09.22) 인터렉션 UI 변경으로 인해 비활성화
             /*
@@ -119,9 +119,9 @@ public class ItemController : MonoBehaviour
 
             keyItems[itemNum].gameObject.SetActive(true);
 
-            GameManager.Instance.player.state = AmonController.InteractionState.Item;
+          //  GameManager.Instance.player.state = AmonController.InteractionState.Item;
 
-            GameManager.Instance.player.currentItem = keyItems[itemNum];
+           // GameManager.Instance.player.currentItem = keyItems[itemNum];
 
             // (19.09.22) 인터렉션 UI 변경으로 인해 비활성화
             /*
@@ -156,7 +156,7 @@ public class ItemController : MonoBehaviour
     }
 
     // 이거 왜 있는지 모르겠음
-    public IEnumerator AddItem(Item _item)
+   /* public IEnumerator AddItem(Item _item)
     {
         for (int i = 0; i < 3; i++)
         {
@@ -175,7 +175,7 @@ public class ItemController : MonoBehaviour
             }
         }
         yield return new WaitForSeconds(0.1f); // space키의 딜레이를 위해서 설정
-    }
+    }*/ 
 
     // (예진) 19.08.05. 아이템 내구도 다 닳았을 때 아이템 키에서 제거하고 슬롯에서 보이지 않게 함
     public void DeleteItemKey(Item item)
