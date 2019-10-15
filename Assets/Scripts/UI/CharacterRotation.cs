@@ -87,8 +87,6 @@ public class CharacterRotation : MonoBehaviour, IPointerDownHandler, IPointerUpH
         isTouch = true;
 
         t_initPos = eventData.position;
-
-        Debug.Log(t_initPos);
     }
 
     void IPointerUpHandler.OnPointerUp(PointerEventData eventData)

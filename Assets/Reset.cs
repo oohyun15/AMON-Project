@@ -1,7 +1,18 @@
-﻿using System.Collections;
+﻿/****************************************
+ * Reset.cs
+ * 제작: 조예진
+ * 초기화 스크립트
+ * (19.10.13) ㅇㅈ> 디버깅 용 돈/명예 추가 기능
+ * (19.10.13) oohyun15 스테이지 정보 추가
+ * 작성일자: 19.10.08.
+ * 수정일자: 19.10.13.
+ ***************************************/
+
+
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using System.IO;
 using System;
 
@@ -34,7 +45,20 @@ public class Reset : MonoBehaviour
 
         UserDataIO.WriteUserData(userData);
 
+        ResetStageData();
+
         panel.SetActive(true);
+    }
+
+    /* 테스트 버전 용 함수 */
+
+    public void ResetStageData()
+    {
+        try
+        {
+            File.Delete(Application.persistentDataPath + "/Data/stageData.xml");
+        }
+        catch(Exception e) { }
     }
 
     public void ResetUserData()
@@ -58,8 +82,26 @@ public class Reset : MonoBehaviour
         UserDataIO.WriteUserData(userData);
     }
 
+    public void AddMoney()
+    {
+        UserDataIO.User user = UserDataIO.ReadUserData();
+
+        user.money += 1000000;
+
+        UserDataIO.WriteUserData(user);
+    }
+
+    public void AddHonor(int honor)
+    {
+        UserDataIO.User user = UserDataIO.ReadUserData();
+
+        user.honor += honor;
+
+        UserDataIO.WriteUserData(user);
+    }
+
     public void MoveScene(string sceneName)
     {
-        SceneManager.LoadScene(sceneName);
+        Lobby.MoveScene(sceneName);
     }
 }

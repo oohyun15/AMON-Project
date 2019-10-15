@@ -3,8 +3,10 @@
  * 제작: 조예진
  * 로비 씬 UI 관리 스크립트
  * (19.10.10) 예진 - 계급 UI 표시 추가
+ * (19.10.12) 용현 - MoveScene 함수 static으로 변경
+ * (19.10.12) 예진 - 단서창 스크립트 분리
  * 작성일자: 19.08.03.
- * 수정일자: 19.10.10.
+ * 수정일자: 19.10.12.
  ***************************************/
 
 using System.Collections;
@@ -21,12 +23,6 @@ public class Lobby : MonoBehaviour
     public Image rankImg;
     public Image rankGaze;
 
-    [Header("Evidence")]
-    public Image eviImage;
-    public Text eviName;
-    public Text eviInfo;
-    public Transform eviContents;
-    public Sprite[] eviSprites;
 
     [Header("Rank Up")]
     public GameObject RankUpPanel;
@@ -53,13 +49,11 @@ public class Lobby : MonoBehaviour
 
         SetUIText();
 
-        InitEvidenceScroll();
-        InitEviInfo();
 
         // 피로도 100 이상인데 게임 초기화 되지 않았을 경우/초기화 씬으로 이동하지 않았을 경우 초기화 씬으로 이동
         if (userData.stress >= 100)
         {
-            SceneManager.LoadScene("GameOver_test");
+            SceneManager.LoadScene("GameOver");
         }
     }
 
@@ -139,39 +133,6 @@ public class Lobby : MonoBehaviour
         GetComponent<ItemUpgrade>().UpdateEquipViewport();
     }
 
-    /* EVIDENCE PANEL */
-
-    public void InitEvidenceScroll()
-    {
-        List<Dictionary<string, object>> eviList = idm.GetEvidenceData();
-        Evidence[] eviArr = eviContents.GetComponentsInChildren<Evidence>();
-
-        for (int i = 0; i < eviArr.Length; i++)
-        {
-            Dictionary<string, object> eviData = eviList[i];
-            Evidence evi = eviArr[i];
-            evi.SetEvidence(eviData, eviSprites[i]);
-            evi.btn.onClick.AddListener(() => OnClickEvidence(evi.Name, evi.Explain, evi.Img));
-        }
-
-        EvidencePanel.SetActive(false);
-    }
-
-    public void InitEviInfo()
-    {
-        eviImage.sprite = null;
-        eviName.text = "";
-        eviInfo.text = "단서를 선택해 주세요";
-    }
-
-    public void OnClickEvidence(string name, string explain, Sprite sprite)
-    {
-        eviImage.sprite = sprite;
-        eviName.text = name;
-        eviInfo.text = explain;
-    }
-
-
 
     public IEnumerator Notify (string notification)
     {
@@ -223,7 +184,12 @@ public class Lobby : MonoBehaviour
 
     // (임시) 버튼 클릭 시 씬 이동 함수
     // 우선은 버튼에 onClick 함수 설정할 때 스트링으로 연결된 씬 입력하도록 설정
-    public void MoveScene(string sceneName)
+    public static void MoveScene(string sceneName)
+    {
+        SceneManager.LoadScene(sceneName);
+    }
+
+    public void OnClickMoveScene(string sceneName)
     {
         SceneManager.LoadScene(sceneName);
     }

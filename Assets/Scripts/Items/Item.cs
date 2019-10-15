@@ -75,8 +75,6 @@ public class Item : MonoBehaviour, IReset
         // (용현) 19.07.30 아이템 사용 후 플레이어 상태 Idle로 변경
         gm.player.state = AmonController.InteractionState.Idle;
 
-        gm.player.currentItem = null;
-
         // (19.08.20) 아이콘 사라지지 않게 함
         // controller.DeleteItemKey(this);
     }

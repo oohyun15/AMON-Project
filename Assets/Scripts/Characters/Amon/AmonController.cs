@@ -26,13 +26,15 @@ using UnityEngine;
 public class AmonController : MonoBehaviour, IReset
 {
     // 플레이어 상태 종류
-    public enum InteractionState { Idle, Item, Obstacle, Rescue } 
+    public enum InteractionState { Idle, Obstacle, Rescue } 
 
     [Header("Player Info")]
     public float moveSpeed;
     public float rotSpeed;
+    public int damage;                  // 장애물 발차기 공격 데미지
     public float initMoveSpeed;
     public float initRotSpeed;
+    public int initDamage;
     public Vector3 initPos;             // 초기 Position 값
     public Quaternion initRot;          // 초기 Rotation 값
     public GameObject initCamPos;       // 카메라 위치 값
@@ -40,14 +42,17 @@ public class AmonController : MonoBehaviour, IReset
     [Header("Player State")]
     public InteractionState state = InteractionState.Idle; // 현재 플레이어의 상태
 
-    [Header("Currnet Item")]
+   /* [Header("Currnet Item")]
     public Item currentItem;            // 플레이어가 현재 가지고 있는 아이템을 받아오는 변수
-    public ItemController ItemController;
+    public ItemController ItemController; */
 
     [Header("Obstacle")]
     public Obstacle obstacle;          // 충돌처리된 장애물을 받아올 변수
     public bool attackDelay = false;    // 장애물 공격 시 딜레이를 주기위한 변수
-
+    public GameObject axeAttack;
+    public GameObject axeIdle;
+    private bool IsEquipAxe = false;
+    
     [Header("Rescue")]
     public bool isRescuing;             // 현재 중상 부상자 구조중인지 저장할 변수
     public Transform backPoint;         // 부상자 업었을 때 위치 받아올 변수
@@ -80,7 +85,6 @@ public class AmonController : MonoBehaviour, IReset
     [Header("Destory")]
     private int shoeLv;
     private int axeLv;
-    public int damage;                  // 장애물 공격 데미지
     private int axeDamage;
 
 
@@ -180,7 +184,7 @@ public class AmonController : MonoBehaviour, IReset
             case "Obstacle":
 
                 // (용현) 구조 후 플레이어 상태 변경, 아이템 들고있을 때 고려함
-                state = currentItem ? InteractionState.Item : InteractionState.Idle;
+                state = InteractionState.Idle;
 
                 
                 // (19.09.22) 인터렉션 UI 변경으로 인해 비활성화
@@ -247,7 +251,7 @@ public class AmonController : MonoBehaviour, IReset
             }
         }
 
-        // (19.08.20) 아이템 획득 시
+       /* // (19.08.20) 아이템 획득 시
         else if(other.CompareTag("FieldItem"))
         {
             FieldItem fi = other.GetComponent<FieldItem>();
@@ -267,7 +271,7 @@ public class AmonController : MonoBehaviour, IReset
                     break;
                 }
             }
-        }
+        }*/
     }
 
     private void OnTriggerExit(Collider other)
@@ -295,11 +299,19 @@ public class AmonController : MonoBehaviour, IReset
             !(isRescuing && nearInjured.type == Injured.InjuryType.SERIOUS) &&
             nearInjured.state != Injured.InjuredState.DEAD)
         {
+            if (playerAnim.GetBool("IsIdle"))
+            {
+                playerAnim.SetBool("IsIdle",false);
+                playerAnim.SetBool("IsIdleResc", true);
+            }
+
+            nearInjured.lyingBody.SetActive(false);
+            nearInjured.huggedBody.SetActive(true);
             // 부상자 구조
             nearInjured.Rescue(this);
 
             // (용현) 구조 후 플레이어 상태 변경
-            state = currentItem ? InteractionState.Item : InteractionState.Idle;
+            state = InteractionState.Idle;
         }
     }
 
@@ -309,29 +321,19 @@ public class AmonController : MonoBehaviour, IReset
         if (state != InteractionState.Obstacle) return;
 
         if (animState == AnimationName.Strike) return;
-
-        // 도끼로 무기 교체
-        // ItemController.ItemSwap 사용
-        if (isRescuing) ItemController.Instance.ItemSwap(3);
-        else
+        
+        if(!isRescuing)
         {
-            if (!currentItem || currentItem.ID_num != 10) ItemController.Instance.ItemSwap(0);
+            axeIdle.SetActive(false);
+            axeAttack.SetActive(true);
         }
-    
-        if(currentItem == null)
-        {
-            animState = AnimationName.Strike;
-            PlayerAnimation();
-        }
-        else
-        {
-            currentItem.ItemActive();
-        }
+        animState = AnimationName.Strike;
+        PlayerAnimation();
     }
     
     public void CalculateDamage()
     {
-        if (currentItem == null)
+        if (isRescuing)
         {
             obstacle.hp -= damage;
             Debug.Log("발차기! 데미지는 = " + damage);
@@ -355,7 +357,7 @@ public class AmonController : MonoBehaviour, IReset
             obstacle.gameObject.SetActive(false);
 
             // (용현) 구조 후 플레이어 상태 변경
-            state = currentItem ? InteractionState.Item : InteractionState.Idle;
+            state =  InteractionState.Idle;
 
             /*
             // (19.09.02) 인터렉션 버튼 아이템 이미지 비활성화
@@ -376,7 +378,7 @@ public class AmonController : MonoBehaviour, IReset
     }
 
     // (19.09.22) 드링크 사용
-    public void UseDrink()
+   /* public void UseDrink()
     {
         // 버프 중이면 사용 X
         if (checkBuff) return;
@@ -389,7 +391,7 @@ public class AmonController : MonoBehaviour, IReset
         if (!currentItem || currentItem.durability <= 0) return;
 
         currentItem.ItemActive();
-    }
+    }*/
 
     // 이동속도 및 회전 속도 증가
     public IEnumerator UpSpeed(int _addSpeed, int _timer)
@@ -437,18 +439,6 @@ public class AmonController : MonoBehaviour, IReset
 
                 break;
 
-            // 아이템 사용
-            case InteractionState.Item:
-
-                UseDrink();
-                
-                // (19.09.22) 이미지를 바꿀 필요가 없으므로 주석처리함
-                /*
-                // (19.09.02) 아이템 이미지 비활성화
-                if (!currentItem) gm.interactionImage.gameObject.SetActive(false);
-                */
-                break;
-
             // 장애물 제거
             case InteractionState.Obstacle:
 
@@ -468,8 +458,6 @@ public class AmonController : MonoBehaviour, IReset
     // (용현) 초기값 저장
     public void GetInitValue()
     {
-        ItemController = gameObject.transform.GetComponent<ItemController>();
-
         transform = GetComponent<Transform>();
 
         isRescuing = false;
@@ -479,6 +467,8 @@ public class AmonController : MonoBehaviour, IReset
         initMoveSpeed = moveSpeed;
 
         initRotSpeed = rotSpeed;
+
+        initDamage = damage;
 
         initPos = gameObject.transform.position;
 
@@ -511,19 +501,19 @@ public class AmonController : MonoBehaviour, IReset
 
         rotSpeed = initRotSpeed;
 
-        currentItem = null;
-
         checkBuff = false;
 
         shoeLv = 1; // user.gloveslv;
 
-        damage = System.Convert.ToInt32(((List<Dictionary<string, object>>)itemDataList["gloves"])[shoeLv - 1]["effect"]);
+        damage = initDamage;
 
         axeLv = 1;//user.axelv;
 
         axeDamage = System.Convert.ToInt32(((List<Dictionary<string, object>>)itemDataList["axe"])[axeLv - 1]["effect"]);
 
+        axeAttack.SetActive(false);
 
+        axeIdle.SetActive(true);
     }
 
     public void PlayerAnimation() // (9.9 태윤, 움직이다가 애니메이션 바뀌는 것때문에 IsWalk도 false로 바꾸도록 함)
@@ -586,6 +576,12 @@ public class AmonController : MonoBehaviour, IReset
 
     public void AnimationIdle()
     {
+        if (axeAttack.activeInHierarchy)
+        {
+            axeAttack.SetActive(false);
+            axeIdle.SetActive(true);
+        }
+
         animState = AnimationName.Idle;
 
         foreach (AnimatorControllerParameter prmt in playerAnim.parameters)
