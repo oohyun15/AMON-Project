@@ -20,11 +20,12 @@ public class EvidenceController : MonoBehaviour
     public Text eviInfo;
     public Transform eviContents;
     public Sprite[] eviSprites;
+    public Sprite emptySprite;
 
     private void Start()
     {
         idm = ItemDataManager.Instance;
-        
+
         InitEvidenceScroll();
         InitEviInfo();
     }
@@ -33,12 +34,24 @@ public class EvidenceController : MonoBehaviour
     {
         List<Dictionary<string, object>> eviList = idm.GetEvidenceData();
         Evidence[] eviArr = eviContents.GetComponentsInChildren<Evidence>();
+        UserDataIO.Stage stage = UserDataIO.ReadStageData();
+
+        Dictionary<string, object> noData = new Dictionary<string, object>
+        {
+            ["evidenceName"] = "미획득 단서",
+            ["evidenceExplain"] = "아직 획득하지 못한 단서입니다"
+        };
 
         for (int i = 0; i < eviArr.Length; i++)
         {
             Dictionary<string, object> eviData = eviList[i];
             Evidence evi = eviArr[i];
-            evi.SetEvidence(eviData, eviSprites[i]);
+
+            if (stage.isGotEvidence[i] == 0)
+                evi.SetEvidence(noData, emptySprite);
+            else
+                evi.SetEvidence(eviData, eviSprites[i]);
+
             evi.btn.onClick.AddListener(() => OnClickEvidence(evi.Name, evi.Explain, evi.Img));
         }
 

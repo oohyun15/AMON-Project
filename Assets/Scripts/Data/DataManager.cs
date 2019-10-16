@@ -114,13 +114,9 @@ public class DataManager : MonoBehaviour
     {
         user = UserDataIO.ReadUserData();
 
-        // PlayerPrefs 이용한 저장
-        PlayerPrefs.SetInt("Money", PlayerPrefs.GetInt("Money", 0) + money);
-        PlayerPrefs.SetInt("Honor", PlayerPrefs.GetInt("Honor", 0) + honor);
-
         // (19. 08. 02) xml 이용한 저장
         user.honor += honor;
-        user.money += money;
+        user.money += money + user.addReward;
 
         // (19.08.25) 클리어 횟수 증가
         user.clearCount++;
