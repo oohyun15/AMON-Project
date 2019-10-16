@@ -1015,12 +1015,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 259959264}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &264102957 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6609943028678667063, guid: 0896d1f118dd59445be4e2bbc9bcaffc,
-    type: 3}
-  m_PrefabInstance: {fileID: 966693024}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &264102958 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6609943028678667062, guid: 0896d1f118dd59445be4e2bbc9bcaffc,
@@ -1047,6 +1041,12 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 708180723974499241, guid: b4c793da3ca5f85478e28690fa72abdc, type: 3}
+--- !u!224 &270276433 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 1372063379195358896, guid: 1423fc149117a1943ab328ee3ecaf1e8,
+    type: 3}
+  m_PrefabInstance: {fileID: 843998476}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &291025340
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3882,6 +3882,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b258f50fa86353349845dcd041c512f8, type: 3}
+--- !u!1 &1129460906 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8882652438074227198, guid: 1423fc149117a1943ab328ee3ecaf1e8,
+    type: 3}
+  m_PrefabInstance: {fileID: 843998476}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1142264731 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4471361613092341537, guid: f80318fd592e55d4192c54fb98e99996,
@@ -9593,7 +9599,8 @@ MonoBehaviour:
   startButton: {fileID: 1413926551}
   settingsButton: {fileID: 259959266}
   warningPanel: {fileID: 1534740385}
-  notifyPanel: {fileID: 264102957}
+  evidencePanel: {fileID: 1129460906}
+  evidence: {fileID: 270276433}
   gameResultPanel:
   - name: Panel
     UI: {fileID: 843998482}

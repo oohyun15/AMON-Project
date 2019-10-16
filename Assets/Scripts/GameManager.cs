@@ -80,7 +80,8 @@ public class GameManager : MonoBehaviour, IObserver
     public GameObject startButton;
     public GameObject settingsButton;
     public GameObject warningPanel;              // (예진) 탈출 버튼
-    public GameObject notifyPanel;
+    public GameObject evidencePanel;
+    public Transform evidence;
     public UISet[] gameResultPanel;             // (예진) 게임 결과 패널 UI 접근 방식 변경
     public GameObject settings;
     public GameObject[] UI;                     // (용현) 0: Joystick, 1: Interaction, 2: ItemSlots, 3: Minimap
@@ -364,7 +365,6 @@ public class GameManager : MonoBehaviour, IObserver
     public int CheckLeftInjured()
     {
         leftInjured = 0;
-
         List<GameObject> injureds = new List<GameObject>();
         injureds.AddRange(objects["Serious"]);
         //injureds.AddRange(objects["Minor"]);
@@ -372,7 +372,7 @@ public class GameManager : MonoBehaviour, IObserver
         foreach (GameObject i in injureds)
             if (i.activeInHierarchy)
                 leftInjured++;
-            
+
         return leftInjured;
     }
 
@@ -602,9 +602,11 @@ public class GameManager : MonoBehaviour, IObserver
             = eviData["evidenceName"].ToString();
         ui.transform.GetChild(0).GetComponent<Image>().sprite = ItemDataManager.Instance.eviSprites[dm.DataIndex];
 
-        notifyPanel.transform.GetChild(0).GetComponent<Text>().text =
-            "단서를 획득했습니다!\n로비의 단서 창에서 확인하세요";
-        notifyPanel.SetActive(true);
+        evidence.GetChild(0).GetComponent<Image>().sprite = ItemDataManager.Instance.eviSprites[dm.DataIndex];
+        evidence.GetChild(1).GetComponent<Text>().text = eviData["evidenceName"].ToString();
+        evidence.GetChild(2).GetComponent<Text>().text = eviData["evidenceExplain"].ToString();
+
+        evidencePanel.SetActive(true);
 
         ui.SetActive(true);
     }
