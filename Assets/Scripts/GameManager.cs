@@ -407,6 +407,10 @@ public class GameManager : MonoBehaviour, IObserver
         UserDataIO.Stage stage = UserDataIO.ReadStageData();
         stage.rescueNum[stageNum] = rescuedCount;
         stage.isPlayed[stageNum] = 1;
+        if (leftInjured == 0)
+            stage.isGotEvidence[stageNum] = 1;
+        else
+            stage.isGotEvidence[stageNum] = 0;
         UserDataIO.WriteStageData(stage);
 
         // (19.08.25) 플레이 횟수 증가

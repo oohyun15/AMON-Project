@@ -27,6 +27,7 @@ public class UserDataIO : MonoBehaviour
         public int honor;                   // 소지 명예 점수
         public int stress;                  // 피로도
         public int rank;
+        public int addReward;               // 추가 보상
 
         /* 도전과제 카운트 변수 */
         public int playCount;               // 플레이 횟수
@@ -49,6 +50,7 @@ public class UserDataIO : MonoBehaviour
     public class Stage
     {
         public int[] isPlayed;
+        public int[] isGotEvidence;
         public int[] rescueNum;
     }
 
@@ -72,6 +74,7 @@ public class UserDataIO : MonoBehaviour
         userElement.SetAttribute("honor", user.honor.ToString());
         userElement.SetAttribute("stress", user.stress.ToString());
         userElement.SetAttribute("rank", user.rank.ToString());
+        userElement.SetAttribute("addReward", user.addReward.ToString());
 
         /* 도전과제 카운트 변수 */
         userElement.SetAttribute("playCount", user.playCount.ToString());
@@ -114,6 +117,7 @@ public class UserDataIO : MonoBehaviour
                 honor = 0,
                 stress = 0,
                 rank = 0,
+                addReward = 0,
 
                 /* 도전과제 카운트 변수 */
                 playCount = 0,
@@ -146,6 +150,7 @@ public class UserDataIO : MonoBehaviour
                 honor = userElement.HasAttribute("honor") ? System.Convert.ToInt32(userElement.GetAttribute("honor")) : 0,
                 stress = userElement.HasAttribute("stress") ? System.Convert.ToInt32(userElement.GetAttribute("stress")) : 0,
                 rank = userElement.HasAttribute("rank") ? System.Convert.ToInt32(userElement.GetAttribute("rank")) : 0,
+                addReward = userElement.HasAttribute("addReward") ? System.Convert.ToInt32(userElement.GetAttribute("addReward")) : 0,
 
                 /* 도전과제 카운트 변수 */
                 playCount = userElement.HasAttribute("playCount") ? System.Convert.ToInt32(userElement.GetAttribute("playCount")) : 0,
@@ -189,9 +194,11 @@ public class UserDataIO : MonoBehaviour
         {
             string number = "Stage" + index.ToString() + "RescueNumber";
             string name = "Stage" + index.ToString() + "isPlayed";
+            string evidence = "Stage" + index.ToString() + "isGotEvidence";
 
             userElement.SetAttribute(number, stage.rescueNum[index].ToString());
             userElement.SetAttribute(name, stage.isPlayed[index].ToString());
+            userElement.SetAttribute(evidence, stage.isGotEvidence[index].ToString());
         }
 
         doc.AppendChild(userElement);
@@ -211,6 +218,7 @@ public class UserDataIO : MonoBehaviour
             stage = new Stage
             {
                 isPlayed = new int[stageCount],
+                isGotEvidence = new int[stageCount],
                 rescueNum = new int[stageCount]
             };
 
@@ -225,6 +233,7 @@ public class UserDataIO : MonoBehaviour
             stage = new Stage
             {
                 isPlayed = new int[stageCount],
+                isGotEvidence = new int[stageCount],
                 rescueNum = new int[stageCount]
             };
 
@@ -233,9 +242,11 @@ public class UserDataIO : MonoBehaviour
             {
                 string number = "Stage" + index.ToString() + "RescueNumber";
                 string name = "Stage" + index.ToString() + "isPlayed";
+                string evidence = "Stage" + index.ToString() + "isGotEvidence";
 
                 stage.rescueNum[index] = userElement.HasAttribute(number) ? System.Convert.ToInt32(userElement.GetAttribute(number)) : 0;
                 stage.isPlayed[index] = userElement.HasAttribute(name) ? System.Convert.ToInt32(userElement.GetAttribute(name)) : 0;
+                stage.isGotEvidence[index] = userElement.HasAttribute(evidence) ? System.Convert.ToInt32(userElement.GetAttribute(evidence)) : 0;
             }
         }
         return stage;
