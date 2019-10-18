@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6431343148075020264}
   - component: {fileID: 5597004284712327470}
   - component: {fileID: 8702645122998528382}
+  - component: {fileID: 913700796}
   m_Layer: 0
   m_Name: FX_Touch
   m_TagString: Untagged
@@ -47,13 +48,13 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7253582329277519809}
   serializedVersion: 6
-  lengthInSec: 5
+  lengthInSec: 0.3
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
@@ -4846,3 +4847,15 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   fixedTime: 0
+--- !u!114 &913700796
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7253582329277519809}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d06488cb732139438020734b66ca914, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
