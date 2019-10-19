@@ -76,14 +76,14 @@ public class Fragments : MonoBehaviour, IReset
 
     public void Explosion()
     {
+        Vector3 temp = transform.position;
         foreach(var fg in _fragment)
         {
             Collider col = fg.fragment.GetComponent<Collider>();
 
             if (col.attachedRigidbody != null)
             {
-                col.attachedRigidbody.AddExplosionForce(80000.0f, Vector3.right, 10.0f, 300.0f);
-                
+                col.attachedRigidbody.AddExplosionForce(80000.0f, temp, 5.0f, 300.0f);
             }
         }
     }

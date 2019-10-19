@@ -237,7 +237,7 @@ public class AmonController : MonoBehaviour, IReset
             go.transform.SetParent(gameObject.transform);
             go.transform.localPosition = Vector3.zero;
             go.transform.localScale = Vector3.one;
-          
+
         }
 
         // (19.09.22) 소방관 탈출 시
