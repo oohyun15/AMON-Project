@@ -6,8 +6,9 @@
  * (19.08.02) FInd 사용하지 않고 AmonController는 GameManager에서 불러와 사용함
  * (19.08.03) IReset 인터페이스 추가
  * (19.08.07) 초기화 관련 수정
+ * (19.10.19) 폭발 스크립트 추가
  * 작성일자: 19.07.09
- * 수정일자: 19.08.07
+ * 수정일자: 19.10.19
  ***************************************/
 
 using System.Collections;
@@ -20,8 +21,9 @@ public class FallTrigger : MonoBehaviour, IReset
     //public Obstacle obstacle; // 인스턴스화할 장애물을 받아오는 변수, 하이라키창에서 Object 직접 연결
 
     public Material _material;                       // 하이라키창에서 material 직접 연결
-    public GameObject fallObs;
+    public GameObject FallObs;                      // 장애물(Obstacle) 또는 부서지는 벽(Fragments)를 넣을 수 있음
     public GameObject obs;
+    public float time;
 
     private new Renderer renderer;
     private Material initMaterial;
@@ -66,10 +68,10 @@ public class FallTrigger : MonoBehaviour, IReset
         // Red material 적용
         renderer.material = _material;
 
-        // 3초 뒤 장애물 생성, rigidbody에 의해 생성된 위치에서 자동으로 떨어짐
-        yield return new WaitForSeconds(3f);
+        // time 뒤 장애물 생성, rigidbody에 의해 생성된 위치에서 자동으로 떨어짐
+        yield return new WaitForSeconds(time);
 
-        fallObs.SetActive(true);
+        FallObs.SetActive(true);
 
         yield return new WaitForSeconds(0.9f);
 
@@ -77,10 +79,19 @@ public class FallTrigger : MonoBehaviour, IReset
         gameObject.SetActive(false);
 
         // 떨어지는 장애물 비활성화
-        fallObs.SetActive(false);
+        FallObs.SetActive(false);
 
         // 기존에 있던 장애물 활성화
         obs.SetActive(true);
+    }
+
+    IEnumerator Explosion()
+    {
+        // Red material 적용
+        renderer.material = _material;
+
+        // 3초 뒤 장애물 생성, rigidbody에 의해 생성된 위치에서 자동으로 떨어짐
+        yield return new WaitForSeconds(time);
     }
 
     public void GetInitValue()
@@ -89,7 +100,7 @@ public class FallTrigger : MonoBehaviour, IReset
 
         initTriggerPos = gameObject.transform.position;
 
-        initFallObsPos = fallObs.transform.position;
+        initFallObsPos = FallObs.transform.position;
     }
 
     public void SetInitValue()
@@ -100,15 +111,15 @@ public class FallTrigger : MonoBehaviour, IReset
 
         gameObject.transform.position = initTriggerPos;
 
-        fallObs.transform.position = initFallObsPos;
+        FallObs.transform.position = initFallObsPos;
 
-        for (int i =0; i < fallObs.transform.childCount; i++)
+        for (int i =0; i < FallObs.transform.childCount; i++)
         {
             // 자식(벽돌)들에게 초기화 명령
-            fallObs.transform.GetChild(i).GetComponent<FallObstacle>().SetInitValue();
+            FallObs.transform.GetChild(i).GetComponent<FallObstacle>().SetInitValue();
         }
 
-        fallObs.SetActive(false);
+        FallObs.SetActive(false);
 
         obs.GetComponent<Obstacle>().initActive = false;
     }

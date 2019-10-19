@@ -14,9 +14,10 @@
  * (19.09.22) 인게임 UI 수정. 인터렉션 관련 행동들은 모두 function call 형태로 바꿈
  * (19.10.03) 카메라 위치값 변수 추가
  * (19.10.04) 장애물 파괴 카운팅
+ * (19.10.19) 구조 시 FX 추가
  * 함수 추가 및 수정 시 누가 작성했는지 꼭 해당 함수 주석으로 명시해주세요!
- * 작성일자: 19.07.14
- * 수정일자: 19.10.04
+ * 작성일자: 19.07.14.
+ * 수정일자: 19.10.19.
  ***************************************/
 
 using System.Collections;
@@ -215,7 +216,7 @@ public class AmonController : MonoBehaviour, IReset
     private void OnTriggerEnter(Collider other)
     {
         // (19.09.22) 태그 이름 바꿈 "Exit" -> "Save"
-        if (other.CompareTag("Save"))
+        if (other.CompareTag("Save") && isRescuing)
         {
             isEscaped = true;
 
@@ -230,6 +231,13 @@ public class AmonController : MonoBehaviour, IReset
                     UserDataIO.WriteUserData(user);
                 }
             rescuers.Clear();
+
+            // (19.10.19) 구조 시 FX 추가
+            GameObject go = Instantiate(gm.FX_Ingame[0]);
+            go.transform.SetParent(gameObject.transform);
+            go.transform.localPosition = Vector3.zero;
+            go.transform.localScale = Vector3.one;
+          
         }
 
         // (19.09.22) 소방관 탈출 시
@@ -343,6 +351,13 @@ public class AmonController : MonoBehaviour, IReset
             obstacle.hp -= axeDamage;
             Debug.Log("도끼질! 데미지는 = " + axeDamage);
         }
+
+        // (19.10.19) 도끼질 FX 추가
+        GameObject go = Instantiate(gm.FX_Ingame[3]);
+        go.transform.SetParent(gameObject.transform);
+        go.transform.localPosition = new Vector3(0.004f, 0.092f, 0.122f);
+        go.transform.localRotation = Quaternion.identity;
+        go.transform.localScale = Vector3.one*5f;
 
         if (obstacle.hp > 0)
         {

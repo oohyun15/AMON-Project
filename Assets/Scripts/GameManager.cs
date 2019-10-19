@@ -16,6 +16,7 @@
  * (19.09.15)  옵저버 추가
  * (19.09.22)  인게임 UI 수정
  * (19.10.13)  Stage 클래스 관련 부상자수 저장 추가
+ * (19.10.19)  파티클 리스트 추가
  * 함수 추가 및 수정 시 누가 작성했는지 꼭 해당 함수 주석으로 명시해주세요!
  * 작성일자: 19.07.26
  * 수정일자: 19.09.22
@@ -69,6 +70,7 @@ public class GameManager : MonoBehaviour, IObserver
     public GameState gameState = GameState.Ready;
     public int leftInjured;
     public float timeLimit;                     // 제한 시간, 초 단위
+    public float hurtTime;                      // 캔버스에 빨갛게 올라와요!
 
     [Header("Clear Requirements")]              // 구조되지 않고 남아 있는 부상자 인원 기준
     public int maxLeftToMiddleCondition;        // 중간 보상 최대 인원
@@ -89,6 +91,9 @@ public class GameManager : MonoBehaviour, IObserver
     public Image interactionImage;              // (용현) 인터렉션 아이템 이미지
     public Sprite[] itemImages;                 // (용현) 인터렉션 아이템 이미지 종류
                                                 // 0: Axe, 1: Drink, 2: Coin(임시)
+
+    [Header("Particle")]
+    public GameObject[] FX_Ingame;              // 0: FX_Save, 1: FX_Damaged, 2: FX_Hurt, 3: FX_HitDust
 
     [Header("Field Objects")]
     public AmonController player;
@@ -215,6 +220,9 @@ public class GameManager : MonoBehaviour, IObserver
 
         // (용현) UI 비활성화
         foreach (GameObject ui in UI) ui.SetActive(false);
+
+        // FX_Hurt 비활성화
+        FX_Ingame[2].SetActive(false);
      
         // 필드 오브젝트 초기화 (자동 버전)
         foreach (var pair in objects)
@@ -618,9 +626,15 @@ public class GameManager : MonoBehaviour, IObserver
             SetTimeText(time);
 
             oxygenSlider.value -= Time.deltaTime;
-            
+
+            // (19.10.19) FX_Hurt 추가
+            if (time <  hurtTime&&
+                !FX_Ingame[2].activeInHierarchy) FX_Ingame[2].SetActive(true);
+
             yield return null;
         }
+
+
 
         SetTimeText(time);
 
