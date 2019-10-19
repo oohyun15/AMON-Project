@@ -1,9 +1,10 @@
 ﻿/****************************************
  * Fragments.cs
  * 제작: 김용현
- * 부셔지는 벽 관련 스크립트
+ * 부서지는 벽 관련 스크립트
+ * (19.10.19) 폭발 스크립트 추가
  * 작성일자: 19.10.13.
- * 수정일자: 19.10.13.
+ * 수정일자: 19.10.19.
  ***************************************/
 
 using System.Collections;
@@ -30,8 +31,6 @@ public class Fragments : MonoBehaviour, IReset
     {
         num = transform.childCount;
 
-        Debug.Log(num);
-
         _fragment = new Fragment[num];
 
 
@@ -43,8 +42,6 @@ public class Fragments : MonoBehaviour, IReset
             _fragment[index].initPos = _fragment[index].fragment.transform.position;
             _fragment[index].initRot = _fragment[index].fragment.transform.rotation;
         }
-
-
     }
 
     public void SetInitValue()
