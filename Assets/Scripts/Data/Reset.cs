@@ -30,7 +30,7 @@ public class Reset : MonoBehaviour
         UserDataIO.User userData = UserDataIO.ReadUserData();
 
         // 추가 보상 업데이트
-        int addReward = System.Convert.ToInt32(ItemDataManager.Instance.GetRankData()[userData.rank]["addReward"]);
+        int addReward = System.Convert.ToInt32(ItemDataManager.Instance.GetRankData()[userData.rank]["add_reward"]);
         userData.addReward = addReward;
 
         // 데이터 리셋
