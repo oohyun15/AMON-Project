@@ -72,6 +72,21 @@ public class Fragments : MonoBehaviour, IReset
         }
 
         GetInitValue();
-
     }
+
+    public void Explosion()
+    {
+        foreach(var fg in _fragment)
+        {
+            Collider col = fg.fragment.GetComponent<Collider>();
+
+            if (col.attachedRigidbody != null)
+            {
+                col.attachedRigidbody.AddExplosionForce(80000.0f, Vector3.right, 10.0f, 300.0f);
+                
+            }
+        }
+    }
+
+
 }

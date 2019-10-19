@@ -21,9 +21,11 @@ public class FallTrigger : MonoBehaviour, IReset
     //public Obstacle obstacle; // 인스턴스화할 장애물을 받아오는 변수, 하이라키창에서 Object 직접 연결
 
     public Material _material;                       // 하이라키창에서 material 직접 연결
-    public GameObject FallObs;                      // 장애물(Obstacle) 또는 부서지는 벽(Fragments)를 넣을 수 있음
+    public GameObject FallObs;                      // 장애물(Obstacle)
+    public Fragments fragments;                     // 부서지는 벽(Fragments)
     public GameObject obs;
     public float time;
+    public int type;                                // 0: 장애물, 1: 부서지는 벽
 
     private new Renderer renderer;
     private Material initMaterial;
@@ -60,7 +62,20 @@ public class FallTrigger : MonoBehaviour, IReset
     private void OnTriggerEnter(Collider other)
     {
         // (용현) AmonController를 GameManager에서 가져오고 게임매니저가 코루틴돌게 수정
-        if (other.gameObject == gm.player.gameObject) gm.StartCoroutine(FallingObs());
+        if (other.gameObject == gm.player.gameObject)
+        {
+            switch(type)
+            {
+                case 0:
+                    gm.StartCoroutine(FallingObs());
+                    break;
+
+                case 1:
+                    gm.StartCoroutine(Explosion());
+                    break;
+            }
+            
+        }
     }
 
     IEnumerator FallingObs()
@@ -92,6 +107,8 @@ public class FallTrigger : MonoBehaviour, IReset
 
         // 3초 뒤 장애물 생성, rigidbody에 의해 생성된 위치에서 자동으로 떨어짐
         yield return new WaitForSeconds(time);
+
+        fragments.Explosion();
     }
 
     public void GetInitValue()
