@@ -543,19 +543,22 @@ public class AmonController : MonoBehaviour, IReset
                 if (isRescuing)
                 {
                     if (playerAnim.GetBool("IsWalk")) playerAnim.SetBool("IsWalk", false);
-
                     playerAnim.SetBool("IsWalkResc", true);
+
                     if (JoystickController.instance.isBackMove) playerAnim.SetBool("IsBackMove", true);
                     else playerAnim.SetBool("IsBackMove", false);
                 }
                 else
                 {
                     if (playerAnim.GetBool("IsWalkResc")) playerAnim.SetBool("IsWalkResc", false);
-
                     playerAnim.SetBool("IsWalk", true);
+
                     if (JoystickController.instance.isBackMove) playerAnim.SetBool("IsBackMove", true);
                     else playerAnim.SetBool("IsBackMove", false);
                 }
+
+                playerAnim.SetFloat("WalkAnimSpd", moveSpeed/initMoveSpeed);
+
                 break;
 
             case AnimationName.Strike:
@@ -601,7 +604,8 @@ public class AmonController : MonoBehaviour, IReset
 
         foreach (AnimatorControllerParameter prmt in playerAnim.parameters)
         {
-            playerAnim.SetBool(prmt.name, false);
+            if (prmt.name.Contains("Is")) playerAnim.SetBool(prmt.name, false);
+            else playerAnim.SetFloat(prmt.name, 1.0f);
         }
         if(isRescuing) playerAnim.SetBool("IsIdleResc", true);
         else playerAnim.SetBool("IsIdle", true);
