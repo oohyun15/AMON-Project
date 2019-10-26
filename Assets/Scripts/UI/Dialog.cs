@@ -14,20 +14,27 @@ public class Dialog : MonoBehaviour
     public Text talker;
     public Text dialog;
 
-    private int index;
+    public float talkingSpeed;
+    protected int index;
     private bool isTalking;
     private string nowDialog;
 
     private List<Dictionary<string, object>> dialogData;
-    private readonly string path = "Data/Dialog/test";
+    protected string path = "Data/Dialog/";
 
-    private void Start()
+    protected virtual void Start()
+    {
+        InitDialog(path);
+    }
+
+    public virtual void InitDialog(string path)
     {
         index = 0;
 
         isTalking = false;
 
-        dialogData = CSVReader.Read(path);
+        if (dialogData == null)
+            dialogData = CSVReader.Read(path);
 
         UpdateDialog();
     }
@@ -43,12 +50,13 @@ public class Dialog : MonoBehaviour
         }
         else if (index < dialogData.Count)
             UpdateDialog();
-
+        else
+            EndDialog();
         // 대화 끝났을 때 뭐 할지 설정해야 함
     }
 
     // 새 대사 보여줌
-    private void UpdateDialog()
+    protected virtual void UpdateDialog()
     {
         talker.text = dialogData[index]["talker"].ToString();
 
@@ -68,7 +76,7 @@ public class Dialog : MonoBehaviour
         {
             dialog.text += text[0];
 
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(talkingSpeed);
 
             text = text.Substring(1);
         }
@@ -77,4 +85,6 @@ public class Dialog : MonoBehaviour
 
         index++;
     }
+
+    protected virtual void EndDialog() { }
 }

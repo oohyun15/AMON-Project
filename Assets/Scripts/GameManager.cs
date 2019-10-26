@@ -143,9 +143,7 @@ public class GameManager : MonoBehaviour, IObserver
         minimapPreview.sprite = dm.minimap;
 
         // 옵저버 추가
-        
 
-        // 게임 초기화
         InitGame();
     }
 
@@ -253,7 +251,8 @@ public class GameManager : MonoBehaviour, IObserver
 
         startButton.SetActive(true);
 
-        minimapPreview.gameObject.SetActive(true);
+        if (PlayerPrefs.GetInt("isPlayedTutorial", 0) == 1)
+            minimapPreview.gameObject.SetActive(true);
 
         // 게임 상태 변경: Ready
         gameState = GameState.Ready;

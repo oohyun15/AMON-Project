@@ -49,6 +49,7 @@ public class DataManager : MonoBehaviour
     public List<int> stressData = new List<int> { 25, 15, 10, 5, 0, -20 };
 
     private string sceneName;
+    public string SceneName { get { return sceneName; } }
     private int dataIndex;
     public int DataIndex
     {
@@ -71,6 +72,8 @@ public class DataManager : MonoBehaviour
 
     private void Awake()
     {
+        sceneName = SceneManager.GetActiveScene().name;
+
         LoadStageData();
     }
 
@@ -79,7 +82,6 @@ public class DataManager : MonoBehaviour
     {
         dataIndex = -1;
 
-        sceneName = SceneManager.GetActiveScene().name;
         Debug.Log("Scene name : " + sceneName);
 
         stageData = CSVReader.Read(stageDataPath);
