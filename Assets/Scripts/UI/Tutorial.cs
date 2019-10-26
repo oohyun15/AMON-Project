@@ -15,16 +15,26 @@ public class Tutorial : Dialog
 {
     [Header("UI")]
     public GameObject TutorialPanel;
-    public GameObject minimapPreview;
-    public GameObject setting;
     public GameObject[] images;
     public Transform[] pos;
+
+    private GameObject minimapPreview;
+    private GameObject startBtn;
+    private GameObject setting;
+
 
     // 튜토리얼 실행 여부 확인
     protected override void Start()
     {
+        GameManager gm = GameManager.Instance;
+        minimapPreview = gm.minimapPreview.gameObject;
+        startBtn = gm.startButton;
+        setting = gm.settings;
+
         // 아랫줄 주석 풀면 실행 시마다 튜토리얼 기록 지움
         //PlayerPrefs.DeleteKey("isPlayedTutorial");
+
+        path += "Tutorial_" + DataManager.Instance.SceneName;
 
         // 튜토리얼 플레이 여부 확인
         if (PlayerPrefs.GetInt("isPlayedTutorial", 0) == 1)
@@ -33,24 +43,11 @@ public class Tutorial : Dialog
             return;
         }
 
-        path += "Tutorial_" + DataManager.Instance.SceneName;
-
         Debug.Log("튜토리얼 실행 기록 없음, 튜토리얼 실행");
 
         TutorialPanel.SetActive(true);
 
-        InitDialog(path);
-    }
-
-    public void InitDialog()
-    {
-        path += "Tutorial_" + DataManager.Instance.SceneName;
-
-        TutorialPanel.SetActive(true);
-
-        setting.SetActive(false);
-
-        base.InitDialog(path);
+        InitDialog();
     }
 
     // 대사 업데이트 시 강조 이미지 변경
@@ -76,7 +73,10 @@ public class Tutorial : Dialog
         TutorialPanel.SetActive(false);
 
         if (PlayerPrefs.GetInt("isPlayedTutorial", 0) == 0)
+        {
             minimapPreview.SetActive(true);
+            startBtn.SetActive(true);
+        }
         else
             setting.SetActive(true);
 

@@ -24,10 +24,10 @@ public class Dialog : MonoBehaviour
 
     protected virtual void Start()
     {
-        InitDialog(path);
+        InitDialog();
     }
 
-    public virtual void InitDialog(string path)
+    public virtual void InitDialog()
     {
         index = 0;
 
@@ -52,7 +52,6 @@ public class Dialog : MonoBehaviour
             UpdateDialog();
         else
             EndDialog();
-        // 대화 끝났을 때 뭐 할지 설정해야 함
     }
 
     // 새 대사 보여줌
