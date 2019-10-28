@@ -3,8 +3,9 @@
  * 제작: 조예진
  * 초기화 스크립트
  * (19.10.13) ㅇㅈ> 디버깅 용 돈/명예 추가 기능
+ * (19.10.29) ㅇㅎ> 스테이지 데이터 초기화 추가
  * 작성일자: 19.10.08.
- * 수정일자: 19.10.13.
+ * 수정일자: 19.10.29.
  ***************************************/
 using System.Collections;
 using System.Collections.Generic;
@@ -76,6 +77,15 @@ public class Reset : MonoBehaviour
     public void ResetTutorialData()
     {
         PlayerPrefs.DeleteKey("isPlayedTutorial");
+    }
+
+    public void ResetStageData()
+    {
+        try
+        {
+            File.Delete(Application.persistentDataPath + "/Data/stageData.xml");
+        }
+        catch (Exception e) { }
     }
 
     public void AddMoney()

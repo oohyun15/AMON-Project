@@ -4,8 +4,9 @@
 * 로비 도전과제 패널 컨트롤러
 * 함수 추가 및 수정 시 누가 작성했는지 꼭 해당 함수 주석으로 명시해주세요!
 * (19.09.15) 도전과제 패널 스크롤 형태로 변경
+* (19.10.29) 도전과제 이미지 추가
 * 작성일자: 19.08.25
-* 수정일자: 19.09.15
+* 수정일자: 19.10.29
 ***************************************/
 
 using System.Collections;
@@ -21,6 +22,7 @@ public class AchievementController : MonoBehaviour
     public Text _name;                           // 도전과제 이름
     public Text content;                         // 내용
     public Text info;
+    public Sprite[] achievementImage;            // 도전과제 이미지
 
     private UserDataIO.User user;                // 유저 데이터
     public readonly static string achievementDataPath = "Data/achievements_data";
@@ -53,7 +55,7 @@ public class AchievementController : MonoBehaviour
         {
             Achievement _achievement = Instantiate(InitAchievement(index));
 
-            if (user.achievementList[index] == 1) _achievement._icon.color = Color.green;
+            if (user.achievementList[index] == 1) _achievement._icon.color = Color.red;
 
             _achievement.transform.SetParent(achievementList.transform);
 
@@ -76,6 +78,8 @@ public class AchievementController : MonoBehaviour
         _achievement.achievementName.text = _achievement._name;
 
         _achievement.name = _achievement._name;
+
+        _achievement._icon.sprite = achievementImage[index];
 
         return _achievement;
     }
