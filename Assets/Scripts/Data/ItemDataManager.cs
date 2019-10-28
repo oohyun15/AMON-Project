@@ -59,6 +59,8 @@ public class ItemDataManager : MonoBehaviour
         }
 
         DontDestroyOnLoad(gameObject);
+
+        LoadEvidenceData();
     }
 
     public void LoadEquipItemData()

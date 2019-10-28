@@ -31,6 +31,12 @@ public class Evidence : MonoBehaviour
         eviImg = img;
 
         image.sprite = eviImg;
+        image.SetNativeSize();
+
+        float temp = 100 / Mathf.Max(image.rectTransform.rect.width, image.rectTransform.rect.height);
+
+        image.rectTransform.sizeDelta = image.rectTransform.sizeDelta * temp;
+
         txtName.text = eviName;
     }
 

@@ -416,6 +416,7 @@ public class GameManager : MonoBehaviour, IObserver
     public void GameEnd()
     {
         int rescuedCount = dm.totalInjuredCount - leftInjured;
+        Debug.Log(rescuedCount);
         int stress = dm.stressData[rescuedCount];
         
         // (19.10.13) 이번 스테이지에서 구출한 인원 저장
