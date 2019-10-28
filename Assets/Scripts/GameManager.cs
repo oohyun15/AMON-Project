@@ -142,6 +142,7 @@ public class GameManager : MonoBehaviour, IObserver
         // 미니맵 프리뷰 스프라이트 불러와서 설정
         minimapPreview.sprite = dm.minimap;
 
+
         // 옵저버 추가
 
         InitGame();
@@ -253,6 +254,23 @@ public class GameManager : MonoBehaviour, IObserver
         RectTransform previewRect = minimapPreview.GetComponent<RectTransform>();
         RectTransform frameRect = minimapPreview.transform.GetChild(0).GetComponent<RectTransform>();
         frameRect.sizeDelta = new Vector2 (previewRect.rect.width + 15, previewRect.rect.height + 20);
+
+
+        // (19.10.29 예진) 미니맵 프레임 사이즈 조절
+        RectTransform minimapFrameRect = UI[3].transform.GetChild(0).GetComponent<RectTransform>();
+
+        float rate = Mathf.Min(previewRect.rect.width, previewRect.rect.height)
+            * minimapFrameRect.rect.width
+            / Mathf.Max(previewRect.rect.width, previewRect.rect.height);
+
+        int offset = 0;
+
+        if (previewRect.rect.width > previewRect.rect.height)
+            minimapFrameRect.sizeDelta = new Vector2(minimapFrameRect.sizeDelta.x + offset, rate + offset);
+        else
+            minimapFrameRect.sizeDelta = new Vector2(rate + offset, minimapFrameRect.sizeDelta.y + offset);
+
+
 
         // (19.10.26 예진) 튜토리얼 실행 중에 미니맵 프리뷰 + 시작 버튼 보이지 않도록 함 
         //                 Tutorial.cs에서 다시 활성화하도록 설정
