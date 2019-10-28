@@ -73,6 +73,11 @@ public class Reset : MonoBehaviour
         UserDataIO.WriteUserData(userData);
     }
 
+    public void ResetTutorialData()
+    {
+        PlayerPrefs.DeleteKey("isPlayedTutorial");
+    }
+
     public void AddMoney()
     {
         UserDataIO.User user = UserDataIO.ReadUserData();
