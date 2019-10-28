@@ -39,10 +39,6 @@ public class Tutorial : Dialog
         // 아랫줄 주석 풀면 실행 시마다 튜토리얼 기록 지움
         //PlayerPrefs.DeleteKey("isPlayedTutorial");
 
-        path += "tutorial_dialog";
-        Debug.Log(path);
-            //+ DataManager.Instance.SceneName;
-
         // 튜토리얼 플레이 여부 확인
         if (PlayerPrefs.GetInt("isPlayedTutorial", 0) == 1)
         {
@@ -55,6 +51,14 @@ public class Tutorial : Dialog
         TutorialPanel.SetActive(true);
 
         InitDialog();
+    }
+
+    public override void InitDialog()
+    {
+        path += "tutorial_dialog";
+        //+ DataManager.Instance.SceneName;
+
+        base.InitDialog();
     }
 
     // 대사 업데이트 시 강조 이미지 변경
