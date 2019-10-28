@@ -75,9 +75,9 @@ public class AmonController : MonoBehaviour, IReset
     public float CSAmount;
     public float CSDuration;
 
-    // [Header("Debug")]                // 키보드로 이동할 때 사용하는 변수, 추후에 삭제해야함
-    private float h = 0.0f;             // 좌,우
-    private float v = 0.0f;             // 상,하
+    [Header("Debug")]                // 키보드로 이동할 때 사용하는 변수, 추후에 삭제해야함
+    public float h = 0.0f;             // 좌,우
+    public float v = 0.0f;             // 상,하
     private bool checkBuff;             // 버프상태인지 확인하는 변수
     private new Transform transform;
     private GameManager gm;
@@ -129,11 +129,37 @@ public class AmonController : MonoBehaviour, IReset
         h = Input.GetAxis("Horizontal");
 
         v = Input.GetAxis("Vertical");
+        if (Input.touchCount == 0 && !Input.GetMouseButton(0))
+        {
+            if (!GameManager.Instance.player.playerAnim.GetBool("IsStrike") || !GameManager.Instance.player.playerAnim.GetBool("IsKick"))
+            {
+                if (v > 0)
+                {
+                    JoystickController.instance.isBackMove = false;
+                    animState = AnimationName.Walk; // 애니메이션 상태 설정
+                    PlayerAnimation();
 
-        transform.Translate(Vector3.forward * moveSpeed * v * Time.deltaTime, Space.Self);
+                    transform.Translate(Vector3.forward * moveSpeed * v * Time.deltaTime, Space.Self);
+                }
 
-        transform.Rotate(Vector3.up * rotSpeed * h * Time.deltaTime);
+                else if (v < 0)
+                {
+                    JoystickController.instance.isBackMove = true;
+                    animState = AnimationName.Walk; // 애니메이션 상태 설정
+                    PlayerAnimation();
 
+                    transform.Translate(Vector3.forward * moveSpeed * v / 2 * Time.deltaTime, Space.Self);
+                }
+
+                else
+                {
+                    JoystickController.instance.isBackMove = false;
+                    AnimationIdle();
+                }
+
+                transform.Rotate(Vector3.up * rotSpeed * h * Time.deltaTime);
+            }
+        }
         // if (Input.GetKeyDown(KeyCode.Space)) Interaction();
     }
 
@@ -609,6 +635,8 @@ public class AmonController : MonoBehaviour, IReset
         }
         if(isRescuing) playerAnim.SetBool("IsIdleResc", true);
         else playerAnim.SetBool("IsIdle", true);
+
+        JoystickController.instance.isBackMove = false;
     }
 
     public void TouchBack() // 인터렉션 때 움직임을 멈춘 부분을 다시 되돌려 조이스틱을 다시 클릭하지 않아도 움직이도록 하는 함수 
