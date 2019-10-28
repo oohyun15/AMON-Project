@@ -31,6 +31,10 @@ public class Evidence : MonoBehaviour
         eviImg = img;
 
         image.sprite = eviImg;
+
+        if (eviImg == null)
+            image.color = Color.grey ;
+
         image.SetNativeSize();
 
         float temp = 100 / Mathf.Max(image.rectTransform.rect.width, image.rectTransform.rect.height);

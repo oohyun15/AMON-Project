@@ -439,12 +439,15 @@ public class GameManager : MonoBehaviour, IObserver
         
         // (19.10.13) 이번 스테이지에서 구출한 인원 저장
         UserDataIO.Stage stage = UserDataIO.ReadStageData();
+
         stage.rescueNum[stageNum] = rescuedCount;
         stage.isPlayed[stageNum] = 1;
+
         if (leftInjured == 0)
             stage.isGotEvidence[stageNum] = 1;
         else
             stage.isGotEvidence[stageNum] = 0;
+
         UserDataIO.WriteStageData(stage);
 
         // (19.08.25) 플레이 횟수 증가
@@ -616,7 +619,7 @@ public class GameManager : MonoBehaviour, IObserver
                         GetEvidence(ui);                    
                     else
                     {
-                        ui.transform.GetChild(0).GetComponent<Image>().sprite = null;
+                        ui.transform.GetChild(0).gameObject.SetActive(false);
                         ui.transform.GetChild(1).GetComponent<Text>().text = "단서\n획득 실패";
                     }
                     
@@ -636,9 +639,9 @@ public class GameManager : MonoBehaviour, IObserver
             = eviData["evidenceName"].ToString();
         ui.transform.GetChild(0).GetComponent<Image>().sprite = ItemDataManager.Instance.eviSprites[dm.DataIndex];
 
-        evidence.GetChild(0).GetComponent<Image>().sprite = ItemDataManager.Instance.eviSprites[dm.DataIndex];
-        evidence.GetChild(1).GetComponent<Text>().text = eviData["evidenceName"].ToString();
-        evidence.GetChild(2).GetComponent<Text>().text = eviData["evidenceExplain"].ToString();
+        evidence.GetChild(1).GetComponent<Image>().sprite = ItemDataManager.Instance.eviSprites[dm.DataIndex];
+        evidence.GetChild(2).GetComponent<Text>().text = eviData["evidenceName"].ToString();
+        evidence.GetChild(3).GetComponent<Text>().text = eviData["evidenceExplain"].ToString();
 
         evidencePanel.SetActive(true);
 
