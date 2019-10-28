@@ -76,7 +76,7 @@ public class JoystickController : MonoBehaviour, IPointerDownHandler, IPointerUp
     // 터치 시 실행되는 함수
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (!GameManager.Instance.player.playerAnim.GetBool("IsStrike") || !GameManager.Instance.player.playerAnim.GetBool("IsKick") || !GameManager.Instance.player.playerAnim.GetBool("IsDrink"))
+        if (!GameManager.Instance.player.playerAnim.GetBool("IsStrike") || !GameManager.Instance.player.playerAnim.GetBool("IsKick"))
             isTouch = true; // 다른 애니메이션 실행중이면 조이스틱 실행 안되도록 만듦
         else return;
     }

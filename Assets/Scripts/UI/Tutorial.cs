@@ -15,7 +15,8 @@ public class Tutorial : Dialog
 {
     [Header("UI")]
     public GameObject TutorialPanel;
-    public GameObject[] images;
+    public List<Transform> images;
+    public GameObject UIs;
     public Transform[] pos;
 
     private GameObject minimapPreview;
@@ -27,14 +28,16 @@ public class Tutorial : Dialog
     protected override void Start()
     {
         GameManager gm = GameManager.Instance;
+
+        for (int i = 0; i < UIs.transform.childCount; i++)
+            images.Add(UIs.transform.GetChild(i));
+
         minimapPreview = gm.minimapPreview.gameObject;
         startBtn = gm.startButton;
         setting = gm.settings;
 
         // 아랫줄 주석 풀면 실행 시마다 튜토리얼 기록 지움
         //PlayerPrefs.DeleteKey("isPlayedTutorial");
-
-        path += "Tutorial_" + DataManager.Instance.SceneName;
 
         // 튜토리얼 플레이 여부 확인
         if (PlayerPrefs.GetInt("isPlayedTutorial", 0) == 1)
@@ -50,6 +53,14 @@ public class Tutorial : Dialog
         InitDialog();
     }
 
+    public override void InitDialog()
+    {
+        path += "tutorial_dialog";
+        //+ DataManager.Instance.SceneName;
+
+        base.InitDialog();
+    }
+
     // 대사 업데이트 시 강조 이미지 변경
     protected override void UpdateDialog()
     {
@@ -57,10 +68,10 @@ public class Tutorial : Dialog
 
         if (index > 0)
         {
-            images[index - 1].SetActive(false);
+            images[index - 1].gameObject.SetActive(false);
         }
 
-        images[index].SetActive(true);
+        images[index].gameObject.SetActive(true);
     }
 
     // 튜토리얼 끝났을 때 - 튜토리얼 패널 비활성화 후 게임 초기화
@@ -68,7 +79,7 @@ public class Tutorial : Dialog
     {
         base.EndDialog();
 
-        images[index - 1].SetActive(false);
+        images[index - 1].gameObject.SetActive(false);
 
         TutorialPanel.SetActive(false);
 

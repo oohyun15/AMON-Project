@@ -249,6 +249,11 @@ public class GameManager : MonoBehaviour, IObserver
         // 세팅창 비활성화
         settings.SetActive(false);
 
+        minimapPreview.SetNativeSize();
+        RectTransform previewRect = minimapPreview.GetComponent<RectTransform>();
+        RectTransform frameRect = minimapPreview.transform.GetChild(0).GetComponent<RectTransform>();
+        frameRect.sizeDelta = new Vector2 (previewRect.rect.width + 15, previewRect.rect.height + 20);
+
         // (19.10.26 예진) 튜토리얼 실행 중에 미니맵 프리뷰 + 시작 버튼 보이지 않도록 함 
         //                 Tutorial.cs에서 다시 활성화하도록 설정
         if (PlayerPrefs.GetInt("isPlayedTutorial", 0) == 1)
