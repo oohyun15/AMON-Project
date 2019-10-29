@@ -469,7 +469,7 @@ public class GameManager : MonoBehaviour, IObserver
         user.playCount++;
         UserDataIO.WriteUserData(user);
 
-        CheckAchievements(user);
+        CheckAchievements(user, stage);
 
         // (19.10.03 예진) 피로도 업데이트
         if (!UserDataIO.ChangeUserStress(stress))
@@ -736,10 +736,8 @@ public class GameManager : MonoBehaviour, IObserver
     }
 
     // 도전과제 성공 여부 조건
-    public void CheckAchievements(UserDataIO.User user)
+    public void CheckAchievements(UserDataIO.User user, UserDataIO.Stage stage)
     {
-        
-
         for (int index = 0; index < UserDataIO.achievementCount; index++)
         {
             if (user.achievementList[index] == 1) continue;
@@ -755,7 +753,26 @@ public class GameManager : MonoBehaviour, IObserver
                     break;
 
                 case 1:
-                    /* Not Implemented */
+                    /* 739줄 겜매 ㅔㅊ크어치이벤츠 케이스1 도전과제 내용인데 
+                     * 변수를 유저데이터만 받고있어 그런데 유저랑 스테이지가 두개있거든 
+                     * 그래서 파라미터를 두개를 만들어 준다음에 이런식으로 한다음엥 리드해가지고 
+                     * 유저데이터를 받아올거야 받아져있을건데 스테이지도 게임매니저 받아온다음에 
+                     * 그거를 케이스1에 써먹어 isGotEvidence 배열이겠지 
+                     * 0부터 8까지 포문 돌려서 어떻게 
+                     */
+                    bool isAcheived = true;
+
+                    for (int i = 0; i < stage.isGotEvidence.Length; i++)
+                    {
+                        if (stage.isGotEvidence[i] == 0)
+                        {
+                            Debug.Log(i);
+                            isAcheived = false;
+                            break;
+                        }
+                    }
+
+                    if (isAcheived) UpdateAchievement(1);
                     break;
 
                 case 2:
