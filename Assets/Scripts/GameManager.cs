@@ -350,19 +350,27 @@ public class GameManager : MonoBehaviour, IObserver
         injureds.AddRange(objects["Serious"]);
         //injureds.AddRange(objects["Minor"]);
 
+
+        // (19.10.29) 임시 비활성화
+        /*
         // (예진) 부상자 시간 체크 시작
         foreach (GameObject i in injureds)
             i.GetComponent<Injured>().StartTimeCheck();
-
+        
         StartCoroutine(timeCheckCoroutine);
+        */
+
 
         gameState = GameState.Playing;
     }
 
     public void StopGame()
     {
+        // (19.10.29) 임시 비활성화
+        /*
         // 제한 시간 체크 일시 중단
         StopCoroutine(timeCheckCoroutine);
+        
 
         // 부상자 시간 제한 체크 일시 중단
         List<GameObject> injureds = new List<GameObject>();
@@ -376,13 +384,17 @@ public class GameManager : MonoBehaviour, IObserver
             if (!injured.isRescued)
                 injured.StopTimeCheck();
         }
+        */
     }
 
     // (예진) 부상자 시간 제한 재개 부분 추가 위해 메소드 추가
     public void ResumeGame()
     {
+        // (19.10.29) 임시 비활성화
+        /*
         // 제한 시간 체크 재개
         StartCoroutine(timeCheckCoroutine);
+        
 
         // 부상자 시간 체크 재개
         List<GameObject> injureds = new List<GameObject>();
@@ -393,6 +405,7 @@ public class GameManager : MonoBehaviour, IObserver
         {
             i.GetComponent<Injured>().StartTimeCheck();
         }
+        */
     }
 
     public int CheckLeftInjured()

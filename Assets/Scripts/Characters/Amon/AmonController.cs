@@ -125,10 +125,13 @@ public class AmonController : MonoBehaviour, IReset
     // Update is called once per frame
     void FixedUpdate()
     {
+        // (19.10.29) 임시 디버깅 버튼 비활성화
+        /*
         // Unity에서 디버깅용 버튼. 추후에 삭제해야함
         h = Input.GetAxis("Horizontal");
 
         v = Input.GetAxis("Vertical");
+        
         if (Input.touchCount == 0 && !Input.GetMouseButton(0))
         {
             if (!GameManager.Instance.player.playerAnim.GetBool("IsStrike") || !GameManager.Instance.player.playerAnim.GetBool("IsKick"))
@@ -160,6 +163,9 @@ public class AmonController : MonoBehaviour, IReset
                 transform.Rotate(Vector3.up * rotSpeed * h * Time.deltaTime);
             }
         }
+
+        */
+        
         // if (Input.GetKeyDown(KeyCode.Space)) Interaction();
     }
 
