@@ -22,7 +22,7 @@ public class Item : MonoBehaviour, IReset
     public int durability;                              // 내구도
 
     private GameManager gm;
-    private ItemController controller;
+    // private ItemController controller;
     private new readonly string name = "Item";
 
     // (예진) 아이템 키 제거를 위해 컨트롤러가 아이템 가져올 때 컨트롤러도 설정하도록 함
@@ -32,7 +32,7 @@ public class Item : MonoBehaviour, IReset
     void Start()
     {
         gm = GameManager.Instance;
-        controller = ItemController.Instance;
+        // controller = ItemController.Instance;
 
         var go = new List<GameObject>();
 
@@ -55,7 +55,7 @@ public class Item : MonoBehaviour, IReset
     {
         DurabilityManage();
 
-        controller.UpdateItemCount(this);
+        // controller.UpdateItemCount(this);
     }
 
     protected void DurabilityManage() // 내구도 관리
@@ -91,6 +91,6 @@ public class Item : MonoBehaviour, IReset
 
         durability = initDurability;
 
-        controller.UpdateItemCount(this);
+        // controller.UpdateItemCount(this);
     }
 }
