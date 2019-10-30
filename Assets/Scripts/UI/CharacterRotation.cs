@@ -27,7 +27,7 @@ public class CharacterRotation : MonoBehaviour, IPointerDownHandler, IPointerUpH
     // private Vector3 camPos;
     private Vector2 t_initPos;
     private float rotSpeed;
-    private int half_width;
+    private int width;
     // private float angle;
     // private float distance;
 
@@ -54,7 +54,7 @@ public class CharacterRotation : MonoBehaviour, IPointerDownHandler, IPointerUpH
 
         // Debug.Log(angle * Mathf.Deg2Rad);
 
-        half_width = Screen.width / 2;
+        width = Screen.width;
     }
 
     // Update is called once per frame
@@ -74,7 +74,7 @@ public class CharacterRotation : MonoBehaviour, IPointerDownHandler, IPointerUpH
     {
         Vector2 value = eventData.position - t_initPos;
 
-        float distance = Vector2.Distance(eventData.position, t_initPos) / half_width;
+        float distance = Vector2.Distance(eventData.position, t_initPos) / width;
 
         value = value.normalized;
 
