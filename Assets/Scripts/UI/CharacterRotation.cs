@@ -27,6 +27,7 @@ public class CharacterRotation : MonoBehaviour, IPointerDownHandler, IPointerUpH
     // private Vector3 camPos;
     private Vector2 t_initPos;
     private float rotSpeed;
+    private int half_width;
     // private float angle;
     // private float distance;
 
@@ -52,6 +53,8 @@ public class CharacterRotation : MonoBehaviour, IPointerDownHandler, IPointerUpH
         // Debug.Log(distance);
 
         // Debug.Log(angle * Mathf.Deg2Rad);
+
+        half_width = Screen.width / 2;
     }
 
     // Update is called once per frame
@@ -71,12 +74,18 @@ public class CharacterRotation : MonoBehaviour, IPointerDownHandler, IPointerUpH
     {
         Vector2 value = eventData.position - t_initPos;
 
+        float distance = Vector2.Distance(eventData.position, t_initPos) / half_width;
+
         value = value.normalized;
+
+        // Debug.Log("value: " + value);
+
+        // Debug.Log("distance: " + distance);
 
         // 캐릭터의 회전 위치를 변경
         playerRot = new Vector3(
             0f,
-            value.x * rotSpeed * Time.deltaTime,
+            value.x * rotSpeed * distance * Time.deltaTime,
             0f);
 
         // UpdateCamPos(value.y);

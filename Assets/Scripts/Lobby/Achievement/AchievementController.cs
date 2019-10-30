@@ -55,7 +55,7 @@ public class AchievementController : MonoBehaviour
         {
             Achievement _achievement = Instantiate(InitAchievement(index));
 
-            if (user.achievementList[index] == 1) _achievement._icon.color = Color.red;
+            if (user.achievementList[index] == 1) _achievement._icon.color = Color.green;
 
             _achievement.transform.SetParent(achievementList.transform);
 
