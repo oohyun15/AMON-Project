@@ -76,11 +76,15 @@ public class CharacterRotation : MonoBehaviour, IPointerDownHandler, IPointerUpH
 
         float distance = Vector2.Distance(eventData.position, t_initPos) / width;
 
+        if (distance > 0.3f) distance = 0.3f;
+
         value = value.normalized;
 
         // Debug.Log("value: " + value);
 
-        // Debug.Log("distance: " + distance);
+        Debug.Log("distance: " + distance);
+
+
 
         // 캐릭터의 회전 위치를 변경
         playerRot = new Vector3(
