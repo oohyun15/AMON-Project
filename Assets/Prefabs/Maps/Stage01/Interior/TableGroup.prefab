@@ -1,5 +1,31 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!65 &1142101452
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2666284700524121472}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.2414856, y: 0.8536802, z: 1.2414856}
+  m_Center: {x: 0, y: -0.38657025, z: 0}
+--- !u!65 &1142101451
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6652380835924868335}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.8853363, y: 1.2450371, z: 0.8884344}
+  m_Center: {x: -0.00000029802322, y: 0.000000029802322, z: 0}
 --- !u!1 &7543250256193184804
 GameObject:
   m_ObjectHideFlags: 0
@@ -33,6 +59,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1142101453
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8959826148360258008}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.8853363, y: 1.2450371, z: 0.8884344}
+  m_Center: {x: -0.00000029802322, y: 0.000000029802322, z: 0}
 --- !u!1001 &1114182958099093713
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -117,6 +156,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 109368095f7cc5c4aa109d1f4f08ab03, type: 3}
+--- !u!1 &8959826148360258008 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -927199367670048503, guid: 109368095f7cc5c4aa109d1f4f08ab03,
+    type: 3}
+  m_PrefabInstance: {fileID: 1114182958099093713}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5335898807355044811 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: 109368095f7cc5c4aa109d1f4f08ab03,
@@ -207,6 +252,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 109368095f7cc5c4aa109d1f4f08ab03, type: 3}
+--- !u!1 &6652380835924868335 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -927199367670048503, guid: 109368095f7cc5c4aa109d1f4f08ab03,
+    type: 3}
+  m_PrefabInstance: {fileID: 3419336068554925542}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7640735855413038844 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: 109368095f7cc5c4aa109d1f4f08ab03,
@@ -220,11 +271,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6081934283112778494}
     m_Modifications:
-    - target: {fileID: -927199367670048503, guid: 98890c76a6a8e3f4b9ccca057deeb26a,
-        type: 3}
-      propertyPath: m_Name
-      value: Desk
-      objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 98890c76a6a8e3f4b9ccca057deeb26a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -295,8 +341,19 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 98890c76a6a8e3f4b9ccca057deeb26a,
+        type: 3}
+      propertyPath: m_Name
+      value: Desk
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 98890c76a6a8e3f4b9ccca057deeb26a, type: 3}
+--- !u!1 &2666284700524121472 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -927199367670048503, guid: 98890c76a6a8e3f4b9ccca057deeb26a,
+    type: 3}
+  m_PrefabInstance: {fileID: 6206354841854530697}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1394939501857111955 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: 98890c76a6a8e3f4b9ccca057deeb26a,
