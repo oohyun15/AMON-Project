@@ -17,6 +17,7 @@ public class Tutorial : Dialog
     public GameObject TutorialPanel;
     public List<Transform> images;
     public GameObject UIs;
+
     public Transform[] pos;
 
     private GameObject minimapPreview;
@@ -69,6 +70,18 @@ public class Tutorial : Dialog
         if (index > 0)
         {
             images[index - 1].gameObject.SetActive(false);
+
+            if (index == 2)
+            {
+                // 튜토리얼 산소통 이미지 길이 설정
+                RectTransform oxygen = GameManager.Instance.oxygenSlider.transform.GetChild(0).GetComponent<RectTransform>();
+                RectTransform oxrt = UIs.transform.GetChild(3).GetComponent<RectTransform>();
+                RectTransform oxbgrt = UIs.transform.GetChild(3).GetChild(0).GetComponent<RectTransform>();
+
+                oxrt.sizeDelta = new Vector2(oxygen.parent.GetComponent<RectTransform>().rect.width, oxrt.sizeDelta.y);
+                oxbgrt.sizeDelta = new Vector2(oxygen.GetComponent<RectTransform>().rect.width, oxbgrt.sizeDelta.y);
+                oxbgrt.position = oxygen.position;
+            }
         }
 
         images[index].gameObject.SetActive(true);

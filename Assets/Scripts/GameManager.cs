@@ -111,7 +111,7 @@ public class GameManager : MonoBehaviour, IObserver
                                                 // 0 --> 구조 실패 / 1 --> 구조 성공
 
 
-    private float time;                         // 남은 시간, 초 단위
+    public float time;                         // 남은 시간, 초 단위
     private bool gameOver;
 
     private IEnumerator timeCheckCoroutine;
@@ -173,10 +173,12 @@ public class GameManager : MonoBehaviour, IObserver
     {
         // 실행되고 있는 모든 코루틴 종료
         StopAllCoroutines();
-
+        
         gameOver = false;
 
         time = timeLimit;
+
+        ApplyEquipItemEffect();
 
         int defaultTime = 60;
 
@@ -187,7 +189,7 @@ public class GameManager : MonoBehaviour, IObserver
         RectTransform rt = oxygenSlider.GetComponent<RectTransform>();
         RectTransform bgrt = oxygenSlider.transform.GetChild(0).GetComponent<RectTransform>();
 
-        float temp = (timeLimit - defaultTime) * 10;
+        float temp = (time - defaultTime) * 10;
 
         rt.sizeDelta = new Vector2(rt.sizeDelta.x + temp, rt.sizeDelta.y);
         bgrt.sizeDelta = new Vector2(bgrt.sizeDelta.x + temp, bgrt.sizeDelta.y);
@@ -199,7 +201,6 @@ public class GameManager : MonoBehaviour, IObserver
         oxygenSlider.value = timeLimit;
 
         // 장착 아이템 효과 적용
-        ApplyEquipItemEffect();
 
         SetTimeText(time);
 
@@ -753,13 +754,6 @@ public class GameManager : MonoBehaviour, IObserver
                     break;
 
                 case 1:
-                    /* 739줄 겜매 ㅔㅊ크어치이벤츠 케이스1 도전과제 내용인데 
-                     * 변수를 유저데이터만 받고있어 그런데 유저랑 스테이지가 두개있거든 
-                     * 그래서 파라미터를 두개를 만들어 준다음에 이런식으로 한다음엥 리드해가지고 
-                     * 유저데이터를 받아올거야 받아져있을건데 스테이지도 게임매니저 받아온다음에 
-                     * 그거를 케이스1에 써먹어 isGotEvidence 배열이겠지 
-                     * 0부터 8까지 포문 돌려서 어떻게 
-                     */
                     bool isAcheived = true;
 
                     for (int i = 0; i < stage.isGotEvidence.Length; i++)

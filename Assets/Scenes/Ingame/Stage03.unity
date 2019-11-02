@@ -985,12 +985,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 77069998}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &94851102 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8547322306482262738, guid: 4b5c7c71c7e092e49905a610f88417b0,
-    type: 3}
-  m_PrefabInstance: {fileID: 1375849185}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &100163730
 GameObject:
   m_ObjectHideFlags: 0
@@ -13035,6 +13029,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: TutorialPanel
       objectReference: {fileID: 0}
+    - target: {fileID: 943736294185190068, guid: 4b5c7c71c7e092e49905a610f88417b0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 943736294185190069, guid: 4b5c7c71c7e092e49905a610f88417b0,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -15425,6 +15424,12 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5098672876172473720, guid: 4f4b6fa535660784b8276629a8adbf61,
     type: 3}
   m_PrefabInstance: {fileID: 1565635654}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1586288684 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4975624498670730640, guid: 4b5c7c71c7e092e49905a610f88417b0,
+    type: 3}
+  m_PrefabInstance: {fileID: 1375849185}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1596010120
 PrefabInstance:
@@ -28602,6 +28607,7 @@ MonoBehaviour:
   resultRescuerSprites:
   - {fileID: 21300000, guid: c18830c40bf8c4b4985f40eae22576a0, type: 3}
   - {fileID: 21300000, guid: de8e6b4b7a14ed54fa1caf21bcdc62be, type: 3}
+  time: 0
 --- !u!137 &1238096593613784914
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 0
@@ -59285,12 +59291,12 @@ MonoBehaviour:
   m_Script: {fileID: 1980459831, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 1
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -68884,7 +68890,7 @@ MonoBehaviour:
   talkingSpeed: 0.05
   TutorialPanel: {fileID: 1434996684}
   images: []
-  UIs: {fileID: 94851102}
+  UIs: {fileID: 1586288684}
   pos: []
 --- !u!4 &8587401769885688225
 Transform:
