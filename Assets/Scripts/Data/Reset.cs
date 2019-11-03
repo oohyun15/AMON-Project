@@ -4,19 +4,25 @@
  * 초기화 스크립트
  * (19.10.13) ㅇㅈ> 디버깅 용 돈/명예 추가 기능
  * (19.10.29) ㅇㅎ> 스테이지 데이터 초기화 추가
+ * (19.11.03) ㅇㅈ> 단서 데이터 변경 기능 추가
  * 작성일자: 19.10.08.
- * 수정일자: 19.10.29.
+ * 수정일자: 19.11.03.
  ***************************************/
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using System;
+using UnityEngine.UI;
 
 public class Reset : MonoBehaviour
 {
 
     public GameObject panel;
+
+    /* debug */
+    public GameObject evidenceList;
+    public Color[] eviColors;
 
     public void OnClickResetBtn()
     {
@@ -104,6 +110,37 @@ public class Reset : MonoBehaviour
         user.honor += honor;
 
         UserDataIO.WriteUserData(user);
+    }
+
+    public void InitSetEvidencePanel()
+    {
+        Button[] btns = evidenceList.GetComponentsInChildren<Button>();
+        List<Dictionary<string, object>> data = CSVReader.Read("Data/stage_data");
+        UserDataIO.Stage stage = UserDataIO.ReadStageData();
+
+        for (int i = 0; i < Mathf.Min(data.Count, btns.Length); i++)
+        {
+            int index = i;
+            btns[i].onClick.AddListener(() => SetEvidence(index));
+            btns[i].transform.GetChild(0).GetComponent<Text>().text
+                = data[i]["sceneName"].ToString();
+            btns[i].GetComponent<Image>().color = eviColors[stage.isGotEvidence[i]];
+        }
+    }
+
+    public void SetEvidence(int n)
+    {
+        UserDataIO.Stage stage = UserDataIO.ReadStageData();
+
+        Debug.Log(n);
+
+        if (stage.isGotEvidence[n] == 0) stage.isGotEvidence[n] = 1;
+        else stage.isGotEvidence[n] = 0;
+
+        evidenceList.GetComponentsInChildren<Button>()[n].GetComponent<Image>().color 
+            = eviColors[stage.isGotEvidence[n]];
+
+        UserDataIO.WriteStageData(stage);
     }
 
     public void MoveScene(string sceneName)
