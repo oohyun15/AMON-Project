@@ -5,8 +5,9 @@
 * 함수 추가 및 수정 시 누가 작성했는지 꼭 해당 함수 주석으로 명시해주세요!
 * (19.09.15) 도전과제 패널 스크롤 형태로 변경
 * (19.10.29) 도전과제 이미지 추가
+* (19.11.03) 도전과제 로드 시 스케일값 정상적으로 수정
 * 작성일자: 19.08.25
-* 수정일자: 19.10.29
+* 수정일자: 19.11.03
 ***************************************/
 
 using System.Collections;
@@ -57,7 +58,7 @@ public class AchievementController : MonoBehaviour
 
             if (user.achievementList[index] == 1) _achievement._icon.color = Color.green;
 
-            _achievement.transform.SetParent(achievementList.transform);
+            _achievement.transform.SetParent(achievementList.transform, false);
 
             achievements[index] = _achievement;
         }
@@ -80,7 +81,7 @@ public class AchievementController : MonoBehaviour
         _achievement.name = _achievement._name;
 
         _achievement._icon.sprite = achievementImage[index];
-
+        
         return _achievement;
     }
 

@@ -3,9 +3,10 @@
  * 제작: 김용현
  * Amon캐릭터의 회전을 조절하는 코드
  * (19.10.03) 위, 아래로 터치시 카메라 회전 구현중...
+ * (19.11.03) 로비씬 락커룸 플레이어렌더 회전
  * 함수 추가 및 수정 시 누가 작성했는지 꼭 해당 함수 주석으로 명시해주세요!
  * 작성일자: 19.10.02
- * 수정일자: 19.10.03
+ * 수정일자: 19.11.03
  ***************************************/
 
 using System.Collections;
@@ -17,17 +18,18 @@ public class CharacterRotation : MonoBehaviour, IPointerDownHandler, IPointerUpH
 {
     [HideInInspector]
     public bool isTouch = false;                // 터치를 눌렀는 지 확인하는 변수
+    public int type;                            // 0: Lobby, 1: Ingame
     // public float camMoveSpeed;
     
-    private GameObject player;
+    public GameObject player;
     // private GameObject initCamPos;
     // private GameObject cam;
     private Vector3 playerRot;
     // private Vector3 camRot;
     // private Vector3 camPos;
     private Vector2 t_initPos;
-    private float rotSpeed;
-    private int width;
+    public float rotSpeed;
+    private float width;
     // private float angle;
     // private float distance;
 
@@ -36,31 +38,38 @@ public class CharacterRotation : MonoBehaviour, IPointerDownHandler, IPointerUpH
     // Start is called before the first frame update
     void Start()
     {
-        player = GameManager.Instance.player.gameObject;
+        width = GetComponent<RectTransform>().sizeDelta.x;
 
-        Vector3 playerCenter = player.transform.position + Vector3.up * 1.9f;
+        if (type == 1)
+        {
+            player = GameManager.Instance.player.gameObject;
 
-        // initCamPos = player.GetComponent<AmonController>().initCamPos;
+            // Vector3 playerCenter = player.transform.position + Vector3.up * 1.9f;
 
-        // cam = GameManager.Instance.Cam;
+            // initCamPos = player.GetComponent<AmonController>().initCamPos;
 
-        rotSpeed = player.GetComponent<AmonController>().rotSpeed;
+            // cam = GameManager.Instance.Cam;
 
-        // angle = Mathf.Atan2(initCamPos.transform.localPosition.y, initCamPos.transform.localPosition.z);
+            rotSpeed = player.GetComponent<AmonController>().rotSpeed;
 
-        // distance = Vector3.Distance(playerCenter, initCamPos.transform.position);
+            // angle = Mathf.Atan2(initCamPos.transform.localPosition.y, initCamPos.transform.localPosition.z);
 
-        // Debug.Log(distance);
+            // distance = Vector3.Distance(playerCenter, initCamPos.transform.position);
 
-        // Debug.Log(angle * Mathf.Deg2Rad);
+            // Debug.Log(distance);
 
-        width = Screen.width;
+            // Debug.Log(angle * Mathf.Deg2Rad);
+
+            //width = Screen.width;
+        }
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        if (GameManager.Instance.gameState == GameManager.GameState.Playing && isTouch)
+        if (type == 0) player.transform.Rotate(-playerRot);
+
+        else if (GameManager.Instance.gameState == GameManager.GameState.Playing && isTouch)
         {
             player.transform.Rotate(playerRot);
 
@@ -82,7 +91,7 @@ public class CharacterRotation : MonoBehaviour, IPointerDownHandler, IPointerUpH
 
         // Debug.Log("value: " + value);
 
-        Debug.Log("distance: " + distance);
+        // Debug.Log("distance: " + distance);
 
 
 
@@ -105,6 +114,8 @@ public class CharacterRotation : MonoBehaviour, IPointerDownHandler, IPointerUpH
     void IPointerUpHandler.OnPointerUp(PointerEventData eventData)
     {
         isTouch = false;
+
+        playerRot = Vector3.zero;
     }
 
     // (19.10.03) 구현중

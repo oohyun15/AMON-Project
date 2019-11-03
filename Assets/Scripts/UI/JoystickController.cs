@@ -8,10 +8,11 @@
  * (19.08.16) 애니메이션 코드 추가
  * (19.09.02) StopJoystickController에 애니메이션 상태 변경 추가
  * (19.09.09) 이동 중 애니메이션 변경에 isTouch 접근이 필요해서 이 변수를 Public으로 설정
- * (19.10.02) 캐릭터 회전 삭제 
+ * (19.10.02) 캐릭터 회전 삭제
+ * (19.11.03) FixedUpdate 추가
  * 함수 추가 및 수정 시 누가 작성했는지 꼭 해당 함수 주석으로 명시해주세요!
  * 작성일자: 19.07.14
- * 수정일자: 19.10.02
+ * 수정일자: 19.11.03
  ***************************************/
 
 
@@ -58,7 +59,7 @@ public class JoystickController : MonoBehaviour, IPointerDownHandler, IPointerUp
         radius = Background.rect.width * 0.5f;
     }
 
-    void Update()
+    void FixedUpdate()
     {
         // 터치 중에는 movePosition 값으로 캐릭터가 이동
         if (isTouch)

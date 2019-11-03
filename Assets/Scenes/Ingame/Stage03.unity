@@ -51913,9 +51913,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _material: {fileID: 2100000, guid: 6a2dc48262a966a4abeb00022dc736da, type: 2}
-  FallObs: {fileID: 4218081730666215891}
-  fragments: {fileID: 0}
-  obs: {fileID: 4894198391559912022}
+  cellingFragments: {fileID: 0}
+  wallFragments: {fileID: 0}
   time: 3
   type: 0
 --- !u!65 &4218081730698999793
@@ -61427,6 +61426,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isTouch: 0
+  type: 1
+  player: {fileID: 0}
+  rotSpeed: 0
 --- !u!224 &6486087851511402729
 RectTransform:
   m_ObjectHideFlags: 0
