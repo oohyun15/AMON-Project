@@ -19,7 +19,9 @@ public class CameraMove : MonoBehaviour
     public float spd; //Lerp함수 속도 변수
     public float rayLength; // Ray의 길이를 정하는 변수
 
-    private GameObject player; 
+    private GameObject player;
+    private Vector3 subCamVec;
+
     void Start()
     {
         player = GameManager.Instance.player.gameObject;
@@ -34,7 +36,7 @@ public class CameraMove : MonoBehaviour
         for (int i = 0; i < hits.Length; i++) // tag가 Wall인 오브젝트를 wallList에 집어넣는 For문
         {
             RaycastHit hit = hits[i];
-            if (hit.collider.tag == "Wall")
+            if (hit.collider.tag == "Wall" || hit.collider.tag == "Obstacle")
             {
                 if (wallList.Count == 0) // wallList가 비어있으면 바로 집어넣음
                     wallList.Add(hit);
@@ -52,8 +54,10 @@ public class CameraMove : MonoBehaviour
             else break;
         }
 
+        subCamVec = ((player.transform.position + Vector3.up * 1.9f) - initPos.transform.position).normalized;
+
         if (wallList.Count != 0) // Ray를 발사하여 충돌 검사하는 부분(0이면 충돌하지않아 wallList가 비어있는 것, 1이면 가장 가까운 벽 오브젝트에 대해 카메라 위치 상호작용) 
-             transform.position = Vector3.Lerp(transform.position, wallList[0].point, spd * Time.deltaTime); 
+             transform.position = Vector3.Lerp(transform.position, wallList[0].point + subCamVec, spd * Time.deltaTime); 
         else
         {
             if(transform.position != initPos.transform.position)
