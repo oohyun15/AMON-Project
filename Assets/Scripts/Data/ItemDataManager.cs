@@ -71,7 +71,8 @@ public class ItemDataManager : MonoBehaviour
         {
             ["oxygen"] = CSVReader.Read("Data/oxygen_data"),
             ["gloves"] = CSVReader.Read("Data/gloves_data"),
-            ["axe"] = CSVReader.Read("Data/axe_data")
+            ["axe"] = CSVReader.Read("Data/axe_data"),
+            ["shoes"] = CSVReader.Read("Data/shoes_data")
         };
     }
 

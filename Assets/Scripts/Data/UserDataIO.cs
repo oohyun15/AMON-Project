@@ -41,7 +41,8 @@ public class UserDataIO : MonoBehaviour
         /* 장착 아이템 레벨 */
         public int oxygenlv;                // 산소통 레벨
         public int gloveslv;                // 장갑 레벨
-        public int axelv;
+        public int axelv;                   // 도끼 레벨
+        public int shoeslv;                 // 신발 레벨
 
         public int[] achievementList;       // 도전과제 목록
         // 저장할 값 늘어날 경우, WriteUserData와 ReadUserData에서 Set/GetAttribute 설정해 주어야 합니다
@@ -88,6 +89,7 @@ public class UserDataIO : MonoBehaviour
         userElement.SetAttribute("oxygenlv", user.oxygenlv.ToString());
         userElement.SetAttribute("gloveslv", user.gloveslv.ToString());
         userElement.SetAttribute("axelv", user.axelv.ToString());
+        userElement.SetAttribute("shoeslv", user.shoeslv.ToString());
 
         /* 도전과제 달성 여부 */
         for(int index = 0; index < achievementCount; index++)
@@ -131,6 +133,7 @@ public class UserDataIO : MonoBehaviour
                 oxygenlv = 0,
                 gloveslv = 0,
                 axelv = 0,
+                shoeslv = 0,
 
                 /* 도전과제 달성 여부 */
                 achievementList = new int[achievementCount]
@@ -164,6 +167,7 @@ public class UserDataIO : MonoBehaviour
                 oxygenlv = userElement.HasAttribute("oxygenlv") ? System.Convert.ToInt32(userElement.GetAttribute("oxygenlv")) : 0,
                 gloveslv = userElement.HasAttribute("gloveslv") ? System.Convert.ToInt32(userElement.GetAttribute("gloveslv")) : 0,
                 axelv = userElement.HasAttribute("axelv") ? System.Convert.ToInt32(userElement.GetAttribute("axelv")) : 0,
+                shoeslv = userElement.HasAttribute("shoeslv") ? System.Convert.ToInt32(userElement.GetAttribute("shoeslv")) : 0,
 
                 /* 도전과제 달성 여부 */
                 achievementList = new int[achievementCount]

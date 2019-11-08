@@ -91,7 +91,6 @@ public class GameManager : MonoBehaviour, IObserver
     public Image interactionImage;              // (용현) 인터렉션 아이템 이미지
     public Sprite[] itemImages;                 // (용현) 인터렉션 아이템 이미지 종류
                                                 // 0: Axe, 1: Drink, 2: Coin(임시)
-
     [Header("Particle")]
     public GameObject[] FX_Ingame;              // 0: FX_Save, 1: FX_Damaged, 2: FX_Hurt, 3: FX_HitDust
 
@@ -109,8 +108,6 @@ public class GameManager : MonoBehaviour, IObserver
     [Header("Sprites")]
     public Sprite[] resultRescuerSprites;       // (예진) 결과 패널에 부상자 구조 여부 스프라이트 받아둠
                                                 // 0 --> 구조 실패 / 1 --> 구조 성공
-
-
     public float time;                         // 남은 시간, 초 단위
     private bool gameOver;
 
@@ -294,9 +291,16 @@ public class GameManager : MonoBehaviour, IObserver
 
         int oxygenEffect = GetEquipedItemEffect("oxygen", user);
         int glovesEffect = GetEquipedItemEffect("gloves", user);
+        int shoesEffect = GetEquipedItemEffect("shoes", user);
+        int axeEffect = GetEquipedItemEffect("axe", user);
 
         time += oxygenEffect;
-        player.damage = glovesEffect;
+        player.AttackSpd = 1.5f * (100 + glovesEffect)/100;
+        player.initMoveSpeed = 5 * (100 + shoesEffect)/100;
+        player.axeDamage = 5 + axeEffect;
+
+        Debug.Log("attspd = " + player.AttackSpd);
+        Debug.Log("movspd = " + user.shoeslv);
     }
 
     private int GetEquipedItemEffect(string item, UserDataIO.User user)
@@ -313,6 +317,14 @@ public class GameManager : MonoBehaviour, IObserver
 
             case "gloves":
                 itemLv = user.gloveslv;
+                break;
+
+            case "axe":
+                itemLv = user.axelv;
+                break;
+
+            case "shoes":
+                itemLv = user.shoeslv;
                 break;
         }
 

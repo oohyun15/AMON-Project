@@ -147,10 +147,13 @@ public class Lobby : MonoBehaviour
     {
         PlayerPrefs.DeleteKey("oxygenlv");
         PlayerPrefs.DeleteKey("gloveslv");
+        PlayerPrefs.DeleteKey("axelv");
+        PlayerPrefs.DeleteKey("shoeslv");
 
         userData.oxygenlv = 0;
         userData.gloveslv = 0;
         userData.axelv = 0;
+        userData.shoeslv = 0;
 
         UserDataIO.WriteUserData(userData);
 

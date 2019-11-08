@@ -51,6 +51,7 @@ public class Reset : MonoBehaviour
         userData.oxygenlv = 0;
         userData.gloveslv = 0;
         userData.axelv = 0;
+        userData.shoeslv = 0;
 
 
         UserDataIO.WriteUserData(userData);
@@ -77,6 +78,7 @@ public class Reset : MonoBehaviour
         userData.oxygenlv = 0;
         userData.gloveslv = 0;
         userData.axelv = 0;
+        userData.shoeslv = 0;
 
         UserDataIO.WriteUserData(userData);
     }

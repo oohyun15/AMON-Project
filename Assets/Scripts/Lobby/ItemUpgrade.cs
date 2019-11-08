@@ -51,6 +51,10 @@ public class ItemUpgrade : MonoBehaviour
             case "axe":
                 lv = user.axelv;
                 break;
+
+            case "shoes":
+                lv = user.shoeslv;
+                break;                  
         }
 
         int maxLv = ((List<Dictionary<string, object>>)itemDataList[item]).Count;
@@ -86,6 +90,10 @@ public class ItemUpgrade : MonoBehaviour
 
                     case "axe":
                         user.axelv++;
+                        break;
+
+                    case "shoes":
+                        user.shoeslv ++;
                         break;
                 }
 
@@ -126,6 +134,9 @@ public class ItemUpgrade : MonoBehaviour
 
             case "axe":
                 lv = userData.axelv;
+                break;
+            case "shoes":
+                lv = userData.shoeslv;
                 break;
         }
 

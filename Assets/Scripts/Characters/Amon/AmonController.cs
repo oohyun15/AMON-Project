@@ -70,6 +70,7 @@ public class AmonController : MonoBehaviour, IReset
     public bool isTouchBack = false; // 이동 중에 애니메이션을 받아왔는지를 알려주는 변수
     public AnimationClip frontWalk;
     public AnimationClip backWalk;
+    public float AttackSpd;
 
     [Header("CameraShake")]
     public float CSAmount;
@@ -86,7 +87,7 @@ public class AmonController : MonoBehaviour, IReset
     [Header("Destory")]
     private int shoeLv;
     private int axeLv;
-    private int axeDamage;
+    public int axeDamage;
 
 
     public List<GameObject> rescuers;
@@ -549,14 +550,8 @@ public class AmonController : MonoBehaviour, IReset
         rotSpeed = initRotSpeed;
 
         checkBuff = false;
-
-        shoeLv = 1; // user.gloveslv;
-
+        
         damage = initDamage;
-
-        axeLv = 1;//user.axelv;
-
-        axeDamage = System.Convert.ToInt32(((List<Dictionary<string, object>>)itemDataList["axe"])[axeLv - 1]["effect"]);
 
         axeAttack.SetActive(false);
 
@@ -589,7 +584,7 @@ public class AmonController : MonoBehaviour, IReset
                     else playerAnim.SetBool("IsBackMove", false);
                 }
 
-                playerAnim.SetFloat("WalkAnimSpd", moveSpeed/initMoveSpeed);
+                playerAnim.SetFloat("WalkAnimSpd", moveSpeed/5);
 
                 break;
 
@@ -637,7 +632,8 @@ public class AmonController : MonoBehaviour, IReset
         foreach (AnimatorControllerParameter prmt in playerAnim.parameters)
         {
             if (prmt.name.Contains("Is")) playerAnim.SetBool(prmt.name, false);
-            else playerAnim.SetFloat(prmt.name, 1.0f);
+            else if (prmt.name == "WalkAnimSpd") playerAnim.SetFloat(prmt.name, moveSpeed / 5);
+            else  playerAnim.SetFloat(prmt.name, AttackSpd);
         }
         if(isRescuing) playerAnim.SetBool("IsIdleResc", true);
         else playerAnim.SetBool("IsIdle", true);
