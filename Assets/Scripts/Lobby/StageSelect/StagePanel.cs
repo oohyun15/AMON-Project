@@ -3,8 +3,9 @@
  * 제작: 김용현
  * 로비 씬에서 스테이지 패널에 대한 스크립트
  * 함수 추가 및 수정 시 누가 작성했는지 꼭 해당 함수 주석으로 명시해주세요!
+ * (19.11.09) 스테이지 스프라이트 추가
  * 작성일자: 19.10.12
- * 수정일자: 19.10.12
+ * 수정일자: 19.11.09
  ***************************************/
 
 using System.Collections;
@@ -15,7 +16,7 @@ using UnityEngine.UI;
 public class StagePanel : MonoBehaviour
 {   
     public StageLevel[] stageLevel;
-    public Sprite[] stageSprite;        // 0: FastFood, 1: temp
+    public Sprite[] stageSprite;        // 0: FastFood, 1: Building, 2: School
     public Sprite[] rescueSprite;       // 0: Before, 1: Success, 2: Fail
     public Image stageImage;
     public Text stageTitle;
@@ -49,6 +50,8 @@ public class StagePanel : MonoBehaviour
 
             int rescueNum = stage.rescueNum[idx_data];
 
+            Debug.Log(rescueNum);
+
             if (stage.isPlayed[idx_data] == 0)
             {
                 for (int idx = 0; idx < 3; idx++) stageLevel[idx_level].rescueImage[idx].sprite = rescueSprite[0];
@@ -71,7 +74,7 @@ public class StagePanel : MonoBehaviour
             stageImage.sprite = stageSprite[index];
 
             stageTitle.text = stageData[index]["stageTitle"].ToString();
-
+            
             SetStage(index);
         }
     }
