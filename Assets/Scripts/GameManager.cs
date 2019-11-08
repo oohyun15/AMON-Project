@@ -17,6 +17,7 @@
  * (19.09.22)  인게임 UI 수정
  * (19.10.13)  Stage 클래스 관련 부상자수 저장 추가
  * (19.10.19)  파티클 리스트 추가
+ * (19.11.09)  게임오버씬 이름 오류 수정
  * 함수 추가 및 수정 시 누가 작성했는지 꼭 해당 함수 주석으로 명시해주세요!
  * 작성일자: 19.07.26
  * 수정일자: 19.09.22
@@ -486,7 +487,7 @@ public class GameManager : MonoBehaviour, IObserver
 
         // (19.10.03 예진) 피로도 업데이트
         if (!UserDataIO.ChangeUserStress(stress))
-            SceneManager.LoadScene("GameOver_test");        // 피로도 100 이상일 때 초기화 씬으로 이동
+            SceneManager.LoadScene("GameOver");        // 피로도 100 이상일 때 초기화 씬으로 이동
 
         // 조이스틱 멈춤
         JoystickController.instance.StopJoystick();
