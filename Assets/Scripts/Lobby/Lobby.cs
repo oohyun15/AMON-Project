@@ -17,11 +17,20 @@ using UnityEngine.SceneManagement;
 
 public class Lobby : MonoBehaviour
 {
+    string[] stress =
+    {
+        "정상",                   // 50 이하
+        "아급성기",               // 50 ~ 69
+        "만성",                   // 70 ~ 99
+        "진행 불가"               // 100
+    };
+
     [Header("Top")]
     public Text moneyText;
     public Text rankName;
     public Image rankImg;
     public Image rankGaze;
+    public Text stressState;
 
 
     [Header("Rank Up")]
@@ -63,28 +72,36 @@ public class Lobby : MonoBehaviour
         if (userData.rank >= rankData.Count - 1)
             return;
 
-        nextRankHonor = System.Convert.ToInt32(rankData[userData.rank + 1]["honor"]);
+        int preRank = userData.rank;
 
-        if (userData.honor > nextRankHonor)
+        while (userData.rank < rankData.Count - 1)
         {
-            OpenRankupPanel(userData.rank, rankData);
+            nextRankHonor = System.Convert.ToInt32(rankData[userData.rank + 1]["honor"]);
 
-            userData.rank++;
+            if (userData.honor > nextRankHonor)
+                userData.rank++;
+            else
+                break;
+        }
 
+        if (preRank != userData.rank)
+        {
             UserDataIO.WriteUserData(userData);
+
+            OpenRankupPanel(preRank, rankData);
         }
     }
 
     private void OpenRankupPanel(int preLv, List<Dictionary<string, object>> rankData)
     {
         preRank.sprite = rankSprites[preLv];
-        nowRank.sprite = rankSprites[preLv + 1];
+        nowRank.sprite = rankSprites[userData.rank];
 
         preRank.SetNativeSize();
         nowRank.SetNativeSize();
 
         preRank.transform.GetChild(0).GetComponent<Text>().text = rankData[preLv]["name"].ToString();
-        nowRank.transform.GetChild(0).GetComponent<Text>().text = rankData[preLv + 1]["name"].ToString();
+        nowRank.transform.GetChild(0).GetComponent<Text>().text = rankData[userData.rank]["name"].ToString();
         
         RankUpPanel.SetActive(true);
         
@@ -103,6 +120,13 @@ public class Lobby : MonoBehaviour
         rankName.text = rankData[userData.rank]["name"].ToString();
         rankImg.sprite = rankSprites[userData.rank];
         rankImg.SetNativeSize();
+
+        if (userData.stress < 50)
+            stressState.text = stress[0];
+        else if (userData.stress < 70)
+            stressState.text = stress[1];
+        else
+            stressState.text = stress[2];
 
         int preRankHonor = 0;
 

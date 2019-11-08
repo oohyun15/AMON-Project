@@ -23,6 +23,7 @@ public class Reset : MonoBehaviour
     /* debug */
     public GameObject evidenceList;
     public Color[] eviColors;
+    public Slider stressSlider;
 
     public void OnClickResetBtn()
     {
@@ -141,6 +142,20 @@ public class Reset : MonoBehaviour
             = eviColors[stage.isGotEvidence[n]];
 
         UserDataIO.WriteStageData(stage);
+    }
+
+    public void InitStressSlider()
+    {
+        stressSlider.value = UserDataIO.ReadUserData().stress;
+    }
+
+    public void OnChangeStress()
+    {
+        UserDataIO.User user = UserDataIO.ReadUserData();
+
+        user.stress = (int) stressSlider.value;
+
+        UserDataIO.WriteUserData(user);
     }
 
     public void MoveScene(string sceneName)
