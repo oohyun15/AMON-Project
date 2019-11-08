@@ -639,8 +639,25 @@ public class GameManager : MonoBehaviour, IObserver
                     }
                     
                     break;
+
+                case "Buttons":
+                    // 조건 확인해서 버튼 종류 바꾸기
+                    // 조건 1. 큰 스테이지의 마지막 작은 스테이지거나
+                    // 2. 피로도 100 넘겼거나
+                    if (UserDataIO.ReadUserData().stress >= 100
+                        || dm.IsLastStage())
+                    {
+                        gameResultPanel[i].UI.transform.GetChild(0).gameObject.SetActive(false);
+                        gameResultPanel[i].UI.transform.GetChild(1).gameObject.SetActive(true);
+                    } else
+                    {
+                        gameResultPanel[i].UI.transform.GetChild(0).gameObject.SetActive(true);
+                        gameResultPanel[i].UI.transform.GetChild(1).gameObject.SetActive(false);
+                    }
+                    break;
             }
         }
+
 
         // 다른 UI 설정 끝나면 패널 열기
         panel.SetActive(true);

@@ -142,4 +142,9 @@ public class DataManager : MonoBehaviour
     }
 
     public string GetStage() { return sceneName; }
+
+    public bool IsLastStage()
+    {
+        return System.Convert.ToInt32(stageData[dataIndex]["isLastStage"]) == 1;
+    }
 }
