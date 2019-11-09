@@ -46,6 +46,11 @@ public class ItemDataManager : MonoBehaviour
 
     public Sprite[] eviSprites;
 
+    public string[] stageTitle = {
+        "패스트푸드점",
+        "사무실",
+        "학교"
+    };
 
     void Awake()
     {
