@@ -15,6 +15,23 @@ public class StoryDialog : Dialog
     public Image image;
     public Sprite[] sprites;
     public string fileName;
+    public GameObject panel;
+    public GameObject loading;
+
+    public static StoryDialog instance;
+
+    private void Awake()
+    {
+        if (instance == null || instance.gameObject == null)
+        {
+            instance = this;
+        }
+    }
+
+    protected override void Start()
+    {
+
+    }
 
     protected override void UpdateDialog()
     {
@@ -34,12 +51,23 @@ public class StoryDialog : Dialog
     {
         path = rootPath + fileName;
 
+        if (sprites == null || sprites.Length == 0)
+            sprites = ItemDataManager.Instance.dialogSprites;
+
+        panel.SetActive(true);
+
         base.InitDialog();
     }
 
     protected override void EndDialog()
     {
         if (sceneNameToMove != "")
+        {
+            panel.SetActive(false);
+
             Lobby.MoveScene(sceneNameToMove);
+
+            loading.SetActive(true);
+        }
     }
 }

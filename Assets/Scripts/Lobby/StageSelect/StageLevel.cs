@@ -18,6 +18,18 @@ public class StageLevel : MonoBehaviour
 
     public void MoveScene()
     {
-        Lobby.MoveScene(stageName.text);
+        int isPlayed = UserDataIO.ReadStageData().isPlayed[(stageName.text[5] - 49) * 3];
+
+        if (isPlayed == 0)
+        {
+            // 입장 대화 출력
+            StoryDialog.instance.SetFile("enter" + (stageName.text[5] - 48));
+
+            StoryDialog.instance.sceneNameToMove = stageName.text;
+        }
+        else
+        {
+            Lobby.MoveScene(stageName.text);
+        }
     }
 }

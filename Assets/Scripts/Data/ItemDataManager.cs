@@ -45,7 +45,9 @@ public class ItemDataManager : MonoBehaviour
     public List<Dictionary<string, object>> rankData;
 
     public Sprite[] eviSprites;
+    public Sprite[] dialogSprites;
 
+    [HideInInspector]
     public string[] stageTitle = {
         "패스트푸드점",
         "사무실",
