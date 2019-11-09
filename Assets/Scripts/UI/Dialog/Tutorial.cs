@@ -56,7 +56,7 @@ public class Tutorial : Dialog
 
     public override void InitDialog()
     {
-        path += "tutorial_dialog";
+        path = rootPath + "tutorial_dialog";
         //+ DataManager.Instance.SceneName;
 
         base.InitDialog();

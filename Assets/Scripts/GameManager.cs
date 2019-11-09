@@ -461,9 +461,9 @@ public class GameManager : MonoBehaviour, IObserver
     // (19.10.03 예진) 게임 클리어, 실패 공통 실행 부분 합침
     public void GameEnd()
     {
-        int rescuedCount = dm.totalInjuredCount - leftInjured;
+        int rescuedCount = dm.total - leftInjured;
         Debug.Log(rescuedCount);
-        int stress = dm.stressData[rescuedCount];
+        int stress = dm.GetStageReward(DataManager.RewardType.stress, leftInjured);
         
         // (19.10.13) 이번 스테이지에서 구출한 인원 저장
         UserDataIO.Stage stage = UserDataIO.ReadStageData();
@@ -512,8 +512,8 @@ public class GameManager : MonoBehaviour, IObserver
 
         Debug.Log("Game Clear - Reward : " + state.ToString());
 
-        int money = dm.GetStageReward(DataManager.RewardType.Money, state);
-        int honor = dm.GetStageReward(DataManager.RewardType.Honor, state);
+        int money = dm.GetStageReward(DataManager.RewardType.Money, leftInjured);
+        int honor = dm.GetStageReward(DataManager.RewardType.Honor, leftInjured);
 
         Debug.Log("Reward - Money : " + money + ", Honor : " + honor);
 
@@ -611,13 +611,13 @@ public class GameManager : MonoBehaviour, IObserver
                     Transform uiTransform = gameResultPanel[i].UI.transform;
 
                     // 구조된 부상자
-                    for (int j = uiTransform.childCount - 1; j >= dm.totalInjuredCount; j--)
+                    for (int j = uiTransform.childCount - 1; j >= dm.total; j--)
                     {
-                        Debug.Log(dm.totalInjuredCount);
+                        Debug.Log(dm.total);
                         uiTransform.GetChild(j).gameObject.SetActive(false);
                     }
 
-                    for (int j = 0; j < dm.totalInjuredCount - leftInjured; j++)
+                    for (int j = 0; j < dm.total - leftInjured; j++)
                     {
                         Transform injured = uiTransform.GetChild(j);
                         injured.GetComponent<Image>().sprite
@@ -629,7 +629,7 @@ public class GameManager : MonoBehaviour, IObserver
                     for (int j = 0; j < leftInjured; j++)
                     {
                         Debug.Log(leftInjured);
-                        Transform injured = uiTransform.GetChild(dm.totalInjuredCount - 1 - j);
+                        Transform injured = uiTransform.GetChild(dm.total - 1 - j);
                         injured.GetComponent<Image>().sprite
                             = resultRescuerSprites[0];
                         injured.GetChild(0).gameObject.SetActive(false);

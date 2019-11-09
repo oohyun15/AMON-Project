@@ -21,7 +21,8 @@ public class DataManager : MonoBehaviour
     public enum RewardType
     {
         Money,
-        Honor
+        Honor,
+        stress
     }
 
     private static DataManager instance = null;
@@ -60,7 +61,7 @@ public class DataManager : MonoBehaviour
 
     public Sprite minimap;
 
-    public int totalInjuredCount = 5;
+    public int total = 5;
 
     private int maxLeftToLowCondition;
     public int MaxLeftToLowCondition { get { return maxLeftToLowCondition; } }
@@ -107,9 +108,7 @@ public class DataManager : MonoBehaviour
         // 미니맵 프리뷰 스프라이트 불러오기 - 안될 경우 이미지의 텍스쳐 타입 Sprite인지 확인
         minimap = Resources.Load<Sprite>("Minimap/" + sceneName);
 
-        totalInjuredCount = System.Convert.ToInt32(stageData[dataIndex]["total"]);
-        maxLeftToLowCondition = totalInjuredCount - System.Convert.ToInt32(stageData[dataIndex]["low"]);
-        maxLeftToMiddleCondition = totalInjuredCount - System.Convert.ToInt32(stageData[dataIndex]["mid"]);
+        total = System.Convert.ToInt32(stageData[dataIndex]["save"]);
     }
 
     public void SaveGameResult(int money, int honor)
@@ -126,11 +125,11 @@ public class DataManager : MonoBehaviour
         UserDataIO.WriteUserData(user);
     }
 
-    public int GetStageReward(RewardType rewardType, GameManager.ClearState state)
+    public int GetStageReward(RewardType rewardType, int left)
     {
         int reward;
 
-        reward = System.Convert.ToInt32(stageData[dataIndex][state.ToString() + "Reward" + rewardType.ToString()]);
+        reward = System.Convert.ToInt32(stageData[dataIndex + left][rewardType.ToString()]);
 
         return reward;
     }
@@ -145,6 +144,10 @@ public class DataManager : MonoBehaviour
 
     public bool IsLastStage()
     {
-        return System.Convert.ToInt32(stageData[dataIndex]["isLastStage"]) == 1;
+        if (dataIndex + total == stageData.Count - 1
+            || sceneName[5] != stageData[dataIndex + total + 1]["sceneName"].ToString()[5])
+            return true;
+
+        return false;
     }
 }
