@@ -1188,6 +1188,18 @@ PrefabInstance:
       objectReference: {fileID: 1061013040008729432}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2011b31096d5b7548a3e49740b3ea06d, type: 3}
+--- !u!114 &187928504 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3678268040293267029, guid: 2011b31096d5b7548a3e49740b3ea06d,
+    type: 3}
+  m_PrefabInstance: {fileID: 187928503}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0bbc9ab617ceb04088be04325739408, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &188873143
 GameObject:
   m_ObjectHideFlags: 0
@@ -1474,6 +1486,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 43560612}
     m_Modifications:
+    - target: {fileID: 8746568260142520784, guid: 1f29a5c69c9e51847bad9262da5e31db,
+        type: 3}
+      propertyPath: m_Name
+      value: obstacle (3)
+      objectReference: {fileID: 0}
     - target: {fileID: 8746568260142520620, guid: 1f29a5c69c9e51847bad9262da5e31db,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1533,11 +1550,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.x
       value: 65
-      objectReference: {fileID: 0}
-    - target: {fileID: 8746568260142520784, guid: 1f29a5c69c9e51847bad9262da5e31db,
-        type: 3}
-      propertyPath: m_Name
-      value: obstacle (3)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1f29a5c69c9e51847bad9262da5e31db, type: 3}
@@ -8063,6 +8075,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 43560612}
     m_Modifications:
+    - target: {fileID: 8746568260142520784, guid: 1f29a5c69c9e51847bad9262da5e31db,
+        type: 3}
+      propertyPath: m_Name
+      value: obstacle (4)
+      objectReference: {fileID: 0}
     - target: {fileID: 8746568260142520620, guid: 1f29a5c69c9e51847bad9262da5e31db,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -8127,11 +8144,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 50.00004
-      objectReference: {fileID: 0}
-    - target: {fileID: 8746568260142520784, guid: 1f29a5c69c9e51847bad9262da5e31db,
-        type: 3}
-      propertyPath: m_Name
-      value: obstacle (4)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1f29a5c69c9e51847bad9262da5e31db, type: 3}
@@ -11078,6 +11090,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 43560612}
     m_Modifications:
+    - target: {fileID: 8746568260142520784, guid: 1f29a5c69c9e51847bad9262da5e31db,
+        type: 3}
+      propertyPath: m_Name
+      value: obstacle (5)
+      objectReference: {fileID: 0}
     - target: {fileID: 8746568260142520620, guid: 1f29a5c69c9e51847bad9262da5e31db,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -11142,11 +11159,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 50.00011
-      objectReference: {fileID: 0}
-    - target: {fileID: 8746568260142520784, guid: 1f29a5c69c9e51847bad9262da5e31db,
-        type: 3}
-      propertyPath: m_Name
-      value: obstacle (5)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1f29a5c69c9e51847bad9262da5e31db, type: 3}
@@ -12437,7 +12449,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 6077718474458812950}
+      objectReference: {fileID: 187928504}
     - target: {fileID: 4730026726180856112, guid: 4b5c7c71c7e092e49905a610f88417b0,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
