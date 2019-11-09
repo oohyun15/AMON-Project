@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6416448113094033871}
+  - component: {fileID: 1370564325888967805}
   - component: {fileID: 3678268040293267029}
   - component: {fileID: 6121929833361057747}
   - component: {fileID: 7187905499731123157}
@@ -26,13 +27,34 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3678268040293267028}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1370564325888967805
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3678268040293267028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87db30475731f0540b8f6cb93105a2db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  talker: {fileID: 0}
+  dialog: {fileID: 0}
+  talkingSpeed: 0
+  sceneNameToMove: 
+  image: {fileID: 0}
+  sprites: []
+  fileName: 
+  panel: {fileID: 0}
+  loading: {fileID: 0}
 --- !u!114 &3678268040293267029
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -42,12 +64,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 3678268040293267028}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c0bbc9ab617ceb04088be04325739408, type: 3}
+  m_Script: {fileID: 11500000, guid: 7139b244f103af149ac9a5f6254ce7c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   talker: {fileID: 0}
   dialog: {fileID: 0}
-  talkingSpeed: 0.05
+  talkingSpeed: 0
   TutorialPanel: {fileID: 0}
   images: []
   UIs: {fileID: 0}
@@ -97,6 +119,7 @@ MonoBehaviour:
     UI: {fileID: 0}
   - name: Buttons
     UI: {fileID: 0}
+  resultOkButton: {fileID: 0}
   settings: {fileID: 0}
   UI:
   - {fileID: 0}
@@ -136,4 +159,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stressData: 190000000f0000000a0000000500000000000000ecffffff
   minimap: {fileID: 0}
-  totalInjuredCount: 5
+  total: 5

@@ -86,6 +86,7 @@ public class GameManager : MonoBehaviour, IObserver
     public GameObject evidencePanel;
     public Transform evidence;
     public UISet[] gameResultPanel;             // (예진) 게임 결과 패널 UI 접근 방식 변경
+    public Button resultOkButton;               // 게임 결과창 확인 버튼
     public GameObject settings;
     public GameObject[] UI;                     // (용현) 0: Joystick, 1: Interaction, 2: ItemSlots, 3: Minimap
     public Image minimapPreview;
@@ -463,7 +464,6 @@ public class GameManager : MonoBehaviour, IObserver
     {
         int rescuedCount = dm.total - leftInjured;
         Debug.Log(rescuedCount);
-        int stress = dm.GetStageReward(DataManager.RewardType.stress, leftInjured);
         
         // (19.10.13) 이번 스테이지에서 구출한 인원 저장
         UserDataIO.Stage stage = UserDataIO.ReadStageData();
@@ -486,8 +486,30 @@ public class GameManager : MonoBehaviour, IObserver
         CheckAchievements(user, stage);
 
         // (19.10.03 예진) 피로도 업데이트
+        int stress = dm.GetStageReward(DataManager.RewardType.stress, leftInjured);
+
+        // (19.11.09 예진) 피로도 100 이상일 때 게임 결과창의 확인 버튼 누르면 초기화 씬으로 이동
         if (!UserDataIO.ChangeUserStress(stress))
-            SceneManager.LoadScene("GameOver");        // 피로도 100 이상일 때 초기화 씬으로 이동
+        {
+            resultOkButton.onClick.RemoveAllListeners();
+            resultOkButton.onClick.AddListener(() => SceneManager.LoadScene("GameOver"));
+        }
+
+        /* 대화창 표시 */
+        for (int i = ItemDataManager.Instance.stress.Length - 2; i > 0; i--)
+        {
+            if (UserDataIO.ReadUserData().stress >= ItemDataManager.Instance.stress[i]
+                && user.stress < ItemDataManager.Instance.stress[i])
+            {
+                StoryDialog.instance.SetFile("stress" + i);
+                break;
+            }
+        }
+
+        if (dm.IsLastStage())
+        {
+            StoryDialog.instance.SetFile("clear" + (dm.SceneName[5] - 48));
+        }
 
         // 조이스틱 멈춤
         JoystickController.instance.StopJoystick();

@@ -9,6 +9,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+using UnityEngine.SceneManagement;
+
 public class StoryDialog : Dialog
 { 
     public string sceneNameToMove;              // 대화 끝난 후 씬 이동 불필요한 경우 비워둘 것
@@ -42,9 +44,16 @@ public class StoryDialog : Dialog
 
     public void SetFile(string name)
     {
-        fileName = name;
-
-        InitDialog();
+        if (fileName != null && panel.activeInHierarchy)
+        {
+            dialogData.AddRange(CSVReader.Read(rootPath + name));
+        }
+        else
+        {
+            fileName = name;
+            
+            InitDialog();
+        }
     }
 
     public override void InitDialog()
@@ -61,6 +70,8 @@ public class StoryDialog : Dialog
 
     protected override void EndDialog()
     {
+        panel.SetActive(false);
+
         if (sceneNameToMove != "")
         {
             panel.SetActive(false);
