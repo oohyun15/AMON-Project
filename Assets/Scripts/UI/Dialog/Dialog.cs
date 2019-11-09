@@ -19,8 +19,9 @@ public class Dialog : MonoBehaviour
     private bool isTalking;
     private string nowDialog;
 
-    private List<Dictionary<string, object>> dialogData;
-    protected string path = "Data/Dialog/";
+    protected List<Dictionary<string, object>> dialogData;
+    protected readonly string rootPath = "Data/Dialog/";
+    protected string path;
 
     protected virtual void Start()
     {
@@ -33,8 +34,7 @@ public class Dialog : MonoBehaviour
 
         isTalking = false;
 
-        if (dialogData == null)
-            dialogData = CSVReader.Read(path);
+        dialogData = CSVReader.Read(path);
 
         UpdateDialog();
     }

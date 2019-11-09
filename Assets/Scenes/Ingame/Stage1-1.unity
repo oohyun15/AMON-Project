@@ -966,11 +966,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3678268040293267028, guid: 2011b31096d5b7548a3e49740b3ea06d,
-        type: 3}
-      propertyPath: m_Name
-      value: GameManager
-      objectReference: {fileID: 0}
     - target: {fileID: 6121929833361057747, guid: 2011b31096d5b7548a3e49740b3ea06d,
         type: 3}
       propertyPath: leftTimeText
@@ -1111,6 +1106,11 @@ PrefabInstance:
       propertyPath: resultCharacterAnimator
       value: 
       objectReference: {fileID: 2835463811951340097}
+    - target: {fileID: 3678268040293267028, guid: 2011b31096d5b7548a3e49740b3ea06d,
+        type: 3}
+      propertyPath: m_Name
+      value: GameManager
+      objectReference: {fileID: 0}
     - target: {fileID: 6416448113094033871, guid: 2011b31096d5b7548a3e49740b3ea06d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5323,7 +5323,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh123084
+  m_Name: pb_Mesh65596
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -11869,7 +11869,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stressData: 190000000f0000000a0000000500000000000000ecffffff
   minimap: {fileID: 0}
-  totalInjuredCount: 5
+  total: 5
 --- !u!4 &341475405162309552
 Transform:
   m_ObjectHideFlags: 0
@@ -12454,6 +12454,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: Touched
+      objectReference: {fileID: 0}
+    - target: {fileID: 4730026726180856112, guid: 4b5c7c71c7e092e49905a610f88417b0,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4b5c7c71c7e092e49905a610f88417b0, type: 3}
@@ -31634,11 +31639,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2019227832}
     m_Modifications:
-    - target: {fileID: 3762333800951869182, guid: a3cd6af8c9282aa448b638ed1b87b38b,
-        type: 3}
-      propertyPath: m_Name
-      value: Soda
-      objectReference: {fileID: 0}
     - target: {fileID: 174839324334398701, guid: a3cd6af8c9282aa448b638ed1b87b38b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -31693,6 +31693,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3762333800951869182, guid: a3cd6af8c9282aa448b638ed1b87b38b,
+        type: 3}
+      propertyPath: m_Name
+      value: Soda
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a3cd6af8c9282aa448b638ed1b87b38b, type: 3}
@@ -36973,13 +36978,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0bbc9ab617ceb04088be04325739408, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  talker: {fileID: 1061013040008729431}
-  dialog: {fileID: 1061013040008729430}
-  talkingSpeed: 0.05
-  TutorialPanel: {fileID: 1061013040008729433}
-  images: []
-  UIs: {fileID: 1061013040008729432}
-  pos: []
 --- !u!1 &6077718474458812951
 GameObject:
   m_ObjectHideFlags: 0
@@ -38967,11 +38965,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1808348374}
     m_Modifications:
-    - target: {fileID: 2287518727491033297, guid: 2a09a5adad4ae614e80b3f89cca3a195,
-        type: 3}
-      propertyPath: m_Name
-      value: Sink
-      objectReference: {fileID: 0}
     - target: {fileID: 3019030168619379394, guid: 2a09a5adad4ae614e80b3f89cca3a195,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -39026,6 +39019,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2287518727491033297, guid: 2a09a5adad4ae614e80b3f89cca3a195,
+        type: 3}
+      propertyPath: m_Name
+      value: Sink
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2a09a5adad4ae614e80b3f89cca3a195, type: 3}
@@ -40012,11 +40010,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2019227832}
     m_Modifications:
-    - target: {fileID: 938270850482403043, guid: 98aba811c1bd91d4e8945e42783ef239,
-        type: 3}
-      propertyPath: m_Name
-      value: Tray2
-      objectReference: {fileID: 0}
     - target: {fileID: 4277911151495185648, guid: 98aba811c1bd91d4e8945e42783ef239,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -40071,6 +40064,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 938270850482403043, guid: 98aba811c1bd91d4e8945e42783ef239,
+        type: 3}
+      propertyPath: m_Name
+      value: Tray2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 98aba811c1bd91d4e8945e42783ef239, type: 3}
