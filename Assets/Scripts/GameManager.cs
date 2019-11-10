@@ -255,7 +255,7 @@ public class GameManager : MonoBehaviour, IObserver
         RectTransform frameRect = minimapPreview.transform.GetChild(0).GetComponent<RectTransform>();
         frameRect.sizeDelta = new Vector2 (previewRect.rect.width + 15, previewRect.rect.height + 20);
 
-
+        /*
         // (19.10.29 예진) 미니맵 프레임 사이즈 조절
         RectTransform minimapFrameRect = UI[3].transform.GetChild(0).GetComponent<RectTransform>();
 
@@ -269,7 +269,7 @@ public class GameManager : MonoBehaviour, IObserver
             minimapFrameRect.sizeDelta = new Vector2(minimapFrameRect.sizeDelta.x + offset, rate + offset);
         else
             minimapFrameRect.sizeDelta = new Vector2(rate + offset, minimapFrameRect.sizeDelta.y + offset);
-
+            */
 
 
         // (19.10.26 예진) 튜토리얼 실행 중에 미니맵 프리뷰 + 시작 버튼 보이지 않도록 함 

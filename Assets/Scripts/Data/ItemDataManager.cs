@@ -54,6 +54,7 @@ public class ItemDataManager : MonoBehaviour
         "학교"
     };
 
+    [HideInInspector]
     public int[] stress = { 0, 50, 80, 100 };
 
     void Awake()
