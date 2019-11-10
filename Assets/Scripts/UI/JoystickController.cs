@@ -78,9 +78,9 @@ public class JoystickController : MonoBehaviour, IPointerDownHandler, IPointerUp
     {
         if (!GameManager.Instance.player.playerAnim.GetBool("IsStrike") || !GameManager.Instance.player.playerAnim.GetBool("IsKick"))
             isTouch = true; // 다른 애니메이션 실행중이면 조이스틱 실행 안되도록 만듦
-        else return;
+        else if(GameManager.Instance.player.playerAnim.GetBool("IsStrike") || GameManager.Instance.player.playerAnim.GetBool("IsKick")) isTouch = false;
     }
-
+    
     // 터치 화면에서 땔 시 실행되는 함수
     public void OnPointerUp(PointerEventData eventData)
     {
@@ -92,6 +92,8 @@ public class JoystickController : MonoBehaviour, IPointerDownHandler, IPointerUp
 
     public void OnDrag(PointerEventData eventData)
     {
+        if (GameManager.Instance.player.playerAnim.GetBool("IsStrike") || GameManager.Instance.player.playerAnim.GetBool("IsKick")) isTouch = false;
+
         // 터치 포인트와 백그라운드 사이의 거리
         Vector2 trans_value = eventData.position - (Vector2)Background.position;
 

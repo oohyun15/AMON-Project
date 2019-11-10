@@ -631,14 +631,18 @@ public class AmonController : MonoBehaviour, IReset
 
         foreach (AnimatorControllerParameter prmt in playerAnim.parameters)
         {
-            if (prmt.name.Contains("Is")) playerAnim.SetBool(prmt.name, false);
+            if (prmt.name.Contains("Is"))
+            {
+                playerAnim.SetBool(prmt.name, false);
+                Debug.Log(prmt.name + playerAnim.GetBool(prmt.name));
+            }
             else if (prmt.name == "WalkAnimSpd") playerAnim.SetFloat(prmt.name, moveSpeed / 5);
-            else  playerAnim.SetFloat(prmt.name, AttackSpd);
+            else playerAnim.SetFloat(prmt.name, AttackSpd);
         }
         if(isRescuing) playerAnim.SetBool("IsIdleResc", true);
         else playerAnim.SetBool("IsIdle", true);
-
         JoystickController.instance.isBackMove = false;
+        Debug.Log("animIdle");
     }
 
     public void TouchBack() // 인터렉션 때 움직임을 멈춘 부분을 다시 되돌려 조이스틱을 다시 클릭하지 않아도 움직이도록 하는 함수 
@@ -647,6 +651,7 @@ public class AmonController : MonoBehaviour, IReset
         {
             JoystickController.instance.isTouch = true;
             isTouchBack = false;
+            Debug.Log("touchback");
         }
         else return;
     }
