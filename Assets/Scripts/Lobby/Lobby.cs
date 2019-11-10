@@ -42,6 +42,7 @@ public class Lobby : MonoBehaviour
     [Header("Panel")]
     public GameObject NotifiPanel;
     public GameObject EvidencePanel;
+    public GameObject ExitPanel;
 
     private UserDataIO.User userData;
     List<Dictionary<string, object>> rankData;
@@ -65,6 +66,22 @@ public class Lobby : MonoBehaviour
             SceneManager.LoadScene("GameOver");
         }
     }
+
+    private void FixedUpdate()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (ExitPanel.activeInHierarchy) ExitPanel.SetActive(false);
+
+            else ExitPanel.SetActive(true);
+        }
+    }
+
+    public void ExitGame()
+    {
+        Application.Quit();
+    }
+
 
     private void CheckUserRankUpped()
     {
