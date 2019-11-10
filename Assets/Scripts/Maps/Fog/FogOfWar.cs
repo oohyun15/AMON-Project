@@ -34,6 +34,8 @@ public class FogOfWar : MonoBehaviour, IReset
     {
         gm = GameManager.Instance;
 
+        Character = transform.parent;
+
         var go = new List<GameObject>();
 
         // Object에 키가 있으면 추가
