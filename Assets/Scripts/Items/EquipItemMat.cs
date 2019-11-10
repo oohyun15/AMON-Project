@@ -43,7 +43,7 @@ public class EquipItemMat : MonoBehaviour
                 break;
         }
         Debug.Log(itemMat[itemLv].name);
-        Debug.Log("mat = " + GetComponent<SkinnedMeshRenderer>().materials[0].name);
+        // Debug.Log("mat = " + GetComponent<SkinnedMeshRenderer>().materials[0].name);
         Debug.Log(itemLv);
     }
 }
