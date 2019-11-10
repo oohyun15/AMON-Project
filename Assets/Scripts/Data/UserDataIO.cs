@@ -50,15 +50,15 @@ public class UserDataIO : MonoBehaviour
 
     public class Stage
     {
-        public int[] isPlayed;
-        public int[] isGotEvidence;
-        public int[] rescueNum;
+        public int[] isPlayed;              // 플레이 여부. 0, 1
+        public int[] isGotEvidence;         // 단서 획득 여부. 0, 1
+        public int[] rescueNum;             // 구출 인원 수
     }
 
-    private readonly static string userDataFileName = "/userData.xml";
-    private readonly static string stageDataFileName = "/stageData.xml";
-    private readonly static string achievementDataPath = "Data/achievements_data";
-    private readonly static string stageDataPath = "Data/stage_data";
+    public readonly static string userDataFileName = "/userData.xml";
+    public readonly static string stageDataFileName = "/stageData.xml";
+    public readonly static string achievementDataPath = "Data/achievements_data";
+    public readonly static string stageDataPath = "Data/stage_data";
     private static List<Dictionary<string, object>> achievementData, stageData;
     public static int achievementCount = 0;
     public static int stageCount = 0;
