@@ -84,7 +84,7 @@ public class GameManager : MonoBehaviour, IObserver
     public GameObject settingsButton;
     public GameObject warningPanel;              // (예진) 탈출 버튼
     public GameObject evidencePanel;
-    //public Transform evidence;
+    public Transform evidence;
     public UISet[] gameResultPanel;             // (예진) 게임 결과 패널 UI 접근 방식 변경
     public Button resultOkButton;               // 게임 결과창 확인 버튼
     public GameObject settings;
