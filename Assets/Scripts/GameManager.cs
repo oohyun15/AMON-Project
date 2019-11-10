@@ -67,7 +67,7 @@ public class GameManager : MonoBehaviour, IObserver
     private DataManager dm;
 
     [Header("Game State")]
-    public int stageNum;                        // 스테이지 번호, (Ex. Stage 1-1 => stageNum = 0, Stage 2-2 => stageNum = 4 (= 1*3 + 1)) 
+    private int stageNum;                        // 스테이지 번호, (Ex. Stage 1-1 => stageNum = 0, Stage 2-2 => stageNum = 4 (= 1*3 + 1)) 
     public GameState gameState = GameState.Ready;
     public int leftInjured;
     public float timeLimit;                     // 제한 시간, 초 단위
@@ -145,6 +145,9 @@ public class GameManager : MonoBehaviour, IObserver
         // 옵저버 추가
 
         InitGame();
+
+        string name = dm.SceneName;
+        stageNum = (name[5] - 49) * 3 + (name[7] - 49);
     }
 
     private void FixedUpdate()
