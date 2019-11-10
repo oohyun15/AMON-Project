@@ -456,16 +456,7 @@ public class GameManager : MonoBehaviour, IObserver
 
         if (time <= 0) GameOver();
 
-        else if (leftInjured == 0)
-        {
-            GameClear(ClearState.high);
-        }
-
-        else if (leftInjured <= maxLeftToMiddleCondition) GameClear(ClearState.mid);
-
-        else if (leftInjured <= maxLeftToLowCondition) GameClear(ClearState.low);
-
-        else GameOver();
+        GameClear();
     }
 
     // (19.10.03 예진) 게임 클리어, 실패 공통 실행 부분 합침
@@ -537,11 +528,9 @@ public class GameManager : MonoBehaviour, IObserver
     }
 
     // 게임 클리어시
-    private void GameClear(ClearState state)
+    private void GameClear()
     {
         GameEnd();
-
-        Debug.Log("Game Clear - Reward : " + state.ToString());
 
         int money = dm.GetStageReward(DataManager.RewardType.money, leftInjured);
         int honor = dm.GetStageReward(DataManager.RewardType.honor, leftInjured);

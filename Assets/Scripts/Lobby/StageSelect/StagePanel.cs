@@ -29,12 +29,31 @@ public class StagePanel : MonoBehaviour
     private List<Dictionary<string, object>> stageData;
     private readonly string stageDataPath = "Data/stage_data";
 
+
+    int stageToPlay = 0;
+
+
     // Start is called before the first frame update
     void Start()
     {
         stage = UserDataIO.ReadStageData();
 
         stageData = CSVReader.Read(stageDataPath);
+
+        stageToPlay = 0;
+
+        if (stage.isPlayed[0] != 0)
+            while (stageToPlay + 1 < stage.isPlayed.Length)
+            {
+                if (stage.isPlayed[stageToPlay] != stage.isPlayed[stageToPlay + 1])
+                {
+                    stageToPlay++;
+
+                    break;
+                }
+                else stageToPlay++;
+            }
+        Debug.Log(stageToPlay);
 
         SetStage(0);
     }
@@ -59,6 +78,13 @@ public class StagePanel : MonoBehaviour
                     // (예진) stageData.xml의 인덱스에 맞게 계산한 인덱스
                     int idx_data = (tempStage[5] - 49) * 3 + (tempStage[7] - 49);
 
+                    Button stageBtn = stageLevel[idx_level].gameObject.GetComponent<Button>();
+
+                    if (idx_data == stageToPlay)
+                        stageBtn.interactable = true;
+                    else
+                        stageBtn.interactable = false;
+
                     stageLevel[idx_level].stageName.text = stageData[i]["sceneName"].ToString();
 
                     int isPlayed = UserDataIO.ReadStageData().isPlayed[(tempStage[5] - 49) * 3];
@@ -66,7 +92,7 @@ public class StagePanel : MonoBehaviour
                     if (isPlayed == 0)
                     {
                         // (예진) 플레이 기록 없을 시, 대화창 표시를 위해 로딩 오브젝트 비활성화 리스너 끄기
-                        stageLevel[idx_level].gameObject.GetComponent<Button>().onClick
+                        stageBtn.onClick
                             .SetPersistentListenerState(1, UnityEngine.Events.UnityEventCallState.Off);
                     }
 
