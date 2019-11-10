@@ -42,6 +42,7 @@ GameObject:
   - component: {fileID: 188480016356641769}
   - component: {fileID: 188480016356641774}
   - component: {fileID: 188480016356641775}
+  - component: {fileID: 6274270997076352135}
   m_Layer: 0
   m_Name: Axe_Idle
   m_TagString: Untagged
@@ -88,10 +89,10 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 6271573414225017425, guid: 5ae88d3c73743944185a10d7af0a68be, type: 3}
-  - {fileID: -432633505234778033, guid: 5ae88d3c73743944185a10d7af0a68be, type: 3}
-  - {fileID: 8748892135801146194, guid: 5ae88d3c73743944185a10d7af0a68be, type: 3}
-  - {fileID: -1294284738371021749, guid: 5ae88d3c73743944185a10d7af0a68be, type: 3}
+  - {fileID: 2100000, guid: 9f325fe8bbd8fac47870cd20bf59dec6, type: 2}
+  - {fileID: 2100000, guid: 9f325fe8bbd8fac47870cd20bf59dec6, type: 2}
+  - {fileID: 2100000, guid: 9f325fe8bbd8fac47870cd20bf59dec6, type: 2}
+  - {fileID: 2100000, guid: 9f325fe8bbd8fac47870cd20bf59dec6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -111,6 +112,23 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &6274270997076352135
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 188480016356641770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12fba29f28f41ac488aac4b6f98e56ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  item: axe
+  itemTexture:
+  - {fileID: 2800000, guid: 98cf247de72cdf14b95be8e843f8701a, type: 3}
+  - {fileID: 2800000, guid: cd9524dbbf81bb948bd0ae6db129e3b3, type: 3}
+  - {fileID: 2800000, guid: 9aafae2309971414c935b3afb1d773db, type: 3}
 --- !u!1 &188480016953117669
 GameObject:
   m_ObjectHideFlags: 0
@@ -153,6 +171,7 @@ GameObject:
   - component: {fileID: 188480017065426996}
   - component: {fileID: 188480017065427001}
   - component: {fileID: 188480017065427002}
+  - component: {fileID: 3183701637638936995}
   m_Layer: 0
   m_Name: Axe_Attack
   m_TagString: Untagged
@@ -199,10 +218,10 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 6271573414225017425, guid: 5ae88d3c73743944185a10d7af0a68be, type: 3}
-  - {fileID: -432633505234778033, guid: 5ae88d3c73743944185a10d7af0a68be, type: 3}
-  - {fileID: 8748892135801146194, guid: 5ae88d3c73743944185a10d7af0a68be, type: 3}
-  - {fileID: -1294284738371021749, guid: 5ae88d3c73743944185a10d7af0a68be, type: 3}
+  - {fileID: 2100000, guid: 9f325fe8bbd8fac47870cd20bf59dec6, type: 2}
+  - {fileID: 2100000, guid: 9f325fe8bbd8fac47870cd20bf59dec6, type: 2}
+  - {fileID: 2100000, guid: 9f325fe8bbd8fac47870cd20bf59dec6, type: 2}
+  - {fileID: 2100000, guid: 9f325fe8bbd8fac47870cd20bf59dec6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -222,6 +241,23 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &3183701637638936995
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 188480017065426997}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12fba29f28f41ac488aac4b6f98e56ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  item: axe
+  itemTexture:
+  - {fileID: 2800000, guid: 98cf247de72cdf14b95be8e843f8701a, type: 3}
+  - {fileID: 2800000, guid: cd9524dbbf81bb948bd0ae6db129e3b3, type: 3}
+  - {fileID: 2800000, guid: 9aafae2309971414c935b3afb1d773db, type: 3}
 --- !u!1 &188480017110485708
 GameObject:
   m_ObjectHideFlags: 0
@@ -698,7 +734,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e23c1795058dfe4448b90a9d8833bbd5, type: 2}
+  - {fileID: 2100000, guid: cb35507d5bf1b5a41a5fa228dbb997ea, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -732,7 +768,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item: oxygen
   itemTexture:
-  - {fileID: 2800000, guid: bf7c9a499f03d774ca0ee73422330a1b, type: 3}
+  - {fileID: 2800000, guid: 7ea2da4eb1d9aaf47a43d8cde53f3f4e, type: 3}
   - {fileID: 2800000, guid: 3e2c76b8039dca841b414ae3c0820480, type: 3}
   - {fileID: 2800000, guid: 273ceebc88c9335439c24988a69497d8, type: 3}
   - {fileID: 2800000, guid: b8f08c2bac8a53840b322d0f20ef9786, type: 3}
@@ -2388,7 +2424,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c690cc7d6cb2591438347386ff54640c, type: 2}
+  - {fileID: 2100000, guid: 80f70a76c4bf07f4ead583a7251d7bc8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2442,7 +2478,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item: shoes
   itemTexture:
-  - {fileID: 2800000, guid: fe65cfb4afaf3c1438c9c6de01b23f56, type: 3}
+  - {fileID: 2800000, guid: 32c7e5d71a7e9cb49b77e4af3d92945c, type: 3}
   - {fileID: 2800000, guid: fe65cfb4afaf3c1438c9c6de01b23f56, type: 3}
   - {fileID: 2800000, guid: 635bea19de474de4087d23e773ae1375, type: 3}
 --- !u!1 &5731414462333191086
@@ -3088,7 +3124,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d9a58f1f9f9656741b3ee8f6ee81ad40, type: 2}
+  - {fileID: 2100000, guid: d61284a0acab6a940bda0e2d558f963b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3146,7 +3182,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item: gloves
   itemTexture:
-  - {fileID: 2800000, guid: 1a435443b3a2786488728de0077845b0, type: 3}
+  - {fileID: 2800000, guid: 30fb8aa13f61878439142b754f915835, type: 3}
   - {fileID: 2800000, guid: 1a435443b3a2786488728de0077845b0, type: 3}
   - {fileID: 2800000, guid: 8eb2672fb463ed84b94f295a4a1acb8c, type: 3}
 --- !u!1 &8260372122007275702
