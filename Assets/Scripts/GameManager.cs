@@ -297,13 +297,11 @@ public class GameManager : MonoBehaviour, IObserver
         int axeEffect = GetEquipedItemEffect("axe", user);
 
         time += oxygenEffect;
-        player.AttackSpd = 1.5f * (100 + glovesEffect)/100;
-        player.initMoveSpeed = 5 * (100 + shoesEffect)/100;
+        player.AttackSpd = 1.5f * (100 + glovesEffect) / 100;
+        player.initMoveSpeed = 5 * (100 + shoesEffect) / 100;
         player.axeDamage = 5 + axeEffect;
-
-        Debug.Log("attspd = " + player.AttackSpd);
-        Debug.Log("movspd = " + user.shoeslv);
     }
+
 
     private int GetEquipedItemEffect(string item, UserDataIO.User user)
     {
