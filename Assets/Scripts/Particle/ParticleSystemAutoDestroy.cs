@@ -12,13 +12,29 @@ using UnityEngine;
 public class ParticleSystemAutoDestroy : MonoBehaviour
 {
     private ParticleSystem ps;
+    private float _time;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         ps = GetComponent<ParticleSystem>();
+
+        _time = ps.main.duration;
     }
 
+    public void SetTimer()
+    {
+        StartCoroutine(Timer(_time));
+    }
+
+    private IEnumerator Timer(float time)
+    {
+        yield return new WaitForSeconds(time);
+
+        gameObject.SetActive(false);
+    }
+
+    /*
     // Update is called once per frame
     void Update()
     {
@@ -30,4 +46,5 @@ public class ParticleSystemAutoDestroy : MonoBehaviour
             }
         }
     }
+    */
 }

@@ -16,16 +16,23 @@ public class TouchFX : MonoBehaviour, IPointerDownHandler
     public int initNum;
     private LobbyFX fx;
     private GameObject FX_Touch, FX_Lists;
-    private GameObject[] FX_Touchs;
+    private int count = 0;
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        Debug.Log(eventData.position);
-
         Vector2 initPos = eventData.position;
 
+        if (count >= initNum) count = 0;
 
-        // Debug.Break();
+        GameObject touch = FX_Lists.transform.GetChild(count).gameObject;
+
+        touch.transform.localPosition = initPos;
+
+        touch.SetActive(true);
+
+        touch.GetComponent<ParticleSystemAutoDestroy>().SetTimer();
+        
+        count++;
     }
 
 
@@ -42,13 +49,12 @@ public class TouchFX : MonoBehaviour, IPointerDownHandler
         {
             GameObject go = Instantiate(FX_Touch, FX_Lists.transform);
 
-            go.SetActive(false);
-
-            FX_Touchs[idx] = go;
 
             go.transform.localPosition = Vector3.zero;
 
             go.transform.localScale = Vector3.one;
+
+            go.SetActive(false);
         }
     }
 
