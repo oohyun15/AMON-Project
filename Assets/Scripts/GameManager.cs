@@ -52,10 +52,10 @@ public class GameManager : MonoBehaviour, IObserver
                     Debug.LogError("There's no active GameManager object");
                 }
             }
-
             return instance;
         }
     }
+    
 
     [System.Serializable]
     public class UISet
@@ -108,13 +108,13 @@ public class GameManager : MonoBehaviour, IObserver
     public IObserver observer;
 
     [Header("Sprites")]
-    public Sprite[] resultRescuerSprites;       // (예진) 결과 패널에 부상자 구조 여부 스프라이트 받아둠
-                                                // 0 --> 구조 실패 / 1 --> 구조 성공
+    public Sprite[] resultRescuerSprites;       // (예진) 결과 패널에 부상자 구조 여부 스프라이트 받아둠    
+                                                 // 0 --> 구조 실패 / 1 --> 구조 성공
+
     public float time;                         // 남은 시간, 초 단위
     private bool gameOver;
 
     private IEnumerator timeCheckCoroutine;
-
 
 
     // 스테이지 데이터 변수
@@ -295,17 +295,25 @@ public class GameManager : MonoBehaviour, IObserver
         int glovesEffect = GetEquipedItemEffect("gloves", user);
         int shoesEffect = GetEquipedItemEffect("shoes", user);
         int axeEffect = GetEquipedItemEffect("axe", user);
-
+    
         time += oxygenEffect;
         player.AttackSpd = 1.5f * (100 + glovesEffect) / 100;
         player.initMoveSpeed = 5 * (100 + shoesEffect) / 100;
         player.axeDamage = 5 + axeEffect;
     }
 
+    private void ApplyEquipItemMaterial()
+    {
+        UserDataIO.User user = UserDataIO.ReadUserData();
+
+        int oxygenLv = user.oxygenlv;
+        int glovesLv = user.gloveslv;
+        int shoesLv = user.shoeslv;
+        int axeLv = user.axelv;
+    }
 
     private int GetEquipedItemEffect(string item, UserDataIO.User user)
     {
-
         // 아이템 현재 레벨 불러오기
         int itemLv = 0;
 
@@ -327,7 +335,7 @@ public class GameManager : MonoBehaviour, IObserver
                 itemLv = user.shoeslv;
                 break;
         }
-
+        
         int itemEffect = 0;
 
         if (itemLv != 0)

@@ -651,6 +651,7 @@ GameObject:
   - component: {fileID: 188480017360794750}
   - component: {fileID: 188480017360794748}
   - component: {fileID: 188480017360794749}
+  - component: {fileID: 8446435584774624338}
   m_Layer: 0
   m_Name: OxygenTank_tank
   m_TagString: Untagged
@@ -717,6 +718,25 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &8446435584774624338
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 188480017360794751}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12fba29f28f41ac488aac4b6f98e56ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  item: oxygen
+  itemTexture:
+  - {fileID: 2800000, guid: bf7c9a499f03d774ca0ee73422330a1b, type: 3}
+  - {fileID: 2800000, guid: 3e2c76b8039dca841b414ae3c0820480, type: 3}
+  - {fileID: 2800000, guid: 273ceebc88c9335439c24988a69497d8, type: 3}
+  - {fileID: 2800000, guid: b8f08c2bac8a53840b322d0f20ef9786, type: 3}
+  - {fileID: 2800000, guid: 1459cae864a2e734e9e767a4135f6bd3, type: 3}
 --- !u!1 &188480017499345970
 GameObject:
   m_ObjectHideFlags: 0
@@ -2235,6 +2255,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5209256524227582143}
   - component: {fileID: 945508174407825464}
+  - component: {fileID: 8047307139631229574}
   m_Layer: 0
   m_Name: firefighter_boots
   m_TagString: Untagged
@@ -2313,6 +2334,23 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.036901563, y: 0.105366684, z: -0.020234998}
     m_Extent: {x: 0.062042683, y: 0.049205013, z: 0.054169763}
   m_DirtyAABB: 0
+--- !u!114 &8047307139631229574
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5098016180511109026}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12fba29f28f41ac488aac4b6f98e56ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  item: shoes
+  itemTexture:
+  - {fileID: 2800000, guid: fe65cfb4afaf3c1438c9c6de01b23f56, type: 3}
+  - {fileID: 2800000, guid: fe65cfb4afaf3c1438c9c6de01b23f56, type: 3}
+  - {fileID: 2800000, guid: 635bea19de474de4087d23e773ae1375, type: 3}
 --- !u!1 &5731414462333191086
 GameObject:
   m_ObjectHideFlags: 0
@@ -2917,6 +2955,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6865475539939883731}
   - component: {fileID: 4974446245137804784}
+  - component: {fileID: 3071039295280972106}
   m_Layer: 0
   m_Name: gloves
   m_TagString: Untagged
@@ -2999,6 +3038,23 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.017211135, y: 0.025414685, z: 0.053720172}
     m_Extent: {x: 0.03808699, y: 0.042333454, z: 0.063971534}
   m_DirtyAABB: 0
+--- !u!114 &3071039295280972106
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7777394605158221961}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12fba29f28f41ac488aac4b6f98e56ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  item: gloves
+  itemTexture:
+  - {fileID: 2800000, guid: 1a435443b3a2786488728de0077845b0, type: 3}
+  - {fileID: 2800000, guid: 1a435443b3a2786488728de0077845b0, type: 3}
+  - {fileID: 2800000, guid: 8eb2672fb463ed84b94f295a4a1acb8c, type: 3}
 --- !u!1 &8260372122007275702
 GameObject:
   m_ObjectHideFlags: 0
