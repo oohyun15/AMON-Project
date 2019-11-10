@@ -17,6 +17,7 @@ public class ItemUpgrade : MonoBehaviour
     Dictionary<string, object> itemDataList;
 
     public GameManager.UISet[] content;
+    public EquipItemMat[] equipItems;
 
     private Lobby lobby;
 
@@ -88,12 +89,12 @@ public class ItemUpgrade : MonoBehaviour
                         user.gloveslv++;
                         break;
 
-                    case "axe":
-                        user.axelv++;
+                    case "shoes":
+                        user.shoeslv++;
                         break;
 
-                    case "shoes":
-                        user.shoeslv ++;
+                    case "axe":
+                        user.axelv++;
                         break;
                 }
 
@@ -102,6 +103,25 @@ public class ItemUpgrade : MonoBehaviour
                 StartCoroutine(lobby.Notify("업그레이드 성공\n현재 " + GetDataValue(item, 1, "name") + " 아이템 레벨은 " + (lv + 1)));
 
                 UpdateEquipViewport();
+
+                switch (item)
+                {
+                    case "oxygen":
+                        equipItems[0].UpdateItemMat(item);
+                        break;
+
+                    case "gloves":
+                        equipItems[1].UpdateItemMat(item);
+                        break;
+
+                    case "shoes":
+                        equipItems[2].UpdateItemMat(item);
+                        break;
+
+                    case "axe":
+                        equipItems[3].UpdateItemMat(item);
+                        break;
+                }
 
                 lobby.SetUIText();
             }

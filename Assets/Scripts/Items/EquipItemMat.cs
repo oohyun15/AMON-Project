@@ -1,11 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EquipItemMat : MonoBehaviour
 {
     public string item;
     public Texture[] itemTexture;
+    public Button itemUpgradeButton;
 
     private string[] textureName;
     private int itemLv;
@@ -13,10 +15,16 @@ public class EquipItemMat : MonoBehaviour
 
     public void Start()
     {
+        UpdateItemMat(item);
+    }
+
+    public void UpdateItemMat(string _item)
+    {
         UserDataIO.User user = UserDataIO.ReadUserData();
+        _item = item;
         itemLv = 0;
 
-        switch (item)
+        switch (_item)
         {
             case "oxygen":
                 itemLv = user.oxygenlv;
@@ -35,15 +43,12 @@ public class EquipItemMat : MonoBehaviour
                 itemMat = GetComponent<SkinnedMeshRenderer>().materials;
                 GetComponent<SkinnedMeshRenderer>().materials[0].mainTexture = itemTexture[itemLv];
                 break;
-                
+
             case "shoes":
                 itemLv = user.shoeslv;
                 itemMat = GetComponent<SkinnedMeshRenderer>().materials;
                 GetComponent<SkinnedMeshRenderer>().materials[0].mainTexture = itemTexture[itemLv];
                 break;
         }
-        Debug.Log(itemMat[itemLv].name);
-        // Debug.Log("mat = " + GetComponent<SkinnedMeshRenderer>().materials[0].name);
-        Debug.Log(itemLv);
     }
 }
