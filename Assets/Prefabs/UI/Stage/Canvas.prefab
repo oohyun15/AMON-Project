@@ -5394,7 +5394,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uB85C\uBE44\uB85C \uAC00\uAE30"
+  m_Text: "\uD3EC\uAE30\uD558\uAE30"
 --- !u!1 &1275515084877330623
 GameObject:
   m_ObjectHideFlags: 0
@@ -5407,7 +5407,7 @@ GameObject:
   - component: {fileID: 1275515084877330618}
   - component: {fileID: 1275515084877330617}
   m_Layer: 5
-  m_Name: IngameSettingPannel
+  m_Name: IngameSettingPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6456,7 +6456,7 @@ GameObject:
   - component: {fileID: 6468270812061239993}
   - component: {fileID: 2232237696999501409}
   m_Layer: 5
-  m_Name: Lobby
+  m_Name: Give Up
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6571,6 +6571,17 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: Lobby
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1275515084877330623}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
@@ -11004,7 +11015,7 @@ PrefabInstance:
     - target: {fileID: 2229043699587302595, guid: cc7775824cbaf83479945de3dde144fe,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 116.92493
+      value: 116.92505
       objectReference: {fileID: 0}
     - target: {fileID: 2229043699587302595, guid: cc7775824cbaf83479945de3dde144fe,
         type: 3}
@@ -11267,11 +11278,6 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2840272372485380701, guid: 1423fc149117a1943ab328ee3ecaf1e8,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 8140732404951417120, guid: 1423fc149117a1943ab328ee3ecaf1e8,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -11376,6 +11382,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2840272372485380701, guid: 1423fc149117a1943ab328ee3ecaf1e8,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 8140732404994540614, guid: 1423fc149117a1943ab328ee3ecaf1e8,
         type: 3}
