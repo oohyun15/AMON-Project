@@ -5,8 +5,9 @@
  * (19.10.13) ㅇㅈ> 디버깅 용 돈/명예 추가 기능
  * (19.10.29) ㅇㅎ> 스테이지 데이터 초기화 추가
  * (19.11.03) ㅇㅈ> 단서 데이터 변경 기능 추가
- * 작성일자: 19.10.08.
- * 수정일자: 19.11.03.
+ * (19.11.11) ㅇㅎ> 게임 초기화 시 스테이지 데이터 삭제 추가
+ * 작성일자: 19.10.08
+ * 수정일자: 19.11.11
  ***************************************/
 using System.Collections;
 using System.Collections.Generic;
@@ -34,6 +35,8 @@ public class Reset : MonoBehaviour
          * 리셋 안 할 것
          * ?
          */
+
+        ResetStageData();
 
         UserDataIO.User userData = UserDataIO.ReadUserData();
 

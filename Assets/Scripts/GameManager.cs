@@ -18,9 +18,10 @@
  * (19.10.13)  Stage 클래스 관련 부상자수 저장 추가
  * (19.10.19)  파티클 리스트 추가
  * (19.11.09)  게임오버씬 이름 오류 수정
+ * (19.11.11)  도전과제 1번 수정
  * 함수 추가 및 수정 시 누가 작성했는지 꼭 해당 함수 주석으로 명시해주세요!
  * 작성일자: 19.07.26
- * 수정일자: 19.09.22
+ * 수정일자: 19.11.11
  ***************************************/
 
 using System.Collections;
@@ -795,12 +796,33 @@ public class GameManager : MonoBehaviour, IObserver
 
             var temp = CSVReader.Read(AchievementController.achievementDataPath);
 
+            var temp2 = CSVReader.Read(UserDataIO.stageDataPath);
+
             int condition = System.Convert.ToInt32(temp[index]["Condition"]);
+            
 
             switch(index)
             {
+                // 1 스테이지 전체 구조 시 달성
                 case 0:
-                    if (leftInjured == 0) UpdateAchievement(0);
+
+                    bool checkBit = true;
+
+                    for (int i = 0; i < 3; i++)
+                    {
+                        int num = System.Convert.ToInt32(temp2[4*i]["save"]);
+
+                        Debug.Log(num);
+                        
+                        if (stage.rescueNum[i] != num)
+                        {
+                            checkBit = false;
+
+                            break;
+                        }
+                    }
+
+                    if (checkBit) UpdateAchievement(0);
                     break;
 
                 case 1:
