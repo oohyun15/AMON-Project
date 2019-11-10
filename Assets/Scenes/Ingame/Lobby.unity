@@ -4714,6 +4714,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1345743225 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3226496122469457884, guid: fc2f1d911be45414d85c708f9ca336bb,
+    type: 3}
+  m_PrefabInstance: {fileID: 6048131857254804102}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1389098132
 GameObject:
   m_ObjectHideFlags: 0
@@ -9556,6 +9568,11 @@ PrefabInstance:
       propertyPath: stressSlider
       value: 
       objectReference: {fileID: 1827257459}
+    - target: {fileID: 6048131856444224867, guid: fc2f1d911be45414d85c708f9ca336bb,
+        type: 3}
+      propertyPath: stressText
+      value: 
+      objectReference: {fileID: 1345743225}
     - target: {fileID: 5228929912839788610, guid: fc2f1d911be45414d85c708f9ca336bb,
         type: 3}
       propertyPath: m_RootOrder
@@ -9937,6 +9954,11 @@ PrefabInstance:
     - target: {fileID: 7719754151755919031, guid: 67473003253368a478761eb1ec6bd619,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_BoolArgument
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4239993382555713389, guid: 67473003253368a478761eb1ec6bd619,
+        type: 3}
+      propertyPath: totalStageNum
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []

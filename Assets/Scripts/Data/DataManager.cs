@@ -20,8 +20,8 @@ public class DataManager : MonoBehaviour
 {
     public enum RewardType
     {
-        Money,
-        Honor,
+        money,
+        honor,
         stress
     }
 

@@ -543,8 +543,8 @@ public class GameManager : MonoBehaviour, IObserver
 
         Debug.Log("Game Clear - Reward : " + state.ToString());
 
-        int money = dm.GetStageReward(DataManager.RewardType.Money, leftInjured);
-        int honor = dm.GetStageReward(DataManager.RewardType.Honor, leftInjured);
+        int money = dm.GetStageReward(DataManager.RewardType.money, leftInjured);
+        int honor = dm.GetStageReward(DataManager.RewardType.honor, leftInjured);
 
         Debug.Log("Reward - Money : " + money + ", Honor : " + honor);
 
