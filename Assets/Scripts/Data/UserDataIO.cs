@@ -62,6 +62,7 @@ public class UserDataIO : MonoBehaviour
     private static List<Dictionary<string, object>> achievementData, stageData;
     public static int achievementCount = 0;
     public static int stageCount = 0;
+    public static readonly int bigStageCount = 5;          // 큰 스테이지 수
 
     // 유저 데이터 저장 시
     public static void WriteUserData(User user)
@@ -198,10 +199,15 @@ public class UserDataIO : MonoBehaviour
         {
             string number = "Stage" + index.ToString() + "RescueNumber";
             string name = "Stage" + index.ToString() + "isPlayed";
-            string evidence = "Stage" + index.ToString() + "isGotEvidence";
 
             userElement.SetAttribute(number, stage.rescueNum[index].ToString());
             userElement.SetAttribute(name, stage.isPlayed[index].ToString());
+        }
+
+        for (int index = 0; index < bigStageCount; index++)
+        {
+            string evidence = "Stage" + index.ToString() + "isGotEvidence";
+
             userElement.SetAttribute(evidence, stage.isGotEvidence[index].ToString());
         }
 
@@ -222,7 +228,7 @@ public class UserDataIO : MonoBehaviour
             stage = new Stage
             {
                 isPlayed = new int[stageCount],
-                isGotEvidence = new int[stageCount],
+                isGotEvidence = new int[bigStageCount],
                 rescueNum = new int[stageCount]
             };
 
@@ -237,7 +243,7 @@ public class UserDataIO : MonoBehaviour
             stage = new Stage
             {
                 isPlayed = new int[stageCount],
-                isGotEvidence = new int[stageCount],
+                isGotEvidence = new int[bigStageCount],
                 rescueNum = new int[stageCount]
             };
 
@@ -246,12 +252,19 @@ public class UserDataIO : MonoBehaviour
             {
                 string number = "Stage" + index.ToString() + "RescueNumber";
                 string name = "Stage" + index.ToString() + "isPlayed";
-                string evidence = "Stage" + index.ToString() + "isGotEvidence";
 
                 stage.rescueNum[index] = userElement.HasAttribute(number) ? System.Convert.ToInt32(userElement.GetAttribute(number)) : 0;
                 stage.isPlayed[index] = userElement.HasAttribute(name) ? System.Convert.ToInt32(userElement.GetAttribute(name)) : 0;
+            }
+
+            // 단서 획득 여부 확인
+            for (int index = 0; index < bigStageCount; index++)
+            {
+                string evidence = "Stage" + index.ToString() + "isGotEvidence";
+
                 stage.isGotEvidence[index] = userElement.HasAttribute(evidence) ? System.Convert.ToInt32(userElement.GetAttribute(evidence)) : 0;
             }
+
         }
         return stage;
     }

@@ -44,7 +44,7 @@ public class EvidenceController : MonoBehaviour
             ["evidenceExplain"] = "아직 획득하지 못한 단서입니다"
         };
 
-        for (int i = 0; i < eviArr.Length; i++)
+        for (int i = 0; i < Mathf.Min(eviArr.Length, eviList.Count); i++)
         {
             Dictionary<string, object> eviData = eviList[i];
             Evidence evi = eviArr[i];

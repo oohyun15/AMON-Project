@@ -68,7 +68,7 @@ public class StoryDialog : Dialog
         base.InitDialog();
     }
 
-    public void EndDialog()
+    public override void EndDialog()
     {
         panel.SetActive(false);
 

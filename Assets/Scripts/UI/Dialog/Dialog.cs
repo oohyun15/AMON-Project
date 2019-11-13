@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Dialog : MonoBehaviour
+public abstract class Dialog : MonoBehaviour
 {
     public Text talker;
     public Text dialog;
@@ -85,5 +85,5 @@ public class Dialog : MonoBehaviour
         index++;
     }
 
-    public void EndDialog() { }
+    public abstract void EndDialog();
 }

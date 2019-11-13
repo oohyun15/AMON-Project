@@ -471,12 +471,9 @@ public class GameManager : MonoBehaviour, IObserver
         UserDataIO.Stage stage = UserDataIO.ReadStageData();
 
         stage.rescueNum[stageNum] = rescuedCount;
-        stage.isPlayed[stageNum] = 1;
+        stage.isPlayed[stageNum] = 1;   
 
-        if (leftInjured == 0)
-            stage.isGotEvidence[stageNum] = 1;
-        else
-            stage.isGotEvidence[stageNum] = 0;
+        // (11.14.예진) 단서 획득 확인 부분은 GetEvidence 메소드로 이동함
 
         UserDataIO.WriteStageData(stage);
 
@@ -663,16 +660,13 @@ public class GameManager : MonoBehaviour, IObserver
 
                 case "Evidence":
                     GameObject ui = gameResultPanel[i].UI;
-
                     // 단서 획득
                     if (leftInjured == 0)                    
                         GetEvidence(ui);                    
                     else
                     {
-                        ui.transform.GetChild(0).gameObject.SetActive(false);
-                        ui.transform.GetChild(1).GetComponent<Text>().text = "단서\n획득 실패";
                     }
-                    
+                    GetEvidence(ui);
                     break;
 
                 case "Buttons":
@@ -700,19 +694,42 @@ public class GameManager : MonoBehaviour, IObserver
 
     private void GetEvidence(GameObject ui)
     {
-        Dictionary<string, object> eviData = ItemDataManager.Instance.GetEvidenceData()[dm.DataIndex];
+        UserDataIO.Stage stage = UserDataIO.ReadStageData();
+        int eviIndex = dm.SceneName[5] - 49;
 
-        ui.transform.GetChild(1).GetComponent<Text>().text
-            = eviData["evidenceName"].ToString();
-        ui.transform.GetChild(0).GetComponent<Image>().sprite = ItemDataManager.Instance.eviSprites[dm.DataIndex];
+        if (stage.isGotEvidence[eviIndex] == 0)
+        {
+            if (leftInjured == 0)
+            {
+                stage.isGotEvidence[eviIndex] = 1;
+                UserDataIO.WriteStageData(stage);
 
-        evidence.GetChild(1).GetComponent<Image>().sprite = ItemDataManager.Instance.eviSprites[dm.DataIndex];
-        evidence.GetChild(2).GetComponent<Text>().text = eviData["evidenceName"].ToString();
-        evidence.GetChild(3).GetComponent<Text>().text = eviData["evidenceExplain"].ToString();
+                Dictionary<string, object> eviData = ItemDataManager.Instance.GetEvidenceData()[eviIndex];
 
-        evidencePanel.SetActive(true);
+                ui.transform.GetChild(1).GetComponent<Text>().text
+                    = eviData["evidenceName"].ToString();
+                ui.transform.GetChild(0).GetComponent<Image>().sprite = ItemDataManager.Instance.eviSprites[eviIndex];
 
-        ui.SetActive(true);
+                evidence.GetChild(1).GetComponent<Image>().sprite = ItemDataManager.Instance.eviSprites[eviIndex];
+                evidence.GetChild(2).GetComponent<Text>().text = eviData["evidenceName"].ToString();
+                evidence.GetChild(3).GetComponent<Text>().text = eviData["evidenceExplain"].ToString();
+
+                evidencePanel.SetActive(true);
+
+                ui.SetActive(true);
+
+            }
+            else
+            {
+                ui.transform.GetChild(0).gameObject.SetActive(false);
+                ui.transform.GetChild(1).GetComponent<Text>().text = "단서\n획득 실패";
+            }
+        }
+        else
+        {
+            ui.transform.GetChild(0).gameObject.SetActive(false);
+            ui.transform.GetChild(1).GetComponent<Text>().text = "단서\n획득 완료";
+        }
     }
 
     private IEnumerator CheckTime()

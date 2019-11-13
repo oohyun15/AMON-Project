@@ -121,7 +121,7 @@ public class Reset : MonoBehaviour
     public void InitSetEvidencePanel()
     {
         Button[] btns = evidenceList.GetComponentsInChildren<Button>();
-        List<Dictionary<string, object>> data = CSVReader.Read("Data/stage_data");
+        List<Dictionary<string, object>> data = CSVReader.Read("Data/evidence_data");
         UserDataIO.Stage stage = UserDataIO.ReadStageData();
 
         for (int i = 0; i < Mathf.Min(data.Count, btns.Length); i++)
@@ -129,7 +129,7 @@ public class Reset : MonoBehaviour
             int index = i;
             btns[i].onClick.AddListener(() => SetEvidence(index));
             btns[i].transform.GetChild(0).GetComponent<Text>().text
-                = data[i]["sceneName"].ToString();
+                = data[i]["stageName"].ToString();
             btns[i].GetComponent<Image>().color = eviColors[stage.isGotEvidence[i]];
         }
     }
