@@ -37,6 +37,15 @@ public class CharacterRotation : MonoBehaviour, IPointerDownHandler, IPointerUpH
 
     private Vector3 touchStart;
 
+
+    /* 조예진 회전 */
+    Vector2 position, com_position;
+    Quaternion fir_rotation;
+    float _rotSpeed = 10;
+
+    public Slider slider;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -63,6 +72,8 @@ public class CharacterRotation : MonoBehaviour, IPointerDownHandler, IPointerUpH
             // Debug.Log(angle * Mathf.Deg2Rad);
 
             //width = Screen.width;
+
+            slider.value = _rotSpeed;
         }
     }
 
@@ -82,16 +93,19 @@ public class CharacterRotation : MonoBehaviour, IPointerDownHandler, IPointerUpH
     }
 
     /* 조예진 회전 */
-    Vector2 position, com_position;
-    Quaternion fir_rotation;
 
     void IDragHandler.OnDrag(PointerEventData eventData)
     {
         com_position = Input.mousePosition;
 
-        player.transform.Rotate(new Vector3(0, (position.x - com_position.x) / 10, 0));
+        player.transform.Rotate(new Vector3(0, (position.x - com_position.x) / _rotSpeed, 0));
 
         position = com_position;
+    }
+
+    public void OnChangeRotSpeed()
+    {
+        _rotSpeed = slider.value;
     }
 
     /* 김용현 회전 */
