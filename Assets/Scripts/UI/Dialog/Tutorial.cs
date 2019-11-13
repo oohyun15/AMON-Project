@@ -88,11 +88,12 @@ public class Tutorial : Dialog
     }
 
     // 튜토리얼 끝났을 때 - 튜토리얼 패널 비활성화 후 게임 초기화
-    protected override void EndDialog()
+    public new void EndDialog()
     {
         base.EndDialog();
 
-        images[index - 1].gameObject.SetActive(false);
+        if (index > 0)
+            images[index - 1].gameObject.SetActive(false);
 
         TutorialPanel.SetActive(false);
 

@@ -85,5 +85,5 @@ public class Dialog : MonoBehaviour
         index++;
     }
 
-    protected virtual void EndDialog() { }
+    public void EndDialog() { }
 }

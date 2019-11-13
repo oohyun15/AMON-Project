@@ -110,7 +110,8 @@ public class GameManager : MonoBehaviour, IObserver
 
     [Header("Sprites")]
     public Sprite[] resultRescuerSprites;       // (예진) 결과 패널에 부상자 구조 여부 스프라이트 받아둠    
-                                                 // 0 --> 구조 실패 / 1 --> 구조 성공
+                                                // 0 --> 구조 실패 / 1 --> 구조 성공
+    public Sprite[] oxygenSprites;              // 0 --> 평상시 / 1 --> 긴급
 
     public float time;                         // 남은 시간, 초 단위
     private bool gameOver;
@@ -716,6 +717,8 @@ public class GameManager : MonoBehaviour, IObserver
 
     private IEnumerator CheckTime()
     {
+        bool isChangedSprite = time < 20 ? true : false;
+
         while ((time -= Time.deltaTime) > 0 && !gameOver)
         {
             SetTimeText(time);
@@ -725,6 +728,15 @@ public class GameManager : MonoBehaviour, IObserver
             // (19.10.19) FX_Hurt 추가
             if (time <  hurtTime&&
                 !FX_Ingame[2].activeInHierarchy) FX_Ingame[2].SetActive(true);
+
+            if (time < 20 && !isChangedSprite)
+            {
+                oxygenSlider.transform.GetChild(1).GetChild(0).GetComponent<Image>().sprite
+                    = oxygenSprites[1];
+
+                isChangedSprite = true;
+            }
+
 
             yield return null;
         }

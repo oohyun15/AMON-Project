@@ -4,6 +4,7 @@
  * Amon캐릭터의 회전을 조절하는 코드
  * (19.10.03) 위, 아래로 터치시 카메라 회전 구현중...
  * (19.11.03) 로비씬 락커룸 플레이어렌더 회전
+ * (19.11.14) 조예진 회전 방식 바꿨음
  * 함수 추가 및 수정 시 누가 작성했는지 꼭 해당 함수 주석으로 명시해주세요!
  * 작성일자: 19.10.02
  * 수정일자: 19.11.03
@@ -33,6 +34,8 @@ public class CharacterRotation : MonoBehaviour, IPointerDownHandler, IPointerUpH
     private float width;
     // private float angle;
     // private float distance;
+
+    private Vector3 touchStart;
 
     // Start is called before the first frame update
     void Start()
@@ -67,7 +70,7 @@ public class CharacterRotation : MonoBehaviour, IPointerDownHandler, IPointerUpH
     void FixedUpdate()
     {
         if (type == 0) player.transform.Rotate(-playerRot);
-
+         /*
         else if (GameManager.Instance.gameState == GameManager.GameState.Playing && isTouch)
         {
             player.transform.Rotate(playerRot);
@@ -75,9 +78,24 @@ public class CharacterRotation : MonoBehaviour, IPointerDownHandler, IPointerUpH
             // cam.transform.Rotate(camRot);
 
             // initCamPos.transform.Translate(camPos);
-        }
+        }*/
     }
 
+    /* 조예진 회전 */
+    Vector2 position, com_position;
+    Quaternion fir_rotation;
+
+    void IDragHandler.OnDrag(PointerEventData eventData)
+    {
+        com_position = Input.mousePosition;
+
+        player.transform.Rotate(new Vector3(0, (position.x - com_position.x) / 10, 0));
+
+        position = com_position;
+    }
+
+    /* 김용현 회전 */
+    /*
     void IDragHandler.OnDrag(PointerEventData eventData)
     {
         Vector2 value = eventData.position - t_initPos;
@@ -102,12 +120,21 @@ public class CharacterRotation : MonoBehaviour, IPointerDownHandler, IPointerUpH
 
         // UpdateCamPos(value.y);
     }
+    */
 
     void IPointerDownHandler.OnPointerDown(PointerEventData eventData)
     {
         isTouch = true;
 
         t_initPos = eventData.position;
+
+        /* 조예진 회전 */
+
+        fir_rotation = player.transform.rotation;
+
+        position = Input.mousePosition;
+
+        com_position = position;
     }
 
     void IPointerUpHandler.OnPointerUp(PointerEventData eventData)
@@ -116,6 +143,7 @@ public class CharacterRotation : MonoBehaviour, IPointerDownHandler, IPointerUpH
 
         playerRot = Vector3.zero;
     }
+
 
     // (19.10.03) 구현중
     /*

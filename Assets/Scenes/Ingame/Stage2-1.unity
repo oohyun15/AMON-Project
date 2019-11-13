@@ -9515,10 +9515,40 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2738747301414417903, guid: b016d9247ac81864d9b6d55854efcf43,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1793505018}
+    - target: {fileID: 2738747301414417903, guid: b016d9247ac81864d9b6d55854efcf43,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: EndDialog
+      objectReference: {fileID: 0}
+    - target: {fileID: 7420964852860742105, guid: b016d9247ac81864d9b6d55854efcf43,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1793505017}
+    - target: {fileID: 7420964852860742105, guid: b016d9247ac81864d9b6d55854efcf43,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: EndDialog
+      objectReference: {fileID: 0}
     - target: {fileID: 2232237696253215109, guid: b016d9247ac81864d9b6d55854efcf43,
         type: 3}
       propertyPath: m_Name
       value: Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 1172055097450471989, guid: b016d9247ac81864d9b6d55854efcf43,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1793505016}
+    - target: {fileID: 1172055097450471989, guid: b016d9247ac81864d9b6d55854efcf43,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: MoveScene
       objectReference: {fileID: 0}
     - target: {fileID: 2232237696253215105, guid: b016d9247ac81864d9b6d55854efcf43,
         type: 3}
@@ -9625,11 +9655,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1066107225832005289, guid: b016d9247ac81864d9b6d55854efcf43,
-        type: 3}
-      propertyPath: player
-      value: 
-      objectReference: {fileID: 4815547001361966239}
     - target: {fileID: 5616068021847951162, guid: b016d9247ac81864d9b6d55854efcf43,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -9720,16 +9745,6 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: MoveScene
       objectReference: {fileID: 0}
-    - target: {fileID: 1172055097450471989, guid: b016d9247ac81864d9b6d55854efcf43,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1793505016}
-    - target: {fileID: 1172055097450471989, guid: b016d9247ac81864d9b6d55854efcf43,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: MoveScene
-      objectReference: {fileID: 0}
     - target: {fileID: 2232237696556796800, guid: b016d9247ac81864d9b6d55854efcf43,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -9780,6 +9795,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: Touched
       objectReference: {fileID: 0}
+    - target: {fileID: 1066107225832005289, guid: b016d9247ac81864d9b6d55854efcf43,
+        type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 4815547001361966239}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b016d9247ac81864d9b6d55854efcf43, type: 3}
 --- !u!114 &1175083846 stripped
@@ -14752,26 +14772,6 @@ PrefabInstance:
       propertyPath: FX_Ingame.Array.data[2]
       value: 
       objectReference: {fileID: 1175083878}
-    - target: {fileID: 3678268040293267029, guid: 2011b31096d5b7548a3e49740b3ea06d,
-        type: 3}
-      propertyPath: talker
-      value: 
-      objectReference: {fileID: 1175083852}
-    - target: {fileID: 3678268040293267029, guid: 2011b31096d5b7548a3e49740b3ea06d,
-        type: 3}
-      propertyPath: dialog
-      value: 
-      objectReference: {fileID: 1175083851}
-    - target: {fileID: 3678268040293267029, guid: 2011b31096d5b7548a3e49740b3ea06d,
-        type: 3}
-      propertyPath: TutorialPanel
-      value: 
-      objectReference: {fileID: 1175083854}
-    - target: {fileID: 3678268040293267029, guid: 2011b31096d5b7548a3e49740b3ea06d,
-        type: 3}
-      propertyPath: UIs
-      value: 
-      objectReference: {fileID: 1175083853}
     - target: {fileID: 1370564325888967805, guid: 2011b31096d5b7548a3e49740b3ea06d,
         type: 3}
       propertyPath: image
@@ -14792,6 +14792,26 @@ PrefabInstance:
       propertyPath: panel
       value: 
       objectReference: {fileID: 1175083850}
+    - target: {fileID: 3678268040293267029, guid: 2011b31096d5b7548a3e49740b3ea06d,
+        type: 3}
+      propertyPath: talker
+      value: 
+      objectReference: {fileID: 1175083852}
+    - target: {fileID: 3678268040293267029, guid: 2011b31096d5b7548a3e49740b3ea06d,
+        type: 3}
+      propertyPath: dialog
+      value: 
+      objectReference: {fileID: 1175083851}
+    - target: {fileID: 3678268040293267029, guid: 2011b31096d5b7548a3e49740b3ea06d,
+        type: 3}
+      propertyPath: TutorialPanel
+      value: 
+      objectReference: {fileID: 1175083854}
+    - target: {fileID: 3678268040293267029, guid: 2011b31096d5b7548a3e49740b3ea06d,
+        type: 3}
+      propertyPath: UIs
+      value: 
+      objectReference: {fileID: 1175083853}
     - target: {fileID: 6416448113094033871, guid: 2011b31096d5b7548a3e49740b3ea06d,
         type: 3}
       propertyPath: m_LocalPosition.x
