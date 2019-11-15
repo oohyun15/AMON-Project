@@ -103,25 +103,7 @@ MonoBehaviour:
   warningPanel: {fileID: 0}
   evidencePanel: {fileID: 0}
   evidence: {fileID: 0}
-  gameResultPanel:
-  - name: Panel
-    UI: {fileID: 0}
-  - name: Stage
-    UI: {fileID: 0}
-  - name: Money
-    UI: {fileID: 0}
-  - name: Honor
-    UI: {fileID: 0}
-  - name: Injured
-    UI: {fileID: 0}
-  - name: Result
-    UI: {fileID: 0}
-  - name: Reward
-    UI: {fileID: 0}
-  - name: Evidence
-    UI: {fileID: 0}
-  - name: Buttons
-    UI: {fileID: 0}
+  resultPanel: {fileID: 0}
   resultOkButton: {fileID: 0}
   settings: {fileID: 0}
   UI:
@@ -132,9 +114,9 @@ MonoBehaviour:
   minimapPreview: {fileID: 0}
   interactionImage: {fileID: 0}
   itemImages:
-  - {fileID: 21300000, guid: faffd3feb5d2f634cbf480293a07f9f6, type: 3}
-  - {fileID: 21300000, guid: 2eed7b18281e1cd4cb16ae04c4afff07, type: 3}
-  - {fileID: 21300000, guid: f3b3c18991d9f8e4fbcf5228f94280cf, type: 3}
+  - {fileID: 21300000, guid: 091fb00f541fc8b47b56762af15396b3, type: 3}
+  - {fileID: 21300000, guid: a9da671c17150be4dbfe78f6a1957769, type: 3}
+  - {fileID: 21300000, guid: 37df9aa2a2f926d4497c1917cb3e915b, type: 3}
   FX_Ingame:
   - {fileID: 8902661641439584746, guid: bc163e9fdcde3ff4a8d92809231f0027, type: 3}
   - {fileID: 0}
@@ -173,11 +155,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6416448113094033871}
     m_Modifications:
-    - target: {fileID: 4427523977308964688, guid: 0eba903c9190ba84c85022e128c1019d,
-        type: 3}
-      propertyPath: m_Name
-      value: AudioManager
-      objectReference: {fileID: 0}
     - target: {fileID: 576136331717206000, guid: 0eba903c9190ba84c85022e128c1019d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -232,6 +209,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4427523977308964688, guid: 0eba903c9190ba84c85022e128c1019d,
+        type: 3}
+      propertyPath: m_Name
+      value: AudioManager
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0eba903c9190ba84c85022e128c1019d, type: 3}

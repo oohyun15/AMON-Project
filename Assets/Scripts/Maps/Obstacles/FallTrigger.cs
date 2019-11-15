@@ -8,6 +8,7 @@
  * (19.08.07) 초기화 관련 수정
  * (19.10.19) 폭발 스크립트 추가
  * (19.11.03) 천장 오브젝트(CellingFragments)를 통해 새롭게 로직 구성
+ * (19.11.16) 천장 오브젝트 관련 FX 추가
  * 작성일자: 19.07.09
  * 수정일자: 19.11.03
  ***************************************/
@@ -21,11 +22,12 @@ public class FallTrigger : MonoBehaviour, IReset
 {
     //public Obstacle obstacle; // 인스턴스화할 장애물을 받아오는 변수, 하이라키창에서 Object 직접 연결
 
-    public Material _material;                       // 하이라키창에서 material 직접 연결
-    public GameObject cellingFragments;                      // 장애물(Obstacle)
-    public Fragments wallFragments;                     // 부서지는 벽(Fragments)
+    // public Material _material;                       // 하이라키창에서 material 직접 연결
+    public GameObject cellingFragments;              // 장애물(Obstacle)
+    public GameObject cellingFX;                     // 장애물 떨어지는 위치
+    public Fragments wallFragments;                  // 부서지는 벽(Fragments)
     public float time;
-    public int type;                                // 0: 장애물, 1: 부서지는 벽
+    public int type;                                 // 0: 장애물, 1: 부서지는 벽
 
     private new Renderer renderer;
     private Material initMaterial;
@@ -81,17 +83,23 @@ public class FallTrigger : MonoBehaviour, IReset
     IEnumerator FallingObs()
     {
         // Red material 적용
-        renderer.material = _material;
+        // renderer.material = _material;
+
+        // FX 활성화
+        cellingFX.SetActive(true);
 
         // time 뒤 장애물 생성, rigidbody에 의해 생성된 위치에서 자동으로 떨어짐
         yield return new WaitForSeconds(time);
 
+        // FX 비활성화
+        cellingFX.SetActive(false);
+
         // 천장 조각들 중력 사용
         for (int idx =0; idx < cellingFragments.transform.childCount; idx++)
         {
-            cellingFragments.transform.GetChild(idx).GetComponent<Rigidbody>().useGravity = true;
+            if (idx%2 == 0) cellingFragments.transform.GetChild(idx).GetComponent<Rigidbody>().useGravity = true;
         }
-        yield return new WaitForSeconds(0.9f);
+        yield return new WaitForSeconds(1.0f);
 
         // 발판(트리거) 비활성화
         gameObject.SetActive(false);
@@ -103,7 +111,7 @@ public class FallTrigger : MonoBehaviour, IReset
     IEnumerator Explosion()
     {
         // Red material 적용
-        renderer.material = _material;
+        // renderer.material = _material;
 
         // 3초 뒤 장애물 생성, rigidbody에 의해 생성된 위치에서 자동으로 떨어짐
         yield return new WaitForSeconds(time);
@@ -113,16 +121,21 @@ public class FallTrigger : MonoBehaviour, IReset
 
     public void GetInitValue()
     {
-        initMaterial = renderer.material;
+        // initMaterial = renderer.material;
 
         initTriggerPos = gameObject.transform.position;
 
-        if (type == 0) initCellingPos = cellingFragments.transform.position;
+        if (type == 0)
+        {
+            initCellingPos = cellingFragments.transform.position;
+
+            cellingFX.SetActive(false);
+        }
     }
 
     public void SetInitValue()
     {
-        renderer.material = initMaterial;
+        // renderer.material = initMaterial;
 
         gameObject.SetActive(true);
 

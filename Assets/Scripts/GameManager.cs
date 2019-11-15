@@ -19,6 +19,7 @@
  * (19.10.19)  파티클 리스트 추가
  * (19.11.09)  게임오버씬 이름 오류 수정
  * (19.11.11)  도전과제 1번 수정
+ * (19.11.16)  인터렉션 버튼 수정
  * 함수 추가 및 수정 시 누가 작성했는지 꼭 해당 함수 주석으로 명시해주세요!
  * 작성일자: 19.07.26
  * 수정일자: 19.11.11
@@ -93,7 +94,7 @@ public class GameManager : MonoBehaviour, IObserver
     public Image minimapPreview;
     public Image interactionImage;              // (용현) 인터렉션 아이템 이미지
     public Sprite[] itemImages;                 // (용현) 인터렉션 아이템 이미지 종류
-                                                // 0: Axe, 1: Drink, 2: Coin(임시)
+                                                // 0: Rescue, 1: Axe, 2: Kick
     [Header("Particle")]
     public GameObject[] FX_Ingame;              // 0: FX_Save, 1: FX_Damaged, 2: FX_Hurt, 3: FX_HitDust
 

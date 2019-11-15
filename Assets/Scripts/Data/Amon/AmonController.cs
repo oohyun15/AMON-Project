@@ -85,7 +85,7 @@ public class AmonController : MonoBehaviour, IReset
     private GameManager gm;
     private new readonly string name = "Player";
 
-    [Header("Destory")]
+    [Header("Destroy")]
     private int shoeLv;
     private int axeLv;
     public int axeDamage;
@@ -124,11 +124,12 @@ public class AmonController : MonoBehaviour, IReset
         GetInitValue();
     }
 
+    /*
     // Update is called once per frame
     void FixedUpdate()
     {
         // (19.10.29) 임시 디버깅 버튼 비활성화
-        /*
+        
         // Unity에서 디버깅용 버튼. 추후에 삭제해야함
         h = Input.GetAxis("Horizontal");
 
@@ -166,10 +167,11 @@ public class AmonController : MonoBehaviour, IReset
             }
         }
 
-        */
+        
         
         // if (Input.GetKeyDown(KeyCode.Space)) Interaction();
     }
+    */
 
     private void OnCollisionStay(Collision collision)
     {
@@ -181,6 +183,11 @@ public class AmonController : MonoBehaviour, IReset
                 // 장애물 제거 모드로 변경
                 state = InteractionState.Obstacle;
                 isCollisionObs = true;
+
+                // 도끼 또는 발차기 이미지로 변경
+                gm.interactionImage.gameObject.SetActive(true);
+
+                gm.interactionImage.sprite = isRescuing ? gm.itemImages[2] : gm.itemImages[1];
 
                 obstacle = collision.gameObject.GetComponent<Obstacle>();
                 
@@ -204,6 +211,11 @@ public class AmonController : MonoBehaviour, IReset
                 // 구출모드로 변경
                 state = InteractionState.Rescue;
 
+                // 구조 아이콘으로 변경
+                gm.interactionImage.gameObject.SetActive(true);
+
+                gm.interactionImage.sprite = gm.itemImages[0];
+
                 // (용현) 부상자를 target으로 설정
                 target = collision.gameObject;
 
@@ -221,7 +233,8 @@ public class AmonController : MonoBehaviour, IReset
                 // (용현) 구조 후 플레이어 상태 변경, 아이템 들고있을 때 고려함
                 state = InteractionState.Idle;
 
-                
+                gm.interactionImage.gameObject.SetActive(false);
+
                 // (19.09.22) 인터렉션 UI 변경으로 인해 비활성화
                 /*
                 // (19.09.02) 현재 아이템이 도끼거나 없을 시 인터렉션 아이템 이미지 비활성화
@@ -240,6 +253,8 @@ public class AmonController : MonoBehaviour, IReset
 
                 // 상태를 Idle로 변경
                 state = InteractionState.Idle;
+
+                gm.interactionImage.gameObject.SetActive(false);
 
                 break;
         }
@@ -354,6 +369,8 @@ public class AmonController : MonoBehaviour, IReset
 
             // (용현) 구조 후 플레이어 상태 변경
             state = InteractionState.Idle;
+
+            gm.interactionImage.gameObject.SetActive(false);
         }
         AudioManager.Instance.PlayAudio("Patient", 0, 0f, false);
     }
@@ -370,7 +387,7 @@ public class AmonController : MonoBehaviour, IReset
             axeIdle.SetActive(false);
             axeAttack.SetActive(true);
         }
-        attackBtn.interactable = false;
+        // attackBtn.interactable = false;
         animState = AnimationName.Strike;
         PlayerAnimation();
     }
@@ -410,11 +427,10 @@ public class AmonController : MonoBehaviour, IReset
             // (용현) 구조 후 플레이어 상태 변경
             state =  InteractionState.Idle;
 
-            /*
             // (19.09.02) 인터렉션 버튼 아이템 이미지 비활성화
             gm.interactionImage.gameObject.SetActive(false);
-            */
             
+
             // 현재 장애물 null로 바꿈
             obstacle = null;
             isCollisionObs = false;
@@ -473,12 +489,14 @@ public class AmonController : MonoBehaviour, IReset
     // (용현) 인터렉션 버튼
     public void Interaction()
     {
+        /*
         // (9.9 태윤, 이동 중에 인터렉션 시 움직임을 멈추도록 조건문 추가)
         if (JoystickController.instance.isTouch) 
         {
             JoystickController.instance.isTouch = false;
             isTouchBack = true;
         }
+        */
 
         switch (state)
         {

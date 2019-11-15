@@ -24,11 +24,6 @@ public class FallObstacle : MonoBehaviour, IReset
         GetInitValue();
     }
 
-    private void Update()
-    {
-        Debug.Log(GetComponent<Rigidbody>().velocity);
-    }
-
     public void GetInitValue()
     {
         initPos = gameObject.transform.position;
