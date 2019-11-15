@@ -584,80 +584,6 @@ public class GameManager : MonoBehaviour, IObserver
         {
             switch (gameResultPanel[i].name)
             {
-                // (19.10.10) 예진 게임 클리어/실패 없어져 필요 없는 부분 --> 씬 안에서 직접 설정할 것
-                /* 
-                // 게임 클리어 상태에 따라 텍스트와 배경 색 변경
-                case "Result":
-                    if (gameState == GameState.Over)
-                    {
-                        gameResultPanel[i].UI.transform.GetChild(0).gameObject.SetActive(false);
-                        gameResultPanel[i].UI.transform.GetChild(1).gameObject.SetActive(true);
-                    }
-                    else
-                    {
-                        gameResultPanel[i].UI.transform.GetChild(0).gameObject.SetActive(true);
-                        gameResultPanel[i].UI.transform.GetChild(1).gameObject.SetActive(false);
-                    }
-                    break;
-
-                // GameStage에 현재 씬 이름(스테이지) 설정
-                case "Stage":
-                    gameResultPanel[i].UI.GetComponent<Text>().text = dm.GetStage();
-                    break;
-                
-
-                // Money, Honor 텍스트 설정
-                case "Reward":
-                    if (gameState == GameState.Over)
-                    {
-                        gameResultPanel[i].UI.transform.GetChild(0).gameObject.SetActive(false);
-                        gameResultPanel[i].UI.transform.GetChild(1).gameObject.SetActive(true);
-                    }
-                    else
-                    {
-                        gameResultPanel[i].UI.transform.GetChild(0).gameObject.SetActive(true);
-                        gameResultPanel[i].UI.transform.GetChild(1).gameObject.SetActive(false);
-                    }
-                    break;
-                */
-                case "Money":
-                    //if (gameState == GameState.Clear)
-                    gameResultPanel[i].UI.GetComponent<Text>().text = "+" + money;
-                    break;
-                case "Honor":
-                    //if (gameState == GameState.Clear)
-                    gameResultPanel[i].UI.GetComponent<Text>().text = "+" + honor;
-                    break;
-
-                // 구출한 부상자만큼 색깔 설정
-                case "Injured":
-                    Transform uiTransform = gameResultPanel[i].UI.transform;
-
-                    // 구조된 부상자
-                    for (int j = uiTransform.childCount - 1; j >= dm.total; j--)
-                    {
-                        Debug.Log(dm.total);
-                        uiTransform.GetChild(j).gameObject.SetActive(false);
-                    }
-
-                    for (int j = 0; j < dm.total - leftInjured; j++)
-                    {
-                        Transform injured = uiTransform.GetChild(j);
-                        injured.GetComponent<Image>().sprite
-                            = resultRescuerSprites[1];
-                        injured.GetChild(0).gameObject.SetActive(true);
-
-                    }
-                    // 구조 실패한 부상자
-                    for (int j = 0; j < leftInjured; j++)
-                    {
-                        Debug.Log(leftInjured);
-                        Transform injured = uiTransform.GetChild(dm.total - 1 - j);
-                        injured.GetComponent<Image>().sprite
-                            = resultRescuerSprites[0];
-                        injured.GetChild(0).gameObject.SetActive(false);
-                    }       
-                    break;
                 case "Panel":
                     panel = gameResultPanel[i].UI;
                     break;
@@ -665,11 +591,6 @@ public class GameManager : MonoBehaviour, IObserver
                 case "Evidence":
                     GameObject ui = gameResultPanel[i].UI;
                     // 단서 획득
-                    if (leftInjured == 0)                    
-                        GetEvidence(ui);                    
-                    else
-                    {
-                    }
                     GetEvidence(ui);
                     break;
 
@@ -694,6 +615,8 @@ public class GameManager : MonoBehaviour, IObserver
 
         // 다른 UI 설정 끝나면 패널 열기
         panel.SetActive(true);
+        panel.GetComponent<ResultAnimationController>().
+            StartResultAnimation(dm.total, leftInjured, money, honor, UserDataIO.ReadUserData().stress);
     }
 
     private void GetEvidence(GameObject ui)
