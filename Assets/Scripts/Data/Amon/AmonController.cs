@@ -355,6 +355,7 @@ public class AmonController : MonoBehaviour, IReset
             // (용현) 구조 후 플레이어 상태 변경
             state = InteractionState.Idle;
         }
+        AudioManager.Instance.PlayAudio("Patient", 0, 0f, false);
     }
 
     // (19.09.22) 장애물 파괴
@@ -589,6 +590,7 @@ public class AmonController : MonoBehaviour, IReset
                 }
 
                 playerAnim.SetFloat("WalkAnimSpd", moveSpeed/5);
+                AudioManager.Instance.PlayAudio("Player", 0, 0f, true);
 
                 break;
 
@@ -605,8 +607,19 @@ public class AmonController : MonoBehaviour, IReset
                 playerAnim.SetBool("IsWalk", false);
                 playerAnim.SetBool("IsWalkResc", false);
 
-                if (isRescuing) playerAnim.SetBool("IsKick", true);
-                else playerAnim.SetBool("IsStrike", true);
+                if (isRescuing)
+                {
+                    playerAnim.SetBool("IsKick", true);
+                    AudioManager.Instance.PlayAudio("Player", 3, 0f, false);
+                }
+
+                else
+                {
+                    playerAnim.SetBool("IsStrike", true);
+
+                    if (GameManager.Instance.stageNum < 6) AudioManager.Instance.PlayAudio("Player", 1, 0f, false);
+                    else AudioManager.Instance.PlayAudio("Player", 2, 0f, false);
+                } 
 
                 break;
 
@@ -662,6 +675,6 @@ public class AmonController : MonoBehaviour, IReset
 
     public void SetButtonOn()
     {
-        attackBtn.interactable = true;
+       attackBtn.interactable = true;
     }
 }

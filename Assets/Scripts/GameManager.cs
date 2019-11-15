@@ -68,7 +68,7 @@ public class GameManager : MonoBehaviour, IObserver
     private DataManager dm;
 
     [Header("Game State")]
-    private int stageNum;                        // 스테이지 번호, (Ex. Stage 1-1 => stageNum = 0, Stage 2-2 => stageNum = 4 (= 1*3 + 1)) 
+    public int stageNum;                        // 스테이지 번호, (Ex. Stage 1-1 => stageNum = 0, Stage 2-2 => stageNum = 4 (= 1*3 + 1)) 
     public GameState gameState = GameState.Ready;
     public int leftInjured;
     public float timeLimit;                     // 제한 시간, 초 단위
@@ -104,6 +104,7 @@ public class GameManager : MonoBehaviour, IObserver
     public GameObject injuredParent;
     public Dictionary<string, List<GameObject>> objects;
     public Animator resultCharacterAnimator;    // (예진) 게임 결과창에 렌더되는 캐릭터 오브젝트 애니메이터
+
 
     [Header("Observer")]
     public IObserver observer;
@@ -466,7 +467,10 @@ public class GameManager : MonoBehaviour, IObserver
     {
         int rescuedCount = dm.total - leftInjured;
         Debug.Log(rescuedCount);
-        
+
+        AudioManager.Instance.StopAudio();
+        AudioManager.Instance.PlayAudio("GameManager", 0, 0.5f, false);
+
         // (19.10.13) 이번 스테이지에서 구출한 인원 저장
         UserDataIO.Stage stage = UserDataIO.ReadStageData();
 
@@ -897,5 +901,5 @@ public class GameManager : MonoBehaviour, IObserver
         user.achievementList[index] = 1;
 
         UserDataIO.WriteUserData(user);
-    }
+    } 
 }

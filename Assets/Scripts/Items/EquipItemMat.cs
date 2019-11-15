@@ -1,4 +1,11 @@
-﻿using System.Collections;
+﻿/****************************************
+ * EquipItemMat.cs
+ * 제작: 김태윤
+ * 아이템 레벨에 따른 텍스쳐 변경 스크립트
+ * 작성일자: 19.11.10
+ ***************************************/
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
