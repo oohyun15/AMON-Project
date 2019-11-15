@@ -22,7 +22,7 @@ public class AudioManager : MonoBehaviour
 
                 if (instance == null)
                 {
-                    Debug.LogError("There's no active GameManager object");
+                    Debug.LogError("There's no active AudioManager object");
                 }
             }
             return instance;
