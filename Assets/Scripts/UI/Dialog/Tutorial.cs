@@ -22,26 +22,35 @@ public class Tutorial : Dialog
 
     private GameObject minimapPreview;
     private GameObject startBtn;
-    private GameObject setting;
+    public GameObject setting;
+
+    public bool isLobby = false;
+
+    private string prefsKey = "isPlayedTutorial";
 
 
     // 튜토리얼 실행 여부 확인
     protected override void Start()
     {
-        GameManager gm = GameManager.Instance;
-
+        if (isLobby) prefsKey += "_lobby";
+        
         for (int i = 0; i < UIs.transform.childCount; i++)
             images.Add(UIs.transform.GetChild(i));
 
-        minimapPreview = gm.minimapPreview.gameObject;
-        startBtn = gm.startButton;
-        setting = gm.settings;
+        if (!isLobby)
+        {
+            GameManager gm = GameManager.Instance;
+
+            minimapPreview = gm.minimapPreview.gameObject;
+            startBtn = gm.startButton;
+            setting = gm.settings;
+        }
 
         // 아랫줄 주석 풀면 실행 시마다 튜토리얼 기록 지움
-        //PlayerPrefs.DeleteKey("isPlayedTutorial");
+        //PlayerPrefs.DeleteKey(prefsKey);
 
         // 튜토리얼 플레이 여부 확인
-        if (PlayerPrefs.GetInt("isPlayedTutorial", 0) == 1)
+        if (PlayerPrefs.GetInt(prefsKey, 0) == 1)
         {
             Debug.Log("튜토리얼 실행 기록 있음");
             return;
@@ -56,7 +65,7 @@ public class Tutorial : Dialog
 
     public override void InitDialog()
     {
-        path = rootPath + "tutorial_dialog";
+        path = rootPath + "tutorial_dialog" + (isLobby ? "_lobby" : "");
         //+ DataManager.Instance.SceneName;
 
         base.InitDialog();
@@ -71,7 +80,7 @@ public class Tutorial : Dialog
         {
             images[index - 1].gameObject.SetActive(false);
 
-            if (index == 2)
+            if (index == 2 && !isLobby)
             {
                 // 튜토리얼 산소통 이미지 길이 설정
                 RectTransform oxygen = GameManager.Instance.oxygenSlider.transform.GetChild(0).GetComponent<RectTransform>();
@@ -94,15 +103,16 @@ public class Tutorial : Dialog
             images[index - 1].gameObject.SetActive(false);
 
         TutorialPanel.SetActive(false);
-
-        if (PlayerPrefs.GetInt("isPlayedTutorial", 0) == 0)
+        
+        if (!isLobby && PlayerPrefs.GetInt(prefsKey, 0) == 0)
         {
             minimapPreview.SetActive(true);
             startBtn.SetActive(true);
         }
-        else
+        
+        if (isLobby && PlayerPrefs.GetInt(prefsKey, 0) == 1)
             setting.SetActive(true);
 
-        PlayerPrefs.SetInt("isPlayedTutorial", 1);
+        PlayerPrefs.SetInt(prefsKey, 1);
     }
 }
