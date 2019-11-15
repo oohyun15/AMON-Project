@@ -18951,6 +18951,11 @@ PrefabInstance:
       propertyPath: Cam
       value: 
       objectReference: {fileID: 7868295329704922960}
+    - target: {fileID: 6121929833361057747, guid: 2011b31096d5b7548a3e49740b3ea06d,
+        type: 3}
+      propertyPath: injuredParent
+      value: 
+      objectReference: {fileID: 4218081729617927678}
     - target: {fileID: 1370564325888967805, guid: 2011b31096d5b7548a3e49740b3ea06d,
         type: 3}
       propertyPath: talker
@@ -19048,6 +19053,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2011b31096d5b7548a3e49740b3ea06d, type: 3}
+--- !u!114 &1472270504 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3243055561333956196, guid: 2011b31096d5b7548a3e49740b3ea06d,
+    type: 3}
+  m_PrefabInstance: {fileID: 1472270503}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b21d6c444c6df941b58f739d35b855c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1481668910
 GameObject:
   m_ObjectHideFlags: 0
@@ -24374,6 +24391,46 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4106871814567395887, guid: b016d9247ac81864d9b6d55854efcf43,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1472270504}
+    - target: {fileID: 4106871814567395887, guid: b016d9247ac81864d9b6d55854efcf43,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: EffectVolumeControll
+      objectReference: {fileID: 0}
+    - target: {fileID: 3800379277519791737, guid: b016d9247ac81864d9b6d55854efcf43,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1472270504}
+    - target: {fileID: 3800379277519791737, guid: b016d9247ac81864d9b6d55854efcf43,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: BGMVolumeControll
+      objectReference: {fileID: 0}
+    - target: {fileID: 9043447105315429885, guid: b016d9247ac81864d9b6d55854efcf43,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1472270504}
+    - target: {fileID: 9043447105315429885, guid: b016d9247ac81864d9b6d55854efcf43,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: BGMVolumeControll
+      objectReference: {fileID: 0}
+    - target: {fileID: 439157766845117730, guid: b016d9247ac81864d9b6d55854efcf43,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1472270504}
+    - target: {fileID: 439157766845117730, guid: b016d9247ac81864d9b6d55854efcf43,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: EffectVolumeControll
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b016d9247ac81864d9b6d55854efcf43, type: 3}
