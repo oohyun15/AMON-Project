@@ -39,7 +39,7 @@ public class CharacterRotation : MonoBehaviour, IPointerDownHandler, IPointerUpH
 
 
     /* 조예진 회전 */
-    Vector2 position, com_position;
+    Vector2 prevPosition, touchPosition;
     Quaternion fir_rotation;
     float _rotSpeed = 10;
 
@@ -96,11 +96,11 @@ public class CharacterRotation : MonoBehaviour, IPointerDownHandler, IPointerUpH
 
     void IDragHandler.OnDrag(PointerEventData eventData)
     {
-        com_position = Input.mousePosition;
+        touchPosition = Input.mousePosition;
 
-        player.transform.Rotate(new Vector3(0, (position.x - com_position.x) / _rotSpeed, 0));
+        player.transform.Rotate(new Vector3(0, (touchPosition.x - prevPosition.x ) / _rotSpeed, 0));
 
-        position = com_position;
+        prevPosition = touchPosition;
     }
 
     public void OnChangeRotSpeed()
@@ -146,9 +146,9 @@ public class CharacterRotation : MonoBehaviour, IPointerDownHandler, IPointerUpH
 
         fir_rotation = player.transform.rotation;
 
-        position = Input.mousePosition;
+        prevPosition = Input.mousePosition;
 
-        com_position = position;
+        touchPosition = prevPosition;
     }
 
     void IPointerUpHandler.OnPointerUp(PointerEventData eventData)
