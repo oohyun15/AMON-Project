@@ -45,6 +45,9 @@ public class UserDataIO : MonoBehaviour
         public int shoeslv;                 // 신발 레벨
 
         public int[] achievementList;       // 도전과제 목록
+
+        public float BgmVolume;             // BGM 사운드 크기
+        public float EffectVolume;          // 이펙트 사운드 크기
         // 저장할 값 늘어날 경우, WriteUserData와 ReadUserData에서 Set/GetAttribute 설정해 주어야 합니다
     }
 
@@ -100,6 +103,10 @@ public class UserDataIO : MonoBehaviour
             userElement.SetAttribute(number, user.achievementList[index].ToString());
         }
 
+        /* 사운드 볼륨 */
+        userElement.SetAttribute("BgmVolume", user.BgmVolume.ToString());
+        userElement.SetAttribute("EffectVolume", user.EffectVolume.ToString());
+
         doc.AppendChild(userElement);
         doc.Save(path);
     }
@@ -136,6 +143,10 @@ public class UserDataIO : MonoBehaviour
                 axelv = 0,
                 shoeslv = 0,
 
+                /* 사운드 볼륨 */
+                BgmVolume = 1f,
+                EffectVolume = 1f,
+
                 /* 도전과제 달성 여부 */
                 achievementList = new int[achievementCount]
             };
@@ -169,6 +180,10 @@ public class UserDataIO : MonoBehaviour
                 gloveslv = userElement.HasAttribute("gloveslv") ? System.Convert.ToInt32(userElement.GetAttribute("gloveslv")) : 0,
                 axelv = userElement.HasAttribute("axelv") ? System.Convert.ToInt32(userElement.GetAttribute("axelv")) : 0,
                 shoeslv = userElement.HasAttribute("shoeslv") ? System.Convert.ToInt32(userElement.GetAttribute("shoeslv")) : 0,
+
+                /* 사운드 볼륨 */
+                BgmVolume = userElement.HasAttribute("BgmVolume") ? System.Convert.ToSingle(userElement.GetAttribute("BgmVolume")) : 1f,
+                EffectVolume = userElement.HasAttribute("EffectVolume") ? System.Convert.ToSingle(userElement.GetAttribute("EffectVolume")) : 1f,
 
                 /* 도전과제 달성 여부 */
                 achievementList = new int[achievementCount]
