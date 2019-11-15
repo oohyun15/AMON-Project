@@ -1895,8 +1895,11 @@ MonoBehaviour:
   honorText: {fileID: 8140732404950178943}
   stressText: {fileID: 8705995144723699020}
   stressSlider: {fileID: 1668248841026683986}
-  evidencePanel: {fileID: 6044399756424467969}
-  saveSprite: {fileID: 0}
+  evidence: {fileID: 8140732405687282774}
+  evidencePanel: {fileID: 4300106993148510543}
+  normalBtn: {fileID: 2840272372536745184}
+  eventBtn: {fileID: 2840272373068978241}
+  saveSprite: {fileID: 21300000, guid: de8e6b4b7a14ed54fa1caf21bcdc62be, type: 3}
 --- !u!1 &8140732405197285670
 GameObject:
   m_ObjectHideFlags: 0
@@ -3191,15 +3194,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4a2bca1b3c5961a4a8447b3c19858ba8, type: 3}
---- !u!1 &6044399756424467969 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8805048115091149079, guid: 4a2bca1b3c5961a4a8447b3c19858ba8,
-    type: 3}
-  m_PrefabInstance: {fileID: 3013986847854970646}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &6044399756424467974 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8805048115091149072, guid: 4a2bca1b3c5961a4a8447b3c19858ba8,
+    type: 3}
+  m_PrefabInstance: {fileID: 3013986847854970646}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &4300106993148510543 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 1332741783365486169, guid: 4a2bca1b3c5961a4a8447b3c19858ba8,
     type: 3}
   m_PrefabInstance: {fileID: 3013986847854970646}
   m_PrefabAsset: {fileID: 0}
@@ -3500,6 +3503,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2128670266504019663}
     m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: stressText
+      value: 
+      objectReference: {fileID: 8705995144723699020}
     - target: {fileID: 6048131856444224869, guid: fc2f1d911be45414d85c708f9ca336bb,
         type: 3}
       propertyPath: m_Name
@@ -3630,10 +3637,6 @@ PrefabInstance:
       propertyPath: m_FillAmount
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: stressText
-      value: 
-      objectReference: {fileID: 8705995144723699020}
     - target: {fileID: 5228929912839788610, guid: fc2f1d911be45414d85c708f9ca336bb,
         type: 3}
       propertyPath: m_SizeDelta.x

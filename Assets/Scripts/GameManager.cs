@@ -86,7 +86,7 @@ public class GameManager : MonoBehaviour, IObserver
     public GameObject warningPanel;              // (예진) 탈출 버튼
     public GameObject evidencePanel;
     public Transform evidence;
-    public UISet[] gameResultPanel;             // (예진) 게임 결과 패널 UI 접근 방식 변경
+    public ResultAnimationController resultPanel;
     public Button resultOkButton;               // 게임 결과창 확인 버튼
     public GameObject settings;
     public GameObject[] UI;                     // (용현) 0: Joystick, 1: Interaction, 2: ItemSlots, 3: Minimap
@@ -241,7 +241,7 @@ public class GameManager : MonoBehaviour, IObserver
         }
         
         // 게임 결과창 비활성화
-        gameResultPanel[0].UI.SetActive(false);
+        resultPanel.gameObject.SetActive(false);
 
         // 결과창 캐릭터 렌더링 애니메이션 초기화
         resultCharacterAnimator.SetBool("Victory", false);
@@ -578,85 +578,7 @@ public class GameManager : MonoBehaviour, IObserver
     // (19.08.12) 탈출 못한 부상자도 초록색으로 바뀌는 것 수정
     private void ShowGameResult(int money, int honor)
     {
-        GameObject panel = null;
-
-        for (int i = 0; i < gameResultPanel.Length; i++)
-        {
-            switch (gameResultPanel[i].name)
-            {
-                case "Panel":
-                    panel = gameResultPanel[i].UI;
-                    break;
-
-                case "Evidence":
-                    GameObject ui = gameResultPanel[i].UI;
-                    // 단서 획득
-                    GetEvidence(ui);
-                    break;
-
-                case "Buttons":
-                    // 조건 확인해서 버튼 종류 바꾸기
-                    // 조건 1. 큰 스테이지의 마지막 작은 스테이지거나
-                    // 2. 피로도 100 넘겼거나
-                    if (UserDataIO.ReadUserData().stress >= 100
-                        || dm.IsLastStage())
-                    {
-                        gameResultPanel[i].UI.transform.GetChild(0).gameObject.SetActive(false);
-                        gameResultPanel[i].UI.transform.GetChild(1).gameObject.SetActive(true);
-                    } else
-                    {
-                        gameResultPanel[i].UI.transform.GetChild(0).gameObject.SetActive(true);
-                        gameResultPanel[i].UI.transform.GetChild(1).gameObject.SetActive(false);
-                    }
-                    break;
-            }
-        }
-
-
-        // 다른 UI 설정 끝나면 패널 열기
-        panel.SetActive(true);
-        panel.GetComponent<ResultAnimationController>().
-            StartResultAnimation(dm.total, leftInjured, money, honor, UserDataIO.ReadUserData().stress);
-    }
-
-    private void GetEvidence(GameObject ui)
-    {
-        UserDataIO.Stage stage = UserDataIO.ReadStageData();
-        int eviIndex = dm.SceneName[5] - 49;
-
-        if (stage.isGotEvidence[eviIndex] == 0)
-        {
-            if (leftInjured == 0)
-            {
-                stage.isGotEvidence[eviIndex] = 1;
-                UserDataIO.WriteStageData(stage);
-
-                Dictionary<string, object> eviData = ItemDataManager.Instance.GetEvidenceData()[eviIndex];
-
-                ui.transform.GetChild(1).GetComponent<Text>().text
-                    = eviData["evidenceName"].ToString();
-                ui.transform.GetChild(0).GetComponent<Image>().sprite = ItemDataManager.Instance.eviSprites[eviIndex];
-
-                evidence.GetChild(1).GetComponent<Image>().sprite = ItemDataManager.Instance.eviSprites[eviIndex];
-                evidence.GetChild(2).GetComponent<Text>().text = eviData["evidenceName"].ToString();
-                evidence.GetChild(3).GetComponent<Text>().text = eviData["evidenceExplain"].ToString();
-
-                evidencePanel.SetActive(true);
-
-                ui.SetActive(true);
-
-            }
-            else
-            {
-                ui.transform.GetChild(0).gameObject.SetActive(false);
-                ui.transform.GetChild(1).GetComponent<Text>().text = "단서\n획득 실패";
-            }
-        }
-        else
-        {
-            ui.transform.GetChild(0).gameObject.SetActive(false);
-            ui.transform.GetChild(1).GetComponent<Text>().text = "단서\n획득 완료";
-        }
+        resultPanel.StartResultAnimation(dm.total, leftInjured, money, honor, UserDataIO.ReadUserData().stress);
     }
 
     private IEnumerator CheckTime()
@@ -681,11 +603,8 @@ public class GameManager : MonoBehaviour, IObserver
                 isChangedSprite = true;
             }
 
-
             yield return null;
         }
-
-
 
         SetTimeText(time);
 

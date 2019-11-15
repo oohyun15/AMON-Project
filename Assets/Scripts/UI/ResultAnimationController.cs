@@ -12,11 +12,14 @@ public class ResultAnimationController : MonoBehaviour
     public Text honorText;
     public Text stressText;
     public Image stressSlider;
-    public GameObject evidencePanel;
+    public Transform evidence;
+    public Transform evidencePanel;
+    public GameObject normalBtn;
+    public GameObject eventBtn;
 
     public Sprite saveSprite;
 
-    float fillSpeed = 1.5f;
+    readonly float fillSpeed = 1.5f;
     WaitForSeconds checkTime;
 
     int total, save, left, money, honor, stress;
@@ -32,15 +35,27 @@ public class ResultAnimationController : MonoBehaviour
         this.total = total;
         this.left = left;
         save = total - left;
-        save = 2;
         this.money = money;
         this.honor = honor;
         this.stress = stress;
 
+        // 버튼 설정
+        if (stress >= 100  || DataManager.Instance.IsLastStage())
+        {
+            normalBtn.SetActive(false);
+            eventBtn.SetActive(true);
+        }
+        else
+        {
+            normalBtn.SetActive(true);
+            eventBtn.SetActive(false);
+        }
+
+        gameObject.SetActive(true);
+        // 애니메이션 시작
         ActiveInjured();
-        Debug.Log(total + "," + left + "," + (total - left));
     }
-    
+
     private void ActiveInjured()
     {
         switch (total)
@@ -145,6 +160,8 @@ public class ResultAnimationController : MonoBehaviour
         StartCoroutine(AddText(honorText, honor, honorSpeed, "+", ""));
         yield return new WaitForSeconds(honor / honorSpeed * Time.deltaTime);
 
+        GetEvidence();
+
         StartCoroutine(AddText(stressText, stress, honorSpeed, "", "%"));
         StartCoroutine(FillImage(stressSlider, stress));
         yield return checkTime;
@@ -163,6 +180,7 @@ public class ResultAnimationController : MonoBehaviour
     private IEnumerator AddText(Text text, int max, int speed, string front, string end)
     {
         int count = 0;
+        text.text = front + count + end;
 
         while (count < max)
         {
@@ -173,4 +191,41 @@ public class ResultAnimationController : MonoBehaviour
             yield return null;
         }
     }
+
+    private void GetEvidence()
+    {
+        UserDataIO.Stage stage = UserDataIO.ReadStageData();
+        int eviIndex = DataManager.Instance.SceneName[5] - 49;
+
+        if (stage.isGotEvidence[eviIndex] == 0 || true)
+        {
+            if (left == 0 || true)
+            {
+                stage.isGotEvidence[eviIndex] = 1;
+                UserDataIO.WriteStageData(stage);
+
+                Dictionary<string, object> eviData = ItemDataManager.Instance.GetEvidenceData()[eviIndex];
+
+                evidence.transform.GetChild(1).GetComponent<Text>().text
+                    = eviData["evidenceName"].ToString();
+                evidence.transform.GetChild(0).GetComponent<Image>().sprite = ItemDataManager.Instance.eviSprites[eviIndex];
+                evidencePanel.GetChild(1).GetComponent<Image>().sprite = ItemDataManager.Instance.eviSprites[eviIndex];
+                evidencePanel.GetChild(2).GetComponent<Text>().text = eviData["evidenceName"].ToString();
+                evidencePanel.GetChild(3).GetComponent<Text>().text = eviData["evidenceExplain"].ToString();
+
+                evidencePanel.parent.parent.gameObject.SetActive(true);
+            }
+            else
+            {
+                evidence.GetChild(0).gameObject.SetActive(false);
+                evidence.GetChild(1).GetComponent<Text>().text = "단서\n획득 실패";
+            }
+        }
+        else
+        {
+            evidence.GetChild(0).gameObject.SetActive(false);
+            evidence.GetChild(1).GetComponent<Text>().text = "단서\n획득 완료";
+        }
+    }
+
 }
