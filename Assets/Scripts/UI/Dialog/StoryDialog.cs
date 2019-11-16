@@ -37,7 +37,15 @@ public class StoryDialog : Dialog
 
     protected override void UpdateDialog()
     {
-        image.sprite = sprites[System.Convert.ToInt32(dialogData[index]["sprite"].ToString())];
+        int spriteIndex = System.Convert.ToInt32(dialogData[index]["sprite"].ToString());
+
+        if (spriteIndex == 0)
+            image.gameObject.SetActive(false);
+        else
+        {
+            image.gameObject.SetActive(true);
+            image.sprite = sprites[spriteIndex];
+        }
 
         base.UpdateDialog();
     }

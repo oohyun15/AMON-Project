@@ -20,7 +20,8 @@ public class CharacterRotation : MonoBehaviour, IPointerDownHandler, IPointerUpH
 {
     [HideInInspector]
     public bool isTouch = false;                // 터치를 눌렀는 지 확인하는 변수
-    public int type;                            // 0: Lobby, 1: Ingame
+    public int type;                            // 0: Lobby, 1: Ingame\
+    public bool isLobby = false;
     // public float camMoveSpeed;
     
     public GameObject player;
@@ -98,7 +99,8 @@ public class CharacterRotation : MonoBehaviour, IPointerDownHandler, IPointerUpH
     {
         touchPosition = Input.mousePosition;
 
-        player.transform.Rotate(new Vector3(0, (touchPosition.x - prevPosition.x ) / _rotSpeed, 0));
+        player.transform.Rotate(new Vector3(0, (touchPosition.x - prevPosition.x ) / _rotSpeed, 0)
+            * (isLobby ? -1 : 1));
 
         prevPosition = touchPosition;
     }

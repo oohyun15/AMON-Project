@@ -1103,6 +1103,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 358080118}
   m_CullTransparentMesh: 0
+--- !u!114 &367839480 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1389098135, guid: fc2f1d911be45414d85c708f9ca336bb,
+    type: 3}
+  m_PrefabInstance: {fileID: 728055792}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &371727512
 GameObject:
   m_ObjectHideFlags: 0
@@ -1153,13 +1165,13 @@ MonoBehaviour:
   rankName: {fileID: 1563849614}
   rankImg: {fileID: 324895911}
   rankGaze: {fileID: 232257564828376373}
-  stressState: {fileID: 0}
+  stressState: {fileID: 367839480}
   RankUpPanel: {fileID: 1468631473372201564}
   rankSprites:
-  - {fileID: 21300000, guid: f7682b5bbe789724ca48d8091725683d, type: 3}
-  - {fileID: 21300000, guid: e3cac1cd769455f4592c401cc909bb6c, type: 3}
-  - {fileID: 21300000, guid: 441cab1dcbd318e43a303c8826fc61e5, type: 3}
-  - {fileID: 21300000, guid: 593f78a2fd49ce14b98aa266d1410965, type: 3}
+  - {fileID: 21300000, guid: 249508f4974066147a8801aab19238b3, type: 3}
+  - {fileID: 21300000, guid: 80d5c2a5c7e63394da3dbe15933f149f, type: 3}
+  - {fileID: 21300000, guid: a6e84ede73ca80a4c954a80707ac43da, type: 3}
+  - {fileID: 21300000, guid: 4f7ccd6b76fc03540aa09d8cc27e0f79, type: 3}
   preRank: {fileID: 558365783}
   nowRank: {fileID: 1159205536}
   NotifiPanel: {fileID: 1015648892}
@@ -3672,6 +3684,11 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 1622601137}
+    - target: {fileID: 6346713458422907526, guid: eede3aaf87e3b6c4db17ef8b83657c58,
+        type: 3}
+      propertyPath: isLobby
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4493209351088611535, guid: eede3aaf87e3b6c4db17ef8b83657c58,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -3836,6 +3853,14 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1389098133, guid: fc2f1d911be45414d85c708f9ca336bb, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 110
+      objectReference: {fileID: 0}
+    - target: {fileID: 1389098135, guid: fc2f1d911be45414d85c708f9ca336bb, type: 3}
+      propertyPath: m_FontData.m_Alignment
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fc2f1d911be45414d85c708f9ca336bb, type: 3}
@@ -4047,7 +4072,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &880516234
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4633,12 +4658,6 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2476479320079859952, guid: cc7775824cbaf83479945de3dde144fe,
-        type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: d8063054e05bf314ea452edc7c78b079,
-        type: 3}
     - target: {fileID: 2229043699587302595, guid: cc7775824cbaf83479945de3dde144fe,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -4747,12 +4766,12 @@ PrefabInstance:
     - target: {fileID: 901199870417365193, guid: cc7775824cbaf83479945de3dde144fe,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 681.2
+      value: 950
       objectReference: {fileID: 0}
     - target: {fileID: 901199870417365193, guid: cc7775824cbaf83479945de3dde144fe,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 382.2
+      value: 533
       objectReference: {fileID: 0}
     - target: {fileID: 385688849180913347, guid: cc7775824cbaf83479945de3dde144fe,
         type: 3}
@@ -4794,6 +4813,12 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: EndDialog
       objectReference: {fileID: 0}
+    - target: {fileID: 2476479320079859952, guid: cc7775824cbaf83479945de3dde144fe,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 4c92d2b7b1c6f74438200c3e96dc9705,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cc7775824cbaf83479945de3dde144fe, type: 3}
 --- !u!1 &1130396562 stripped
@@ -4983,7 +5008,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: fc8fca639889bd8439b547d3c37cd398, type: 3}
   dialogSprites:
   - {fileID: 0}
-  - {fileID: 21300000, guid: d8063054e05bf314ea452edc7c78b079, type: 3}
+  - {fileID: 21300000, guid: 4c92d2b7b1c6f74438200c3e96dc9705, type: 3}
   stageTitle:
   - "\uD328\uC2A4\uD2B8\uD478\uB4DC\uC810"
   - "\uC0AC\uBB34\uC2E4"
