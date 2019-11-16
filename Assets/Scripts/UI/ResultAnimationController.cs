@@ -197,17 +197,19 @@ public class ResultAnimationController : MonoBehaviour
         UserDataIO.Stage stage = UserDataIO.ReadStageData();
         int eviIndex = DataManager.Instance.SceneName[5] - 49;
 
-        if (stage.isGotEvidence[eviIndex] == 0 || true)
+        if (stage.isGotEvidence[eviIndex] == 0)
         {
-            if (left == 0 || true)
+            if (left == 0)
             {
                 stage.isGotEvidence[eviIndex] = 1;
                 UserDataIO.WriteStageData(stage);
 
                 Dictionary<string, object> eviData = ItemDataManager.Instance.GetEvidenceData()[eviIndex];
 
-                evidence.transform.GetChild(1).GetComponent<Text>().text
+                evidence.transform.GetChild(0).GetComponent<Text>().text
                     = eviData["evidenceName"].ToString();
+                evidence.GetChild(0).gameObject.SetActive(true);
+                evidence.GetChild(1).gameObject.SetActive(true);
                 evidence.transform.GetChild(0).GetComponent<Image>().sprite = ItemDataManager.Instance.eviSprites[eviIndex];
                 evidencePanel.GetChild(1).GetComponent<Image>().sprite = ItemDataManager.Instance.eviSprites[eviIndex];
                 evidencePanel.GetChild(2).GetComponent<Text>().text = eviData["evidenceName"].ToString();
@@ -217,14 +219,16 @@ public class ResultAnimationController : MonoBehaviour
             }
             else
             {
-                evidence.GetChild(0).gameObject.SetActive(false);
-                evidence.GetChild(1).GetComponent<Text>().text = "단서\n획득 실패";
+                evidence.GetChild(1).gameObject.SetActive(false);
+                evidence.GetChild(0).GetComponent<Text>().text = "단서\n획득 실패";
+                evidence.GetChild(0).gameObject.SetActive(true);
             }
         }
         else
         {
-            evidence.GetChild(0).gameObject.SetActive(false);
-            evidence.GetChild(1).GetComponent<Text>().text = "단서\n획득 완료";
+            evidence.GetChild(1).gameObject.SetActive(false);
+            evidence.GetChild(0).GetComponent<Text>().text = "단서\n획득 완료";
+            evidence.GetChild(0).gameObject.SetActive(true);
         }
     }
 

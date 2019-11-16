@@ -103,13 +103,21 @@ public class Tutorial : Dialog
             images[index - 1].gameObject.SetActive(false);
 
         TutorialPanel.SetActive(false);
-        
-        if (!isLobby && PlayerPrefs.GetInt(prefsKey, 0) == 0)
+
+        if (!isLobby)
         {
-            minimapPreview.SetActive(true);
-            startBtn.SetActive(true);
+            if (PlayerPrefs.GetInt(prefsKey, 0) == 0)
+            {
+                minimapPreview.SetActive(true);
+                startBtn.SetActive(true);
+            }
+            else
+            {
+                setting.SetActive(true);
+            }
         }
         
+
         if (isLobby && PlayerPrefs.GetInt(prefsKey, 0) == 1)
             setting.SetActive(true);
 
