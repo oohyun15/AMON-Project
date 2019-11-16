@@ -116,7 +116,7 @@ public class AudioManager : MonoBehaviour
 
     public void StopAudio()
     {
-        for (int i = 0; i < 3; i++) audioPlayers[i].clip = null;
+        for (int i = 0; i < 6; i++) audioPlayers[i].clip = null;
     }
 
     public void BGMVolumeControll(float _audioVolume)
