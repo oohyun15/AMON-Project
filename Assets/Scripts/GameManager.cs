@@ -283,7 +283,7 @@ public class GameManager : MonoBehaviour, IObserver
         //                 Tutorial.cs에서 다시 활성화하도록 설정
         if (PlayerPrefs.GetInt("isPlayedTutorial", 0) == 1)
         {
-            minimapPreview.gameObject.SetActive(true);
+            minimapPreview.transform.parent.gameObject.SetActive(true);
             startButton.SetActive(true);
         }
 
@@ -361,7 +361,7 @@ public class GameManager : MonoBehaviour, IObserver
     {
         startButton.SetActive(false);
 
-        minimapPreview.gameObject.SetActive(false);
+        minimapPreview.transform.parent.gameObject.SetActive(false);
 
         // 세팅 버튼 활성화
         settingsButton.SetActive(true);

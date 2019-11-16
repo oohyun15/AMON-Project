@@ -4595,7 +4595,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1000010361680816, guid: 7306d742a1dae45d6a3ba936927b248c, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4000013067667570, guid: 7306d742a1dae45d6a3ba936927b248c, type: 3}
       propertyPath: m_LocalPosition.x
@@ -18840,7 +18840,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh85396
+  m_Name: pb_Mesh522294
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -25352,7 +25352,7 @@ PrefabInstance:
     - target: {fileID: 2232237696253215109, guid: b016d9247ac81864d9b6d55854efcf43,
         type: 3}
       propertyPath: m_Name
-      value: Canvas (1)
+      value: Canvas
       objectReference: {fileID: 0}
     - target: {fileID: 2232237696253215105, guid: b016d9247ac81864d9b6d55854efcf43,
         type: 3}
@@ -25459,16 +25459,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5616068021847951162, guid: b016d9247ac81864d9b6d55854efcf43,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 3278462600040422914}
-    - target: {fileID: 5616068021847951162, guid: b016d9247ac81864d9b6d55854efcf43,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Interaction
-      objectReference: {fileID: 0}
     - target: {fileID: 193432102866110373, guid: b016d9247ac81864d9b6d55854efcf43,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -25499,6 +25489,27 @@ PrefabInstance:
       propertyPath: resultCharacterAnimator
       value: 
       objectReference: {fileID: 4858486893975090876}
+    - target: {fileID: 5174888549449155766, guid: b016d9247ac81864d9b6d55854efcf43,
+        type: 3}
+      propertyPath: m_Text
+      value: "\uD559\uAD50"
+      objectReference: {fileID: 0}
+    - target: {fileID: 5616068021847951162, guid: b016d9247ac81864d9b6d55854efcf43,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 3278462600040422914}
+    - target: {fileID: 5616068021847951162, guid: b016d9247ac81864d9b6d55854efcf43,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Interaction
+      objectReference: {fileID: 0}
+    - target: {fileID: 6458870905633469809, guid: b016d9247ac81864d9b6d55854efcf43,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: bab81eba73a486e42bb52403f59f73b0,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b016d9247ac81864d9b6d55854efcf43, type: 3}
 --- !u!1001 &1993726289
@@ -29813,8 +29824,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1477268101952634467}
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 1.13, z: -0}
-  m_LocalScale: {x: 9.804, y: 9.804, z: 1.634}
+  m_LocalPosition: {x: 0, y: 1, z: 0.8}
+  m_LocalScale: {x: 9.21576, y: 9.21576, z: 1.53596}
   m_Children: []
   m_Father: {fileID: 3858697791058813205}
   m_RootOrder: 1
@@ -29873,12 +29884,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 6f3a138914a3018498fa24d012a1b12d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: dfece3a3ce7045b4c808a51a17051373, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 3.21, y: 3.21}
+  m_Size: {x: 3.96, y: 2.85}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -31648,7 +31659,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2566411777457815176}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 2.37, y: 0.08, z: 1.02}
+  m_LocalPosition: {x: 2.37, y: -5.52, z: 1.02}
   m_LocalScale: {x: 10, y: 10, z: 1}
   m_Children: []
   m_Father: {fileID: 8966452500964157636}
