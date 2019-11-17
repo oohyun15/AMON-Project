@@ -9,6 +9,7 @@
  * (19.10.19) 폭발 스크립트 추가
  * (19.11.03) 천장 오브젝트(CellingFragments)를 통해 새롭게 로직 구성
  * (19.11.16) 천장 오브젝트 관련 FX 추가
+ * (19.11.17) 장애물 떨어지고 나서 남아있도록 수정
  * 작성일자: 19.07.09
  * 수정일자: 19.11.03
  ***************************************/
@@ -97,7 +98,7 @@ public class FallTrigger : MonoBehaviour, IReset
         // 천장 조각들 중력 사용
         for (int idx =0; idx < cellingFragments.transform.childCount; idx++)
         {
-            if (idx%2 == 0) cellingFragments.transform.GetChild(idx).GetComponent<Rigidbody>().useGravity = true;
+             cellingFragments.transform.GetChild(idx).GetComponent<Rigidbody>().useGravity = true;
         }
         yield return new WaitForSeconds(1.0f);
 
@@ -105,7 +106,10 @@ public class FallTrigger : MonoBehaviour, IReset
         gameObject.SetActive(false);
 
         // 떨어지는 장애물 비활성화
-        cellingFragments.SetActive(false);
+        for (int idx = 0; idx < cellingFragments.transform.childCount; idx++)
+        {
+            cellingFragments.transform.GetChild(idx).GetComponent<FallObstacle>().isFalling = false;
+        }
     }
 
     IEnumerator Explosion()
