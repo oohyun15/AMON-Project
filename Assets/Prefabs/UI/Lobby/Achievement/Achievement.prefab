@@ -212,7 +212,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -220,8 +220,8 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 24
+    m_Font: {fileID: 12800000, guid: 2074ba6f07a7639458a589cc84ab70eb, type: 3}
+    m_FontSize: 50
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
@@ -229,8 +229,8 @@ MonoBehaviour:
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
+    m_HorizontalOverflow: 1
+    m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: "\uBCA0\uD14C\uB791 \uC18C\uBC29\uAD00"
 --- !u!1 &4138315595646742957
@@ -273,7 +273,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 525.3, y: 125.9}
+  m_SizeDelta: {x: 868, y: 187}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7061713962569370568
 CanvasRenderer:
@@ -303,7 +303,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: ce133a4e3b60ca14e884f5567f0fca39, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -381,10 +381,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ef78f8c4e0aa574da897b307701fdb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  index: 0
   achievementName: {fileID: 7640054673263040975}
   _name: "\uBCA0\uD14C\uB791 \uC18C\uBC29\uAD00"
   _content: "\uBAA8\uB4E0 \uC2A4\uD14C\uC774\uC9C0\uC5D0\uC11C \uBAA8\uB4E0 \uC0AC\uB78C\uC744
     \uAD6C\uD574\uB0C4"
+  _info: 
+  _icon: {fileID: 0}
 --- !u!1 &5046960964426383248
 GameObject:
   m_ObjectHideFlags: 0
@@ -417,10 +420,10 @@ RectTransform:
   m_Father: {fileID: 5853007133756608956}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.39674345}
+  m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -182, y: 6.5}
-  m_SizeDelta: {x: 100, y: 87}
+  m_AnchoredPosition: {x: -294, y: 0}
+  m_SizeDelta: {x: 128, y: 128}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &404886176995856474
 CanvasRenderer:
