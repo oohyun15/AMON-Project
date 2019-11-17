@@ -44,6 +44,7 @@ GameObject:
   - component: {fileID: 9110699616059273575}
   - component: {fileID: 231007086581844817}
   - component: {fileID: 5766924004594349992}
+  - component: {fileID: 8398177357125920162}
   m_Layer: 0
   m_Name: Wall
   m_TagString: Wall
@@ -59,7 +60,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5203043913402073972}
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: 0.16357231, y: 1.5, z: 1.0597332}
+  m_LocalPosition: {x: 0.16357231, y: 0, z: 1.0597332}
   m_LocalScale: {x: 1.2, y: 1.3, z: 0.3}
   m_Children: []
   m_Father: {fileID: 4200558907598826583}
@@ -110,6 +111,19 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!65 &8398177357125920162
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5203043913402073972}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.9999999, y: 2.3999999, z: 0.19999997}
+  m_Center: {x: 0, y: 1.1999999, z: 0}
 --- !u!1 &7218998216044171526
 GameObject:
   m_ObjectHideFlags: 0
@@ -121,6 +135,7 @@ GameObject:
   - component: {fileID: 5941463391811609365}
   - component: {fileID: 3400032755162290467}
   - component: {fileID: 8940734522437133786}
+  - component: {fileID: 8202366293499939322}
   m_Layer: 0
   m_Name: toiletDoor
   m_TagString: Untagged
@@ -187,6 +202,19 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!65 &8202366293499939322
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7218998216044171526}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.8488992, y: 2.875265, z: 0.2906658}
+  m_Center: {x: -0.69359636, y: 1.4231285, z: -0.000000022351747}
 --- !u!1 &8669927599018516886
 GameObject:
   m_ObjectHideFlags: 0
@@ -214,7 +242,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8669927599018516886}
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 1.3935719, y: 1.5, z: 0.95503306}
+  m_LocalPosition: {x: 1.3935719, y: 0, z: 0.95503306}
   m_LocalScale: {x: 0.13472429, y: 1.3, z: 0.3000006}
   m_Children: []
   m_Father: {fileID: 4200558907598826583}
@@ -276,5 +304,5 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.0000005, y: 2.4, z: 0.20000003}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 2.0000005, y: 2.3999999, z: 0.20000002}
+  m_Center: {x: 0, y: 1.1999999, z: 0}
