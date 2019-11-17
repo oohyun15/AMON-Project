@@ -42,7 +42,7 @@ public class CharacterRotation : MonoBehaviour, IPointerDownHandler, IPointerUpH
     /* 조예진 회전 */
     Vector2 prevPosition, touchPosition;
     Quaternion fir_rotation;
-    float _rotSpeed = 10;
+    float _rotSpeed = 5;
 
     public Slider slider;
 

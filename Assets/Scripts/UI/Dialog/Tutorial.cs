@@ -108,7 +108,7 @@ public class Tutorial : Dialog
         {
             if (PlayerPrefs.GetInt(prefsKey, 0) == 0)
             {
-                minimapPreview.SetActive(true);
+                minimapPreview.transform.parent.gameObject.SetActive(true);
                 startBtn.SetActive(true);
             }
             else

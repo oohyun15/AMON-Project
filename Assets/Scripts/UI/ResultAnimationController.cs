@@ -197,9 +197,9 @@ public class ResultAnimationController : MonoBehaviour
         UserDataIO.Stage stage = UserDataIO.ReadStageData();
         int eviIndex = DataManager.Instance.SceneName[5] - 49;
 
-        if (stage.isGotEvidence[eviIndex] == 0)
+        if (stage.isGotEvidence[eviIndex] == 0 ||true)
         {
-            if (left == 0)
+            if (left == 0 || true)
             {
                 stage.isGotEvidence[eviIndex] = 1;
                 UserDataIO.WriteStageData(stage);
@@ -210,7 +210,7 @@ public class ResultAnimationController : MonoBehaviour
                     = eviData["evidenceName"].ToString();
                 evidence.GetChild(0).gameObject.SetActive(true);
                 evidence.GetChild(1).gameObject.SetActive(true);
-                evidence.transform.GetChild(0).GetComponent<Image>().sprite = ItemDataManager.Instance.eviSprites[eviIndex];
+                evidence.transform.GetChild(1).GetComponent<Image>().sprite = ItemDataManager.Instance.eviSprites[eviIndex];
                 evidencePanel.GetChild(1).GetComponent<Image>().sprite = ItemDataManager.Instance.eviSprites[eviIndex];
                 evidencePanel.GetChild(2).GetComponent<Text>().text = eviData["evidenceName"].ToString();
                 evidencePanel.GetChild(3).GetComponent<Text>().text = eviData["evidenceExplain"].ToString();

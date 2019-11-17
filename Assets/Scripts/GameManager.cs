@@ -120,7 +120,6 @@ public class GameManager : MonoBehaviour, IObserver
 
     private IEnumerator timeCheckCoroutine;
 
-
     // 스테이지 데이터 변수
 
     /* PlayerPrefs 저장 키
@@ -463,6 +462,7 @@ public class GameManager : MonoBehaviour, IObserver
         GameClear();
     }
 
+    bool isPlayingDialog = false;
     // (19.10.03 예진) 게임 클리어, 실패 공통 실행 부분 합침
     public void GameEnd()
     {
@@ -531,6 +531,8 @@ public class GameManager : MonoBehaviour, IObserver
         resultCharacterAnimator.gameObject.SetActive(true);
     }
 
+
+
     // 게임 클리어시
     private void GameClear()
     {
@@ -574,12 +576,14 @@ public class GameManager : MonoBehaviour, IObserver
         StopGame();
     }
 
+
     // (예진 19.08.05) 게임 결과 보여주는 UI 창 설정
     // (19.08.10) Find 함수 >> 게임 패널 UI 안의 텍스트, 이미지 미리 연결해 두고 사용하는 식으로 변경
     // (19.08.12) 탈출 못한 부상자도 초록색으로 바뀌는 것 수정
     private void ShowGameResult(int money, int honor)
     {
         resultPanel.StartResultAnimation(dm.total, leftInjured, money, honor, UserDataIO.ReadUserData().stress);
+        
     }
 
     private IEnumerator CheckTime()
