@@ -2,9 +2,11 @@
 {
     Properties
     {
+		_Albedo("Albedo Color", Color) = (1,1,1,1)
 		[HDR]_Color ("Emission Color", Color) = (1,1,1,1)
 		_RateFactor("Rate Factor", Range(0, 2)) = 1
 		_Frequency("Frequency", Range(0, 1)) = .5
+		_Random("Random Factor", Range(0, 1)) = 0
     }
     SubShader
     {
@@ -25,8 +27,8 @@
             float2 uv_MainTex;
         };
 
-        fixed4 _Color;
-		float _RateFactor, _Frequency;
+        fixed4 _Color, _Albedo;
+		float _RateFactor, _Frequency, _Random;
 
         // Add instancing support for this shader. You need to check 'Enable Instancing' on materials that use the shader.
         // See https://docs.unity3d.com/Manual/GPUInstancing.html for more information about instancing.
@@ -37,13 +39,15 @@
 
         void surf (Input IN, inout SurfaceOutputStandard o)
         {
-			float rate = frac(sin(_Time.y * _RateFactor) * 2);
-			float rate1 = frac(_Time.y * _RateFactor) * 2 - 1;
+			float rate = frac(sin((_Time.y + _Random) * _RateFactor) * 2);
+			float rate1 = frac((_Time.y + _Random) * _RateFactor) * 2 - 1;
 			float rate2 = 0;
 			if (rate1 < _Frequency)
 				rate2 = 0;
 			else
 				rate2 = 1;
+
+			o.Albedo = _Albedo;
 			o.Emission = _Color * rate2;
 
         }

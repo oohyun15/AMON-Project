@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Emission02
-  m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
+  m_Name: stage01lightBeam2
+  m_Shader: {fileID: 4800000, guid: 496dcd3e0eb0ec34e8e8800b783f8aba, type: 3}
   m_ShaderKeywords: _EMISSION
   m_LightmapFlags: 1
   m_EnableInstancingVariants: 0
@@ -60,6 +60,7 @@ Material:
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
+    - _Frequency: 0.702
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
@@ -67,11 +68,14 @@ Material:
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
+    - _Random: 0.3
+    - _RateFactor: 0
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
-    - _Color: {r: 0.9947406, g: 1, b: 0.1273585, a: 1}
+    - _Albedo: {r: 0.3773585, g: 0.3773585, b: 0.3755785, a: 1}
+    - _Color: {r: 5.3181787, g: 5.3181787, b: 4.139148, a: 1}
     - _EmissionColor: {r: 1.1353015, g: 0.7489423, b: 0, a: 1}
