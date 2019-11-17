@@ -3,8 +3,9 @@
  * 제작: 김용현
  * 로비 씬에서 스테이지 패널에 대한 스크립트
  * 함수 추가 및 수정 시 누가 작성했는지 꼭 해당 함수 주석으로 명시해주세요!
- * (19.11.09) 스테이지 스프라이트 추가
- * (19.11.09 예진) stage_data 로드 방식 수정
+ * (19.11.09) 용현 - 스테이지 스프라이트 추가
+ * (19.11.09) 예진 - stage_data 로드 방식 수정
+ * (19.11.17) 용현 - 로딩창 추가
  * 작성일자: 19.10.12
  * 수정일자: 19.11.09
  ***************************************/
@@ -16,21 +17,26 @@ using UnityEngine.UI;
 
 public class StagePanel : MonoBehaviour
 {   
+    [Header("Stage")]
     public StageLevel[] stageLevel;
     public Sprite[] stageSprite;        // 0: FastFood, 1: Building, 2: School
     public Sprite[] rescueSprite;       // 0: Before, 1: Success, 2: Fail
     public Image stageImage;
     public Text stageTitle;
-
     public int totalStageNum;
+
+    [Header("Loading")]
+    public Image loadingPanel;
+    public Sprite[] loadingSprites;
+
+
     private int index = 0;
 
     private UserDataIO.Stage stage;
     private List<Dictionary<string, object>> stageData;
     private readonly string stageDataPath = "Data/stage_data";
 
-
-    int stageToPlay = 0;
+    private int stageToPlay = 0;        // 현재 스테이지 순서
 
 
     // Start is called before the first frame update
@@ -55,6 +61,18 @@ public class StagePanel : MonoBehaviour
             }
         Debug.Log(stageToPlay);
 
+        // 로딩창 이미지 랜덤으로 변경
+        int num = Random.Range(0,loadingSprites.Length);
+        loadingPanel.sprite = loadingSprites[num];
+
+        /*
+        // 현재 진행중인 스테이지 부터 나옴
+        num = stageToPlay < 9 ? stageToPlay / 3 : 0;
+        Debug.Log(num);
+        SetStage(num);
+        */
+
+        // 1스테이지 패널부터 보여줌
         SetStage(0);
     }
 
@@ -63,6 +81,9 @@ public class StagePanel : MonoBehaviour
     // (19.11.09 예진) stage data 로드 방식 변경
     public void SetStage(int stageNum)
     {
+        // 현재 패널에 맞는 스테이지 이미지로 교체
+        stageImage.sprite = stageSprite[stageNum];
+
         int idx_level = 0;
 
         for (int i = 0; i < stageData.Count; i++)
