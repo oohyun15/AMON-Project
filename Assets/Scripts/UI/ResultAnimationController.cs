@@ -16,6 +16,7 @@ public class ResultAnimationController : MonoBehaviour
     public Transform evidencePanel;
     public GameObject normalBtn;
     public GameObject eventBtn;
+    public Button skipper;              // 결과 애니메이션 스킵
 
     public Sprite saveSprite;
 
@@ -39,6 +40,8 @@ public class ResultAnimationController : MonoBehaviour
         this.honor = honor;
         this.stress = stress;
 
+        ActiveInjured();
+
         // 버튼 설정
         if (stress >= 100  || DataManager.Instance.IsLastStage())
         {
@@ -47,13 +50,21 @@ public class ResultAnimationController : MonoBehaviour
         }
         else
         {
+            Debug.Log(GameManager.Instance.stageNum + "<" + DataManager.Instance.SceneName);
+            string nextScene = DataManager.Instance.SceneName;
+            nextScene = nextScene.Substring(0, nextScene.Length - 1);
+            nextScene += (GameManager.Instance.stageNum % 3 + 2).ToString();
+
             normalBtn.SetActive(true);
+            normalBtn.transform.GetChild(1).GetComponent<Button>().onClick.AddListener(
+                () => GameManager.Instance.MoveScene(nextScene));
+
             eventBtn.SetActive(false);
         }
 
         gameObject.SetActive(true);
         // 애니메이션 시작
-        ActiveInjured();
+        StartCoroutine(CheckSavedInjured());
     }
 
     private void ActiveInjured()
@@ -97,7 +108,6 @@ public class ResultAnimationController : MonoBehaviour
                 break;
         }
 
-        StartCoroutine(CheckSavedInjured());
         //CheckSavedInjured();
     }
 
@@ -165,6 +175,8 @@ public class ResultAnimationController : MonoBehaviour
         StartCoroutine(AddText(stressText, stress, honorSpeed, "", "%"));
         StartCoroutine(FillImage(stressSlider, stress));
         yield return checkTime;
+
+        skipper.gameObject.SetActive(false);
     }
 
     private IEnumerator FillImage(Image img, int max)
@@ -197,9 +209,9 @@ public class ResultAnimationController : MonoBehaviour
         UserDataIO.Stage stage = UserDataIO.ReadStageData();
         int eviIndex = DataManager.Instance.SceneName[5] - 49;
 
-        if (stage.isGotEvidence[eviIndex] == 0 ||true)
+        if (stage.isGotEvidence[eviIndex] == 0)
         {
-            if (left == 0 || true)
+            if (left == 0)
             {
                 stage.isGotEvidence[eviIndex] = 1;
                 UserDataIO.WriteStageData(stage);
@@ -232,4 +244,8 @@ public class ResultAnimationController : MonoBehaviour
         }
     }
 
+    public void Skip()
+    {
+
+    }
 }

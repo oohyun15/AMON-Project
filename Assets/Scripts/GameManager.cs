@@ -95,6 +95,8 @@ public class GameManager : MonoBehaviour, IObserver
     public Image interactionImage;              // (용현) 인터렉션 아이템 이미지
     public Sprite[] itemImages;                 // (용현) 인터렉션 아이템 이미지 종류
                                                 // 0: Rescue, 1: Axe, 2: Kick
+    public GameObject LeftInjuredNumImages;     // (예진) 부상자 몇명 남았는지 보여줄 오브젝트
+   
     [Header("Particle")]
     public GameObject[] FX_Ingame;              // 0: FX_Save, 1: FX_Damaged, 2: FX_Hurt, 3: FX_HitDust
 
@@ -238,6 +240,12 @@ public class GameManager : MonoBehaviour, IObserver
             {
                 value.GetComponent<IReset>().SetInitValue();
             }
+        }
+
+        // (19.11.18) 남은 부상자 이미지 UI total 값만큼만 활성화하기
+        for (int i = 0; i < dm.total; i++)
+        {
+            LeftInjuredNumImages.transform.GetChild(i).gameObject.SetActive(true);
         }
         
         // 게임 결과창 비활성화
@@ -446,6 +454,17 @@ public class GameManager : MonoBehaviour, IObserver
         foreach (GameObject i in injureds)
             if (i.activeInHierarchy)
                 leftInjured++;
+
+        int count = 0;
+
+        foreach (Image i in LeftInjuredNumImages.GetComponentsInChildren<Image>())
+        {
+            if (count < dm.total - leftInjured)
+                i.sprite = resultRescuerSprites[1];
+            else break;
+
+            count++;
+        }
 
         return leftInjured;
     }

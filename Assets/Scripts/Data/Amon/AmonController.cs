@@ -210,7 +210,7 @@ public class AmonController : MonoBehaviour, IReset
 
                 // 구출모드로 변경
                 state = InteractionState.Rescue;
-
+                
                 // 구조 아이콘으로 변경
                 gm.interactionImage.gameObject.SetActive(true);
 
@@ -281,6 +281,8 @@ public class AmonController : MonoBehaviour, IReset
                 }
             rescuers.Clear();
 
+            gm.CheckLeftInjured();
+
             // (19.10.19) 구조 시 FX 추가
             GameObject go = Instantiate(gm.FX_Ingame[0]);
             go.transform.SetParent(gameObject.transform);
@@ -330,7 +332,7 @@ public class AmonController : MonoBehaviour, IReset
             }
         }*/
     }
-
+    /*
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Exit"))
@@ -340,7 +342,7 @@ public class AmonController : MonoBehaviour, IReset
             isEscaped = false;
         }
     }
-
+    */
     // (예진) 부상자 구조 상호작용
     // (19.09.22) Unity 내에서 버튼에 연결하기 위해 public으로 바꿈
     public void RescueInjured()
