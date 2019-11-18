@@ -24,6 +24,7 @@ public class ResultAnimationController : MonoBehaviour
     WaitForSeconds checkTime;
 
     int total, save, left, money, honor, stress;
+    List<Image> imgs;
 
     public void StartResultAnimation(int total, int left, int money, int honor, int stress)
     {
@@ -41,7 +42,7 @@ public class ResultAnimationController : MonoBehaviour
         this.stress = stress;
 
         ActiveInjured();
-
+        
         // 버튼 설정
         if (stress >= 100  || DataManager.Instance.IsLastStage())
         {
@@ -63,6 +64,42 @@ public class ResultAnimationController : MonoBehaviour
         }
 
         gameObject.SetActive(true);
+
+        imgs = new List<Image>();
+
+        for (int i = 0; i < hor1.transform.childCount; i++)
+        {
+            if (save > 0 && hor1.transform.GetChild(i).gameObject.activeInHierarchy)
+            {
+                hor1.transform.GetChild(i).GetComponent<Image>().sprite = saveSprite;
+
+                Image saveImg = hor1.transform.GetChild(i).GetChild(0).GetComponent<Image>();
+
+                imgs.Add(saveImg);
+
+                save--;
+            }
+            else break;
+        }
+
+        if (save > 0)
+
+            for (int i = 0; i < hor2.transform.childCount; i++)
+            {
+                if (save > 0 && hor2.transform.GetChild(i).gameObject.activeInHierarchy)
+                {
+                    hor2.transform.GetChild(i).GetComponent<Image>().sprite = saveSprite;
+
+                    Image saveImg = hor2.transform.GetChild(i).GetChild(0).GetComponent<Image>();
+
+                    imgs.Add(saveImg);
+
+                    save--;
+                }
+            }
+
+        skipper.gameObject.SetActive(true);
+
         // 애니메이션 시작
         StartCoroutine(CheckSavedInjured());
     }
@@ -107,47 +144,10 @@ public class ResultAnimationController : MonoBehaviour
                 }
                 break;
         }
-
-        //CheckSavedInjured();
     }
 
     private IEnumerator CheckSavedInjured()
     {
-
-        List<Image> imgs = new List<Image>();
-
-        for (int i = 0; i < hor1.transform.childCount; i++)
-        {
-            if (save > 0 && hor1.transform.GetChild(i).gameObject.activeInHierarchy)
-            {
-                hor1.transform.GetChild(i).GetComponent<Image>().sprite = saveSprite;
-
-                Image saveImg = hor1.transform.GetChild(i).GetChild(0).GetComponent<Image>();
-
-                imgs.Add(saveImg);
-
-                save--;
-            }
-            else break;
-        }
-
-        if (save > 0)
-
-            for (int i = 0; i < hor2.transform.childCount; i++)
-            {
-                if (save > 0 && hor2.transform.GetChild(i).gameObject.activeInHierarchy)
-                {
-                    hor2.transform.GetChild(i).GetComponent<Image>().sprite = saveSprite;
-
-                    Image saveImg = hor2.transform.GetChild(i).GetChild(0).GetComponent<Image>();
-
-                    imgs.Add(saveImg);
-
-                    save--;
-                }
-            }
-
-
         for (int i = 0; i < imgs.Count; i++)
         {
             StartCoroutine(FillImage(imgs[i], 100));
@@ -246,6 +246,21 @@ public class ResultAnimationController : MonoBehaviour
 
     public void Skip()
     {
+        StopAllCoroutines();
 
+        foreach (Image image in imgs)
+        {
+            image.fillAmount = 100;
+        }
+
+        moneyText.text = "+" + money;
+        honorText.text = "+" + honor;
+        stressText.text = stress + "%";
+
+        stressSlider.fillAmount = stress;
+
+        GetEvidence();
+
+        skipper.gameObject.SetActive(false);
     }
 }
