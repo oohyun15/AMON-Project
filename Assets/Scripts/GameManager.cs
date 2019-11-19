@@ -680,7 +680,8 @@ public class GameManager : MonoBehaviour, IObserver
     // 씬 옮기기
     public void MoveScene(string sceneName)
     {
-        SceneManager.LoadScene(sceneName);
+        //SceneManager.LoadScene(sceneName);
+        LoadingManager.LoadScene(sceneName);
     }
 
     // 도전과제 성공 여부 조건

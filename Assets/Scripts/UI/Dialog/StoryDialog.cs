@@ -18,8 +18,7 @@ public class StoryDialog : Dialog
     public Sprite[] sprites;
     public string fileName;
     public GameObject panel;
-    public GameObject loading;
-
+   
     public static StoryDialog instance;
 
     private void Awake()
@@ -85,8 +84,6 @@ public class StoryDialog : Dialog
             panel.SetActive(false);
 
             Lobby.MoveScene(sceneNameToMove);
-
-            loading.SetActive(true);
         }
     }
 }

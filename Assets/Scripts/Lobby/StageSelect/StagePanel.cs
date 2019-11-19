@@ -24,11 +24,11 @@ public class StagePanel : MonoBehaviour
     public Image stageImage;
     public Text stageTitle;
     public int totalStageNum;
-
+    /*
     [Header("Loading")]
     public Image loadingPanel;
     public Sprite[] loadingSprites;
-
+    */
 
     private int index = 0;
 
@@ -60,11 +60,11 @@ public class StagePanel : MonoBehaviour
                 else stageToPlay++;
             }
         Debug.Log(stageToPlay);
-
+        /*
         // 로딩창 이미지 랜덤으로 변경
         int num = Random.Range(0,loadingSprites.Length);
         loadingPanel.sprite = loadingSprites[num];
-
+        */
         /*
         // 현재 진행중인 스테이지 부터 나옴
         num = stageToPlay < 9 ? stageToPlay / 3 : 0;
@@ -109,13 +109,15 @@ public class StagePanel : MonoBehaviour
                     stageLevel[idx_level].stageName.text = stageData[i]["sceneName"].ToString();
 
                     int isPlayed = UserDataIO.ReadStageData().isPlayed[(tempStage[5] - 49) * 3];
-
+                    
+                    /*
                     if (isPlayed == 0)
                     {
                         // (예진) 플레이 기록 없을 시, 대화창 표시를 위해 로딩 오브젝트 비활성화 리스너 끄기
                         stageBtn.onClick
                             .SetPersistentListenerState(1, UnityEngine.Events.UnityEventCallState.Off);
                     }
+                    */
 
                     int total = System.Convert.ToInt32(stageData[i]["save"]);
                     int rescueNum = stage.rescueNum[idx_data];

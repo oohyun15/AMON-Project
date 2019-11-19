@@ -228,11 +228,13 @@ public class Lobby : MonoBehaviour
     // 우선은 버튼에 onClick 함수 설정할 때 스트링으로 연결된 씬 입력하도록 설정
     public static void MoveScene(string sceneName)
     {
-        SceneManager.LoadScene(sceneName);
+        //SceneManager.LoadScene(sceneName);
+        LoadingManager.LoadScene(sceneName);
     }
 
     public void OnClickMoveScene(string sceneName)
     {
-        SceneManager.LoadScene(sceneName);
+        //SceneManager.LoadScene(sceneName);
+        LoadingManager.LoadScene(sceneName);
     }
 }
