@@ -564,7 +564,10 @@ public class GameManager : MonoBehaviour, IObserver
         dm.SaveGameResult(money, honor);
 
         // (19.09.23.) 결과창 애니메이션 설정
-        resultCharacterAnimator.SetBool("Victory", true);
+        if (leftInjured != 0)
+            resultCharacterAnimator.SetBool("Victory", true);
+        else
+            resultCharacterAnimator.SetBool("Fail", true);
 
         gameState = GameState.Clear;
 
