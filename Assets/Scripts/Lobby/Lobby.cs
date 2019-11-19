@@ -115,7 +115,10 @@ public class Lobby : MonoBehaviour
         nowRank.sprite = rankSprites[userData.rank];
 
         preRank.SetNativeSize();
+        preRank.rectTransform.sizeDelta = new Vector2(preRank.rectTransform.rect.width * (26 / preRank.rectTransform.rect.height), 26);
+
         nowRank.SetNativeSize();
+        nowRank.rectTransform.sizeDelta = new Vector2(nowRank.rectTransform.rect.width * (26 / nowRank.rectTransform.rect.height), 26);
 
         preRank.transform.GetChild(0).GetComponent<Text>().text = rankData[preLv]["name"].ToString();
         nowRank.transform.GetChild(0).GetComponent<Text>().text = rankData[userData.rank]["name"].ToString();
