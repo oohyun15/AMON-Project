@@ -264,6 +264,8 @@ public class GameManager : MonoBehaviour, IObserver
 
         minimapPreview.SetNativeSize();
         RectTransform previewRect = minimapPreview.GetComponent<RectTransform>();
+        previewRect.sizeDelta = new Vector2(previewRect.rect.width * 300 / previewRect.rect.height, 300);
+
         RectTransform frameRect = minimapPreview.transform.GetChild(0).GetComponent<RectTransform>();
         frameRect.sizeDelta = new Vector2 (previewRect.rect.width + 15, previewRect.rect.height + 20);
 
