@@ -185,19 +185,20 @@ public class ItemUpgrade : MonoBehaviour
         if (lv == 0)
             nowLv = "";
         else
-            nowLv = "\n현재 레벨 : " + lv + " 효과 : " + GetDataValue(item, lv, "effect");
+            nowLv = "현재 레벨 : " + lv + " 효과 : " + GetDataValue(item, lv, "effect");
 
         string nextLv;
 
         if (lv == maxLv)
             nextLv = "\n최대 레벨입니다";
         else
-            nextLv = "\n다음 레벨 : " + (lv + 1) + " 효과 : " + GetDataValue(item, lv + 1, "effect");
+            nextLv = "\n다음 레벨 : " + (lv + 1) + " 효과 : " + GetDataValue(item, lv + 1, "effect")
+               + "\n필요 금액 : " + GetDataValue(item, lv + 1, "price").ToString();
 
 
 
         content.UI.transform.GetChild(1).GetComponent<Text>().text =
-            GetDataValue(item, 1, "name") +
+            //GetDataValue(item, 1, "name") + "\n" +
             nowLv +
             nextLv;
     }
