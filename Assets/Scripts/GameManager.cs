@@ -142,8 +142,6 @@ public class GameManager : MonoBehaviour, IObserver
         dm = DataManager.Instance;
 
         // 스테이지 데이터 설정
-        maxLeftToMiddleCondition = dm.MaxLeftToMiddleCondition;     // 중간 보상 최대 인원
-        maxLeftToLowCondition = dm.MaxLeftToLowCondition;           // 최하 보상 최대 인원
 
         // 미니맵 프리뷰 스프라이트 불러와서 설정
         minimapPreview.sprite = dm.minimap;
@@ -565,8 +563,6 @@ public class GameManager : MonoBehaviour, IObserver
 
         // (19.09.23.) 결과창 애니메이션 설정
         resultCharacterAnimator.SetBool("Victory", true);
-
-        dm.ShowPlayerInfo();
 
         gameState = GameState.Clear;
 
