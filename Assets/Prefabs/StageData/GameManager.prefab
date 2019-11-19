@@ -117,6 +117,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 091fb00f541fc8b47b56762af15396b3, type: 3}
   - {fileID: 21300000, guid: a9da671c17150be4dbfe78f6a1957769, type: 3}
   - {fileID: 21300000, guid: 37df9aa2a2f926d4497c1917cb3e915b, type: 3}
+  LeftInjuredNumImages: {fileID: 0}
   FX_Ingame:
   - {fileID: 8902661641439584746, guid: bc163e9fdcde3ff4a8d92809231f0027, type: 3}
   - {fileID: 0}
@@ -155,6 +156,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6416448113094033871}
     m_Modifications:
+    - target: {fileID: 4427523977308964688, guid: 0eba903c9190ba84c85022e128c1019d,
+        type: 3}
+      propertyPath: m_Name
+      value: AudioManager
+      objectReference: {fileID: 0}
     - target: {fileID: 576136331717206000, guid: 0eba903c9190ba84c85022e128c1019d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -209,11 +215,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4427523977308964688, guid: 0eba903c9190ba84c85022e128c1019d,
-        type: 3}
-      propertyPath: m_Name
-      value: AudioManager
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0eba903c9190ba84c85022e128c1019d, type: 3}

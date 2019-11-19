@@ -48,6 +48,7 @@ public class UserDataIO : MonoBehaviour
 
         public float BgmVolume;             // BGM 사운드 크기
         public float EffectVolume;          // 이펙트 사운드 크기
+        public float rotSpeed;              // 회전 감도
         // 저장할 값 늘어날 경우, WriteUserData와 ReadUserData에서 Set/GetAttribute 설정해 주어야 합니다
     }
 
@@ -106,6 +107,7 @@ public class UserDataIO : MonoBehaviour
         /* 사운드 볼륨 */
         userElement.SetAttribute("BgmVolume", user.BgmVolume.ToString());
         userElement.SetAttribute("EffectVolume", user.EffectVolume.ToString());
+        userElement.SetAttribute("rotSpeed", user.rotSpeed.ToString());
 
         doc.AppendChild(userElement);
         doc.Save(path);
@@ -146,6 +148,7 @@ public class UserDataIO : MonoBehaviour
                 /* 사운드 볼륨 */
                 BgmVolume = 1f,
                 EffectVolume = 1f,
+                rotSpeed = 5f,
 
                 /* 도전과제 달성 여부 */
                 achievementList = new int[achievementCount]
@@ -184,6 +187,7 @@ public class UserDataIO : MonoBehaviour
                 /* 사운드 볼륨 */
                 BgmVolume = userElement.HasAttribute("BgmVolume") ? System.Convert.ToSingle(userElement.GetAttribute("BgmVolume")) : 1f,
                 EffectVolume = userElement.HasAttribute("EffectVolume") ? System.Convert.ToSingle(userElement.GetAttribute("EffectVolume")) : 1f,
+                rotSpeed = userElement.HasAttribute("rotSpeed") ? System.Convert.ToSingle(userElement.GetAttribute("rotSpeed")) : 5f,
 
                 /* 도전과제 달성 여부 */
                 achievementList = new int[achievementCount]

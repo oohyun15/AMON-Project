@@ -16,10 +16,11 @@ public class Evidence : MonoBehaviour
     private Image image;
     private Text txtName;
     public Button btn;
+    public bool isGot = true;
 
     private void Awake()
     {
-        image = gameObject.transform.GetChild(0).GetComponent<Image>();
+        image = gameObject.transform.GetChild(0).GetChild(0).GetComponent<Image>();
         btn = gameObject.transform.GetChild(0).GetComponent<Button>();
         txtName = gameObject.transform.GetChild(1).GetComponent<Text>();
     }
@@ -44,9 +45,10 @@ public class Evidence : MonoBehaviour
         txtName.text = eviName;
     }
 
-    private void SetDisabled()
+    public void SetDisabled()
     {
-        btn.interactable = false;
+        //btn.interactable = false;
         txtName.text = "미획득 단서";
+        isGot = false;
     }
 }

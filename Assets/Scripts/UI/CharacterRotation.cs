@@ -62,7 +62,11 @@ public class CharacterRotation : MonoBehaviour, IPointerDownHandler, IPointerUpH
 
             // cam = GameManager.Instance.Cam;
 
+            // 김용현 회전 속도
             rotSpeed = player.GetComponent<AmonController>().rotSpeed;
+
+            // 조예진 회전 속도
+            _rotSpeed = UserDataIO.ReadUserData().rotSpeed;
 
             // angle = Mathf.Atan2(initCamPos.transform.localPosition.y, initCamPos.transform.localPosition.z);
 
@@ -108,6 +112,12 @@ public class CharacterRotation : MonoBehaviour, IPointerDownHandler, IPointerUpH
     public void OnChangeRotSpeed()
     {
         _rotSpeed = slider.value;
+
+        UserDataIO.User user = UserDataIO.ReadUserData();
+
+        user.rotSpeed = _rotSpeed;
+
+        UserDataIO.WriteUserData(user);
     }
 
     /* 김용현 회전 */

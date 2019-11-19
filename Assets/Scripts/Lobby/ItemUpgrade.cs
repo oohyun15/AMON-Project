@@ -34,9 +34,7 @@ public class ItemUpgrade : MonoBehaviour
     public void UpgradeItem(string item)
     {
         UserDataIO.User user = UserDataIO.ReadUserData();
-
-        // 아이템 현재 레벨 불러오기
-        // int lv = PlayerPrefs.GetInt(item + "lv", 0);
+        
         int lv = 0;
 
         switch (item)
@@ -77,8 +75,7 @@ public class ItemUpgrade : MonoBehaviour
             else
             {
                 user.money -= price;
-
-                // PlayerPrefs.SetInt(item + "lv", lv + 1);
+                
                 switch (item)
                 {
                     case "oxygen":

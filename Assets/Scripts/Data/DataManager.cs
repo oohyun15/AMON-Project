@@ -63,12 +63,6 @@ public class DataManager : MonoBehaviour
 
     public int total = 5;
 
-    private int maxLeftToLowCondition;
-    public int MaxLeftToLowCondition { get { return maxLeftToLowCondition; } }
-
-    private int maxLeftToMiddleCondition;
-    public int MaxLeftToMiddleCondition { get { return maxLeftToMiddleCondition; } }
-
     private UserDataIO.User user;
 
     private void Awake()
@@ -132,12 +126,6 @@ public class DataManager : MonoBehaviour
         reward = System.Convert.ToInt32(stageData[dataIndex + left][rewardType.ToString()]);
 
         return reward;
-    }
-
-    public void ShowPlayerInfo()
-    {
-        Debug.Log("Player Info. Money = " + PlayerPrefs.GetInt("Money", 0) +
-            ", Honor = " + PlayerPrefs.GetInt("Honor", 0));
     }
 
     public string GetStage() { return sceneName; }

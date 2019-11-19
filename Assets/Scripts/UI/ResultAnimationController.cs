@@ -51,7 +51,6 @@ public class ResultAnimationController : MonoBehaviour
         }
         else
         {
-            Debug.Log(GameManager.Instance.stageNum + "<" + DataManager.Instance.SceneName);
             string nextScene = DataManager.Instance.SceneName;
             nextScene = nextScene.Substring(0, nextScene.Length - 1);
             nextScene += (GameManager.Instance.stageNum % 3 + 2).ToString();

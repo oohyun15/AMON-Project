@@ -50,11 +50,14 @@ public class EvidenceController : MonoBehaviour
             Evidence evi = eviArr[i];
 
             if (stage.isGotEvidence[i] == 0)
+            {
                 evi.SetEvidence(noData, emptySprite);
+                evi.SetDisabled();
+            }
             else
                 evi.SetEvidence(eviData, eviSprites[i]);
 
-            evi.btn.onClick.AddListener(() => OnClickEvidence(evi.Name, evi.Explain, evi.Img));
+            evi.btn.onClick.AddListener(() => OnClickEvidence(evi.isGot, evi.Name, evi.Explain, evi.Img));
         }
     }
 
@@ -66,16 +69,24 @@ public class EvidenceController : MonoBehaviour
         eviInfo.text = "단서를 선택해 주세요";
     }
 
-    public void OnClickEvidence(string name, string explain, Sprite sprite)
+    public void OnClickEvidence(bool isGot, string name, string explain, Sprite sprite)
     {
-        eviImage.sprite = sprite;
-        eviImage.SetNativeSize();
+        if (isGot)
+        {
+            eviImage.gameObject.SetActive(true);
+            eviImage.sprite = sprite;
+            eviImage.SetNativeSize();
+            eviInfo.fontSize = 36;
+        }
+        else
+        {
+            eviImage.gameObject.SetActive(false);
+            eviInfo.fontSize = 48;
+        }
 
         float temp = 350 / Mathf.Max(eviImage.rectTransform.rect.width, eviImage.rectTransform.rect.height);
 
         eviImage.rectTransform.sizeDelta = eviImage.rectTransform.sizeDelta * temp;
-
-        eviImage.gameObject.SetActive(true);
 
         eviName.text = name;
         eviInfo.text = explain;

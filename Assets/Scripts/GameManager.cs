@@ -118,6 +118,8 @@ public class GameManager : MonoBehaviour, IObserver
     public Sprite[] oxygenSprites;              // 0 --> 평상시 / 1 --> 긴급
 
     public float time;                         // 남은 시간, 초 단위
+    private readonly int defaultTime = 60;
+
     private bool gameOver;
 
     private IEnumerator timeCheckCoroutine;
@@ -140,8 +142,6 @@ public class GameManager : MonoBehaviour, IObserver
         dm = DataManager.Instance;
 
         // 스테이지 데이터 설정
-        maxLeftToMiddleCondition = dm.MaxLeftToMiddleCondition;     // 중간 보상 최대 인원
-        maxLeftToLowCondition = dm.MaxLeftToLowCondition;           // 최하 보상 최대 인원
 
         // 미니맵 프리뷰 스프라이트 불러와서 설정
         minimapPreview.sprite = dm.minimap;
@@ -186,8 +186,6 @@ public class GameManager : MonoBehaviour, IObserver
         time = timeLimit;
 
         ApplyEquipItemEffect();
-
-        int defaultTime = 60;
 
         // (19.09.11. 예진) 산소통 테스트 - debug 씬에 추가 시 if문 삭제
         // (19.09.21.) Debug 씬에 산소통 추가됨
@@ -472,13 +470,12 @@ public class GameManager : MonoBehaviour, IObserver
     // 게임 클리어 여부와 보상 수준 확인
     public void CheckGameClear()
     {
-        CheckLeftInjured();
-
         gameOver = true;
 
-        if (time <= 0) GameOver();
+        CheckLeftInjured();
 
-        GameClear();
+        if (time <= 0) GameOver();
+        else GameClear();
     }
 
     bool isPlayingDialog = false;
@@ -566,8 +563,6 @@ public class GameManager : MonoBehaviour, IObserver
 
         // (19.09.23.) 결과창 애니메이션 설정
         resultCharacterAnimator.SetBool("Victory", true);
-
-        dm.ShowPlayerInfo();
 
         gameState = GameState.Clear;
 
