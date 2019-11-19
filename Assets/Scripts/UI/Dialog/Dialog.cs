@@ -65,6 +65,8 @@ public abstract class Dialog : MonoBehaviour
 
         nowDialog = dialogData[index]["dialog"].ToString();
 
+        nowDialog = nowDialog.Replace('`', ',');
+
         StartCoroutine(TypeText(nowDialog));
     }
 

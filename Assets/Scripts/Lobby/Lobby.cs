@@ -165,11 +165,6 @@ public class Lobby : MonoBehaviour
     // 디버깅 용 버튼 
     public void ResetItemData()
     {
-        PlayerPrefs.DeleteKey("oxygenlv");
-        PlayerPrefs.DeleteKey("gloveslv");
-        PlayerPrefs.DeleteKey("axelv");
-        PlayerPrefs.DeleteKey("shoeslv");
-
         userData.oxygenlv = 0;
         userData.gloveslv = 0;
         userData.axelv = 0;
