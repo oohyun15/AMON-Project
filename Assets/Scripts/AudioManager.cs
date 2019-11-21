@@ -30,8 +30,8 @@ public class AudioManager : MonoBehaviour
     }
 
     [Header("Sound")]
-    private AudioSource[] audioPlayers = new AudioSource[6];
-    public AudioClip[] gmBgmAudioClips, lobbyBgmAudioClips, gmEfAudioClips, lobbyEfAudioClips, playerAudioClips, UIAudioClips; 
+    private AudioSource[] audioPlayers = new AudioSource[7];
+    public AudioClip[] gmBgmAudioClips, lobbyBgmAudioClips, gmEfAudioClips, lobbyEfAudioClips, playerAudioClips, UIAudioClips, ObsAudioClips; 
     private float controllBgmVolume, controllEffectVolume;
 
     void Awake()
@@ -40,14 +40,13 @@ public class AudioManager : MonoBehaviour
         controllBgmVolume = user.BgmVolume;
         controllEffectVolume = user.EffectVolume;
 
-        // 0 = GameManageAudioPlayer, 1 = PlayerAudioPlayer, 2 = PatientAudioPlayer
         for (int i = 0; i < 2; i++)
         {
             audioPlayers[i] = gameObject.AddComponent<AudioSource>() as AudioSource;
             audioPlayers[i].volume = controllBgmVolume;
         }
         
-        for(int j = 2; j < 6; j++)
+        for(int j = 2; j < audioPlayers.Length; j++)
         {
             audioPlayers[j] = gameObject.AddComponent<AudioSource>() as AudioSource;
             audioPlayers[j].playOnAwake = false;
@@ -100,20 +99,29 @@ public class AudioManager : MonoBehaviour
                 audioPlayers[5].time = startTime;
                 audioPlayers[5].Play();
                 break;
+
+            case "Obstacle": // 7번 오디오 소스
+                audioPlayers[6].clip = ObsAudioClips[clipNum];
+                audioPlayers[6].loop = _isLoop;
+                audioPlayers[6].time = startTime;
+                audioPlayers[6].Play();
+                break;
         }
     }
 
     public void StopAudio()
     {
-        for (int i = 0; i < 6; i++) audioPlayers[i].clip = null;
+        for (int i = 0; i < audioPlayers.Length; i++) audioPlayers[i].clip = null;
     }
 
     public void BGMVolumeControll(float _audioVolume)
     {
         UserDataIO.User user = UserDataIO.ReadUserData();
 
-        audioPlayers[0].volume = _audioVolume;  //GameManager BGM
-        audioPlayers[1].volume = _audioVolume;  //Lobby BGm
+        for(int i = 0; i < 2; i++)
+        {
+            audioPlayers[i].volume = _audioVolume; 
+        }
 
         controllBgmVolume = _audioVolume;
         user.BgmVolume = controllBgmVolume;    
@@ -124,10 +132,10 @@ public class AudioManager : MonoBehaviour
     {
         UserDataIO.User user = UserDataIO.ReadUserData();
 
-        audioPlayers[2].volume = _audioVolume;  //GameManager Effect
-        audioPlayers[3].volume = _audioVolume;  //Lobby Effect
-        audioPlayers[4].volume = _audioVolume;  //Player
-        audioPlayers[5].volume = _audioVolume;  //Patient
+        for (int i = 2; i < audioPlayers.Length; i++)
+        {
+            audioPlayers[i].volume = _audioVolume; 
+        }
 
         controllEffectVolume = _audioVolume;
         user.EffectVolume = controllEffectVolume;

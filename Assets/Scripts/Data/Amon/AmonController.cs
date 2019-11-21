@@ -419,12 +419,21 @@ public class AmonController : MonoBehaviour, IReset
         if (obstacle.hp > 0)
         {
             gm.StartCoroutine(GameManager.Instance.Cam.transform.GetComponent<CameraShake>().Shake(CSAmount/4, CSDuration));
+            if(playerAnim.GetBool("IsKick")) AudioManager.Instance.PlayAudio("Player", 3, 0f, false);
+            else
+            {
+                if (GameManager.Instance.stageNum < 6) AudioManager.Instance.PlayAudio("Player", 1, 0f, false);
+                else AudioManager.Instance.PlayAudio("Player", 2, 0f, false);
+            }
         }
         else
         {
+            if (obstacle._type == Obstacle.ObsType.GlassDoor) AudioManager.Instance.PlayAudio("Obstacle", 1, 0f, false);
+            else AudioManager.Instance.PlayAudio("Obstacle", 0, 0f, false);
+
             // 코루틴 함수는 모두 게임매니저로 걸어놓음
             gm.StartCoroutine(GameManager.Instance.Cam.transform.GetComponent<CameraShake>().Shake(CSAmount, CSDuration));
-
+            
             // 장애물 비활성화
             obstacle.gameObject.SetActive(false);
 
@@ -433,7 +442,7 @@ public class AmonController : MonoBehaviour, IReset
 
             // (19.09.02) 인터렉션 버튼 아이템 이미지 비활성화
             gm.interactionImage.gameObject.SetActive(false);
-            
+
 
             // 현재 장애물 null로 바꿈
             obstacle = null;
@@ -631,15 +640,11 @@ public class AmonController : MonoBehaviour, IReset
                 if (isRescuing)
                 {
                     playerAnim.SetBool("IsKick", true);
-                    AudioManager.Instance.PlayAudio("Player", 3, 0f, false);
                 }
 
                 else
                 {
                     playerAnim.SetBool("IsStrike", true);
-
-                    if (GameManager.Instance.stageNum < 6) AudioManager.Instance.PlayAudio("Player", 1, 0f, false);
-                    else AudioManager.Instance.PlayAudio("Player", 2, 0f, false);
                 } 
 
                 break;

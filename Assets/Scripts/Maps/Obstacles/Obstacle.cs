@@ -19,6 +19,9 @@ public class Obstacle : MonoBehaviour, IReset
     public int initHp;
     public int hp;                              // 장애물 체력
 
+    public enum ObsType { IronObs, WoodObs, WoodDoor, GlassDoor }
+    public ObsType _type;
+
     private GameManager gm;
     private new readonly string name = "Obstacle";
 
