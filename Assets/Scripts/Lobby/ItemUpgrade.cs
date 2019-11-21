@@ -70,12 +70,13 @@ public class ItemUpgrade : MonoBehaviour
             if (!UserDataIO.ChangeUserMoney(-price))
             {
                 StartCoroutine(lobby.Notify("업그레이드 실패\n소지 금액 부족"));
+                AudioManager.Instance.PlayAudio("UI", 1, 0f, false);
             }
             // 돈 충분할 경우 업그레이드 완료
             else
             {
                 user.money -= price;
-                
+                AudioManager.Instance.PlayAudio("LobbyEffect", 1, 3.6f, false);
                 switch (item)
                 {
                     case "oxygen":

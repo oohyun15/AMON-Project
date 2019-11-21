@@ -164,15 +164,18 @@ public class ResultAnimationController : MonoBehaviour
         checkTime = new WaitForSeconds(Time.deltaTime * fillSpeed * 15);
 
         StartCoroutine(AddText(moneyText, money, moneySpeed, "+", ""));
+        AudioManager.Instance.PlayAudio("UI", 2, 0f, false);
         yield return new WaitForSeconds(money / moneySpeed * Time.deltaTime);
 
         StartCoroutine(AddText(honorText, honor, honorSpeed, "+", ""));
+        AudioManager.Instance.PlayAudio("UI", 2, 0f, false);
         yield return new WaitForSeconds(honor / honorSpeed * Time.deltaTime);
 
         GetEvidence();
 
         StartCoroutine(AddText(stressText, stress, honorSpeed, "", "%"));
         StartCoroutine(FillImage(stressSlider, stress));
+        AudioManager.Instance.PlayAudio("UI", 2, 0f, false);
         yield return checkTime;
 
         skipper.gameObject.SetActive(false);

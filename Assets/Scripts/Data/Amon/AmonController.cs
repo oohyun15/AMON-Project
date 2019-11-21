@@ -283,6 +283,8 @@ public class AmonController : MonoBehaviour, IReset
 
             gm.CheckLeftInjured();
 
+            AudioManager.Instance.PlayAudio("GameManagerEffect", 1, 0f, false);
+
             // (19.10.19) 구조 시 FX 추가
             GameObject go = Instantiate(gm.FX_Ingame[0]);
             go.transform.SetParent(gameObject.transform);
@@ -374,7 +376,7 @@ public class AmonController : MonoBehaviour, IReset
 
             gm.interactionImage.gameObject.SetActive(false);
         }
-        AudioManager.Instance.PlayAudio("Patient", 0, 0f, false);
+        AudioManager.Instance.PlayAudio("GameManagerEffect", 0, 0f, false);
     }
 
     // (19.09.22) 장애물 파괴
@@ -610,8 +612,7 @@ public class AmonController : MonoBehaviour, IReset
                 }
 
                 playerAnim.SetFloat("WalkAnimSpd", moveSpeed/5);
-                AudioManager.Instance.PlayAudio("Player", 0, 0f, true);
-
+                // AudioManager.Instance.PlayAudio("Player", 0, 0f, false);
                 break;
 
             case AnimationName.Strike:

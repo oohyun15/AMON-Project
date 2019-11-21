@@ -122,7 +122,8 @@ public class Lobby : MonoBehaviour
 
         preRank.transform.GetChild(0).GetComponent<Text>().text = rankData[preLv]["name"].ToString();
         nowRank.transform.GetChild(0).GetComponent<Text>().text = rankData[userData.rank]["name"].ToString();
-        
+        AudioManager.Instance.PlayAudio("LobbyEffect", 0, 0f, false);
+
         RankUpPanel.SetActive(true);
         
         SetUIText();

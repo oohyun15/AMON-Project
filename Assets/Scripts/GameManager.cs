@@ -145,14 +145,14 @@ public class GameManager : MonoBehaviour, IObserver
 
         // 미니맵 프리뷰 스프라이트 불러와서 설정
         minimapPreview.sprite = dm.minimap;
-
-
+        
         // 옵저버 추가
-
-        InitGame();
 
         string name = dm.SceneName;
         stageNum = (name[5] - 49) * 3 + (name[7] - 49);
+
+        InitGame();
+
     }
 
     private void FixedUpdate()
@@ -296,6 +296,13 @@ public class GameManager : MonoBehaviour, IObserver
 
         // 게임 상태 변경: Ready
         gameState = GameState.Ready;
+
+        //BGM 틀기
+        if (stageNum >= 0 && stageNum < 3) AudioManager.Instance.PlayAudio("GameManagerBgm", 0, 0f, true);
+        else if(stageNum >= 3 && stageNum < 6) AudioManager.Instance.PlayAudio("GameManagerBgm", 1, 0f, true);
+        else if(stageNum >= 6 && stageNum < 9) AudioManager.Instance.PlayAudio("GameManagerBgm", 1, 0f, true);
+        else if(stageNum >= 9 && stageNum < 12) AudioManager.Instance.PlayAudio("GameManagerBgm", 1, 0f, true);
+        else AudioManager.Instance.PlayAudio("GameManagerBgm", 4, 0f, true);
 
         // 초기 부상자 수 확인
         CheckLeftInjured();
@@ -565,9 +572,15 @@ public class GameManager : MonoBehaviour, IObserver
 
         // (19.09.23.) 결과창 애니메이션 설정
         if (leftInjured != 0)
+        {
             resultCharacterAnimator.SetBool("Victory", true);
+            AudioManager.Instance.PlayAudio("GameManagerEffect", 3, 0f, false);
+        }
         else
+        {
             resultCharacterAnimator.SetBool("Fail", true);
+            AudioManager.Instance.PlayAudio("GameManagerEffect", 2, 0f, false);
+        }
 
         gameState = GameState.Clear;
 
@@ -588,6 +601,7 @@ public class GameManager : MonoBehaviour, IObserver
 
         // (19.09.23.) 결과창 애니메이션 설정
         resultCharacterAnimator.SetBool("Fail", true);
+        AudioManager.Instance.PlayAudio("GameManagerEffect", 2, 0f, false);
 
         // 게임 결과창 활성화
         ShowGameResult(0, 0);
@@ -602,7 +616,6 @@ public class GameManager : MonoBehaviour, IObserver
     private void ShowGameResult(int money, int honor)
     {
         resultPanel.StartResultAnimation(dm.total, leftInjured, money, honor, UserDataIO.ReadUserData().stress);
-        
     }
 
     private IEnumerator CheckTime()
@@ -625,6 +638,7 @@ public class GameManager : MonoBehaviour, IObserver
                     = oxygenSprites[1];
 
                 isChangedSprite = true;
+                AudioManager.Instance.PlayAudio("GameManagerEffect", 6, 0f, false);
             }
 
             yield return null;

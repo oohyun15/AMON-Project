@@ -31,7 +31,7 @@ public class AudioManager : MonoBehaviour
 
     [Header("Sound")]
     private AudioSource[] audioPlayers = new AudioSource[6];
-    public AudioClip[] gmBgmAudioClips, gmEfAudioClips, playerAudioClips, patientAudioClips, lobbyBgmAudioClips, lobbyEfAudioClips;
+    public AudioClip[] gmBgmAudioClips, lobbyBgmAudioClips, gmEfAudioClips, lobbyEfAudioClips, playerAudioClips, UIAudioClips; 
     private float controllBgmVolume, controllEffectVolume;
 
     void Awake()
@@ -50,6 +50,7 @@ public class AudioManager : MonoBehaviour
         for(int j = 2; j < 6; j++)
         {
             audioPlayers[j] = gameObject.AddComponent<AudioSource>() as AudioSource;
+            audioPlayers[j].playOnAwake = false;
             audioPlayers[j].volume = controllEffectVolume;
         }
     }
@@ -59,8 +60,6 @@ public class AudioManager : MonoBehaviour
         switch (sourceName)
         {
             case "GameManagerBgm": // 0번 오디오 소스
-                if (audioPlayers[0].clip == gmBgmAudioClips[clipNum]) return;
-
                 audioPlayers[0].clip = gmBgmAudioClips[clipNum];
                 audioPlayers[0].loop = _isLoop;
                 audioPlayers[0].time = startTime;
@@ -68,8 +67,6 @@ public class AudioManager : MonoBehaviour
                 break;
 
             case "LobbyBgm": // 1번 오디오 소스
-                if (audioPlayers[1].clip == lobbyBgmAudioClips[clipNum]) return;
-
                 audioPlayers[1].clip = lobbyBgmAudioClips[clipNum];
                 audioPlayers[1].loop = _isLoop;
                 audioPlayers[1].time = startTime;
@@ -77,8 +74,6 @@ public class AudioManager : MonoBehaviour
                 break;
 
             case "GameManagerEffect": // 2번 오디오 소스
-                if (audioPlayers[2].clip == gmEfAudioClips[clipNum]) return;
-
                 audioPlayers[2].clip = gmEfAudioClips[clipNum];
                 audioPlayers[2].loop = _isLoop;
                 audioPlayers[2].time = startTime;
@@ -86,8 +81,6 @@ public class AudioManager : MonoBehaviour
                 break;
 
             case "LobbyEffect": // 3번 오디오 소스
-                if (audioPlayers[3].clip == lobbyEfAudioClips[clipNum]) return;
-
                 audioPlayers[3].clip = lobbyEfAudioClips[clipNum];
                 audioPlayers[3].loop = _isLoop;
                 audioPlayers[3].time = startTime;
@@ -95,18 +88,14 @@ public class AudioManager : MonoBehaviour
                 break;
 
             case "Player": // 4번 오디오 소스
-                if (audioPlayers[4].clip == playerAudioClips[clipNum]) return;
-
                 audioPlayers[4].clip = playerAudioClips[clipNum];
                 audioPlayers[4].loop = _isLoop;
                 audioPlayers[4].time = startTime;
                 audioPlayers[4].Play();
                 break;
 
-            case "Patient": // 5번 오디오 소스
-                if (audioPlayers[5].clip == patientAudioClips[clipNum]) return;
-
-                audioPlayers[5].clip = patientAudioClips[clipNum];
+            case "UI": // 5번 오디오 소스
+                audioPlayers[5].clip = UIAudioClips[clipNum];
                 audioPlayers[5].loop = _isLoop;
                 audioPlayers[5].time = startTime;
                 audioPlayers[5].Play();
@@ -143,5 +132,11 @@ public class AudioManager : MonoBehaviour
         controllEffectVolume = _audioVolume;
         user.EffectVolume = controllEffectVolume;
         UserDataIO.WriteUserData(user);
+    }
+
+    public void ClickSFX(bool _avaliable)
+    {
+        if (_avaliable) PlayAudio("UI", 0, 0.01f, false);
+        else PlayAudio("UI", 1, 0.01f, false);
     }
 }
