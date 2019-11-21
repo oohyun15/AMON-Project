@@ -419,6 +419,7 @@ public class AmonController : MonoBehaviour, IReset
         if (obstacle.hp > 0)
         {
             gm.StartCoroutine(GameManager.Instance.Cam.transform.GetComponent<CameraShake>().Shake(CSAmount/4, CSDuration));
+
             if(playerAnim.GetBool("IsKick")) AudioManager.Instance.PlayAudio("Player", 3, 0f, false);
             else
             {
