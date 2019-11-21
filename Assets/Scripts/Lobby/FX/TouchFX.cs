@@ -2,8 +2,9 @@
  * TouchFX.cs
  * 제작: 김용현
  * 로비 내에서 터치시 생성되는 FX
+ * (19.11.21) 터치 FX가 캔버스에 정확한 위치에 나오지 않던 버그 수정(localPosition -> position 교체)
  * 작성일자: 19.11.10
- * 수정일자: 19.11.10
+ * 수정일자: 19.11.21
  ***************************************/
 
 using System.Collections;
@@ -22,11 +23,13 @@ public class TouchFX : MonoBehaviour, IPointerDownHandler
     {
         Vector2 initPos = eventData.position;
 
+        Debug.Log(initPos);
+
         if (count >= initNum) count = 0;
 
         GameObject touch = FX_Lists.transform.GetChild(count).gameObject;
 
-        touch.transform.localPosition = initPos;
+        touch.transform.position = initPos;
 
         touch.SetActive(true);
 
@@ -34,7 +37,6 @@ public class TouchFX : MonoBehaviour, IPointerDownHandler
         
         count++;
     }
-
 
     // Start is called before the first frame update
     void Start()
@@ -48,11 +50,6 @@ public class TouchFX : MonoBehaviour, IPointerDownHandler
         for (int idx = 0; idx < initNum; idx++)
         {
             GameObject go = Instantiate(FX_Touch, FX_Lists.transform);
-
-
-            go.transform.localPosition = Vector3.zero;
-
-            go.transform.localScale = Vector3.one;
 
             go.SetActive(false);
         }
