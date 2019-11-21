@@ -15,6 +15,7 @@ public class StageLevel : MonoBehaviour
 {
     public Image[] rescueImage;
     public Text stageName;
+    public string sceneName;
 
     public void MoveScene()
     {
@@ -29,7 +30,8 @@ public class StageLevel : MonoBehaviour
         }
         else
         {
-            Lobby.MoveScene(stageName.text);
+            Lobby.MoveScene(sceneName);
+            Debug.Log(sceneName);
         }
     }
 }

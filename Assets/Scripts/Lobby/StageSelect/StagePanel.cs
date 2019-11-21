@@ -107,6 +107,7 @@ public class StagePanel : MonoBehaviour
                         stageBtn.interactable = false;
 
                     stageLevel[idx_level].stageName.text = stageData[i]["sceneName"].ToString();
+                    stageLevel[idx_level].sceneName = stageData[i]["sceneName"].ToString();
 
                     int isPlayed = UserDataIO.ReadStageData().isPlayed[(tempStage[5] - 49) * 3];
                     

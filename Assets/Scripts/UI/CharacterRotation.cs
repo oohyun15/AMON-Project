@@ -44,6 +44,8 @@ public class CharacterRotation : MonoBehaviour, IPointerDownHandler, IPointerUpH
     Quaternion fir_rotation;
     float _rotSpeed = 5;
 
+    int touchCount = 0;
+
     public Slider slider;
 
 
@@ -101,12 +103,15 @@ public class CharacterRotation : MonoBehaviour, IPointerDownHandler, IPointerUpH
 
     void IDragHandler.OnDrag(PointerEventData eventData)
     {
-        touchPosition = Input.mousePosition;
+        if (Input.touchCount < 2)
+        {
+            touchPosition = Input.mousePosition;
 
-        player.transform.Rotate(new Vector3(0, (touchPosition.x - prevPosition.x ) / _rotSpeed, 0)
-            * (isLobby ? -1 : 1));
+            player.transform.Rotate(new Vector3(0, (touchPosition.x - prevPosition.x) / _rotSpeed, 0)
+                * (isLobby ? -1 : 1));
 
-        prevPosition = touchPosition;
+            prevPosition = touchPosition;
+        }
     }
 
     public void OnChangeRotSpeed()
@@ -150,24 +155,32 @@ public class CharacterRotation : MonoBehaviour, IPointerDownHandler, IPointerUpH
 
     void IPointerDownHandler.OnPointerDown(PointerEventData eventData)
     {
-        isTouch = true;
+        Debug.Log(isTouch);
+        if (!isTouch)
+        {
+            isTouch = true;
 
-        t_initPos = eventData.position;
+            t_initPos = eventData.position;
 
-        /* 조예진 회전 */
+            /* 조예진 회전 */
 
-        fir_rotation = player.transform.rotation;
+            fir_rotation = player.transform.rotation;
 
-        prevPosition = Input.mousePosition;
+            prevPosition = Input.mousePosition;
 
-        touchPosition = prevPosition;
+            touchPosition = prevPosition;
+        }
     }
 
     void IPointerUpHandler.OnPointerUp(PointerEventData eventData)
     {
-        isTouch = false;
+        if (Input.touchCount < 2)
+        {
+            isTouch = false;
 
-        playerRot = Vector3.zero;
+            playerRot = Vector3.zero;
+
+        }
     }
 
 
