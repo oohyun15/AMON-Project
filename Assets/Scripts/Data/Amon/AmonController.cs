@@ -391,7 +391,7 @@ public class AmonController : MonoBehaviour, IReset
             axeIdle.SetActive(false);
             axeAttack.SetActive(true);
         }
-        attackBtn.interactable = false;
+        // attackBtn.interactable = false;
         animState = AnimationName.Strike;
         PlayerAnimation();
     }
@@ -592,7 +592,7 @@ public class AmonController : MonoBehaviour, IReset
 
         axeIdle.SetActive(true);
 
-        attackBtn = GameManager.Instance.UI[1].transform.GetChild(0).transform.GetChild(0).GetComponent<Button>();
+        attackBtn = GameManager.Instance.UI[1].transform.GetChild(1).transform.GetChild(0).GetComponent<Button>();
     }
 
     public void PlayerAnimation() // (9.9 태윤, 움직이다가 애니메이션 바뀌는 것때문에 IsWalk도 false로 바꾸도록 함)
