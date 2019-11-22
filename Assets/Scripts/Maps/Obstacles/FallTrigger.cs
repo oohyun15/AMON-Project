@@ -88,12 +88,13 @@ public class FallTrigger : MonoBehaviour, IReset
 
         // FX 활성화
         cellingFX.SetActive(true);
-
-        // time 뒤 장애물 생성, rigidbody에 의해 생성된 위치에서 자동으로 떨어짐
+        AudioManager.Instance.PlayAudio("Warning", 0, 0f, true);
+;        // time 뒤 장애물 생성, rigidbody에 의해 생성된 위치에서 자동으로 떨어짐
         yield return new WaitForSeconds(time);
 
         // FX 비활성화
         cellingFX.SetActive(false);
+        AudioManager.Instance.StopAudio("Warning");
 
         // 천장 조각들 중력 사용
         for (int idx =0; idx < cellingFragments.transform.childCount; idx++)

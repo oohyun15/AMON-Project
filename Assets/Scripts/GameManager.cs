@@ -494,7 +494,7 @@ public class GameManager : MonoBehaviour, IObserver
         int rescuedCount = dm.total - leftInjured;
         Debug.Log(rescuedCount);
 
-        AudioManager.Instance.StopAudio();
+        AudioManager.Instance.StopAllAudio();
         AudioManager.Instance.PlayAudio("GameManagerEffect", 0, 0.5f, false);
 
         // (19.10.13) 이번 스테이지에서 구출한 인원 저장
