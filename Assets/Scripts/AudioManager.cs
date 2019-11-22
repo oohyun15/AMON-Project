@@ -30,8 +30,8 @@ public class AudioManager : MonoBehaviour
     }
 
     [Header("Sound")]
-    private AudioSource[] audioPlayers = new AudioSource[8];
-    public AudioClip[] gmBgmAudioClips, lobbyBgmAudioClips, gmEfAudioClips, lobbyEfAudioClips, playerAudioClips, UIAudioClips, ObsAudioClips, WarningAudioClips; 
+    private AudioSource[] audioPlayers = new AudioSource[7];
+    public AudioClip[] gmBgmAudioClips, lobbyBgmAudioClips, gmEfAudioClips, lobbyEfAudioClips, playerAudioClips, UIAudioClips, ObsAudioClips; 
     private float controllBgmVolume, controllEffectVolume;
 
     void Awake()
@@ -100,63 +100,18 @@ public class AudioManager : MonoBehaviour
                 audioPlayers[5].Play();
                 break;
 
-            case "Obstacle": // 6번 오디오 소스
+            case "Obstacle": // 7번 오디오 소스
                 audioPlayers[6].clip = ObsAudioClips[clipNum];
                 audioPlayers[6].loop = _isLoop;
                 audioPlayers[6].time = startTime;
                 audioPlayers[6].Play();
                 break;
-
-            case "Warning": // 7번 오디오 소스
-                audioPlayers[7].clip = WarningAudioClips[clipNum];
-                audioPlayers[7].loop = _isLoop;
-                audioPlayers[7].time = startTime;
-                audioPlayers[7].Play();
-                break;
         }
     }
 
-    public void StopAllAudio()
+    public void StopAudio()
     {
         for (int i = 0; i < audioPlayers.Length; i++) audioPlayers[i].clip = null;
-    }
-
-    public void StopAudio(string sourceName)
-    {
-        switch (sourceName)
-        {
-            case "GameManagerBgm": // 0번 오디오 소스
-                audioPlayers[0].clip = null;
-                break;
-
-            case "LobbyBgm": // 1번 오디오 소스
-                audioPlayers[1].clip = null;
-                break;
-
-            case "GameManagerEffect": // 2번 오디오 소스
-                audioPlayers[2].clip = null;
-                break;
-
-            case "LobbyEffect": // 3번 오디오 소스
-                audioPlayers[3].clip = null;
-                break;
-
-            case "Player": // 4번 오디오 소스
-                audioPlayers[4].clip = null;
-                break;
-
-            case "UI": // 5번 오디오 소스
-                audioPlayers[5].clip = null;
-                break;
-
-            case "Obstacle": // 7번 오디오 소스
-                audioPlayers[6].clip = null;
-                break;
-
-            case "Warning": // 8번 오디오 소스
-                audioPlayers[7].clip = null;
-                break;
-        }
     }
 
     public void BGMVolumeControll(float _audioVolume)
