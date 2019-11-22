@@ -8,6 +8,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+
 
 public class AudioManager : MonoBehaviour
 {
@@ -32,26 +34,38 @@ public class AudioManager : MonoBehaviour
     [Header("Sound")]
     private AudioSource[] audioPlayers = new AudioSource[8];
     public AudioClip[] gmBgmAudioClips, lobbyBgmAudioClips, gmEfAudioClips, lobbyEfAudioClips, playerAudioClips, UIAudioClips, ObsAudioClips, WarningAudioClips; 
-    private float controllBgmVolume, controllEffectVolume;
+
+    [Header("Button")]
+    public Sprite onImage;
+    public Sprite offImage;
+    //public bool onOff;
+    public Image BgmOnOff;
+    public Image EffectOnOff;
 
     void Awake()
     {
         UserDataIO.User user = UserDataIO.ReadUserData();
-        controllBgmVolume = user.BgmVolume;
-        controllEffectVolume = user.EffectVolume;
 
         for (int i = 0; i < 2; i++)
         {
             audioPlayers[i] = gameObject.AddComponent<AudioSource>() as AudioSource;
-            audioPlayers[i].volume = controllBgmVolume;
+            audioPlayers[i].volume = user.BgmVolume;
         }
         
         for(int j = 2; j < audioPlayers.Length; j++)
         {
             audioPlayers[j] = gameObject.AddComponent<AudioSource>() as AudioSource;
             audioPlayers[j].playOnAwake = false;
-            audioPlayers[j].volume = controllEffectVolume;
+            audioPlayers[j].volume = user.EffectVolume;
         }
+
+        Text onText = BgmOnOff.transform.GetChild(0).GetComponent<Text>();
+        if (user.BgmVolume == 1f) onText.text = "ON";
+        else onText.text = "OFF";
+
+        onText = EffectOnOff.transform.GetChild(0).GetComponent<Text>();
+        if(user.EffectVolume == 1f) onText.text = "ON";
+        else onText.text = "OFF";
     }
 
     public void PlayAudio(string sourceName, int clipNum, float startTime, bool _isLoop)
@@ -159,31 +173,72 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public void BGMVolumeControll(float _audioVolume)
+    public void BGMVolumeControll()
     {
         UserDataIO.User user = UserDataIO.ReadUserData();
-
-        for(int i = 0; i < 2; i++)
+        
+        if (user.BgmVolume == 0f)
         {
-            audioPlayers[i].volume = _audioVolume; 
+            BgmOnOff.overrideSprite = onImage;
+            user.BgmVolume = 1f;
+
+            for (int i = 0; i < 2; i++)
+            {
+                audioPlayers[i].volume = user.BgmVolume;
+            }
+
+            Text onText = BgmOnOff.transform.GetChild(0).GetComponent<Text>();
+            onText.text = "ON";
         }
 
-        controllBgmVolume = _audioVolume;
-        user.BgmVolume = controllBgmVolume;    
+        else
+        {
+            BgmOnOff.overrideSprite = offImage;
+            user.BgmVolume = 0f;
+
+            for (int i = 0; i < 2; i++)
+            {
+                audioPlayers[i].volume = user.BgmVolume;
+            }
+            
+            Text offText = BgmOnOff.transform.GetChild(0).GetComponent<Text>();
+            offText.text = "OFF";
+
+        }
         UserDataIO.WriteUserData(user);
     }
 
-    public void EffectVolumeControll(float _audioVolume)
+    public void EffectVolumeControll()
     {
         UserDataIO.User user = UserDataIO.ReadUserData();
 
-        for (int i = 2; i < audioPlayers.Length; i++)
+        if (user.EffectVolume == 0f)
         {
-            audioPlayers[i].volume = _audioVolume; 
+            EffectOnOff.overrideSprite = onImage;
+            user.EffectVolume = 1f;
+
+            for (int i = 2; i < audioPlayers.Length; i++)
+            {
+                audioPlayers[i].volume = user.EffectVolume;
+            }
+
+            Text onText = EffectOnOff.transform.GetChild(0).GetComponent<Text>();
+            onText.text = "ON";
         }
 
-        controllEffectVolume = _audioVolume;
-        user.EffectVolume = controllEffectVolume;
+        else
+        {
+            EffectOnOff.overrideSprite = offImage;
+            user.EffectVolume = 0f;
+
+            for (int i = 2; i < audioPlayers.Length; i++)
+            {
+                audioPlayers[i].volume = user.EffectVolume;
+            }
+
+            Text offText = EffectOnOff.transform.GetChild(0).GetComponent<Text>();
+            offText.text = "OFF";
+        }
         UserDataIO.WriteUserData(user);
     }
 
