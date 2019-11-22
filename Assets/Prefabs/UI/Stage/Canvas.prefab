@@ -9539,8 +9539,8 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 3a1a656d5756c6b4ba120d0dc5e9dc3b, type: 3}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: e919a6f4d72eed249953cfc5c6d9d76f, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -9673,7 +9673,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -9683,7 +9683,7 @@ MonoBehaviour:
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 56
-    m_FontStyle: 1
+    m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
     m_MaxSize: 72
@@ -9762,7 +9762,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 3a1a656d5756c6b4ba120d0dc5e9dc3b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 187a1a9f045d5af409cc1bf3c43ebd64, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -9829,7 +9829,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -9918,7 +9918,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 343256d7e0dc6ae4599b731d89655ee2, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e919a6f4d72eed249953cfc5c6d9d76f, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -10072,7 +10072,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 343256d7e0dc6ae4599b731d89655ee2, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e919a6f4d72eed249953cfc5c6d9d76f, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -10217,7 +10217,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -10227,7 +10227,7 @@ MonoBehaviour:
   m_FontData:
     m_Font: {fileID: 12800000, guid: f69e794bfa066c447ae78d4e665e8891, type: 3}
     m_FontSize: 40
-    m_FontStyle: 1
+    m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
     m_MaxSize: 48
@@ -10371,7 +10371,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -10381,7 +10381,7 @@ MonoBehaviour:
   m_FontData:
     m_Font: {fileID: 12800000, guid: f69e794bfa066c447ae78d4e665e8891, type: 3}
     m_FontSize: 40
-    m_FontStyle: 1
+    m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
     m_MaxSize: 48
@@ -12583,6 +12583,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2232237696253215105}
     m_Modifications:
+    - target: {fileID: 2861687989170944623, guid: cc7775824cbaf83479945de3dde144fe,
+        type: 3}
+      propertyPath: m_Name
+      value: DialogBox
+      objectReference: {fileID: 0}
+    - target: {fileID: 2861687989170944623, guid: cc7775824cbaf83479945de3dde144fe,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2229043699587302595, guid: cc7775824cbaf83479945de3dde144fe,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -12688,16 +12698,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 2861687989170944623, guid: cc7775824cbaf83479945de3dde144fe,
-        type: 3}
-      propertyPath: m_Name
-      value: DialogBox
-      objectReference: {fileID: 0}
-    - target: {fileID: 2861687989170944623, guid: cc7775824cbaf83479945de3dde144fe,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3111762166047138097, guid: cc7775824cbaf83479945de3dde144fe,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -12765,26 +12765,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2232237696253215105}
     m_Modifications:
-    - target: {fileID: 1370564325888967805, guid: 2011b31096d5b7548a3e49740b3ea06d,
-        type: 3}
-      propertyPath: talker
-      value: 
-      objectReference: {fileID: 3564071586647611650}
-    - target: {fileID: 1370564325888967805, guid: 2011b31096d5b7548a3e49740b3ea06d,
-        type: 3}
-      propertyPath: dialog
-      value: 
-      objectReference: {fileID: 4055908054457813238}
-    - target: {fileID: 1370564325888967805, guid: 2011b31096d5b7548a3e49740b3ea06d,
-        type: 3}
-      propertyPath: image
-      value: 
-      objectReference: {fileID: 3611254908163686095}
-    - target: {fileID: 1370564325888967805, guid: 2011b31096d5b7548a3e49740b3ea06d,
-        type: 3}
-      propertyPath: panel
-      value: 
-      objectReference: {fileID: 4032194972483863632}
     - target: {fileID: 3678268040293267028, guid: 2011b31096d5b7548a3e49740b3ea06d,
         type: 3}
       propertyPath: m_Name
@@ -12860,6 +12840,26 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.75
       objectReference: {fileID: 0}
+    - target: {fileID: 1370564325888967805, guid: 2011b31096d5b7548a3e49740b3ea06d,
+        type: 3}
+      propertyPath: talker
+      value: 
+      objectReference: {fileID: 3564071586647611650}
+    - target: {fileID: 1370564325888967805, guid: 2011b31096d5b7548a3e49740b3ea06d,
+        type: 3}
+      propertyPath: dialog
+      value: 
+      objectReference: {fileID: 4055908054457813238}
+    - target: {fileID: 1370564325888967805, guid: 2011b31096d5b7548a3e49740b3ea06d,
+        type: 3}
+      propertyPath: image
+      value: 
+      objectReference: {fileID: 3611254908163686095}
+    - target: {fileID: 1370564325888967805, guid: 2011b31096d5b7548a3e49740b3ea06d,
+        type: 3}
+      propertyPath: panel
+      value: 
+      objectReference: {fileID: 4032194972483863632}
     - target: {fileID: 3678268040293267029, guid: 2011b31096d5b7548a3e49740b3ea06d,
         type: 3}
       propertyPath: talker
@@ -13336,16 +13336,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2232237696253215105}
     m_Modifications:
-    - target: {fileID: 2840272372485380701, guid: 1423fc149117a1943ab328ee3ecaf1e8,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 4951302454176523546}
-    - target: {fileID: 2840272372485380701, guid: 1423fc149117a1943ab328ee3ecaf1e8,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: MoveScene
-      objectReference: {fileID: 0}
     - target: {fileID: 8140732404951417121, guid: 1423fc149117a1943ab328ee3ecaf1e8,
         type: 3}
       propertyPath: m_Name
@@ -13500,6 +13490,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -191.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 2840272372485380701, guid: 1423fc149117a1943ab328ee3ecaf1e8,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 4951302454176523546}
+    - target: {fileID: 2840272372485380701, guid: 1423fc149117a1943ab328ee3ecaf1e8,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: MoveScene
       objectReference: {fileID: 0}
     - target: {fileID: 3236190866802771666, guid: 1423fc149117a1943ab328ee3ecaf1e8,
         type: 3}
