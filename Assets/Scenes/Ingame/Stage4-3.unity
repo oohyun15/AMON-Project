@@ -4689,6 +4689,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 231460575}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &231460577 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8743276549827746353, guid: 7b60318632836e041a37d7aa9024810d,
+    type: 3}
+  m_PrefabInstance: {fileID: 231460575}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &231525555
 GameObject:
   m_ObjectHideFlags: 0
@@ -18181,7 +18187,7 @@ PrefabInstance:
         type: 3}
       propertyPath: cellingFragments
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1379811992}
     - target: {fileID: 4506263965822562792, guid: 50795809e1b598d41ba3e175ec6a1c1d,
         type: 3}
       propertyPath: time
@@ -18812,6 +18818,12 @@ PrefabInstance:
 --- !u!4 &1004804300 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5696211759374444578, guid: 7b60318632836e041a37d7aa9024810d,
+    type: 3}
+  m_PrefabInstance: {fileID: 1004804299}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1004804301 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8743276549827746353, guid: 7b60318632836e041a37d7aa9024810d,
     type: 3}
   m_PrefabInstance: {fileID: 1004804299}
   m_PrefabAsset: {fileID: 0}
@@ -19662,6 +19674,11 @@ PrefabInstance:
       propertyPath: cellingFragments
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 4506263965822562792, guid: 50795809e1b598d41ba3e175ec6a1c1d,
+        type: 3}
+      propertyPath: cellingFX
+      value: 
+      objectReference: {fileID: 1004804301}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 50795809e1b598d41ba3e175ec6a1c1d, type: 3}
 --- !u!4 &1059856102 stripped
@@ -25611,6 +25628,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1379811990}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1379811992 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8743276549827746353, guid: 7b60318632836e041a37d7aa9024810d,
+    type: 3}
+  m_PrefabInstance: {fileID: 1379811990}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1385610928
 GameObject:
   m_ObjectHideFlags: 0
@@ -27390,6 +27413,12 @@ PrefabInstance:
 --- !u!4 &1484571511 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5696211759374444578, guid: 7b60318632836e041a37d7aa9024810d,
+    type: 3}
+  m_PrefabInstance: {fileID: 1484571510}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1484571512 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8743276549827746353, guid: 7b60318632836e041a37d7aa9024810d,
     type: 3}
   m_PrefabInstance: {fileID: 1484571510}
   m_PrefabAsset: {fileID: 0}
@@ -29469,7 +29498,7 @@ PrefabInstance:
         type: 3}
       propertyPath: cellingFragments
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 231460577}
     - target: {fileID: 4506263965822562792, guid: 50795809e1b598d41ba3e175ec6a1c1d,
         type: 3}
       propertyPath: time
@@ -29778,7 +29807,7 @@ PrefabInstance:
         type: 3}
       propertyPath: cellingFragments
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1484571512}
     - target: {fileID: 4506263965822562792, guid: 50795809e1b598d41ba3e175ec6a1c1d,
         type: 3}
       propertyPath: time
@@ -30053,11 +30082,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1422326868705916019, guid: 473edb84bc478134682f4dbe8efd5eb0,
-        type: 3}
-      propertyPath: m_Name
-      value: ExitTrigger
-      objectReference: {fileID: 0}
     - target: {fileID: 1422326868705916021, guid: 473edb84bc478134682f4dbe8efd5eb0,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -30112,6 +30136,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1422326868705916019, guid: 473edb84bc478134682f4dbe8efd5eb0,
+        type: 3}
+      propertyPath: m_Name
+      value: ExitTrigger
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 473edb84bc478134682f4dbe8efd5eb0, type: 3}
