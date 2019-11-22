@@ -37,7 +37,7 @@ public class FallTrigger : MonoBehaviour, IReset
 
     private GameManager gm;
     private new readonly string name = "FallTrigger";
-    
+
 
     void Start()
     {
@@ -61,13 +61,13 @@ public class FallTrigger : MonoBehaviour, IReset
 
         GetInitValue();
     }
-    
+
     private void OnTriggerEnter(Collider other)
     {
         // (용현) AmonController를 GameManager에서 가져오고 게임매니저가 코루틴돌게 수정
         if (other.gameObject == gm.player.gameObject)
         {
-            switch(type)
+            switch (type)
             {
                 case 0:
                     gm.StartCoroutine(FallingObs());
@@ -77,7 +77,7 @@ public class FallTrigger : MonoBehaviour, IReset
                     gm.StartCoroutine(Explosion());
                     break;
             }
-            
+
         }
     }
 
@@ -88,17 +88,18 @@ public class FallTrigger : MonoBehaviour, IReset
 
         // FX 활성화
         cellingFX.SetActive(true);
-
-        // time 뒤 장애물 생성, rigidbody에 의해 생성된 위치에서 자동으로 떨어짐
+        AudioManager.Instance.PlayAudio("Warning", 0, 0f, true);
+        ;        // time 뒤 장애물 생성, rigidbody에 의해 생성된 위치에서 자동으로 떨어짐
         yield return new WaitForSeconds(time);
 
         // FX 비활성화
         cellingFX.SetActive(false);
+        AudioManager.Instance.StopAudio("Warning");
 
         // 천장 조각들 중력 사용
-        for (int idx =0; idx < cellingFragments.transform.childCount; idx++)
+        for (int idx = 0; idx < cellingFragments.transform.childCount; idx++)
         {
-             cellingFragments.transform.GetChild(idx).GetComponent<Rigidbody>().useGravity = true;
+            cellingFragments.transform.GetChild(idx).GetComponent<Rigidbody>().useGravity = true;
         }
         yield return new WaitForSeconds(1.0f);
 

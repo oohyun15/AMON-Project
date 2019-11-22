@@ -28,7 +28,7 @@ using UnityEngine.UI;
 public class AmonController : MonoBehaviour, IReset
 {
     // 플레이어 상태 종류
-    public enum InteractionState { Idle, Obstacle, Rescue } 
+    public enum InteractionState { Idle, Obstacle, Rescue }
 
     [Header("Player Info")]
     public float moveSpeed;
@@ -44,9 +44,9 @@ public class AmonController : MonoBehaviour, IReset
     [Header("Player State")]
     public InteractionState state = InteractionState.Idle; // 현재 플레이어의 상태
 
-   /* [Header("Currnet Item")]
-    public Item currentItem;            // 플레이어가 현재 가지고 있는 아이템을 받아오는 변수
-    public ItemController ItemController; */
+    /* [Header("Currnet Item")]
+     public Item currentItem;            // 플레이어가 현재 가지고 있는 아이템을 받아오는 변수
+     public ItemController ItemController; */
 
     [Header("Obstacle")]
     public Obstacle obstacle;          // 충돌처리된 장애물을 받아올 변수
@@ -54,7 +54,7 @@ public class AmonController : MonoBehaviour, IReset
     public GameObject axeAttack;
     public GameObject axeIdle;
     private bool IsEquipAxe = false;
-    
+
     [Header("Rescue")]
     public bool isRescuing;             // 현재 중상 부상자 구조중인지 저장할 변수
     public Transform backPoint;         // 부상자 업었을 때 위치 받아올 변수
@@ -119,7 +119,7 @@ public class AmonController : MonoBehaviour, IReset
         }
 
         itemDataList = ItemDataManager.Instance.GetEquipItemData();
-        
+
         // (용현) 초기값 저장
         GetInitValue();
     }
@@ -190,7 +190,7 @@ public class AmonController : MonoBehaviour, IReset
                 gm.interactionImage.sprite = isRescuing ? gm.itemImages[2] : gm.itemImages[1];
 
                 obstacle = collision.gameObject.GetComponent<Obstacle>();
-                
+
                 // (19.09.22) 인터렉션 UI 변경으로 인한 비활성화
                 /*
                 // 아이템이 도끼일 경우, 인터렉션 아이템 이미지 활성화
@@ -210,7 +210,7 @@ public class AmonController : MonoBehaviour, IReset
 
                 // 구출모드로 변경
                 state = InteractionState.Rescue;
-                
+
                 // 구조 아이콘으로 변경
                 gm.interactionImage.gameObject.SetActive(true);
 
@@ -225,7 +225,7 @@ public class AmonController : MonoBehaviour, IReset
 
     private void OnCollisionExit(Collision collision)
     {
-        switch(collision.gameObject.tag)
+        switch (collision.gameObject.tag)
         {
             // 장애물일때
             case "Obstacle":
@@ -312,27 +312,27 @@ public class AmonController : MonoBehaviour, IReset
             }
         }
 
-       /* // (19.08.20) 아이템 획득 시
-        else if(other.CompareTag("FieldItem"))
-        {
-            FieldItem fi = other.GetComponent<FieldItem>();
+        /* // (19.08.20) 아이템 획득 시
+         else if(other.CompareTag("FieldItem"))
+         {
+             FieldItem fi = other.GetComponent<FieldItem>();
 
-            for (int index = 0; index < ItemController.TIN; index++)
-            {
-                Item item = ItemController.keyItems[index];
+             for (int index = 0; index < ItemController.TIN; index++)
+             {
+                 Item item = ItemController.keyItems[index];
 
-                if (fi.ID_num == item.ID_num)
-                {
-                    item.durability += fi.itemCount;
+                 if (fi.ID_num == item.ID_num)
+                 {
+                     item.durability += fi.itemCount;
 
-                    ItemController.UpdateItemCount(item);
+                     ItemController.UpdateItemCount(item);
 
-                    other.gameObject.SetActive(false);
+                     other.gameObject.SetActive(false);
 
-                    break;
-                }
-            }
-        }*/
+                     break;
+                 }
+             }
+         }*/
     }
     /*
     private void OnTriggerExit(Collider other)
@@ -362,7 +362,7 @@ public class AmonController : MonoBehaviour, IReset
         {
             if (playerAnim.GetBool("IsIdle"))
             {
-                playerAnim.SetBool("IsIdle",false);
+                playerAnim.SetBool("IsIdle", false);
                 playerAnim.SetBool("IsIdleResc", true);
             }
 
@@ -385,17 +385,17 @@ public class AmonController : MonoBehaviour, IReset
         if (state != InteractionState.Obstacle) return;
 
         if (animState == AnimationName.Strike) return;
-        
-        if(!isRescuing)
+
+        if (!isRescuing)
         {
             axeIdle.SetActive(false);
             axeAttack.SetActive(true);
         }
-        // attackBtn.interactable = false;
+        attackBtn.interactable = false;
         animState = AnimationName.Strike;
         PlayerAnimation();
     }
-    
+
     public void CalculateDamage()
     {
         if (isRescuing)
@@ -414,13 +414,13 @@ public class AmonController : MonoBehaviour, IReset
         go.transform.SetParent(gameObject.transform);
         go.transform.localPosition = new Vector3(0.004f, 0.092f, 0.122f);
         go.transform.localRotation = Quaternion.identity;
-        go.transform.localScale = Vector3.one*5f;
+        go.transform.localScale = Vector3.one * 5f;
 
         if (obstacle.hp > 0)
         {
-            gm.StartCoroutine(GameManager.Instance.Cam.transform.GetComponent<CameraShake>().Shake(CSAmount/4, CSDuration));
+            gm.StartCoroutine(GameManager.Instance.Cam.transform.GetComponent<CameraShake>().Shake(CSAmount / 4, CSDuration));
 
-            if(playerAnim.GetBool("IsKick")) AudioManager.Instance.PlayAudio("Player", 3, 0f, false);
+            if (playerAnim.GetBool("IsKick")) AudioManager.Instance.PlayAudio("Player", 3, 0f, false);
             else
             {
                 if (GameManager.Instance.stageNum < 6) AudioManager.Instance.PlayAudio("Player", 1, 0f, false);
@@ -434,12 +434,12 @@ public class AmonController : MonoBehaviour, IReset
 
             // 코루틴 함수는 모두 게임매니저로 걸어놓음
             gm.StartCoroutine(GameManager.Instance.Cam.transform.GetComponent<CameraShake>().Shake(CSAmount, CSDuration));
-            
+
             // 장애물 비활성화
             obstacle.gameObject.SetActive(false);
 
             // (용현) 구조 후 플레이어 상태 변경
-            state =  InteractionState.Idle;
+            state = InteractionState.Idle;
 
             // (19.09.02) 인터렉션 버튼 아이템 이미지 비활성화
             gm.interactionImage.gameObject.SetActive(false);
@@ -459,20 +459,20 @@ public class AmonController : MonoBehaviour, IReset
     }
 
     // (19.09.22) 드링크 사용
-   /* public void UseDrink()
-    {
-        // 버프 중이면 사용 X
-        if (checkBuff) return;
+    /* public void UseDrink()
+     {
+         // 버프 중이면 사용 X
+         if (checkBuff) return;
 
-        Debug.Log("swap 2");
+         Debug.Log("swap 2");
 
-        // 드링크로 무기 교체
-        ItemController.Instance.ItemSwap(1);
+         // 드링크로 무기 교체
+         ItemController.Instance.ItemSwap(1);
 
-        if (!currentItem || currentItem.durability <= 0) return;
+         if (!currentItem || currentItem.durability <= 0) return;
 
-        currentItem.ItemActive();
-    }*/
+         currentItem.ItemActive();
+     }*/
 
     // 이동속도 및 회전 속도 증가
     public IEnumerator UpSpeed(int _addSpeed, int _timer)
@@ -528,16 +528,16 @@ public class AmonController : MonoBehaviour, IReset
                 DestroyObstacle();
 
                 break;
-           
+
             // 부상자 구출
             case InteractionState.Rescue:
 
                 RescueInjured();
 
                 break;
-        } 
+        }
     }
-    
+
     // (용현) 초기값 저장
     public void GetInitValue()
     {
@@ -585,14 +585,14 @@ public class AmonController : MonoBehaviour, IReset
         rotSpeed = initRotSpeed;
 
         checkBuff = false;
-        
+
         damage = initDamage;
 
         axeAttack.SetActive(false);
 
         axeIdle.SetActive(true);
 
-        attackBtn = GameManager.Instance.UI[1].transform.GetChild(1).transform.GetChild(0).GetComponent<Button>();
+        attackBtn = GameManager.Instance.UI[1].transform.GetChild(0).transform.GetChild(0).GetComponent<Button>();
     }
 
     public void PlayerAnimation() // (9.9 태윤, 움직이다가 애니메이션 바뀌는 것때문에 IsWalk도 false로 바꾸도록 함)
@@ -621,7 +621,7 @@ public class AmonController : MonoBehaviour, IReset
                     else playerAnim.SetBool("IsBackMove", false);
                 }
 
-                playerAnim.SetFloat("WalkAnimSpd", moveSpeed/5);
+                playerAnim.SetFloat("WalkAnimSpd", moveSpeed / 5);
                 // AudioManager.Instance.PlayAudio("Player", 0, 0f, false);
                 break;
 
@@ -646,7 +646,7 @@ public class AmonController : MonoBehaviour, IReset
                 else
                 {
                     playerAnim.SetBool("IsStrike", true);
-                } 
+                }
 
                 break;
 
@@ -658,7 +658,7 @@ public class AmonController : MonoBehaviour, IReset
                 playerAnim.SetBool("IsWalkResc", false);
 
                 playerAnim.SetBool("IsDrink", true);
-                
+
                 break;
         }
     }
@@ -682,7 +682,7 @@ public class AmonController : MonoBehaviour, IReset
             else if (prmt.name == "WalkAnimSpd") playerAnim.SetFloat(prmt.name, moveSpeed / 5);
             else playerAnim.SetFloat(prmt.name, AttackSpd);
         }
-        if(isRescuing) playerAnim.SetBool("IsIdleResc", true);
+        if (isRescuing) playerAnim.SetBool("IsIdleResc", true);
         else playerAnim.SetBool("IsIdle", true);
         JoystickController.instance.isBackMove = false;
     }
@@ -699,6 +699,6 @@ public class AmonController : MonoBehaviour, IReset
 
     public void SetButtonOn()
     {
-       attackBtn.interactable = true;
+        attackBtn.interactable = true;
     }
 }
