@@ -45,6 +45,8 @@ public class CharacterRotation : MonoBehaviour, IPointerDownHandler, IPointerUpH
     float _rotSpeed = 5;
     int finId = -1;
 
+    bool isAndroid;
+
     public Transform joyPos;
     public Slider slider;
    
@@ -54,6 +56,9 @@ public class CharacterRotation : MonoBehaviour, IPointerDownHandler, IPointerUpH
     void Start()
     {
         width = GetComponent<RectTransform>().sizeDelta.x;
+
+        if (Application.platform == RuntimePlatform.WindowsEditor) isAndroid = false;
+        else if (Application.platform == RuntimePlatform.Android) isAndroid = true;
 
         if (type == 1)
         {
@@ -166,12 +171,19 @@ public class CharacterRotation : MonoBehaviour, IPointerDownHandler, IPointerUpH
             /* 조예진 회전 */
             isTouch = true;
 
-            finId = Input.touches[Input.touchCount - 1].fingerId;
-
             fir_rotation = player.transform.rotation;
 
-            CheckRotFingerId();
-            prevPosition = Input.GetTouch(finId).position;
+            if (isAndroid)
+            {
+                finId = Input.touches[Input.touchCount - 1].fingerId;
+
+                CheckRotFingerId();
+                prevPosition = Input.GetTouch(finId).position;
+            }
+            else
+            {
+                prevPosition = Input.mousePosition;
+            }
 
             touchPosition = prevPosition;
         }
@@ -181,13 +193,18 @@ public class CharacterRotation : MonoBehaviour, IPointerDownHandler, IPointerUpH
 
     void IDragHandler.OnDrag(PointerEventData eventData)
     {
-        if (isTouch && finId != -1)
+        if (isTouch)
         {
-            if (Input.touchCount == 1) finId = 0;
+            if (isAndroid && finId != -1)
+            {
+                if (Input.touchCount == 1) finId = 0;
 
-            CheckRotFingerId();
-            touchPosition = Input.GetTouch(finId).position;
-
+                CheckRotFingerId();
+                touchPosition = Input.GetTouch(finId).position;
+            } else
+            {
+                touchPosition = Input.mousePosition;
+            }
             player.transform.Rotate(new Vector3(0, (touchPosition.x - prevPosition.x) / _rotSpeed, 0)
                 * (isLobby ? -1 : 1));
 
@@ -199,7 +216,6 @@ public class CharacterRotation : MonoBehaviour, IPointerDownHandler, IPointerUpH
     {
         if (isTouch)
         {
-            Debug.Log("A");
             finId = -1;
 
             isTouch = false;
