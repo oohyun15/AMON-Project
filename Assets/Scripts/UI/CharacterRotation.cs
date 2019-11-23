@@ -43,10 +43,11 @@ public class CharacterRotation : MonoBehaviour, IPointerDownHandler, IPointerUpH
     Vector2 prevPosition, touchPosition;
     Quaternion fir_rotation;
     float _rotSpeed = 5;
+    int finId = -1;
 
-    int touchCount = 0;
-
+    public Transform joyPos;
     public Slider slider;
+   
 
 
     // Start is called before the first frame update
@@ -99,21 +100,6 @@ public class CharacterRotation : MonoBehaviour, IPointerDownHandler, IPointerUpH
         }*/
     }
 
-    /* 조예진 회전 */
-
-    void IDragHandler.OnDrag(PointerEventData eventData)
-    {
-        if (Input.touchCount < 2)
-        {
-            touchPosition = Input.mousePosition;
-
-            player.transform.Rotate(new Vector3(0, (touchPosition.x - prevPosition.x) / _rotSpeed, 0)
-                * (isLobby ? -1 : 1));
-
-            prevPosition = touchPosition;
-        }
-    }
-
     public void OnChangeRotSpeed()
     {
         _rotSpeed = slider.value;
@@ -153,33 +139,72 @@ public class CharacterRotation : MonoBehaviour, IPointerDownHandler, IPointerUpH
     }
     */
 
+    void CheckRotFingerId()
+    {
+        int max = 0;
+        for (int i = 0; i < Input.touchCount; i++)
+        {
+            if (i == 0)
+                continue;
+            else
+            {
+                if (Vector2.Distance(joyPos.position, Input.touches[i].position)
+                    > Vector2.Distance(joyPos.position, Input.touches[max].position))
+                    max = i;
+            }
+        }
+
+        finId = max;
+    }
+
     void IPointerDownHandler.OnPointerDown(PointerEventData eventData)
     {
-        Debug.Log(isTouch);
         if (!isTouch)
-        {
-            isTouch = true;
-
+        {            
             t_initPos = eventData.position;
 
             /* 조예진 회전 */
+            isTouch = true;
+
+            finId = Input.touches[Input.touchCount - 1].fingerId;
 
             fir_rotation = player.transform.rotation;
 
-            prevPosition = Input.mousePosition;
+            CheckRotFingerId();
+            prevPosition = Input.GetTouch(finId).position;
 
             touchPosition = prevPosition;
         }
     }
 
+    /* 조예진 회전 */
+
+    void IDragHandler.OnDrag(PointerEventData eventData)
+    {
+        if (isTouch && finId != -1)
+        {
+            if (Input.touchCount == 1) finId = 0;
+
+            CheckRotFingerId();
+            touchPosition = Input.GetTouch(finId).position;
+
+            player.transform.Rotate(new Vector3(0, (touchPosition.x - prevPosition.x) / _rotSpeed, 0)
+                * (isLobby ? -1 : 1));
+
+            prevPosition = touchPosition;
+        }
+    }
+
     void IPointerUpHandler.OnPointerUp(PointerEventData eventData)
     {
-        if (Input.touchCount < 2)
+        if (isTouch)
         {
+            Debug.Log("A");
+            finId = -1;
+
             isTouch = false;
 
             playerRot = Vector3.zero;
-
         }
     }
 
