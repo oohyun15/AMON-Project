@@ -447,6 +447,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 6080904820065294274}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &68094257 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4841921754767412930, guid: fc2f1d911be45414d85c708f9ca336bb,
+    type: 3}
+  m_PrefabInstance: {fileID: 728055792}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &158694406 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: 50b5038737045ad43b771d4429cd8eb8,
@@ -543,6 +555,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1541343450}
     m_Modifications:
+    - target: {fileID: 6609943028678667063, guid: 0896d1f118dd59445be4e2bbc9bcaffc,
+        type: 3}
+      propertyPath: m_Name
+      value: NotificationPanel
+      objectReference: {fileID: 0}
+    - target: {fileID: 6609943028678667063, guid: 0896d1f118dd59445be4e2bbc9bcaffc,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6609943028678667062, guid: 0896d1f118dd59445be4e2bbc9bcaffc,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -647,16 +669,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6609943028678667063, guid: 0896d1f118dd59445be4e2bbc9bcaffc,
-        type: 3}
-      propertyPath: m_Name
-      value: NotificationPanel
-      objectReference: {fileID: 0}
-    - target: {fileID: 6609943028678667063, guid: 0896d1f118dd59445be4e2bbc9bcaffc,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6609943028678666443, guid: 0896d1f118dd59445be4e2bbc9bcaffc,
         type: 3}
@@ -1129,6 +1141,7 @@ MonoBehaviour:
   rankImg: {fileID: 324895911}
   rankGaze: {fileID: 232257564828376373}
   stressState: {fileID: 367839480}
+  stressImg: {fileID: 68094257}
   RankUpPanel: {fileID: 1468631473372201564}
   rankSprites:
   - {fileID: 21300000, guid: 249508f4974066147a8801aab19238b3, type: 3}
@@ -1502,6 +1515,24 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1541343450}
     m_Modifications:
+    - target: {fileID: 5919686830875343980, guid: 5c028d2e617be6d41a9a8f556bb5b8bc,
+        type: 3}
+      propertyPath: m_Name
+      value: EvidencePanel
+      objectReference: {fileID: 0}
+    - target: {fileID: 5919686830875343980, guid: 5c028d2e617be6d41a9a8f556bb5b8bc,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 885380700, guid: 5c028d2e617be6d41a9a8f556bb5b8bc, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.000005459413
+      objectReference: {fileID: 0}
+    - target: {fileID: 885380700, guid: 5c028d2e617be6d41a9a8f556bb5b8bc, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 530
+      objectReference: {fileID: 0}
     - target: {fileID: 5919686830875343979, guid: 5c028d2e617be6d41a9a8f556bb5b8bc,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1606,16 +1637,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5919686830875343980, guid: 5c028d2e617be6d41a9a8f556bb5b8bc,
-        type: 3}
-      propertyPath: m_Name
-      value: EvidencePanel
-      objectReference: {fileID: 0}
-    - target: {fileID: 5919686830875343980, guid: 5c028d2e617be6d41a9a8f556bb5b8bc,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7517570067279168274, guid: 5c028d2e617be6d41a9a8f556bb5b8bc,
         type: 3}
@@ -1758,14 +1779,6 @@ PrefabInstance:
     - target: {fileID: 233511015, guid: 5c028d2e617be6d41a9a8f556bb5b8bc, type: 3}
       propertyPath: m_SizeDelta.x
       value: -17
-      objectReference: {fileID: 0}
-    - target: {fileID: 885380700, guid: 5c028d2e617be6d41a9a8f556bb5b8bc, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -0.000005459413
-      objectReference: {fileID: 0}
-    - target: {fileID: 885380700, guid: 5c028d2e617be6d41a9a8f556bb5b8bc, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 530
       objectReference: {fileID: 0}
     - target: {fileID: 713876472223572550, guid: 5c028d2e617be6d41a9a8f556bb5b8bc,
         type: 3}
@@ -2211,6 +2224,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1541343450}
     m_Modifications:
+    - target: {fileID: 7251537883952658461, guid: eede3aaf87e3b6c4db17ef8b83657c58,
+        type: 3}
+      propertyPath: m_Name
+      value: LockerRoom
+      objectReference: {fileID: 0}
+    - target: {fileID: 7251537883952658461, guid: eede3aaf87e3b6c4db17ef8b83657c58,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7251537883952658458, guid: eede3aaf87e3b6c4db17ef8b83657c58,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2315,16 +2338,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7251537883952658461, guid: eede3aaf87e3b6c4db17ef8b83657c58,
-        type: 3}
-      propertyPath: m_Name
-      value: LockerRoom
-      objectReference: {fileID: 0}
-    - target: {fileID: 7251537883952658461, guid: eede3aaf87e3b6c4db17ef8b83657c58,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 479313346, guid: eede3aaf87e3b6c4db17ef8b83657c58, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -2574,6 +2587,15 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1735669689}
     m_Modifications:
+    - target: {fileID: 6048131856444224869, guid: fc2f1d911be45414d85c708f9ca336bb,
+        type: 3}
+      propertyPath: m_Name
+      value: Stress
+      objectReference: {fileID: 0}
+    - target: {fileID: 1389098135, guid: fc2f1d911be45414d85c708f9ca336bb, type: 3}
+      propertyPath: m_FontData.m_Alignment
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 6048131856444224866, guid: fc2f1d911be45414d85c708f9ca336bb,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2679,18 +2701,9 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 6048131856444224869, guid: fc2f1d911be45414d85c708f9ca336bb,
-        type: 3}
-      propertyPath: m_Name
-      value: Stress
-      objectReference: {fileID: 0}
     - target: {fileID: 1389098133, guid: fc2f1d911be45414d85c708f9ca336bb, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 110
-      objectReference: {fileID: 0}
-    - target: {fileID: 1389098135, guid: fc2f1d911be45414d85c708f9ca336bb, type: 3}
-      propertyPath: m_FontData.m_Alignment
-      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fc2f1d911be45414d85c708f9ca336bb, type: 3}
@@ -3477,6 +3490,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1541343450}
     m_Modifications:
+    - target: {fileID: 2861687989170944623, guid: cc7775824cbaf83479945de3dde144fe,
+        type: 3}
+      propertyPath: m_Name
+      value: DialogBox
+      objectReference: {fileID: 0}
+    - target: {fileID: 2861687989170944623, guid: cc7775824cbaf83479945de3dde144fe,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2476479320079859952, guid: cc7775824cbaf83479945de3dde144fe,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 4c92d2b7b1c6f74438200c3e96dc9705,
+        type: 3}
     - target: {fileID: 2229043699587302595, guid: cc7775824cbaf83479945de3dde144fe,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3582,16 +3611,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 2861687989170944623, guid: cc7775824cbaf83479945de3dde144fe,
-        type: 3}
-      propertyPath: m_Name
-      value: DialogBox
-      objectReference: {fileID: 0}
-    - target: {fileID: 2861687989170944623, guid: cc7775824cbaf83479945de3dde144fe,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3111762166047138097, guid: cc7775824cbaf83479945de3dde144fe,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -3672,12 +3691,6 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
-    - target: {fileID: 2476479320079859952, guid: cc7775824cbaf83479945de3dde144fe,
-        type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 4c92d2b7b1c6f74438200c3e96dc9705,
-        type: 3}
     - target: {fileID: 901199870417365193, guid: cc7775824cbaf83479945de3dde144fe,
         type: 3}
       propertyPath: m_SizeDelta.x
@@ -6579,6 +6592,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4427523977308964688, guid: 0eba903c9190ba84c85022e128c1019d,
+        type: 3}
+      propertyPath: m_Name
+      value: AudioManager
+      objectReference: {fileID: 0}
     - target: {fileID: 576136331717206000, guid: 0eba903c9190ba84c85022e128c1019d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -6633,11 +6651,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4427523977308964688, guid: 0eba903c9190ba84c85022e128c1019d,
-        type: 3}
-      propertyPath: m_Name
-      value: AudioManager
       objectReference: {fileID: 0}
     - target: {fileID: 4773408090334215758, guid: 0eba903c9190ba84c85022e128c1019d,
         type: 3}
@@ -6926,6 +6939,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7565596585697156765, guid: c8ce12a1966adb142bf7ee75f258dfe3,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2371793043357540792, guid: c8ce12a1966adb142bf7ee75f258dfe3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -7030,11 +7048,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7565596585697156765, guid: c8ce12a1966adb142bf7ee75f258dfe3,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6193732002834289918, guid: c8ce12a1966adb142bf7ee75f258dfe3,
         type: 3}
@@ -7181,6 +7194,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1541343450}
     m_Modifications:
+    - target: {fileID: 5156909297790589981, guid: b1346c4a4bf41f14896e4dce3da8da48,
+        type: 3}
+      propertyPath: m_Name
+      value: RankUpPanel
+      objectReference: {fileID: 0}
+    - target: {fileID: 5156909297790589981, guid: b1346c4a4bf41f14896e4dce3da8da48,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5156909297790589978, guid: b1346c4a4bf41f14896e4dce3da8da48,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -7285,16 +7308,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5156909297790589981, guid: b1346c4a4bf41f14896e4dce3da8da48,
-        type: 3}
-      propertyPath: m_Name
-      value: RankUpPanel
-      objectReference: {fileID: 0}
-    - target: {fileID: 5156909297790589981, guid: b1346c4a4bf41f14896e4dce3da8da48,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 722471520450450546, guid: b1346c4a4bf41f14896e4dce3da8da48,
         type: 3}

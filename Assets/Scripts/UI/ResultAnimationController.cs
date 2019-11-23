@@ -196,7 +196,7 @@ public class ResultAnimationController : MonoBehaviour
         while (img.fillAmount < max)
         {
             if ((img.fillAmount += Time.deltaTime * fillSpeed) > max) img.fillAmount = max;
-            Debug.Log(img.fillAmount);
+
             yield return null;
         }
     }

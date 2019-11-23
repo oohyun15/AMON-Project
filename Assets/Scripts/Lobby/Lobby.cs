@@ -31,6 +31,7 @@ public class Lobby : MonoBehaviour
     public Image rankImg;
     public Image rankGaze;
     public Text stressState;
+    public Image stressImg;
 
 
     [Header("Rank Up")]
@@ -148,6 +149,8 @@ public class Lobby : MonoBehaviour
             stressState.text = stress[1];
         else
             stressState.text = stress[2];
+
+        stressImg.fillAmount = userData.stress / 100f;
 
         int preRankHonor = 0;
 
