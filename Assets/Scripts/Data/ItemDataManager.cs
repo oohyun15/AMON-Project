@@ -47,15 +47,17 @@ public class ItemDataManager : MonoBehaviour
     public Sprite[] eviSprites;
     public Sprite[] dialogSprites;
 
-    [HideInInspector]
-    public string[] stageTitle = {
+    private string[] stageTitle = {
         "패스트푸드점",
         "사무실",
-        "학교"
+        "학교",
+        "가정집"
     };
 
     [HideInInspector]
     public int[] stress = { 0, 50, 80, 100 };
+
+    public string[] GetTitles() { return stageTitle; }
 
     void Awake()
     {

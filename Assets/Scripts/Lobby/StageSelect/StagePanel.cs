@@ -165,7 +165,7 @@ public class StagePanel : MonoBehaviour
 
             stageImage.sprite = stageSprite[index];
 
-            stageTitle.text = ItemDataManager.Instance.stageTitle[index];
+            stageTitle.text = ItemDataManager.Instance.GetTitles()[index];
             
             SetStage(index);
         }

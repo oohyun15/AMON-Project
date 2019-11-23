@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 8274325881903218276}
   - component: {fileID: 4353329177207837882}
   - component: {fileID: 2081059537015099545}
+  - component: {fileID: 7357152214900830426}
   m_Layer: 0
   m_Name: Door02
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -78,3 +79,19 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &7357152214900830426
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6794140825164380786}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 456b42ea3212f964cb0ff2ba717a5ef7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initActive: 1
+  initHp: 20
+  hp: 0
+  _type: 2
