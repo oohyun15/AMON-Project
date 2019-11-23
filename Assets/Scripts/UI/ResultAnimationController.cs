@@ -149,7 +149,7 @@ public class ResultAnimationController : MonoBehaviour
     {
         for (int i = 0; i < imgs.Count; i++)
         {
-            StartCoroutine(FillImage(imgs[i], 100));
+            StartCoroutine(FillImage(imgs[i], 1));
 
             yield return checkTime;
         };
@@ -174,7 +174,7 @@ public class ResultAnimationController : MonoBehaviour
         GetEvidence();
 
         StartCoroutine(AddText(stressText, stress, honorSpeed, "", "%"));
-        StartCoroutine(FillImage(stressSlider, stress));
+        StartCoroutine(FillImage(stressSlider, stress / 100f));
         AudioManager.Instance.PlayAudio("UI", 2, 0f, false);
         yield return checkTime;
 
@@ -190,6 +190,17 @@ public class ResultAnimationController : MonoBehaviour
             yield return null;
         }
     }
+
+    private IEnumerator FillImage(Image img, float max)
+    {
+        while (img.fillAmount < max)
+        {
+            if ((img.fillAmount += Time.deltaTime * fillSpeed) > max) img.fillAmount = max;
+            Debug.Log(img.fillAmount);
+            yield return null;
+        }
+    }
+
 
     private IEnumerator AddText(Text text, int max, int speed, string front, string end)
     {
