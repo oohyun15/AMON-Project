@@ -176,6 +176,11 @@ public class GameManager : MonoBehaviour, IObserver
         }
     }
 
+    private void Update()
+    {
+        Debug.Log(time);
+    }
+
     public void InitGame()
     {
         // 실행되고 있는 모든 코루틴 종료
@@ -194,16 +199,18 @@ public class GameManager : MonoBehaviour, IObserver
         RectTransform rt = oxygenSlider.GetComponent<RectTransform>();
         RectTransform bgrt = oxygenSlider.transform.GetChild(0).GetComponent<RectTransform>();
 
-        float temp = (time - defaultTime) * 10;
+        Debug.Log(time);
+        float temp = (time - timeLimit) * 10;
+        Debug.Log(temp);
 
         rt.sizeDelta = new Vector2(rt.sizeDelta.x + temp, rt.sizeDelta.y);
         bgrt.sizeDelta = new Vector2(bgrt.sizeDelta.x + temp, bgrt.sizeDelta.y);
         
         bgrt.anchoredPosition = new Vector3(bgrt.anchoredPosition.x + temp / 2, bgrt.anchoredPosition.y, 0);
 
-        oxygenSlider.maxValue = timeLimit;
+        oxygenSlider.maxValue = time;
 
-        oxygenSlider.value = timeLimit;
+        oxygenSlider.value = time;
 
         // 장착 아이템 효과 적용
 
