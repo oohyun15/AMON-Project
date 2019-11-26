@@ -571,15 +571,15 @@ public class GameManager : MonoBehaviour, IObserver
         dm.SaveGameResult(money, honor);
 
         // (19.09.23.) 결과창 애니메이션 설정
-        if (leftInjured != 0)
-        {
-            resultCharacterAnimator.SetBool("Victory", true);
-            AudioManager.Instance.PlayAudio("GameManagerEffect", 3, 0f, false);
-        }
-        else
+        if (leftInjured == dm.total)
         {
             resultCharacterAnimator.SetBool("Fail", true);
             AudioManager.Instance.PlayAudio("GameManagerEffect", 2, 0f, false);
+        }
+        else
+        {
+            resultCharacterAnimator.SetBool("Victory", true);
+            AudioManager.Instance.PlayAudio("GameManagerEffect", 3, 0f, false);
         }
 
         gameState = GameState.Clear;
