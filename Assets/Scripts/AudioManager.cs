@@ -34,6 +34,8 @@ public class AudioManager : MonoBehaviour
     [Header("Sound")]
     public AudioSource[] audioPlayers = new AudioSource[8];
     public AudioClip[] gmBgmAudioClips, lobbyBgmAudioClips, gmEfAudioClips, lobbyEfAudioClips, playerAudioClips, UIAudioClips, ObsAudioClips, WarningAudioClips;
+    public GameObject fireParent;
+    public List<AudioSource> fires;
 
     [Header("Button")]
     public Sprite onImage;
@@ -45,13 +47,16 @@ public class AudioManager : MonoBehaviour
     void Awake()
     {
         UserDataIO.User user = UserDataIO.ReadUserData();
+        fireParent = GameObject.Find("Fire");
 
+        //게임 시작 시 BGM 사운드 조절
         for (int i = 0; i < 2; i++)
         {
             audioPlayers[i] = gameObject.AddComponent<AudioSource>() as AudioSource;
             audioPlayers[i].volume = user.BgmVolume;
         }
 
+        //게임 시작 시 이펙트 사운드 조절
         for (int j = 2; j < audioPlayers.Length; j++)
         {
             audioPlayers[j] = gameObject.AddComponent<AudioSource>() as AudioSource;
@@ -59,6 +64,14 @@ public class AudioManager : MonoBehaviour
             audioPlayers[j].volume = user.EffectVolume;
         }
 
+        //게임 시작시 fire fx 사운드 조절
+        for (int j = 0; j < fireParent.GetComponentsInChildren<AudioSource>().Length; j++)
+        {
+            fires.Insert(j, fireParent.transform.GetChild(j).GetComponent<AudioSource>());
+            fires[j].volume = user.EffectVolume;
+        }
+        Debug.Log(user.EffectVolume);
+        //SettingButton 초기화
         Text onText = BgmOnOff.transform.GetChild(0).GetComponent<Text>();
         if (user.BgmVolume == 1f)
         {
@@ -77,7 +90,6 @@ public class AudioManager : MonoBehaviour
             onText.text = "ON";
             EffectOnOff.overrideSprite = onImage;
         }
-
         else
         {
             onText.text = "OFF";
@@ -228,7 +240,7 @@ public class AudioManager : MonoBehaviour
     public void EffectVolumeControll()
     {
         UserDataIO.User user = UserDataIO.ReadUserData();
-
+        
         if (user.EffectVolume == 0f)
         {
             EffectOnOff.overrideSprite = onImage;
@@ -237,6 +249,11 @@ public class AudioManager : MonoBehaviour
             for (int i = 2; i < audioPlayers.Length; i++)
             {
                 audioPlayers[i].volume = user.EffectVolume;
+            }
+
+            for(int j = 0; j < fires.Count; j++)
+            {
+                fires[j].volume = user.EffectVolume;
             }
 
             Text onText = EffectOnOff.transform.GetChild(0).GetComponent<Text>();
@@ -251,6 +268,12 @@ public class AudioManager : MonoBehaviour
             for (int i = 2; i < audioPlayers.Length; i++)
             {
                 audioPlayers[i].volume = user.EffectVolume;
+            }
+
+
+            for (int j = 0; j < fires.Count; j++)
+            {
+                fires[j].volume = user.EffectVolume;
             }
 
             Text offText = EffectOnOff.transform.GetChild(0).GetComponent<Text>();

@@ -37,7 +37,9 @@ public class FallTrigger : MonoBehaviour, IReset
 
     private GameManager gm;
     private new readonly string name = "FallTrigger";
-   
+
+    private bool isWarning = false;
+
     void Start()
     {
         gm = GameManager.Instance;
@@ -87,8 +89,12 @@ public class FallTrigger : MonoBehaviour, IReset
 
         // FX 활성화
         cellingFX.SetActive(true);
-        if(!AudioManager.Instance.audioPlayers[7].isPlaying) AudioManager.Instance.PlayAudio("Warning", 0, 0f, true);
-        ;        // time 뒤 장애물 생성, rigidbody에 의해 생성된 위치에서 자동으로 떨어짐
+        if (!isWarning)
+        {
+            isWarning = true;
+            AudioManager.Instance.PlayAudio("Warning", 0, 0f, false);
+        }
+                // time 뒤 장애물 생성, rigidbody에 의해 생성된 위치에서 자동으로 떨어짐
         yield return new WaitForSeconds(time);
 
         // FX 비활성화
