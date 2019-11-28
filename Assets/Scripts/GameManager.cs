@@ -176,11 +176,6 @@ public class GameManager : MonoBehaviour, IObserver
         }
     }
 
-    private void Update()
-    {
-        Debug.Log(time);
-    }
-
     public void InitGame()
     {
         // 실행되고 있는 모든 코루틴 종료
@@ -324,10 +319,10 @@ public class GameManager : MonoBehaviour, IObserver
         int shoesEffect = GetEquipedItemEffect("shoes", user);
         int axeEffect = GetEquipedItemEffect("axe", user);
     
-        time += oxygenEffect;
-        player.AttackSpd = 1.5f * (100 + glovesEffect) / 100;
-        player.initMoveSpeed = 5 * (100 + shoesEffect) / 100;
-        player.axeDamage = 5 + axeEffect;
+        time = oxygenEffect;
+        player.AttackSpd = 1.5f * glovesEffect / 100;
+        player.initMoveSpeed = 5 * shoesEffect / 100;
+        player.axeDamage = axeEffect;
     }
 
     private void ApplyEquipItemMaterial()
@@ -366,14 +361,14 @@ public class GameManager : MonoBehaviour, IObserver
         
         int itemEffect = 0;
 
-        if (itemLv != 0)
-        {
+        //if (itemLv != 0)
+        //{
             Dictionary<string, object> data = ItemDataManager.Instance.GetEquipItemData();
 
-            object effectData = ((List<Dictionary<string, object>>)data[item])[itemLv - 1]["effect"];
+            object effectData = ((List<Dictionary<string, object>>)data[item])[itemLv]["effect"];
 
             itemEffect = System.Convert.ToInt32(effectData);
-        }
+        //}
 
         return itemEffect;
     }

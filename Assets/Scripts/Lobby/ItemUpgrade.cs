@@ -56,7 +56,7 @@ public class ItemUpgrade : MonoBehaviour
                 break;                  
         }
 
-        int maxLv = ((List<Dictionary<string, object>>)itemDataList[item]).Count;
+        int maxLv = ((List<Dictionary<string, object>>)itemDataList[item]).Count - 1;
 
 
         // 아이템 다음 레벨 구입 가격 불러오기
@@ -158,7 +158,7 @@ public class ItemUpgrade : MonoBehaviour
                 break;
         }
 
-        int maxLv = ((List<Dictionary<string, object>>)itemDataList[item]).Count;
+        int maxLv = ((List<Dictionary<string, object>>)itemDataList[item]).Count - 1;
 
         int rank = 0;
 
@@ -206,7 +206,7 @@ public class ItemUpgrade : MonoBehaviour
 
     private object GetDataValue(string item, int lv, string key)
     {
-        return ((List<Dictionary<string, object>>)itemDataList[item])[lv - 1][key];
+        return ((List<Dictionary<string, object>>)itemDataList[item])[lv][key];
     }
 
     public void UpdateEquipViewport()
