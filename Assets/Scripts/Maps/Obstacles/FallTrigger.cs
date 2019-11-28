@@ -37,8 +37,7 @@ public class FallTrigger : MonoBehaviour, IReset
 
     private GameManager gm;
     private new readonly string name = "FallTrigger";
-
-
+   
     void Start()
     {
         gm = GameManager.Instance;
@@ -88,13 +87,12 @@ public class FallTrigger : MonoBehaviour, IReset
 
         // FX 활성화
         cellingFX.SetActive(true);
-        AudioManager.Instance.PlayAudio("Warning", 0, 0f, true);
+        if(!AudioManager.Instance.audioPlayers[7].isPlaying) AudioManager.Instance.PlayAudio("Warning", 0, 0f, true);
         ;        // time 뒤 장애물 생성, rigidbody에 의해 생성된 위치에서 자동으로 떨어짐
         yield return new WaitForSeconds(time);
 
         // FX 비활성화
         cellingFX.SetActive(false);
-        AudioManager.Instance.StopAudio("Warning");
 
         // 천장 조각들 중력 사용
         for (int idx = 0; idx < cellingFragments.transform.childCount; idx++)
@@ -104,6 +102,7 @@ public class FallTrigger : MonoBehaviour, IReset
         yield return new WaitForSeconds(1.0f);
 
         // 발판(트리거) 비활성화
+        AudioManager.Instance.StopAudio("Warning");
         gameObject.SetActive(false);
 
         // 떨어지는 장애물 비활성화

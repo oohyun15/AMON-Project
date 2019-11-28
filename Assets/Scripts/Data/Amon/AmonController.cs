@@ -94,7 +94,7 @@ public class AmonController : MonoBehaviour, IReset
     public List<GameObject> rescuers;
     Dictionary<string, object> itemDataList;
     UserDataIO.User user;
-
+    bool isattack = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -385,12 +385,17 @@ public class AmonController : MonoBehaviour, IReset
         if (state != InteractionState.Obstacle) return;
 
         if (animState == AnimationName.Strike) return;
+        
+        if (isattack) return;
 
         if (!isRescuing)
         {
             axeIdle.SetActive(false);
             axeAttack.SetActive(true);
         }
+
+        isattack = true;
+
         attackBtn.interactable = false;
         animState = AnimationName.Strike;
         PlayerAnimation();
@@ -517,7 +522,8 @@ public class AmonController : MonoBehaviour, IReset
             // 기본 상태
             case InteractionState.Idle:
 
-                TouchBack(); // Idle 상태에서 인터렉션 버튼 사용 시 이동이 끊기지 않도록 수정
+                // AnimationIdle();
+                //TouchBack(); // Idle 상태에서 인터렉션 버튼 사용 시 이동이 끊기지 않도록 수정
                 Debug.Log("Do Nothing");
 
                 break;
@@ -685,6 +691,7 @@ public class AmonController : MonoBehaviour, IReset
         if (isRescuing) playerAnim.SetBool("IsIdleResc", true);
         else playerAnim.SetBool("IsIdle", true);
         JoystickController.instance.isBackMove = false;
+        isattack = false;
     }
 
     public void TouchBack() // 인터렉션 때 움직임을 멈춘 부분을 다시 되돌려 조이스틱을 다시 클릭하지 않아도 움직이도록 하는 함수 
@@ -693,12 +700,23 @@ public class AmonController : MonoBehaviour, IReset
         {
             JoystickController.instance.isTouch = true;
             isTouchBack = false;
+
+            playerAnim.SetBool("IsStrike", false);
+            playerAnim.SetBool("IsKick", false);
+
+            axeAttack.SetActive(false);
+            axeIdle.SetActive(true);
+
+            isattack = false;
         }
-        else return;
+        else AnimationIdle();
     }
 
     public void SetButtonOn()
     {
-        attackBtn.interactable = true;
+        if (!attackBtn.interactable)
+        {
+            attackBtn.interactable = true;
+        }
     }
 }

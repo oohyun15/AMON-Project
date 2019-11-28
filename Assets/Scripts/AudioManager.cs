@@ -32,7 +32,7 @@ public class AudioManager : MonoBehaviour
     }
 
     [Header("Sound")]
-    private AudioSource[] audioPlayers = new AudioSource[8];
+    public AudioSource[] audioPlayers = new AudioSource[8];
     public AudioClip[] gmBgmAudioClips, lobbyBgmAudioClips, gmEfAudioClips, lobbyEfAudioClips, playerAudioClips, UIAudioClips, ObsAudioClips, WarningAudioClips;
 
     [Header("Button")]
