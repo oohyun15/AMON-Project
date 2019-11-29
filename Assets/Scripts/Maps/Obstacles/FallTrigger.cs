@@ -71,11 +71,13 @@ public class FallTrigger : MonoBehaviour, IReset
             switch (type)
             {
                 case 0:
-                    gm.StartCoroutine(FallingObs());
+                    if (isWarning) return;
+                    else gm.StartCoroutine(FallingObs());
                     break;
 
                 case 1:
-                    gm.StartCoroutine(Explosion());
+                    if (isWarning) return;
+                    else gm.StartCoroutine(Explosion());
                     break;
             }
 
@@ -86,21 +88,19 @@ public class FallTrigger : MonoBehaviour, IReset
     {
         // Red material 적용
         // renderer.material = _material;
-
+        isWarning = true;
         // FX 활성화
         cellingFX.SetActive(true);
-        if (!isWarning)
-        {
-            isWarning = true;
-            AudioManager.Instance.PlayAudio("Warning", 0, 0f, false);
-        }
+        AudioManager.Instance.PlayAudio("Warning", 0, 0f, false);
                 // time 뒤 장애물 생성, rigidbody에 의해 생성된 위치에서 자동으로 떨어짐
         yield return new WaitForSeconds(time);
 
         // FX 비활성화
         cellingFX.SetActive(false);
+        AudioManager.Instance.StopAudio("Warning");
 
         // 천장 조각들 중력 사용
+        AudioManager.Instance.PlayAudio("Obstacle", 0, 0f, false);
         for (int idx = 0; idx < cellingFragments.transform.childCount; idx++)
         {
             cellingFragments.transform.GetChild(idx).GetComponent<Rigidbody>().useGravity = true;
@@ -122,10 +122,10 @@ public class FallTrigger : MonoBehaviour, IReset
     {
         // Red material 적용
         // renderer.material = _material;
-
+        isWarning = true;
         // 3초 뒤 장애물 생성, rigidbody에 의해 생성된 위치에서 자동으로 떨어짐
         yield return new WaitForSeconds(time);
-
+        AudioManager.Instance.PlayAudio("Obstacle", 0, 0f, false);
         wallFragments.Explosion();
     }
 
