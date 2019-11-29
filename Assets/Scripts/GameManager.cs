@@ -527,10 +527,10 @@ public class GameManager : MonoBehaviour, IObserver
         }
 
         /* 대화창 표시 */
-        for (int i = ItemDataManager.Instance.stress.Length - 2; i > 0; i--)
+        for (int i = ItemDataManager.Instance.stressValues.Length - 2; i > 0; i--)
         {
-            if (UserDataIO.ReadUserData().stress >= ItemDataManager.Instance.stress[i]
-                && user.stress < ItemDataManager.Instance.stress[i])
+            if (UserDataIO.ReadUserData().stress >= ItemDataManager.Instance.stressValues[i]
+                && user.stress < ItemDataManager.Instance.stressValues[i])
             {
                 StoryDialog.instance.SetFile("stress" + i);
                 break;
@@ -540,6 +540,12 @@ public class GameManager : MonoBehaviour, IObserver
         if (dm.IsLastStage())
         {
             StoryDialog.instance.SetFile("clear" + (dm.SceneName[5] - 48));
+
+            if (System.Convert.ToInt16(dm.SceneName[6].ToString()) == 5)
+            {
+                resultOkButton.onClick.RemoveAllListeners();
+                resultOkButton.onClick.AddListener(() => SceneManager.LoadScene("GameOver"));
+            }
         }
 
         // 조이스틱 멈춤

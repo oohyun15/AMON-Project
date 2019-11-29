@@ -17,13 +17,6 @@ using UnityEngine.SceneManagement;
 
 public class Lobby : MonoBehaviour
 {
-    string[] stress =
-    {
-        "정상",                   // 50 이하
-        "아급성기",               // 50 ~ 69
-        "만성",                   // 70 ~ 99
-        "진행 불가"               // 100
-    };
 
     [Header("Top")]
     public Text moneyText;
@@ -144,11 +137,11 @@ public class Lobby : MonoBehaviour
         rankImg.SetNativeSize();
 
         if (userData.stress < 50)
-            stressState.text = stress[0];
+            stressState.text = idm.stressNames[0];
         else if (userData.stress < 70)
-            stressState.text = stress[1];
+            stressState.text = idm.stressNames[1];
         else
-            stressState.text = stress[2];
+            stressState.text = idm.stressNames[2];
 
         stressImg.fillAmount = userData.stress / 100f;
 

@@ -54,8 +54,18 @@ public class ItemDataManager : MonoBehaviour
         "가정집"
     };
 
-    [HideInInspector]
-    public int[] stress = { 0, 50, 80, 100 };
+    [HideInInspector] 
+    public int[] stressValues = { 0, 30, 50, 80, 100 };
+    public string[] stressNames =
+    {
+        "정상",                   // 30 미만
+        "급성기",                 // 30~49
+        "아급성기",               // 50 ~ 69
+        "만성",                   // 70 ~ 99
+        "진행 불가"               // 100
+    };
+
+    // 0~29 정상, 30~49 급성기, 50~79 아급성기, 80~99 만성기, 100 자살
 
     public string[] GetTitles() { return stageTitle; }
 

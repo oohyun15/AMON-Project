@@ -29,21 +29,21 @@ public class StoryDialog : Dialog
         }
     }
 
-    protected override void Start()
-    {
-
-    }
-
     protected override void UpdateDialog()
     {
-        int spriteIndex = System.Convert.ToInt32(dialogData[index]["sprite"].ToString());
+        int spriteIndex = 0;
 
-        if (spriteIndex == 0)
-            image.gameObject.SetActive(false);
-        else
+        if (image != null)
         {
-            image.gameObject.SetActive(true);
-            image.sprite = sprites[spriteIndex];
+            spriteIndex = System.Convert.ToInt32(dialogData[index]["sprite"].ToString());
+
+            if (spriteIndex == 0)
+                image.gameObject.SetActive(false);
+            else
+            {
+                image.gameObject.SetActive(true);
+                image.sprite = sprites[spriteIndex];
+            }
         }
 
         base.UpdateDialog();

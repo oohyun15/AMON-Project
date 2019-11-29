@@ -30,7 +30,7 @@ public class Tutorial : Dialog
 
 
     // 튜토리얼 실행 여부 확인
-    protected override void Start()
+    protected void Start()
     {
         if (isLobby) prefsKey += "_lobby";
         

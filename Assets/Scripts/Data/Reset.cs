@@ -26,6 +26,7 @@ public class Reset : MonoBehaviour
     public Color[] eviColors;
     public Slider stressSlider;
 
+
     public void OnClickResetBtn()
     {
         /*

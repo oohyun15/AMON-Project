@@ -16,17 +16,12 @@ public abstract class Dialog : MonoBehaviour
 
     public float talkingSpeed;
     protected int index;
-    private bool isTalking;
+    protected bool isTalking;
     private string nowDialog;
 
     protected List<Dictionary<string, object>> dialogData;
     protected readonly string rootPath = "Data/Dialog/";
     protected string path;
-
-    protected virtual void Start()
-    {
-        InitDialog();
-    }
 
     public virtual void InitDialog()
     {
@@ -40,7 +35,7 @@ public abstract class Dialog : MonoBehaviour
     }
 
     // 화면 터치했을 경우 ㅡ 타이핑 효과 스킵 혹은 대화 넘기기
-    public void Touched()
+    public virtual void Touched()
     {
         if (isTalking)
         {
