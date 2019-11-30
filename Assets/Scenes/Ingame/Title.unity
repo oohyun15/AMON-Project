@@ -403,6 +403,7 @@ GameObject:
   - component: {fileID: 874067264}
   - component: {fileID: 874067266}
   - component: {fileID: 874067265}
+  - component: {fileID: 874067267}
   m_Layer: 5
   m_Name: Version
   m_TagString: Untagged
@@ -462,7 +463,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 'Version: 0.5.3a'
+  m_Text: 'Version: 0.0'
 --- !u!222 &874067266
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -471,6 +472,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 874067263}
   m_CullTransparentMesh: 0
+--- !u!114 &874067267
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 874067263}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d1ffcedf2ef3214fa70ac8877bb22df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: {fileID: 874067265}
 --- !u!1 &988528926
 GameObject:
   m_ObjectHideFlags: 0
