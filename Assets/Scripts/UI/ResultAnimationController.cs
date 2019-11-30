@@ -177,7 +177,7 @@ public class ResultAnimationController : MonoBehaviour
         StartCoroutine(FillImage(stressSlider, stress / 100f));
         yield return checkTime;
 
-        AudioManager.Instance.StopAllAudio();
+        AudioManager.Instance.StopAudio("UI");
         skipper.gameObject.SetActive(false);
     }
 
@@ -260,7 +260,7 @@ public class ResultAnimationController : MonoBehaviour
     public void Skip()
     {
         StopAllCoroutines();
-        AudioManager.Instance.StopAllAudio();
+        AudioManager.Instance.StopAudio("UI");
         foreach (Image image in imgs)
         {
             image.fillAmount = 100;
