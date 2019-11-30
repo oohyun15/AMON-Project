@@ -10,8 +10,9 @@
  * (19.11.03) 천장 오브젝트(CellingFragments)를 통해 새롭게 로직 구성
  * (19.11.16) 천장 오브젝트 관련 FX 추가
  * (19.11.17) 장애물 떨어지고 나서 남아있도록 수정
+ * (19.11.30) 장애물 떨어지는 방식 변경(Kinetic 사용)
  * 작성일자: 19.07.09
- * 수정일자: 19.11.03
+ * 수정일자: 19.11.30
  ***************************************/
 
 using System.Collections;
@@ -103,7 +104,7 @@ public class FallTrigger : MonoBehaviour, IReset
         AudioManager.Instance.PlayAudio("Obstacle", 0, 0f, false);
         for (int idx = 0; idx < cellingFragments.transform.childCount; idx++)
         {
-            cellingFragments.transform.GetChild(idx).GetComponent<Rigidbody>().useGravity = true;
+            cellingFragments.transform.GetChild(idx).GetComponent<Rigidbody>().isKinematic = false;
         }
         yield return new WaitForSeconds(1.0f);
 

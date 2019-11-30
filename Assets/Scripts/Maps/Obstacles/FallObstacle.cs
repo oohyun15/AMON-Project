@@ -6,9 +6,10 @@
  * (19.10.04) 죽었을 때 유저데이터에 죽은 횟수 저장
  * (19.11.03) 초기화 방식을 바꿨습니다. (setActive -> gravity)
  * (19.11.17) 장애물 떨어지고 남아있도록 수정
+ * (19.11.30) 장애물 떨어지는 방식 변경(Kinetic 사용)
  * 함수 추가 및 수정 시 누가 작성했는지 꼭 해당 함수 주석으로 명시해주세요!
  * 작성일자: 19.08.05
- * 수정일자: 19.08.07
+ * 수정일자: 19.11.30
  ***************************************/
 
 using System.Collections;
@@ -33,7 +34,7 @@ public class FallObstacle : MonoBehaviour, IReset
 
         initRot = gameObject.transform.rotation;
 
-        GetComponent<Rigidbody>().useGravity = false;
+        GetComponent<Rigidbody>().isKinematic = true;
     }
 
     public void SetInitValue()
