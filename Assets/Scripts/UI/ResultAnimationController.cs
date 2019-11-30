@@ -161,23 +161,23 @@ public class ResultAnimationController : MonoBehaviour
     private IEnumerator ShowRewards()
     {
         int moneySpeed = 7, honorSpeed = 3;
-        checkTime = new WaitForSeconds(Time.deltaTime * fillSpeed * 15);
+        checkTime = new WaitForSeconds(Time.deltaTime * fillSpeed * 20);
 
         StartCoroutine(AddText(moneyText, money, moneySpeed, "+", ""));
-        AudioManager.Instance.PlayAudio("UI", 2, 0f, false);
+        
         yield return new WaitForSeconds(money / moneySpeed * Time.deltaTime);
 
         StartCoroutine(AddText(honorText, honor, honorSpeed, "+", ""));
-        AudioManager.Instance.PlayAudio("UI", 2, 0f, false);
+        
         yield return new WaitForSeconds(honor / honorSpeed * Time.deltaTime);
 
         GetEvidence();
 
         StartCoroutine(AddText(stressText, stress, honorSpeed, "", "%"));
         StartCoroutine(FillImage(stressSlider, stress / 100f));
-        AudioManager.Instance.PlayAudio("UI", 2, 0f, false);
         yield return checkTime;
 
+        AudioManager.Instance.StopAllAudio();
         skipper.gameObject.SetActive(false);
     }
 
@@ -206,7 +206,7 @@ public class ResultAnimationController : MonoBehaviour
     {
         int count = 0;
         text.text = front + count + end;
-
+        AudioManager.Instance.PlayAudio("UI", 2, 0f, true);
         while (count < max)
         {
             if ((count += speed) > max) count = max;
@@ -260,7 +260,7 @@ public class ResultAnimationController : MonoBehaviour
     public void Skip()
     {
         StopAllCoroutines();
-
+        AudioManager.Instance.StopAllAudio();
         foreach (Image image in imgs)
         {
             image.fillAmount = 100;

@@ -628,7 +628,8 @@ public class AmonController : MonoBehaviour, IReset
                 }
 
                 playerAnim.SetFloat("WalkAnimSpd", moveSpeed / 5);
-                // AudioManager.Instance.PlayAudio("Player", 0, 0f, false);
+                if(AudioManager.Instance.audioPlayers[4].clip != AudioManager.Instance.playerAudioClips[0])
+                    AudioManager.Instance.PlayAudio("Player", 0, 0f, true);
                 break;
 
             case AnimationName.Strike:
@@ -692,6 +693,7 @@ public class AmonController : MonoBehaviour, IReset
         else playerAnim.SetBool("IsIdle", true);
         JoystickController.instance.isBackMove = false;
         isattack = false;
+        AudioManager.Instance.StopAudio("Player");
     }
 
     public void TouchBack() // 인터렉션 때 움직임을 멈춘 부분을 다시 되돌려 조이스틱을 다시 클릭하지 않아도 움직이도록 하는 함수 

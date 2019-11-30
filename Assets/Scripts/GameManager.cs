@@ -609,6 +609,7 @@ public class GameManager : MonoBehaviour, IObserver
 
         // (19.09.23.) 결과창 애니메이션 설정
         resultCharacterAnimator.SetBool("Fail", true);
+
         AudioManager.Instance.PlayAudio("GameManagerEffect", 2, 0f, false);
 
         // 게임 결과창 활성화
@@ -646,7 +647,7 @@ public class GameManager : MonoBehaviour, IObserver
                     = oxygenSprites[1];
 
                 isChangedSprite = true;
-                AudioManager.Instance.PlayAudio("GameManagerEffect", 6, 0f, false);
+                AudioManager.Instance.PlayAudio("TimeOut", 0, 0f, true);
             }
 
             yield return null;
