@@ -540,9 +540,9 @@ public class GameManager : MonoBehaviour, IObserver
         if (dm.IsLastStage())
         {
             StoryDialog.instance.SetFile("clear" + (dm.SceneName[5] - 48));
-
+            
             // 게임 모든 스테이지 클리어 시 엔딩 씬으로
-            if (System.Convert.ToInt16(dm.SceneName[6].ToString()) == 5)
+            if (dm.SceneName[5] - 48 == 5)
             {
                 resultOkButton.onClick.RemoveAllListeners();
                 resultOkButton.onClick.AddListener(() => SceneManager.LoadScene("GameOver"));
