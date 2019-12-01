@@ -84,6 +84,17 @@ public class StagePanel : MonoBehaviour
         // 현재 패널에 맞는 스테이지 이미지로 교체
         stageImage.sprite = stageSprite[stageNum];
 
+        if (stageNum == 4)
+        {
+            stageLevel[1].gameObject.SetActive(false);
+            stageLevel[2].gameObject.SetActive(false);
+        }
+        else
+        {
+            stageLevel[1].gameObject.SetActive(true);
+            stageLevel[2].gameObject.SetActive(true);
+        }
+
         int idx_level = 0;
 
         for (int i = 0; i < stageData.Count; i++)
