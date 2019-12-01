@@ -136,11 +136,15 @@ public class Lobby : MonoBehaviour
         rankImg.sprite = rankSprites[userData.rank];
         rankImg.SetNativeSize();
 
-        for (int i = 0; i < idm.stressNames.Length - 1; i++)
+        int i;
+
+        for (i = 0; i < idm.stressNames.Length - 1; i++)
         {
             if (userData.stress < idm.stressValues[i + 1])
                 stressState.text = idm.stressNames[i];
         }
+
+        if (i == idm.stressNames.Length - 1) stressState.text = idm.stressNames[0];
 
         stressImg.fillAmount = userData.stress / 100f;
 

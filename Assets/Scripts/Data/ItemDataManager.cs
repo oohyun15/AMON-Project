@@ -51,7 +51,8 @@ public class ItemDataManager : MonoBehaviour
         "패스트푸드점",
         "사무실",
         "학교",
-        "가정집"
+        "가정집",
+        "문화재"
     };
 
     [HideInInspector] 
