@@ -51,7 +51,7 @@ public class GameManager : MonoBehaviour, IObserver
 
                 if (instance == null)
                 {
-                    Debug.LogError("There's no active GameManager object");
+                    Debug.Log("There's no active GameManager object");
                 }
             }
             return instance;
@@ -541,10 +541,17 @@ public class GameManager : MonoBehaviour, IObserver
         {
             StoryDialog.instance.SetFile("clear" + (dm.SceneName[5] - 48));
 
+            // 게임 모든 스테이지 클리어 시 엔딩 씬으로
             if (System.Convert.ToInt16(dm.SceneName[6].ToString()) == 5)
             {
                 resultOkButton.onClick.RemoveAllListeners();
                 resultOkButton.onClick.AddListener(() => SceneManager.LoadScene("GameOver"));
+            }
+            // 게임의 큰 스테이지 하나를 클리어 시 로비 씬으로
+            else
+            {
+                resultOkButton.onClick.RemoveAllListeners();
+                resultOkButton.onClick.AddListener(() => SceneManager.LoadScene("Lobby"));
             }
         }
 

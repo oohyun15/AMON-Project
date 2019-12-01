@@ -3936,7 +3936,13 @@ MonoBehaviour:
   dialogSprites:
   - {fileID: 0}
   - {fileID: 21300000, guid: 4c92d2b7b1c6f74438200c3e96dc9705, type: 3}
-  stress: 00000000320000005000000064000000
+  stressValues: 000000001e000000320000005000000064000000
+  stressNames:
+  - "\uC815\uC0C1"
+  - "\uAE09\uC131\uAE30"
+  - "\uC544\uAE09\uC131\uAE30"
+  - "\uB9CC\uC131"
+  - "\uC9C4\uD589 \uBD88\uAC00"
 --- !u!4 &1167113232
 Transform:
   m_ObjectHideFlags: 0
@@ -6674,6 +6680,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4773408090334215758, guid: 0eba903c9190ba84c85022e128c1019d,
         type: 3}
+      propertyPath: audioPlayers.Array.size
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 4773408090334215758, guid: 0eba903c9190ba84c85022e128c1019d,
+        type: 3}
       propertyPath: gmBgmAudioClips.Array.data[0]
       value: 
       objectReference: {fileID: 8300000, guid: 3dae9bc9f17537c4295e578f83a6e050, type: 3}
@@ -6784,6 +6795,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: 6ed976aef5a15e248a5fbce6de58618c,
         type: 3}
+    - target: {fileID: 4773408090334215758, guid: 0eba903c9190ba84c85022e128c1019d,
+        type: 3}
+      propertyPath: masterMixer
+      value: 
+      objectReference: {fileID: 24100000, guid: 83a16e6db13a3aa40a078ddc51af4441,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0eba903c9190ba84c85022e128c1019d, type: 3}
 --- !u!114 &2116090513 stripped

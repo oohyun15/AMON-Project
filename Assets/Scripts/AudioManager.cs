@@ -3,7 +3,9 @@
  * 제작: 김태윤
  * AudioSource 및 Clip 관리하는 스크립트
  * 함수 추가 및 수정 시 누가 작성했는지 꼭 해당 함수 주석으로 명시해주세요!
+ * (19.12.01 예진) 로비씬인지 확인하는 변수 추가
  * 작성일자: 19.11.15.
+ * 수정일자: 19.12.01. 
  ***************************************/
 using System.Collections;
 using System.Collections.Generic;
@@ -63,6 +65,8 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    private bool isLobby;
+
     [Header("Sound")]
     public AudioMixer masterMixer;
     public AudioSource[] audioPlayers = new AudioSource[9];
@@ -85,8 +89,11 @@ public class AudioManager : MonoBehaviour
 
     void Awake()
     {
+        if (GameManager.Instance != null) isLobby = false;
+        else isLobby = true;
+
         UserDataIO.User user = UserDataIO.ReadUserData();
-        fireParent = GameObject.Find("Fire");
+        if (!isLobby) fireParent = GameObject.Find("Fire");
         matchMixerGroup = new MultiKeyDictionary<string, int, AudioMixerGroup>();
 
         GetMixerGroup();
@@ -132,14 +139,19 @@ public class AudioManager : MonoBehaviour
             ["Warning"] = WarningAudioClips,
             ["TimeOut"] = TimeOutAudioClips
         };
-        
+
         //게임 시작시 fire fx 사운드 조절
-        for (int j = 0; j < fireParent.GetComponentsInChildren<AudioSource>().Length; j++)
+        if (!isLobby)
         {
-            fires.Insert(j, fireParent.transform.GetChild(j).GetComponent<AudioSource>());
-            fires[j].volume = user.EffectVolume;
+            for (int j = 0; j < fireParent.GetComponentsInChildren<AudioSource>().Length; j++)
+            {
+                fires.Insert(j, fireParent.transform.GetChild(j).GetComponent<AudioSource>());
+                fires[j].volume = user.EffectVolume;
+            }
         }
+
         Debug.Log(user.EffectVolume);
+
         //SettingButton 초기화
         Text onText = BgmOnOff.transform.GetChild(0).GetComponent<Text>();
         if (user.BgmVolume == 1f)
