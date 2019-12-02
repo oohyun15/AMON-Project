@@ -140,11 +140,14 @@ public class Lobby : MonoBehaviour
 
         for (i = 0; i < idm.stressNames.Length - 1; i++)
         {
-            if (userData.stress < idm.stressValues[i + 1])
+            if (userData.stress < idm.stressValues[i + 1] && userData.stress >= idm.stressValues[i])
+            {
                 stressState.text = idm.stressNames[i];
+                break;
+            }
         }
 
-        if (i == idm.stressNames.Length - 1) stressState.text = idm.stressNames[0];
+        if (i == idm.stressNames.Length) stressState.text = idm.stressNames[0];
 
         stressImg.fillAmount = userData.stress / 100f;
 
