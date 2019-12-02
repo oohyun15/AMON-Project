@@ -45,35 +45,37 @@ public class FallObstacle : MonoBehaviour, IReset
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.transform.tag == "Player" && FallTrigger.isWarning)
+        if (collision.transform.tag == "Player" && isFalling)
         {
             // 충돌 위치를 알아내기 위한 코드, 유니티에 collision.contacts 검색
             foreach (ContactPoint contact in collision.contacts)
             {
                 Debug.Log(contact);
+                // 스테이지에 배치된 장애물과의 충돌 지점의 y좌표는 0.55임을 이용, amon 위에서 떨어질 떄 충돌하면 amon 오브젝트 파괴
+                if (contact.point.y > 1.3f)
+                {
+                    // (용현) 플레이어에게 달린 카메라 변수. 기존에 하드코딩으로 자식 번호 위치로 카메라 변수를 지정하니까 정상적으로 카메라를 못골랐었음
+                    GameObject camera = GameManager.Instance.Cam;
+                    // 상속된 카메라를 상속 해제하는 코드
+                    camera.transform.parent = null;
 
-                // (용현) 플레이어에게 달린 카메라 변수. 기존에 하드코딩으로 자식 번호 위치로 카메라 변수를 지정하니까 정상적으로 카메라를 못골랐었음
-                GameObject camera = GameManager.Instance.Cam;
-                // 상속된 카메라를 상속 해제하는 코드
-                camera.transform.parent = null;
+                    // (용현) 플레이어 비활성화
+                    collision.gameObject.SetActive(false);
 
-                // (용현) 플레이어 비활성화
-                collision.gameObject.SetActive(false);
+                    UserDataIO.User user = UserDataIO.ReadUserData();
 
-                UserDataIO.User user = UserDataIO.ReadUserData();
+                    user.deathCount++;
 
-                user.deathCount++;
+                    UserDataIO.WriteUserData(user);
+                    
+                    // 게임 오버
+                    GameManager.Instance.GameOver();
 
-                UserDataIO.WriteUserData(user);
+                    break;
 
-                // 게임 오버
-                GameManager.Instance.GameOver();
-
-                break;
-
-                // (용현) 결과창 업데이트
-                /* Not Implemented */
-
+                    // (용현) 결과창 업데이트
+                    /* Not Implemented */
+                }
             }
         }
     }
