@@ -38,6 +38,8 @@ public class StagePanel : MonoBehaviour
 
     private int stageToPlay = 0;        // 현재 스테이지 순서
 
+    public static bool isLock = true;
+
 
     // Start is called before the first frame update
     void Start()
@@ -112,7 +114,7 @@ public class StagePanel : MonoBehaviour
 
                     Button stageBtn = stageLevel[idx_level].gameObject.GetComponent<Button>();
 
-                    if (idx_data == stageToPlay)
+                    if (idx_data == stageToPlay || !isLock)
                         stageBtn.interactable = true;
                     else
                         stageBtn.interactable = false;

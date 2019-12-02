@@ -168,4 +168,9 @@ public class Reset : MonoBehaviour
     {
         Lobby.MoveScene(sceneName);
     }
+
+    public void SetStageLock ()
+    {
+        StagePanel.isLock = !StagePanel.isLock;
+    }
 }
