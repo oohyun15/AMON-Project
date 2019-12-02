@@ -39,7 +39,7 @@ public class FallTrigger : MonoBehaviour, IReset
     private GameManager gm;
     private new readonly string name = "FallTrigger";
 
-    private bool isWarning = false;
+    static public bool isWarning = false;
 
     void Start()
     {
@@ -112,11 +112,7 @@ public class FallTrigger : MonoBehaviour, IReset
         AudioManager.Instance.StopAudio("Warning");
         gameObject.SetActive(false);
 
-        // 떨어지는 장애물 비활성화
-        for (int idx = 0; idx < cellingFragments.transform.childCount; idx++)
-        {
-            cellingFragments.transform.GetChild(idx).GetComponent<FallObstacle>().isFalling = false;
-        }
+        isWarning = false;
     }
 
     IEnumerator Explosion()
@@ -128,6 +124,8 @@ public class FallTrigger : MonoBehaviour, IReset
         yield return new WaitForSeconds(time);
         AudioManager.Instance.PlayAudio("Obstacle", 0, 0f, false);
         wallFragments.Explosion();
+
+        isWarning = false;
     }
 
     public void GetInitValue()
