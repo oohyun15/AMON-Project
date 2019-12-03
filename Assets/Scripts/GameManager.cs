@@ -193,15 +193,28 @@ public class GameManager : MonoBehaviour, IObserver
         // (19.09.26) 산소통 슬라이더 백그라운드 Sliced Sprite 처리하고 위치와 크기 조정하도록 함
         RectTransform rt = oxygenSlider.GetComponent<RectTransform>();
         RectTransform bgrt = oxygenSlider.transform.GetChild(0).GetComponent<RectTransform>();
+        RectTransform fillrt = oxygenSlider.transform.GetChild(1).GetComponent<RectTransform>();
+
+        RectTransform bgFramert = oxygenSlider.transform.GetChild(2).GetComponent<RectTransform>();
+        RectTransform textrt = oxygenSlider.transform.GetChild(3).GetComponent<RectTransform>();
+
 
         Debug.Log(time);
         float temp = (time - timeLimit) * 10;
+
+        timeLimit = time;
         Debug.Log(temp);
 
         rt.sizeDelta = new Vector2(rt.sizeDelta.x + temp, rt.sizeDelta.y);
         bgrt.sizeDelta = new Vector2(bgrt.sizeDelta.x + temp, bgrt.sizeDelta.y);
-        
-        bgrt.anchoredPosition = new Vector3(bgrt.anchoredPosition.x + temp / 2, bgrt.anchoredPosition.y, 0);
+
+        bgFramert.sizeDelta = new Vector2(bgFramert.sizeDelta.x + temp, bgFramert.sizeDelta.y);
+
+        fillrt.localPosition = new Vector2(fillrt.rect.width / 2, fillrt.localPosition.y);
+        textrt.localPosition = new Vector2(fillrt.rect.width / 2, fillrt.localPosition.y);
+        //bgrt.anchoredPosition = new Vector3(bgrt.anchoredPosition.x + temp / 2, bgrt.anchoredPosition.y, 0);
+        //bgFramert.anchoredPosition = new Vector3(bgFramert.anchoredPosition.x + temp / 2, bgFramert.anchoredPosition.y, 0);
+
 
         oxygenSlider.maxValue = time;
 
@@ -668,8 +681,9 @@ public class GameManager : MonoBehaviour, IObserver
     private void SetTimeText(float setTime)
     {
         if (setTime < 0) setTime = 0;
+        else setTime = setTime / timeLimit * 100;
 
-        leftTimeText.text = "남은 시간 : " + setTime.ToString("00.00");
+        leftTimeText.text = (int)setTime + "%";
     }
 
     // 설정창 온오프
