@@ -135,6 +135,7 @@ public class Lobby : MonoBehaviour
         rankName.text = rankData[userData.rank]["name"].ToString();
         rankImg.sprite = rankSprites[userData.rank];
         rankImg.SetNativeSize();
+        rankImg.GetComponent<RectTransform>().localScale = Vector3.one * 2;
 
         int i;
 
