@@ -10572,7 +10572,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0.25}
   m_AnchorMax: {x: 0, y: 0.25}
   m_AnchoredPosition: {x: 396.05, y: 20.85}
-  m_SizeDelta: {x: 705.2, y: 52.05}
+  m_SizeDelta: {x: 722, y: 62}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3915028251475633376
 CanvasRenderer:
@@ -12788,26 +12788,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2232237696253215105}
     m_Modifications:
-    - target: {fileID: 1370564325888967805, guid: 2011b31096d5b7548a3e49740b3ea06d,
-        type: 3}
-      propertyPath: talker
-      value: 
-      objectReference: {fileID: 3564071586647611650}
-    - target: {fileID: 1370564325888967805, guid: 2011b31096d5b7548a3e49740b3ea06d,
-        type: 3}
-      propertyPath: dialog
-      value: 
-      objectReference: {fileID: 4055908054457813238}
-    - target: {fileID: 1370564325888967805, guid: 2011b31096d5b7548a3e49740b3ea06d,
-        type: 3}
-      propertyPath: image
-      value: 
-      objectReference: {fileID: 3611254908163686095}
-    - target: {fileID: 1370564325888967805, guid: 2011b31096d5b7548a3e49740b3ea06d,
-        type: 3}
-      propertyPath: panel
-      value: 
-      objectReference: {fileID: 4032194972483863632}
     - target: {fileID: 3678268040293267028, guid: 2011b31096d5b7548a3e49740b3ea06d,
         type: 3}
       propertyPath: m_Name
@@ -12883,6 +12863,26 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.75
       objectReference: {fileID: 0}
+    - target: {fileID: 1370564325888967805, guid: 2011b31096d5b7548a3e49740b3ea06d,
+        type: 3}
+      propertyPath: talker
+      value: 
+      objectReference: {fileID: 3564071586647611650}
+    - target: {fileID: 1370564325888967805, guid: 2011b31096d5b7548a3e49740b3ea06d,
+        type: 3}
+      propertyPath: dialog
+      value: 
+      objectReference: {fileID: 4055908054457813238}
+    - target: {fileID: 1370564325888967805, guid: 2011b31096d5b7548a3e49740b3ea06d,
+        type: 3}
+      propertyPath: image
+      value: 
+      objectReference: {fileID: 3611254908163686095}
+    - target: {fileID: 1370564325888967805, guid: 2011b31096d5b7548a3e49740b3ea06d,
+        type: 3}
+      propertyPath: panel
+      value: 
+      objectReference: {fileID: 4032194972483863632}
     - target: {fileID: 3678268040293267029, guid: 2011b31096d5b7548a3e49740b3ea06d,
         type: 3}
       propertyPath: talker
@@ -13158,6 +13158,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2232237696253215105}
     m_Modifications:
+    - target: {fileID: 943736294185190068, guid: 4b5c7c71c7e092e49905a610f88417b0,
+        type: 3}
+      propertyPath: m_Name
+      value: TutorialPanel
+      objectReference: {fileID: 0}
+    - target: {fileID: 943736294185190068, guid: 4b5c7c71c7e092e49905a610f88417b0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 943736294185190069, guid: 4b5c7c71c7e092e49905a610f88417b0,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -13263,32 +13273,22 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 943736294185190068, guid: 4b5c7c71c7e092e49905a610f88417b0,
-        type: 3}
-      propertyPath: m_Name
-      value: TutorialPanel
-      objectReference: {fileID: 0}
-    - target: {fileID: 943736294185190068, guid: 4b5c7c71c7e092e49905a610f88417b0,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4975624498670730640, guid: 4b5c7c71c7e092e49905a610f88417b0,
         type: 3}
       propertyPath: m_IsActive
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4367693257177251998, guid: 4b5c7c71c7e092e49905a610f88417b0,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1102435231789414275, guid: 4b5c7c71c7e092e49905a610f88417b0,
         type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7587618596987853915, guid: 4b5c7c71c7e092e49905a610f88417b0,
+    - target: {fileID: 4367693257177251998, guid: 4b5c7c71c7e092e49905a610f88417b0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5641371889160552179, guid: 4b5c7c71c7e092e49905a610f88417b0,
         type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -13303,7 +13303,7 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5641371889160552179, guid: 4b5c7c71c7e092e49905a610f88417b0,
+    - target: {fileID: 7587618596987853915, guid: 4b5c7c71c7e092e49905a610f88417b0,
         type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -13369,16 +13369,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2232237696253215105}
     m_Modifications:
-    - target: {fileID: 2840272372485380701, guid: 1423fc149117a1943ab328ee3ecaf1e8,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 4951302454176523546}
-    - target: {fileID: 2840272372485380701, guid: 1423fc149117a1943ab328ee3ecaf1e8,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: MoveScene
-      objectReference: {fileID: 0}
     - target: {fileID: 8140732404951417121, guid: 1423fc149117a1943ab328ee3ecaf1e8,
         type: 3}
       propertyPath: m_Name
@@ -13533,6 +13523,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -191.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 2840272372485380701, guid: 1423fc149117a1943ab328ee3ecaf1e8,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 4951302454176523546}
+    - target: {fileID: 2840272372485380701, guid: 1423fc149117a1943ab328ee3ecaf1e8,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: MoveScene
       objectReference: {fileID: 0}
     - target: {fileID: 3236190866802771666, guid: 1423fc149117a1943ab328ee3ecaf1e8,
         type: 3}
