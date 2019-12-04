@@ -80,7 +80,7 @@ public class Tutorial : Dialog
         {
             images[index - 1].gameObject.SetActive(false);
 
-            if (index == 2 && !isLobby)
+            if (index == 2 && !isLobby && false)
             {
                 // 튜토리얼 산소통 이미지 길이 설정
                 RectTransform oxygen = GameManager.Instance.oxygenSlider.transform.GetChild(0).GetComponent<RectTransform>();

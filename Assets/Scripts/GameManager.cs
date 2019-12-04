@@ -210,15 +210,16 @@ public class GameManager : MonoBehaviour, IObserver
 
         bgFramert.sizeDelta = new Vector2(bgFramert.sizeDelta.x + temp, bgFramert.sizeDelta.y);
 
-        fillrt.localPosition = new Vector2(fillrt.rect.width / 2, fillrt.localPosition.y);
-        textrt.localPosition = new Vector2(fillrt.rect.width / 2, fillrt.localPosition.y);
+        oxygenSlider.maxValue = time;
+
+        oxygenSlider.value = time;
+        //- temp / 2
+        fillrt.localPosition = new Vector2(fillrt.rect.width / 2 - temp / 2, fillrt.localPosition.y);
+        textrt.localPosition = new Vector2(fillrt.rect.width / 2 - temp / 2, fillrt.localPosition.y);
         //bgrt.anchoredPosition = new Vector3(bgrt.anchoredPosition.x + temp / 2, bgrt.anchoredPosition.y, 0);
         //bgFramert.anchoredPosition = new Vector3(bgFramert.anchoredPosition.x + temp / 2, bgFramert.anchoredPosition.y, 0);
 
 
-        oxygenSlider.maxValue = time;
-
-        oxygenSlider.value = time;
 
         // 장착 아이템 효과 적용
 
@@ -680,10 +681,11 @@ public class GameManager : MonoBehaviour, IObserver
 
     private void SetTimeText(float setTime)
     {
+        
         if (setTime < 0) setTime = 0;
-        else setTime = setTime / timeLimit * 100;
+        //else setTime = setTime / timeLimit * 100;
 
-        leftTimeText.text = (int)setTime + "%";
+        leftTimeText.text = ((int)setTime).ToString();
     }
 
     // 설정창 온오프
