@@ -43,7 +43,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b21d6c444c6df941b58f739d35b855c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  masterMixer: {fileID: 24100000, guid: 83a16e6db13a3aa40a078ddc51af4441, type: 2}
   audioPlayers:
+  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -61,7 +63,7 @@ MonoBehaviour:
   lobbyBgmAudioClips: []
   gmEfAudioClips:
   - {fileID: 8300000, guid: d7f65dc7612aa7a4e9494e269389e398, type: 3}
-  - {fileID: 8300000, guid: e0808c93f434a784387cf54e90088e51, type: 3}
+  - {fileID: 8300000, guid: 1f167f8bdcfafac458f1191745ce6f9a, type: 3}
   - {fileID: 8300000, guid: f0b39f005b19d5d4589f397ac8fd956e, type: 3}
   - {fileID: 8300000, guid: 151026db12131f14ca992c443ac57118, type: 3}
   - {fileID: 8300000, guid: a4bc878441d75b14da35c5e2db7fb0db, type: 3}
@@ -71,7 +73,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: d0af7cf2220c96348be784882b173796, type: 3}
   - {fileID: 8300000, guid: d4fff955a383cbc43a181f63ed1d1d17, type: 3}
   playerAudioClips:
-  - {fileID: 8300000, guid: 4a6dc529419227a45b920598a224903b, type: 3}
+  - {fileID: 8300000, guid: 23c3c39d9def0df4c847ac51b67b917e, type: 3}
   - {fileID: 8300000, guid: 68f39053223b6a1408366980d2433e8f, type: 3}
   - {fileID: 8300000, guid: a61d1b0683f594b43943d43cb5b22aab, type: 3}
   - {fileID: 8300000, guid: e0808c93f434a784387cf54e90088e51, type: 3}
@@ -86,9 +88,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: f4ecad4e4dd92294ebdb832a9e25a6bc, type: 3}
   TimeOutAudioClips:
   - {fileID: 8300000, guid: 850ee131df660114eaf971bcac02e594, type: 3}
-  fireParent: {fileID: 0}
-  fires: []
   onImage: {fileID: 0}
   offImage: {fileID: 0}
   BgmOnOff: {fileID: 0}
   EffectOnOff: {fileID: 0}
+  fireParent: {fileID: 0}
+  fires: []

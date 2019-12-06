@@ -434,7 +434,8 @@ public class AmonController : MonoBehaviour, IReset
         }
         else
         {
-            if (obstacle._type == Obstacle.ObsType.GlassDoor) AudioManager.Instance.PlayAudio("Obstacle", 1, 0f, false);
+            if (obstacle._type == Obstacle.ObsType.GlassDoor) AudioManager.Instance.PlayAudio("Obstacle", 2, 0f, false);
+            else if(obstacle._type == Obstacle.ObsType.WoodDoor || obstacle._type == Obstacle.ObsType.WoodObs) AudioManager.Instance.PlayAudio("Obstacle", 1, 0f, false);
             else AudioManager.Instance.PlayAudio("Obstacle", 0, 0f, false);
 
             // 코루틴 함수는 모두 게임매니저로 걸어놓음
@@ -629,7 +630,14 @@ public class AmonController : MonoBehaviour, IReset
 
                 playerAnim.SetFloat("WalkAnimSpd", moveSpeed / 5);
                 if(AudioManager.Instance.audioPlayers[4].clip != AudioManager.Instance.playerAudioClips[0])
+                {
+                    if(playerAnim.GetBool("IsBackMove"))
+                    {
+                        AudioManager.Instance.masterMixer.SetFloat("sfxRunVolume", -0.5f);
+                    }
+                    else AudioManager.Instance.masterMixer.SetFloat("sfxRunVolume", 0f);
                     AudioManager.Instance.PlayAudio("Player", 0, 0f, true);
+                }
                 break;
 
             case AnimationName.Strike:

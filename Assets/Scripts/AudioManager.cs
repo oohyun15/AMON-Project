@@ -66,6 +66,7 @@ public class AudioManager : MonoBehaviour
     }
 
     private bool isLobby;
+   
 
     [Header("Sound")]
     public AudioMixer masterMixer;
@@ -256,6 +257,10 @@ public class AudioManager : MonoBehaviour
     public void StopAllAudio()
     {
         for (int i = 0; i < audioPlayers.Length; i++) audioPlayers[i].clip = null;
+        for (int j = 0; j < fires.Count; j++)
+        {
+            fires[j].volume = 0f;
+        }
     }
 
     public void StopAudio(string sourceName)
@@ -393,12 +398,47 @@ public class AudioManager : MonoBehaviour
 
     private void GetMixerGroup()
     {
-        matchMixerGroup.Add("UI", 2, masterMixer.FindMatchingGroups("UI_2_Coin")[0]);
-    }
+        matchMixerGroup.Add("GameManagerBgm", 0, masterMixer.FindMatchingGroups("GmBgm_0")[0]);
+        matchMixerGroup.Add("GameManagerBgm", 1, masterMixer.FindMatchingGroups("GmBgm_1")[0]);
+        matchMixerGroup.Add("GameManagerBgm", 2, masterMixer.FindMatchingGroups("GmBgm_2")[0]);
+        matchMixerGroup.Add("GameManagerBgm", 3, masterMixer.FindMatchingGroups("GmBgm_3")[0]);
+        matchMixerGroup.Add("GameManagerBgm", 4, masterMixer.FindMatchingGroups("GmBgm_4")[0]);
+        
+        matchMixerGroup.Add("LobbyBgm", 0, masterMixer.FindMatchingGroups("LobbyBgm_0")[0]);
+        
+        matchMixerGroup.Add("GameManagerEffect", 0, masterMixer.FindMatchingGroups("GmEffect_0")[0]);
+        matchMixerGroup.Add("GameManagerEffect", 1, masterMixer.FindMatchingGroups("GmEffect_1")[0]);
+        matchMixerGroup.Add("GameManagerEffect", 2, masterMixer.FindMatchingGroups("GmEffect_2")[0]);
+        matchMixerGroup.Add("GameManagerEffect", 3, masterMixer.FindMatchingGroups("GmEffect_3")[0]);
+        matchMixerGroup.Add("GameManagerEffect", 4, masterMixer.FindMatchingGroups("GmEffect_4")[0]);
+        matchMixerGroup.Add("GameManagerEffect", 5, masterMixer.FindMatchingGroups("GmEffect_5")[0]);
 
+        matchMixerGroup.Add("LobbyEffect", 0, masterMixer.FindMatchingGroups("LobbyEffect_0")[0]);
+        matchMixerGroup.Add("LobbyEffect", 1, masterMixer.FindMatchingGroups("LobbyEffect_1")[0]);
+        matchMixerGroup.Add("LobbyEffect", 2, masterMixer.FindMatchingGroups("LobbyEffect_2")[0]);
+
+        matchMixerGroup.Add("Player", 0, masterMixer.FindMatchingGroups("Player_0")[0]);
+        matchMixerGroup.Add("Player", 1, masterMixer.FindMatchingGroups("Player_1")[0]);
+        matchMixerGroup.Add("Player", 2, masterMixer.FindMatchingGroups("Player_2")[0]);
+        matchMixerGroup.Add("Player", 3, masterMixer.FindMatchingGroups("Player_3")[0]);
+
+        matchMixerGroup.Add("UI", 0, masterMixer.FindMatchingGroups("UI_0")[0]);
+        matchMixerGroup.Add("UI", 1, masterMixer.FindMatchingGroups("UI_1")[0]);
+        matchMixerGroup.Add("UI", 2, masterMixer.FindMatchingGroups("UI_2")[0]);
+        
+        matchMixerGroup.Add("Obstacle", 0, masterMixer.FindMatchingGroups("Obs_0")[0]);
+        matchMixerGroup.Add("Obstacle", 1, masterMixer.FindMatchingGroups("Obs_1")[0]);
+        matchMixerGroup.Add("Obstacle", 2, masterMixer.FindMatchingGroups("Obs_2")[0]);
+
+        matchMixerGroup.Add("Warning", 0, masterMixer.FindMatchingGroups("Warning_0")[0]);
+        matchMixerGroup.Add("Warning", 1, masterMixer.FindMatchingGroups("Warning_1")[0]);
+
+        matchMixerGroup.Add("TimeOut", 0, masterMixer.FindMatchingGroups("TimeOut_0")[0]);
+    }
 
     private void AudioMixerControll(string _sourceName, int _clipNum)
     {
         audioDic[_sourceName].outputAudioMixerGroup = matchMixerGroup[_sourceName][_clipNum];
     }
+    
 }
