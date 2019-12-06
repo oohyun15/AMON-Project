@@ -76,7 +76,7 @@ public class ItemUpgrade : MonoBehaviour
             else
             {
                 user.money -= price;
-                AudioManager.Instance.PlayAudio("LobbyEffect", 1, 3.6f, false);
+                AudioManager.Instance.PlayAudio("LobbyEffect", 1, 1f, false);
                 switch (item)
                 {
                     case "oxygen":
