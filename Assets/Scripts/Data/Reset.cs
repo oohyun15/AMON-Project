@@ -20,10 +20,13 @@ public class Reset : MonoBehaviour
 {
 
     public GameObject panel;
+    public Image rank;
+    public Text rankTxt;
 
     /* debug */
     public GameObject evidenceList;
     public Color[] eviColors;
+    public Sprite[] ranks;
     public Slider stressSlider;
 
 
@@ -40,10 +43,34 @@ public class Reset : MonoBehaviour
         ResetStageData();
 
         UserDataIO.User userData = UserDataIO.ReadUserData();
+        List<Dictionary<string, object>> rankData = ItemDataManager.Instance.GetRankData();
 
         // 추가 보상 업데이트
-        int addReward = System.Convert.ToInt32(ItemDataManager.Instance.GetRankData()[userData.rank]["add_reward"]);
-        userData.addReward += addReward;
+
+        int diff = 0;
+
+        // 최고 계급 갱신할 경우
+        if (userData.rank > userData.bestRank)
+        {
+            userData.bestRank = userData.rank;
+
+            int addReward = System.Convert.ToInt32(rankData[userData.bestRank]["add_reward"]);
+            diff = addReward - userData.addReward;
+            userData.addReward = addReward;
+        }
+
+        /* 초기화 패널 설정 */
+        rank.sprite = ranks[userData.bestRank];
+        rank.SetNativeSize();
+
+        Vector2 size = rank.rectTransform.sizeDelta;
+        rank.rectTransform.sizeDelta = new Vector2(size.x * 32 / size.y, 32);
+
+        rankTxt.text = "당신의 최고 진급 계급은 " 
+            + ItemDataManager.Instance.rankData[userData.bestRank]["name"].ToString() + "입니다.\n"
+            + "다음 게임에서는 " + diff + "원의 추가 보상을 받게 됩니다.";
+
+        /* 패널 설정 끝 */
 
         // 데이터 리셋
         userData.money = 0;
@@ -59,6 +86,7 @@ public class Reset : MonoBehaviour
 
 
         UserDataIO.WriteUserData(userData);
+
 
         panel.SetActive(true);
     }

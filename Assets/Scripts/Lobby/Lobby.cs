@@ -136,7 +136,8 @@ public class Lobby : MonoBehaviour
         rankName.text = rankData[userData.rank]["name"].ToString();
         rankImg.sprite = rankSprites[userData.rank];
         rankImg.SetNativeSize();
-        //rankImg.GetComponent<RectTransform>().localScale = Vector3.one * 2;
+        Vector2 size = rankImg.rectTransform.sizeDelta;
+        rankImg.rectTransform.sizeDelta = new Vector2(size.x * 52 / size.y, 52);
 
         int i;
 
@@ -162,6 +163,11 @@ public class Lobby : MonoBehaviour
         {
             rankGaze.value = 1f * (userData.honor - preRankHonor) / nextRankHonor;
             rankPercent.text = (int)(rankGaze.value * 100) + "%";
+        }
+        else
+        {
+            rankGaze.value = 1;
+            rankPercent.text = "100%";
         }
     }
 
