@@ -28,6 +28,7 @@ public class UserDataIO : MonoBehaviour
         public int stress;                  // 피로도
         public int rank;
         public int addReward;               // 추가 보상
+        public int bestRank;                // 최고 도달 랭크
 
         /* 도전과제 카운트 변수 */
         public int playCount;               // 플레이 횟수
@@ -81,6 +82,7 @@ public class UserDataIO : MonoBehaviour
         userElement.SetAttribute("stress", user.stress.ToString());
         userElement.SetAttribute("rank", user.rank.ToString());
         userElement.SetAttribute("addReward", user.addReward.ToString());
+        userElement.SetAttribute("bestRank", user.bestRank.ToString());
 
         /* 도전과제 카운트 변수 */
         userElement.SetAttribute("playCount", user.playCount.ToString());
@@ -130,6 +132,7 @@ public class UserDataIO : MonoBehaviour
                 stress = 0,
                 rank = 0,
                 addReward = 0,
+                bestRank = 0,
 
                 /* 도전과제 카운트 변수 */
                 playCount = 0,
@@ -169,6 +172,7 @@ public class UserDataIO : MonoBehaviour
                 stress = userElement.HasAttribute("stress") ? System.Convert.ToInt32(userElement.GetAttribute("stress")) : 0,
                 rank = userElement.HasAttribute("rank") ? System.Convert.ToInt32(userElement.GetAttribute("rank")) : 0,
                 addReward = userElement.HasAttribute("addReward") ? System.Convert.ToInt32(userElement.GetAttribute("addReward")) : 0,
+                bestRank = userElement.HasAttribute("bestRank") ? System.Convert.ToInt32(userElement.GetAttribute("bestRank")) : 0,
 
                 /* 도전과제 카운트 변수 */
                 playCount = userElement.HasAttribute("playCount") ? System.Convert.ToInt32(userElement.GetAttribute("playCount")) : 0,
