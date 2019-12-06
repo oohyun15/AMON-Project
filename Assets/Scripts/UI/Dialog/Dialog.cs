@@ -37,7 +37,7 @@ public abstract class Dialog : MonoBehaviour
     // 화면 터치했을 경우 ㅡ 타이핑 효과 스킵 혹은 대화 넘기기
     public virtual void Touched()
     {
-        if (isTalking)
+        if (isTalking && talker.transform.parent.gameObject.activeInHierarchy)
         {
             isTalking = false;
 

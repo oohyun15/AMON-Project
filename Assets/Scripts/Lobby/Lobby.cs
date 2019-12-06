@@ -22,7 +22,8 @@ public class Lobby : MonoBehaviour
     public Text moneyText;
     public Text rankName;
     public Image rankImg;
-    public Image rankGaze;
+    public Slider rankGaze;
+    public Text rankPercent;
     public Text stressState;
     public Image stressImg;
 
@@ -135,7 +136,7 @@ public class Lobby : MonoBehaviour
         rankName.text = rankData[userData.rank]["name"].ToString();
         rankImg.sprite = rankSprites[userData.rank];
         rankImg.SetNativeSize();
-        rankImg.GetComponent<RectTransform>().localScale = Vector3.one * 2;
+        //rankImg.GetComponent<RectTransform>().localScale = Vector3.one * 2;
 
         int i;
 
@@ -159,8 +160,8 @@ public class Lobby : MonoBehaviour
 
         if (userData.rank != rankData.Count - 1)
         {
-            rankGaze.fillAmount = 1f * (userData.honor - preRankHonor) / nextRankHonor;
-            rankGaze.transform.GetChild(0).GetComponent<Text>().text = (int)(rankGaze.fillAmount * 100) + "%";
+            rankGaze.value = 1f * (userData.honor - preRankHonor) / nextRankHonor;
+            rankPercent.text = (int)(rankGaze.value * 100) + "%";
         }
     }
 
