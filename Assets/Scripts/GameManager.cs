@@ -316,8 +316,8 @@ public class GameManager : MonoBehaviour, IObserver
         //BGM 틀기
         if (stageNum >= 0 && stageNum < 3) AudioManager.Instance.PlayAudio("GameManagerBgm", 0, 0f, true);
         else if(stageNum >= 3 && stageNum < 6) AudioManager.Instance.PlayAudio("GameManagerBgm", 1, 0f, true);
-        else if(stageNum >= 6 && stageNum < 9) AudioManager.Instance.PlayAudio("GameManagerBgm", 1, 0f, true);
-        else if(stageNum >= 9 && stageNum < 12) AudioManager.Instance.PlayAudio("GameManagerBgm", 1, 0f, true);
+        else if(stageNum >= 6 && stageNum < 9) AudioManager.Instance.PlayAudio("GameManagerBgm", 2, 0f, true);
+        else if(stageNum >= 9 && stageNum < 12) AudioManager.Instance.PlayAudio("GameManagerBgm", 3, 0f, true);
         else AudioManager.Instance.PlayAudio("GameManagerBgm", 4, 0f, true);
 
         // 초기 부상자 수 확인

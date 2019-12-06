@@ -101,7 +101,7 @@ public class FallTrigger : MonoBehaviour, IReset
         AudioManager.Instance.StopAudio("Warning");
 
         // 천장 조각들 중력 사용
-        AudioManager.Instance.PlayAudio("Obstacle", 0, 0f, false);
+        AudioManager.Instance.PlayAudio("Warning", 1, 0f, false);
         for (int idx = 0; idx < cellingFragments.transform.childCount; idx++)
         {
             cellingFragments.transform.GetChild(idx).GetComponent<Rigidbody>().isKinematic = false;
@@ -109,7 +109,6 @@ public class FallTrigger : MonoBehaviour, IReset
         yield return new WaitForSeconds(1.0f);
 
         // 발판(트리거) 비활성화
-        AudioManager.Instance.StopAudio("Warning");
         gameObject.SetActive(false);
 
         isWarning = false;
@@ -122,7 +121,7 @@ public class FallTrigger : MonoBehaviour, IReset
         isWarning = true;
         // 3초 뒤 장애물 생성, rigidbody에 의해 생성된 위치에서 자동으로 떨어짐
         yield return new WaitForSeconds(time);
-        AudioManager.Instance.PlayAudio("Obstacle", 0, 0f, false);
+        AudioManager.Instance.PlayAudio("Warning", 1, 0f, false);
         wallFragments.Explosion();
 
         isWarning = false;
