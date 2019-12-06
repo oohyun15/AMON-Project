@@ -15,6 +15,7 @@ using UnityEngine;
 using System.IO;
 using System;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Reset : MonoBehaviour
 {
@@ -29,6 +30,23 @@ public class Reset : MonoBehaviour
     public Sprite[] ranks;
     public Slider stressSlider;
 
+    private void Start()
+    {
+        AudioSource temp = GetComponent<AudioSource>();
+
+        if (SceneManager.GetActiveScene().name == "Title")
+        {
+            temp.time = 112f;
+            temp.loop = true;
+            temp.Play();
+        }
+        else if(SceneManager.GetActiveScene().name == "GameOver")
+        {
+            temp.time = 0f;
+            temp.loop = true;
+            temp.Play();
+        }
+    }
 
     public void OnClickResetBtn()
     {

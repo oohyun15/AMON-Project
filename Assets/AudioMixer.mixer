@@ -783,10 +783,14 @@ AudioMixerController:
     name: TimeOut
   - guids:
     - 977b718b10528be42878d90e583fd16e
+    - aa28dcec0d415fe449c7f85c6a3fbf0e
+    name: Theme_RushOut
+  - guids:
+    - 977b718b10528be42878d90e583fd16e
     - 6f150e7d6580f014e8773aa1b8ebea20
     - 44b7f01e8366b1a4fb9f806a4f9b375c
     name: Etc
-  m_CurrentViewIndex: 5
+  m_CurrentViewIndex: 10
   m_TargetSnapshot: {fileID: 24500006}
 --- !u!243 &24300002
 AudioMixerGroupController:
@@ -807,6 +811,7 @@ AudioMixerGroupController:
   - {fileID: 3302594473113483136}
   - {fileID: -7908146000946529456}
   - {fileID: -8995817316840077406}
+  - {fileID: 1400403311740565951}
   - {fileID: 1674289606453816382}
   m_Volume: eb9a7859d7a5f4341ab4b8412861a359
   m_Pitch: ae505c63e340e3842ac091e10a654088
@@ -873,6 +878,25 @@ AudioMixerGroupController:
   m_Send: 00000000000000000000000000000000
   m_Effects:
   - {fileID: -6307327245315250940}
+  m_UserColorIndex: 0
+  m_Mute: 0
+  m_Solo: 0
+  m_BypassEffects: 0
+--- !u!243 &1400403311740565951
+AudioMixerGroupController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: RushOut
+  m_AudioMixer: {fileID: 24100000}
+  m_GroupID: aa28dcec0d415fe449c7f85c6a3fbf0e
+  m_Children: []
+  m_Volume: 8b4595fee9363da4ebd3d3dcb7e0d467
+  m_Pitch: c19f59c11855d0c428e687926f6aacc7
+  m_Send: 00000000000000000000000000000000
+  m_Effects:
+  - {fileID: 2797249963673251732}
   m_UserColorIndex: 0
   m_Mute: 0
   m_Solo: 0
@@ -1024,6 +1048,20 @@ AudioMixerGroupController:
   m_Mute: 0
   m_Solo: 0
   m_BypassEffects: 0
+--- !u!244 &2797249963673251732
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: b73db5f4a31d3804fb7bf71c63071fad
+  m_EffectName: Attenuation
+  m_MixLevel: f63b131846e8efb48b29a52526631201
+  m_Parameters: []
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
 --- !u!243 &3040078900203557058
 AudioMixerGroupController:
   m_ObjectHideFlags: 0
