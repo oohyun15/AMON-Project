@@ -598,7 +598,7 @@ public class AmonController : MonoBehaviour, IReset
         axeAttack.SetActive(false);
 
         axeIdle.SetActive(true);
-
+        
         attackBtn = GameManager.Instance.UI[1].transform.GetChild(0).transform.GetChild(0).GetComponent<Button>();
     }
 
@@ -629,13 +629,20 @@ public class AmonController : MonoBehaviour, IReset
                 }
 
                 playerAnim.SetFloat("WalkAnimSpd", moveSpeed / 5);
-                if(AudioManager.Instance.audioPlayers[4].clip != AudioManager.Instance.playerAudioClips[0])
+
+                if (playerAnim.GetBool("IsBackMove"))
                 {
-                    if(playerAnim.GetBool("IsBackMove"))
-                    {
-                        AudioManager.Instance.masterMixer.SetFloat("sfxRunVolume", -0.5f);
-                    }
-                    else AudioManager.Instance.masterMixer.SetFloat("sfxRunVolume", 0f);
+                    AudioManager.Instance.masterMixer.SetFloat("RunVolume", -5f);
+                    AudioManager.Instance.masterMixer.SetFloat("RunPitch", (moveSpeed / 5) * 2.75f);
+                }
+                else
+                {
+                    AudioManager.Instance.masterMixer.SetFloat("RunVolume", 0f);
+                    AudioManager.Instance.masterMixer.SetFloat("RunPitch", (moveSpeed / 5) * 2.25f);
+                }
+
+                if (AudioManager.Instance.audioPlayers[4].clip != AudioManager.Instance.playerAudioClips[0])
+                {
                     AudioManager.Instance.PlayAudio("Player", 0, 0f, true);
                 }
                 break;
@@ -700,8 +707,9 @@ public class AmonController : MonoBehaviour, IReset
         if (isRescuing) playerAnim.SetBool("IsIdleResc", true);
         else playerAnim.SetBool("IsIdle", true);
         JoystickController.instance.isBackMove = false;
+        if(!isattack) AudioManager.Instance.StopAudio("Player");
         isattack = false;
-        AudioManager.Instance.StopAudio("Player");
+        
     }
 
     public void TouchBack() // 인터렉션 때 움직임을 멈춘 부분을 다시 되돌려 조이스틱을 다시 클릭하지 않아도 움직이도록 하는 함수 

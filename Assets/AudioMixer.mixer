@@ -665,9 +665,15 @@ AudioMixerController:
   m_UpdateMode: 0
   m_ExposedParameters:
   - guid: c0a5a31c3a5910248979ccdd011a754a
-    name: sfxRunVolume
+    name: RunVolume
   - guid: 69ba605589ecf21438952d718de9bdcc
-    name: sfxRunPitch
+    name: RunPitch
+  - guid: 118f9e3f6629e3c4e8cae2d70b1ecb51
+    name: IronAttackPitch
+  - guid: 0efb8bef83fb1b54fb9bbb82b139956a
+    name: WoodAttackPitch
+  - guid: 5a1065f12a7b7e7438eb40aa4894cee8
+    name: KickPitch
   m_AudioMixerGroupViews:
   - guids:
     - 977b718b10528be42878d90e583fd16e
@@ -780,7 +786,7 @@ AudioMixerController:
     - 6f150e7d6580f014e8773aa1b8ebea20
     - 44b7f01e8366b1a4fb9f806a4f9b375c
     name: Etc
-  m_CurrentViewIndex: 4
+  m_CurrentViewIndex: 5
   m_TargetSnapshot: {fileID: 24500006}
 --- !u!243 &24300002
 AudioMixerGroupController:
@@ -847,7 +853,7 @@ AudioMixerSnapshotController:
     3e3f19e69f61bc040a4429ef4d9df0d6: 8
     eb9a7859d7a5f4341ab4b8412861a359: -10
     7797109984d7ba1488b8b1dde4af4b65: 2
-    c0a5a31c3a5910248979ccdd011a754a: -0.16685188
+    c0a5a31c3a5910248979ccdd011a754a: 0
     69fc6c5cd7f7c74438f9e99f6bcbf73b: 2
     635157adc68749847b2a34a78cb1ae47: 0
     9eca4deee8d743748a8b03f726e4e8a7: -39.703533
