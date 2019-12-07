@@ -20,6 +20,7 @@
  * (19.11.09)  게임오버씬 이름 오류 수정
  * (19.11.11)  도전과제 1번 수정
  * (19.11.16)  인터렉션 버튼 수정
+ * (19.12.07)  인게임 우측 상단에 도전과제 패널 추가
  * 함수 추가 및 수정 시 누가 작성했는지 꼭 해당 함수 주석으로 명시해주세요!
  * 작성일자: 19.07.26
  * 수정일자: 19.11.11
@@ -84,7 +85,7 @@ public class GameManager : MonoBehaviour, IObserver
     public Slider oxygenSlider;                 // (예진) 산소통 테스트
     public GameObject startButton;
     public GameObject settingsButton;
-    public GameObject warningPanel;              // (예진) 탈출 버튼
+    public GameObject warningPanel;             // (예진) 탈출 버튼
     public GameObject evidencePanel;
     public Transform evidence;
     public ResultAnimationController resultPanel;
@@ -96,13 +97,16 @@ public class GameManager : MonoBehaviour, IObserver
     public Sprite[] itemImages;                 // (용현) 인터렉션 아이템 이미지 종류
                                                 // 0: Rescue, 1: Axe, 2: Kick
     public GameObject LeftInjuredNumImages;     // (예진) 부상자 몇명 남았는지 보여줄 오브젝트
+    public GameObject achievementPanel;         // (용현) 도전과제 우측 상단 패널
+    public Image achievementImage;
+    public Text achievementText;
    
     [Header("Particle")]
     public GameObject[] FX_Ingame;              // 0: FX_Save, 1: FX_Damaged, 2: FX_Hurt, 3: FX_HitDust
 
     [Header("Field Objects")]
     public AmonController player;
-    //public GameObject Inventory;                // (태윤) Player 오브젝트에 상속된 아이템 받는 오브젝트 변수
+    //public GameObject Inventory;              // (태윤) Player 오브젝트에 상속된 아이템 받는 오브젝트 변수
     public GameObject Cam;
     public GameObject injuredParent;
     public Dictionary<string, List<GameObject>> objects;
@@ -116,13 +120,21 @@ public class GameManager : MonoBehaviour, IObserver
     public Sprite[] resultRescuerSprites;       // (예진) 결과 패널에 부상자 구조 여부 스프라이트 받아둠    
                                                 // 0 --> 구조 실패 / 1 --> 구조 성공
     public Sprite[] oxygenSprites;              // 0 --> 평상시 / 1 --> 긴급
+    public Sprite[] achievementImages;          // (용현) 도전과제 이미지
 
-    public float time;                         // 남은 시간, 초 단위
+    public float time;                          // 남은 시간, 초 단위
+
+    /* private variable */
     private readonly int defaultTime = 60;
-
     private bool gameOver;
-
     private IEnumerator timeCheckCoroutine;
+    private List<int> achievementQueue;
+    private bool lock_spin = false;             // (용현) 스핀락 변수
+    private float velocity;                     // (용현) 패널 열고 닫을 때 쓸 속도 변수. 건드리지 마셈
+
+
+
+
 
     // 스테이지 데이터 변수
 
@@ -219,7 +231,8 @@ public class GameManager : MonoBehaviour, IObserver
         //bgrt.anchoredPosition = new Vector3(bgrt.anchoredPosition.x + temp / 2, bgrt.anchoredPosition.y, 0);
         //bgFramert.anchoredPosition = new Vector3(bgFramert.anchoredPosition.x + temp / 2, bgFramert.anchoredPosition.y, 0);
 
-
+        // 도전과제 대기큐 생성
+        achievementQueue = new List<int>();
 
         // 장착 아이템 효과 적용
 
@@ -814,5 +827,91 @@ public class GameManager : MonoBehaviour, IObserver
         user.achievementList[index] = 1;
 
         UserDataIO.WriteUserData(user);
+
+        ShowAchievementPanel(index);
     } 
+
+    public void ShowAchievementPanel(int index)
+    {
+        // Enqueue
+        achievementQueue.Add(index);
+
+        // Spin Lock
+        StartCoroutine(SpinLock());
+    }
+
+    public IEnumerator PanelTimer(float time, GameObject panel)
+    {
+        StartCoroutine(OpenPanel(panel));
+
+        yield return new WaitForSeconds(time);
+
+        StartCoroutine(ClosePanel(panel));
+    }
+
+    public IEnumerator OpenPanel(GameObject panel)
+    {
+        var panelPos = panel.GetComponent<RectTransform>();
+
+        float TargetPositionY = panelPos.anchoredPosition.y - panelPos.sizeDelta.y;
+
+        while (panelPos.anchoredPosition.y - TargetPositionY > 1f)
+        {
+            Vector2 vec = new Vector2(
+                panelPos.anchoredPosition.x,
+                Mathf.SmoothDamp(panelPos.anchoredPosition.y, TargetPositionY - 0.5f, ref velocity, 0.25f)
+                );
+
+            panelPos.anchoredPosition = vec;
+
+            yield return null;
+        }
+        yield break;
+    }
+
+    public IEnumerator ClosePanel(GameObject panel)
+    {
+        var panelPos = panel.GetComponent<RectTransform>();
+
+        float TargetPositionY = panelPos.anchoredPosition.y + panelPos.sizeDelta.y;
+
+        while (TargetPositionY - panelPos.anchoredPosition.y > 1f)
+        {
+            Vector2 vec = new Vector2(
+                panelPos.anchoredPosition.x,
+                Mathf.SmoothDamp(panelPos.anchoredPosition.y, TargetPositionY - 0.5f, ref velocity, 0.25f)
+                );
+
+            panelPos.anchoredPosition = vec;
+
+            yield return null;
+        }
+
+        // Dequeue
+        achievementQueue.RemoveAt(0);
+
+        // Unlock
+        lock_spin = false;
+
+        yield break;
+    }
+
+    public IEnumerator SpinLock()
+    {
+        // Spin Lock
+        while (lock_spin) yield return null;
+
+        lock_spin = true;
+
+        // Set Achievement
+        var achievementData = CSVReader.Read(AchievementController.achievementDataPath);
+
+        achievementText.text = achievementData[achievementQueue[0]]["Name"].ToString();
+
+        achievementImage.sprite = achievementImages[achievementQueue[0]];
+
+        StartCoroutine(PanelTimer(3f, achievementPanel));
+
+        yield break;
+    }
 }
