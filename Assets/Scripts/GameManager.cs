@@ -835,7 +835,7 @@ public class GameManager : MonoBehaviour, IObserver
     {
         // Enqueue
         achievementQueue.Add(index);
-
+        AudioManager.Instance.PlayAudio("LobbyEffect", 3, 0f, false);
         // Spin Lock
         StartCoroutine(SpinLock());
     }

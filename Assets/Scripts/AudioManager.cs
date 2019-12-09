@@ -411,11 +411,11 @@ public class AudioManager : MonoBehaviour
         matchMixerGroup.Add("GameManagerEffect", 2, masterMixer.FindMatchingGroups("GmEffect_2")[0]);
         matchMixerGroup.Add("GameManagerEffect", 3, masterMixer.FindMatchingGroups("GmEffect_3")[0]);
         matchMixerGroup.Add("GameManagerEffect", 4, masterMixer.FindMatchingGroups("GmEffect_4")[0]);
-        matchMixerGroup.Add("GameManagerEffect", 5, masterMixer.FindMatchingGroups("GmEffect_5")[0]);
 
         matchMixerGroup.Add("LobbyEffect", 0, masterMixer.FindMatchingGroups("LobbyEffect_0")[0]);
         matchMixerGroup.Add("LobbyEffect", 1, masterMixer.FindMatchingGroups("LobbyEffect_1")[0]);
         matchMixerGroup.Add("LobbyEffect", 2, masterMixer.FindMatchingGroups("LobbyEffect_2")[0]);
+        matchMixerGroup.Add("LobbyEffect", 3, masterMixer.FindMatchingGroups("LobbyEffect_3")[0]);
 
         matchMixerGroup.Add("Player", 0, masterMixer.FindMatchingGroups("Player_0")[0]);
         matchMixerGroup.Add("Player", 1, masterMixer.FindMatchingGroups("Player_1")[0]);
