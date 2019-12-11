@@ -58,7 +58,7 @@ public class GameManager : MonoBehaviour, IObserver
             return instance;
         }
     }
-    
+
 
     [System.Serializable]
     public class UISet
@@ -100,13 +100,12 @@ public class GameManager : MonoBehaviour, IObserver
     public GameObject achievementPanel;         // (용현) 도전과제 우측 상단 패널
     public Image achievementImage;
     public Text achievementText;
-   
+
     [Header("Particle")]
     public GameObject[] FX_Ingame;              // 0: FX_Save, 1: FX_Damaged, 2: FX_Hurt, 3: FX_HitDust
 
     [Header("Field Objects")]
     public AmonController player;
-    //public GameObject Inventory;              // (태윤) Player 오브젝트에 상속된 아이템 받는 오브젝트 변수
     public GameObject Cam;
     public GameObject injuredParent;
     public Dictionary<string, List<GameObject>> objects;
@@ -132,10 +131,6 @@ public class GameManager : MonoBehaviour, IObserver
     private bool lock_spin = false;             // (용현) 스핀락 변수
     private float velocity;                     // (용현) 패널 열고 닫을 때 쓸 속도 변수. 건드리지 마셈
 
-
-
-
-
     // 스테이지 데이터 변수
 
     /* PlayerPrefs 저장 키
@@ -153,18 +148,13 @@ public class GameManager : MonoBehaviour, IObserver
     {
         dm = DataManager.Instance;
 
-        // 스테이지 데이터 설정
-
         // 미니맵 프리뷰 스프라이트 불러와서 설정
         minimapPreview.sprite = dm.minimap;
-        
-        // 옵저버 추가
 
         string name = dm.SceneName;
         stageNum = (name[5] - 49) * 3 + (name[7] - 49);
 
         InitGame();
-
     }
 
     private void FixedUpdate()
@@ -192,7 +182,7 @@ public class GameManager : MonoBehaviour, IObserver
     {
         // 실행되고 있는 모든 코루틴 종료
         StopAllCoroutines();
-        
+
         gameOver = false;
 
         time = timeLimit;
@@ -228,36 +218,18 @@ public class GameManager : MonoBehaviour, IObserver
         //- temp / 2
         fillrt.localPosition = new Vector2(fillrt.rect.width / 2 - temp / 2, fillrt.localPosition.y);
         textrt.localPosition = new Vector2(fillrt.rect.width / 2 - temp / 2, fillrt.localPosition.y);
-        //bgrt.anchoredPosition = new Vector3(bgrt.anchoredPosition.x + temp / 2, bgrt.anchoredPosition.y, 0);
-        //bgFramert.anchoredPosition = new Vector3(bgFramert.anchoredPosition.x + temp / 2, bgFramert.anchoredPosition.y, 0);
 
         // 도전과제 대기큐 생성
         achievementQueue = new List<int>();
 
-        // 장착 아이템 효과 적용
-
         SetTimeText(time);
-
-        // (19.09.22) 아이템 슬롯 임시 비활성화
-        /*
-        // (19.08.10) 아이템 이미지가 있을 경우에만 아이템 이미지 활성화.
-        // 추후에 아이템이 추가되고 조건들이 많아질 경우 함수로 빼놔야 할 듯
-        for (int i = 0; i < UI[2].transform.childCount; i++)
-        {
-            Transform currentItem = UI[2].transform.GetChild(i);
-
-            // 아이템 이미지가 있는지 확인
-            if (currentItem.childCount == 2)
-                currentItem.GetChild(0).gameObject.SetActive(true);
-        }
-        */
 
         // (용현) UI 비활성화
         foreach (GameObject ui in UI) ui.SetActive(false);
 
         // FX_Hurt 비활성화
         FX_Ingame[2].SetActive(false);
-     
+
         // 필드 오브젝트 초기화 (자동 버전)
         foreach (var pair in objects)
         {
@@ -274,7 +246,7 @@ public class GameManager : MonoBehaviour, IObserver
         {
             LeftInjuredNumImages.transform.GetChild(i).gameObject.SetActive(true);
         }
-        
+
         // 게임 결과창 비활성화
         resultPanel.gameObject.SetActive(false);
 
@@ -296,24 +268,7 @@ public class GameManager : MonoBehaviour, IObserver
         previewRect.sizeDelta = new Vector2(previewRect.rect.width * 300 / previewRect.rect.height, 300);
 
         RectTransform frameRect = minimapPreview.transform.GetChild(0).GetComponent<RectTransform>();
-        frameRect.sizeDelta = new Vector2 (previewRect.rect.width + 15, previewRect.rect.height + 20);
-
-        /*
-        // (19.10.29 예진) 미니맵 프레임 사이즈 조절
-        RectTransform minimapFrameRect = UI[3].transform.GetChild(0).GetComponent<RectTransform>();
-
-        float rate = Mathf.Min(previewRect.rect.width, previewRect.rect.height)
-            * minimapFrameRect.rect.width
-            / Mathf.Max(previewRect.rect.width, previewRect.rect.height);
-
-        int offset = 0;
-
-        if (previewRect.rect.width > previewRect.rect.height)
-            minimapFrameRect.sizeDelta = new Vector2(minimapFrameRect.sizeDelta.x + offset, rate + offset);
-        else
-            minimapFrameRect.sizeDelta = new Vector2(rate + offset, minimapFrameRect.sizeDelta.y + offset);
-            */
-
+        frameRect.sizeDelta = new Vector2(previewRect.rect.width + 15, previewRect.rect.height + 20);
 
         // (19.10.26 예진) 튜토리얼 실행 중에 미니맵 프리뷰 + 시작 버튼 보이지 않도록 함 
         //                 Tutorial.cs에서 다시 활성화하도록 설정
@@ -328,9 +283,9 @@ public class GameManager : MonoBehaviour, IObserver
 
         //BGM 틀기
         if (stageNum >= 0 && stageNum < 3) AudioManager.Instance.PlayAudio("GameManagerBgm", 0, 0f, true);
-        else if(stageNum >= 3 && stageNum < 6) AudioManager.Instance.PlayAudio("GameManagerBgm", 1, 0f, true);
-        else if(stageNum >= 6 && stageNum < 9) AudioManager.Instance.PlayAudio("GameManagerBgm", 2, 0f, true);
-        else if(stageNum >= 9 && stageNum < 12) AudioManager.Instance.PlayAudio("GameManagerBgm", 3, 0f, true);
+        else if (stageNum >= 3 && stageNum < 6) AudioManager.Instance.PlayAudio("GameManagerBgm", 1, 0f, true);
+        else if (stageNum >= 6 && stageNum < 9) AudioManager.Instance.PlayAudio("GameManagerBgm", 2, 0f, true);
+        else if (stageNum >= 9 && stageNum < 12) AudioManager.Instance.PlayAudio("GameManagerBgm", 3, 0f, true);
         else AudioManager.Instance.PlayAudio("GameManagerBgm", 4, 0f, true);
 
         // 초기 부상자 수 확인
@@ -345,7 +300,7 @@ public class GameManager : MonoBehaviour, IObserver
         int glovesEffect = GetEquipedItemEffect("gloves", user);
         int shoesEffect = GetEquipedItemEffect("shoes", user);
         int axeEffect = GetEquipedItemEffect("axe", user);
-    
+
         time = oxygenEffect;
         player.AttackSpd = 1.5f * glovesEffect / 100;
         player.initMoveSpeed = 5 * shoesEffect / 100;
@@ -385,17 +340,13 @@ public class GameManager : MonoBehaviour, IObserver
                 itemLv = user.shoeslv;
                 break;
         }
-        
         int itemEffect = 0;
 
-        //if (itemLv != 0)
-        //{
-            Dictionary<string, object> data = ItemDataManager.Instance.GetEquipItemData();
+        Dictionary<string, object> data = ItemDataManager.Instance.GetEquipItemData();
 
-            object effectData = ((List<Dictionary<string, object>>)data[item])[itemLv]["effect"];
+        object effectData = ((List<Dictionary<string, object>>)data[item])[itemLv]["effect"];
 
-            itemEffect = System.Convert.ToInt32(effectData);
-        //}
+        itemEffect = System.Convert.ToInt32(effectData);
 
         return itemEffect;
     }
@@ -418,66 +369,25 @@ public class GameManager : MonoBehaviour, IObserver
         timeCheckCoroutine = CheckTime();
 
         List<GameObject> injureds = new List<GameObject>();
+
         injureds.AddRange(objects["Serious"]);
-        //injureds.AddRange(objects["Minor"]);
-
-
-        // (19.10.29) 임시 비활성화
-        /*
-        // (예진) 부상자 시간 체크 시작
-        foreach (GameObject i in injureds)
-            i.GetComponent<Injured>().StartTimeCheck();
-        */
 
         StartCoroutine(timeCheckCoroutine);
-        
-
 
         gameState = GameState.Playing;
     }
 
     public void StopGame()
     {
-        // (19.10.29) 임시 비활성화
-        
         // 제한 시간 체크 일시 중단
         StopCoroutine(timeCheckCoroutine);
-
-        /*
-        // 부상자 시간 제한 체크 일시 중단
-        List<GameObject> injureds = new List<GameObject>();
-        injureds.AddRange(objects["Serious"]);
-        //injureds.AddRange(objects["Minor"]);
-
-        foreach (GameObject i in injureds)
-        {
-            Injured injured = i.GetComponent<Injured>();
-
-            if (!injured.isRescued)
-                injured.StopTimeCheck();
-        }
-        */
     }
 
     // (예진) 부상자 시간 제한 재개 부분 추가 위해 메소드 추가
     public void ResumeGame()
     {
-        // (19.10.29) 임시 비활성화
-        
         // 제한 시간 체크 재개
         StartCoroutine(timeCheckCoroutine);
-
-        /*
-        // 부상자 시간 체크 재개
-        List<GameObject> injureds = new List<GameObject>();
-        injureds.AddRange(objects["Serious"]);
-        //injureds.AddRange(objects["Minor"]);
-
-        foreach (GameObject i in injureds)
-        {
-            i.GetComponent<Injured>().StartTimeCheck();
-        }
-        */
     }
 
     public int CheckLeftInjured()
@@ -530,7 +440,7 @@ public class GameManager : MonoBehaviour, IObserver
         UserDataIO.Stage stage = UserDataIO.ReadStageData();
 
         stage.rescueNum[stageNum] = rescuedCount;
-        stage.isPlayed[stageNum] = 1;   
+        stage.isPlayed[stageNum] = 1;
 
         // (11.14.예진) 단서 획득 확인 부분은 GetEvidence 메소드로 이동함
 
@@ -567,7 +477,7 @@ public class GameManager : MonoBehaviour, IObserver
         if (dm.IsLastStage())
         {
             StoryDialog.instance.SetFile("clear" + (dm.SceneName[5] - 48));
-            
+
             // 게임 모든 스테이지 클리어 시 엔딩 씬으로
             if (dm.SceneName[5] - 48 == 5)
             {
@@ -597,8 +507,6 @@ public class GameManager : MonoBehaviour, IObserver
         // 결과창 캐릭터 렌더링 활성화
         resultCharacterAnimator.gameObject.SetActive(true);
     }
-
-
 
     // 게임 클리어시
     private void GameClear()
@@ -652,7 +560,6 @@ public class GameManager : MonoBehaviour, IObserver
         StopGame();
     }
 
-
     // (예진 19.08.05) 게임 결과 보여주는 UI 창 설정
     // (19.08.10) Find 함수 >> 게임 패널 UI 안의 텍스트, 이미지 미리 연결해 두고 사용하는 식으로 변경
     // (19.08.12) 탈출 못한 부상자도 초록색으로 바뀌는 것 수정
@@ -672,7 +579,7 @@ public class GameManager : MonoBehaviour, IObserver
             oxygenSlider.value -= Time.deltaTime;
 
             // (19.10.19) FX_Hurt 추가
-            if (time <  hurtTime&&
+            if (time < hurtTime &&
                 !FX_Ingame[2].activeInHierarchy) FX_Ingame[2].SetActive(true);
 
             if (time < 20 && !isChangedSprite)
@@ -694,9 +601,8 @@ public class GameManager : MonoBehaviour, IObserver
 
     private void SetTimeText(float setTime)
     {
-        
+
         if (setTime < 0) setTime = 0;
-        //else setTime = setTime / timeLimit * 100;
 
         leftTimeText.text = ((int)setTime).ToString();
     }
@@ -742,7 +648,6 @@ public class GameManager : MonoBehaviour, IObserver
     // 씬 옮기기
     public void MoveScene(string sceneName)
     {
-        //SceneManager.LoadScene(sceneName);
         LoadingManager.LoadScene(sceneName);
     }
 
@@ -758,9 +663,9 @@ public class GameManager : MonoBehaviour, IObserver
             var temp2 = CSVReader.Read(UserDataIO.stageDataPath);
 
             int condition = System.Convert.ToInt32(temp[index]["Condition"]);
-            
 
-            switch(index)
+
+            switch (index)
             {
                 // 1 스테이지 전체 구조 시 달성
                 case 0:
@@ -769,10 +674,10 @@ public class GameManager : MonoBehaviour, IObserver
 
                     for (int i = 0; i < 3; i++)
                     {
-                        int num = System.Convert.ToInt32(temp2[4*i]["save"]);
+                        int num = System.Convert.ToInt32(temp2[4 * i]["save"]);
 
                         Debug.Log(num);
-                        
+
                         if (stage.rescueNum[i] != num)
                         {
                             checkBit = false;
@@ -829,7 +734,7 @@ public class GameManager : MonoBehaviour, IObserver
         UserDataIO.WriteUserData(user);
 
         ShowAchievementPanel(index);
-    } 
+    }
 
     public void ShowAchievementPanel(int index)
     {
