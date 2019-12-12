@@ -30,16 +30,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour, IObserver
 {
-    // 게임 클리어 시 보상 수준
-    public enum ClearState { high, mid, low }
-
-    // 게임 상태
-    public enum GameState { Ready, Playing, Over, Clear }
-
     // 게임 매니저 싱글톤
     private static GameManager instance = null;
     public static GameManager Instance
@@ -59,7 +52,6 @@ public class GameManager : MonoBehaviour, IObserver
         }
     }
 
-
     [System.Serializable]
     public class UISet
     {
@@ -71,14 +63,9 @@ public class GameManager : MonoBehaviour, IObserver
 
     [Header("Game State")]
     public int stageNum;                        // 스테이지 번호, (Ex. Stage 1-1 => stageNum = 0, Stage 2-2 => stageNum = 4 (= 1*3 + 1)) 
-    public GameState gameState = GameState.Ready;
     public int leftInjured;
     public float timeLimit;                     // 제한 시간, 초 단위
     public float hurtTime;                      // 캔버스에 빨갛게 올라와요!
-
-    [Header("Clear Requirements")]              // 구조되지 않고 남아 있는 부상자 인원 기준
-    public int maxLeftToMiddleCondition;        // 중간 보상 최대 인원
-    public int maxLeftToLowCondition;           // 최하 보상 최대 인원
 
     [Header("UI")]
     public Text leftTimeText;
@@ -94,8 +81,6 @@ public class GameManager : MonoBehaviour, IObserver
     public GameObject[] UI;                     // (용현) 0: Joystick, 1: Interaction, 2: ItemSlots, 3: Minimap
     public Image minimapPreview;
     public Image interactionImage;              // (용현) 인터렉션 아이템 이미지
-    public Sprite[] itemImages;                 // (용현) 인터렉션 아이템 이미지 종류
-                                                // 0: Rescue, 1: Axe, 2: Kick
     public GameObject LeftInjuredNumImages;     // (예진) 부상자 몇명 남았는지 보여줄 오브젝트
     public GameObject achievementPanel;         // (용현) 도전과제 우측 상단 패널
     public Image achievementImage;
@@ -111,32 +96,22 @@ public class GameManager : MonoBehaviour, IObserver
     public Dictionary<string, List<GameObject>> objects;
     public Animator resultCharacterAnimator;    // (예진) 게임 결과창에 렌더되는 캐릭터 오브젝트 애니메이터
 
-
-    [Header("Observer")]
-    public IObserver observer;
-
     [Header("Sprites")]
     public Sprite[] resultRescuerSprites;       // (예진) 결과 패널에 부상자 구조 여부 스프라이트 받아둠    
                                                 // 0 --> 구조 실패 / 1 --> 구조 성공
     public Sprite[] oxygenSprites;              // 0 --> 평상시 / 1 --> 긴급
     public Sprite[] achievementImages;          // (용현) 도전과제 이미지
+    public Sprite[] itemImages;                 // (용현) 인터렉션 아이템 이미지 종류
+                                                // 0: Rescue, 1: Axe, 2: Kick
 
     public float time;                          // 남은 시간, 초 단위
 
     /* private variable */
-    private readonly int defaultTime = 60;
     private bool gameOver;
     private IEnumerator timeCheckCoroutine;
     private List<int> achievementQueue;
     private bool lock_spin = false;             // (용현) 스핀락 변수
     private float velocity;                     // (용현) 패널 열고 닫을 때 쓸 속도 변수. 건드리지 마셈
-
-    // 스테이지 데이터 변수
-
-    /* PlayerPrefs 저장 키
-     * Money - 플레이어 소지 돈
-     * Honor - 플레이어 소지 명예
-     */
 
     private void Awake()
     {
@@ -161,17 +136,11 @@ public class GameManager : MonoBehaviour, IObserver
     {
         // Debug: Reset
         if (Input.GetKeyDown(KeyCode.R))
-        {
-            Debug.Log("RESTART");
-
             InitGame();
-        }
 
         // Debug: Settings
         else if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Debug.Log("Settings");
-
             if (settings.activeInHierarchy) SettingButton(false);
 
             else SettingButton(true);
@@ -180,7 +149,6 @@ public class GameManager : MonoBehaviour, IObserver
 
     public void InitGame()
     {
-        // 실행되고 있는 모든 코루틴 종료
         StopAllCoroutines();
 
         gameOver = false;
@@ -189,10 +157,7 @@ public class GameManager : MonoBehaviour, IObserver
 
         ApplyEquipItemEffect();
 
-        // (19.09.11. 예진) 산소통 테스트 - debug 씬에 추가 시 if문 삭제
-        // (19.09.21.) Debug 씬에 산소통 추가됨
-        // 시간에 따라 산소통 크기 다르게 해줌
-        // (19.09.26) 산소통 슬라이더 백그라운드 Sliced Sprite 처리하고 위치와 크기 조정하도록 함
+        /* 산소통 크기 설정*/
         RectTransform rt = oxygenSlider.GetComponent<RectTransform>();
         RectTransform bgrt = oxygenSlider.transform.GetChild(0).GetComponent<RectTransform>();
         RectTransform fillrt = oxygenSlider.transform.GetChild(1).GetComponent<RectTransform>();
@@ -200,29 +165,22 @@ public class GameManager : MonoBehaviour, IObserver
         RectTransform bgFramert = oxygenSlider.transform.GetChild(2).GetComponent<RectTransform>();
         RectTransform textrt = oxygenSlider.transform.GetChild(3).GetComponent<RectTransform>();
 
-
-        Debug.Log(time);
         float temp = (time - timeLimit) * 10;
-
         timeLimit = time;
-        Debug.Log(temp);
 
         rt.sizeDelta = new Vector2(rt.sizeDelta.x + temp, rt.sizeDelta.y);
         bgrt.sizeDelta = new Vector2(bgrt.sizeDelta.x + temp, bgrt.sizeDelta.y);
-
         bgFramert.sizeDelta = new Vector2(bgFramert.sizeDelta.x + temp, bgFramert.sizeDelta.y);
 
         oxygenSlider.maxValue = time;
-
         oxygenSlider.value = time;
-        //- temp / 2
+
         fillrt.localPosition = new Vector2(fillrt.rect.width / 2 - temp / 2, fillrt.localPosition.y);
         textrt.localPosition = new Vector2(fillrt.rect.width / 2 - temp / 2, fillrt.localPosition.y);
+        /* 산소통 크기 설정 끝*/
 
         // 도전과제 대기큐 생성
         achievementQueue = new List<int>();
-
-        SetTimeText(time);
 
         // (용현) UI 비활성화
         foreach (GameObject ui in UI) ui.SetActive(false);
@@ -232,37 +190,23 @@ public class GameManager : MonoBehaviour, IObserver
 
         // 필드 오브젝트 초기화 (자동 버전)
         foreach (var pair in objects)
-        {
-            Debug.Log(pair.Key + " " + pair.Value.Count);
-
             foreach (var value in pair.Value)
-            {
                 value.GetComponent<IReset>().SetInitValue();
-            }
-        }
 
         // (19.11.18) 남은 부상자 이미지 UI total 값만큼만 활성화하기
         for (int i = 0; i < dm.total; i++)
-        {
             LeftInjuredNumImages.transform.GetChild(i).gameObject.SetActive(true);
-        }
 
-        // 게임 결과창 비활성화
+        // 결과창 초기화
         resultPanel.gameObject.SetActive(false);
-
-        // 결과창 캐릭터 렌더링 애니메이션 초기화
         resultCharacterAnimator.SetBool("Victory", false);
         resultCharacterAnimator.SetBool("Fail", false);
-
-        // 결과창 캐릭터 렌더링 비활성화
         resultCharacterAnimator.gameObject.SetActive(false);
 
-        // 세팅 버튼 비활성화
         settingsButton.SetActive(false);
-
-        // 세팅창 비활성화
         settings.SetActive(false);
 
+        // 미니맵 미리보기 초기화
         minimapPreview.SetNativeSize();
         RectTransform previewRect = minimapPreview.GetComponent<RectTransform>();
         previewRect.sizeDelta = new Vector2(previewRect.rect.width * 300 / previewRect.rect.height, 300);
@@ -271,17 +215,13 @@ public class GameManager : MonoBehaviour, IObserver
         frameRect.sizeDelta = new Vector2(previewRect.rect.width + 15, previewRect.rect.height + 20);
 
         // (19.10.26 예진) 튜토리얼 실행 중에 미니맵 프리뷰 + 시작 버튼 보이지 않도록 함 
-        //                 Tutorial.cs에서 다시 활성화하도록 설정
         if (PlayerPrefs.GetInt("isPlayedTutorial", 0) == 1)
         {
             minimapPreview.transform.parent.gameObject.SetActive(true);
             startButton.SetActive(true);
         }
 
-        // 게임 상태 변경: Ready
-        gameState = GameState.Ready;
-
-        //BGM 틀기
+        // BGM 틀기
         if (stageNum >= 0 && stageNum < 3) AudioManager.Instance.PlayAudio("GameManagerBgm", 0, 0f, true);
         else if (stageNum >= 3 && stageNum < 6) AudioManager.Instance.PlayAudio("GameManagerBgm", 1, 0f, true);
         else if (stageNum >= 6 && stageNum < 9) AudioManager.Instance.PlayAudio("GameManagerBgm", 2, 0f, true);
@@ -307,19 +247,8 @@ public class GameManager : MonoBehaviour, IObserver
         player.axeDamage = axeEffect;
     }
 
-    private void ApplyEquipItemMaterial()
-    {
-        UserDataIO.User user = UserDataIO.ReadUserData();
-
-        int oxygenLv = user.oxygenlv;
-        int glovesLv = user.gloveslv;
-        int shoesLv = user.shoeslv;
-        int axeLv = user.axelv;
-    }
-
     private int GetEquipedItemEffect(string item, UserDataIO.User user)
     {
-        // 아이템 현재 레벨 불러오기
         int itemLv = 0;
 
         switch (item)
@@ -340,53 +269,38 @@ public class GameManager : MonoBehaviour, IObserver
                 itemLv = user.shoeslv;
                 break;
         }
-        int itemEffect = 0;
 
         Dictionary<string, object> data = ItemDataManager.Instance.GetEquipItemData();
 
         object effectData = ((List<Dictionary<string, object>>)data[item])[itemLv]["effect"];
 
-        itemEffect = System.Convert.ToInt32(effectData);
-
-        return itemEffect;
+        return System.Convert.ToInt32(effectData);
     }
 
     public void StartGame()
     {
+        // UI 활성화 설정
         startButton.SetActive(false);
-
         minimapPreview.transform.parent.gameObject.SetActive(false);
-
-        // 세팅 버튼 활성화
         settingsButton.SetActive(true);
-
-        // (용현) UI 활성화
         foreach (GameObject ui in UI) ui.SetActive(true);
 
-        // (19.09.22) 아이템 슬롯 임시 비활성화
-        UI[2].SetActive(false);
-
+        // 시간 시작
         timeCheckCoroutine = CheckTime();
-
-        List<GameObject> injureds = new List<GameObject>();
-
-        injureds.AddRange(objects["Serious"]);
-
         StartCoroutine(timeCheckCoroutine);
 
-        gameState = GameState.Playing;
+        // 부상자 리스트 설정
+        List<GameObject> injureds = new List<GameObject>();
+        injureds.AddRange(objects["Serious"]);
     }
 
     public void StopGame()
     {
-        // 제한 시간 체크 일시 중단
         StopCoroutine(timeCheckCoroutine);
     }
 
-    // (예진) 부상자 시간 제한 재개 부분 추가 위해 메소드 추가
     public void ResumeGame()
     {
-        // 제한 시간 체크 재개
         StartCoroutine(timeCheckCoroutine);
     }
 
@@ -395,7 +309,6 @@ public class GameManager : MonoBehaviour, IObserver
         leftInjured = 0;
         List<GameObject> injureds = new List<GameObject>();
         injureds.AddRange(objects["Serious"]);
-        //injureds.AddRange(objects["Minor"]);
 
         foreach (GameObject i in injureds)
             if (i.activeInHierarchy)
@@ -415,7 +328,6 @@ public class GameManager : MonoBehaviour, IObserver
         return leftInjured;
     }
 
-    // 게임 클리어 여부와 보상 수준 확인
     public void CheckGameClear()
     {
         gameOver = true;
@@ -426,24 +338,18 @@ public class GameManager : MonoBehaviour, IObserver
         else GameClear();
     }
 
-    bool isPlayingDialog = false;
     // (19.10.03 예진) 게임 클리어, 실패 공통 실행 부분 합침
     public void GameEnd()
     {
         int rescuedCount = dm.total - leftInjured;
-        Debug.Log(rescuedCount);
 
         AudioManager.Instance.StopAllAudio();
         AudioManager.Instance.PlayAudio("GameManagerEffect", 0, 0.5f, false);
 
         // (19.10.13) 이번 스테이지에서 구출한 인원 저장
         UserDataIO.Stage stage = UserDataIO.ReadStageData();
-
         stage.rescueNum[stageNum] = rescuedCount;
         stage.isPlayed[stageNum] = 1;
-
-        // (11.14.예진) 단서 획득 확인 부분은 GetEvidence 메소드로 이동함
-
         UserDataIO.WriteStageData(stage);
 
         // (19.08.25) 플레이 횟수 증가
@@ -458,21 +364,16 @@ public class GameManager : MonoBehaviour, IObserver
 
         // (19.11.09 예진) 피로도 100 이상일 때 게임 결과창의 확인 버튼 누르면 초기화 씬으로 이동
         if (!UserDataIO.ChangeUserStress(stress))
-        {
-            resultOkButton.onClick.RemoveAllListeners();
-            resultOkButton.onClick.AddListener(() => SceneManager.LoadScene("GameOver"));
-        }
+            SetButtonListener(resultOkButton, "GameOver");
 
         /* 대화창 표시 */
         for (int i = ItemDataManager.Instance.stressValues.Length - 2; i > 0; i--)
-        {
             if (UserDataIO.ReadUserData().stress >= ItemDataManager.Instance.stressValues[i]
                 && user.stress < ItemDataManager.Instance.stressValues[i])
             {
                 StoryDialog.instance.SetFile("stress" + i);
                 break;
             }
-        }
 
         if (dm.IsLastStage())
         {
@@ -480,43 +381,30 @@ public class GameManager : MonoBehaviour, IObserver
 
             // 게임 모든 스테이지 클리어 시 엔딩 씬으로
             if (dm.SceneName[5] - 48 == 5)
-            {
-                resultOkButton.onClick.RemoveAllListeners();
-                resultOkButton.onClick.AddListener(() => SceneManager.LoadScene("GameOver"));
-            }
+                SetButtonListener(resultOkButton, "GameOver");
             // 게임의 큰 스테이지 하나를 클리어 시 로비 씬으로
             else
-            {
-                resultOkButton.onClick.RemoveAllListeners();
-                resultOkButton.onClick.AddListener(() => SceneManager.LoadScene("Lobby"));
-            }
+                SetButtonListener(resultOkButton, "Lobby");
         }
-
-        // 조이스틱 멈춤
-        JoystickController.instance.StopJoystick();
 
         // 애니메이션 멈춤
         player.AnimationIdle();
 
-        // 세팅 버튼 비활성화
+        // 조이스틱 멈춤
+        JoystickController.instance.StopJoystick();
+
+        // UI 활성화 여부 설정
         settingsButton.SetActive(false);
-
-        // (용현) UI 비활성화
         foreach (GameObject ui in UI) ui.SetActive(false);
-
-        // 결과창 캐릭터 렌더링 활성화
         resultCharacterAnimator.gameObject.SetActive(true);
     }
 
-    // 게임 클리어시
     private void GameClear()
     {
         GameEnd();
 
         int money = dm.GetStageReward(DataManager.RewardType.money, leftInjured);
         int honor = dm.GetStageReward(DataManager.RewardType.honor, leftInjured);
-
-        Debug.Log("Reward - Money : " + money + ", Honor : " + honor);
 
         dm.SaveGameResult(money, honor);
 
@@ -532,22 +420,15 @@ public class GameManager : MonoBehaviour, IObserver
             AudioManager.Instance.PlayAudio("GameManagerEffect", 3, 0f, false);
         }
 
-        gameState = GameState.Clear;
-
         // 게임 결과창 활성화
         ShowGameResult(money, honor);
 
         StopGame();
     }
 
-    // 게임 클리어 실패 시. (19.08.05) 플레이어가 장애물에 맞아 죽었을 시 접근하기 위해 public으로 변경
     public void GameOver()
     {
         GameEnd();
-
-        Debug.Log("game over");
-
-        gameState = GameState.Over;
 
         // (19.09.23.) 결과창 애니메이션 설정
         resultCharacterAnimator.SetBool("Fail", true);
@@ -561,8 +442,6 @@ public class GameManager : MonoBehaviour, IObserver
     }
 
     // (예진 19.08.05) 게임 결과 보여주는 UI 창 설정
-    // (19.08.10) Find 함수 >> 게임 패널 UI 안의 텍스트, 이미지 미리 연결해 두고 사용하는 식으로 변경
-    // (19.08.12) 탈출 못한 부상자도 초록색으로 바뀌는 것 수정
     private void ShowGameResult(int money, int honor)
     {
         resultPanel.StartResultAnimation(dm.total, leftInjured, money, honor, UserDataIO.ReadUserData().stress);
@@ -584,8 +463,7 @@ public class GameManager : MonoBehaviour, IObserver
 
             if (time < 20 && !isChangedSprite)
             {
-                oxygenSlider.transform.GetChild(1).GetChild(0).GetComponent<Image>().sprite
-                    = oxygenSprites[1];
+                oxygenSlider.transform.GetChild(1).GetChild(0).GetComponent<Image>().sprite = oxygenSprites[1];
 
                 isChangedSprite = true;
                 AudioManager.Instance.PlayAudio("TimeOut", 0, 0f, true);
@@ -603,7 +481,6 @@ public class GameManager : MonoBehaviour, IObserver
     {
 
         if (setTime < 0) setTime = 0;
-
         leftTimeText.text = ((int)setTime).ToString();
     }
 
@@ -618,34 +495,25 @@ public class GameManager : MonoBehaviour, IObserver
 
             else
             {
-                // 게임 정지
                 StopGame();
 
                 // (용현) UI 비활성화
                 foreach (GameObject ui in UI) ui.SetActive(false);
 
-                // 설정창 활성화
                 settings.SetActive(true);
             }
         }
-
         else
         {
-            // 게임 시작
             ResumeGame();
 
             // (용현) UI 활성화
             foreach (GameObject ui in UI) ui.SetActive(true);
 
-            // (19.09.22) 아이템 슬롯 임시 비활성화
-            UI[2].SetActive(false);
-
-            // 설정창 비활성화
             settings.SetActive(false);
         }
     }
 
-    // 씬 옮기기
     public void MoveScene(string sceneName)
     {
         LoadingManager.LoadScene(sceneName);
@@ -676,8 +544,6 @@ public class GameManager : MonoBehaviour, IObserver
                     {
                         int num = System.Convert.ToInt32(temp2[4 * i]["save"]);
 
-                        Debug.Log(num);
-
                         if (stage.rescueNum[i] != num)
                         {
                             checkBit = false;
@@ -696,7 +562,6 @@ public class GameManager : MonoBehaviour, IObserver
                     {
                         if (stage.isGotEvidence[i] == 0)
                         {
-                            Debug.Log(i);
                             isAcheived = false;
                             break;
                         }
@@ -818,5 +683,11 @@ public class GameManager : MonoBehaviour, IObserver
         StartCoroutine(PanelTimer(3f, achievementPanel));
 
         yield break;
+    }
+
+    private void SetButtonListener(Button btn, string scenename)
+    {
+        btn.onClick.RemoveAllListeners();
+        btn.onClick.AddListener(() => LoadingManager.LoadScene(scenename));
     }
 }
