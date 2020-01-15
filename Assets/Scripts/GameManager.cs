@@ -105,6 +105,7 @@ public class GameManager : MonoBehaviour, IObserver
                                                 // 0: Rescue, 1: Axe, 2: Kick
 
     public float time;                          // 남은 시간, 초 단위
+    public bool hidden;                         // hidden
 
     /* private variable */
     private bool gameOver;
@@ -584,6 +585,10 @@ public class GameManager : MonoBehaviour, IObserver
 
                 case 5:
                     if (user.deathCount >= condition) UpdateAchievement(5);
+                    break;
+                    
+                case 6:
+                    if (hidden) UpdateAchievement(6);
                     break;
             }
         }
