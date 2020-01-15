@@ -155,6 +155,8 @@ public class GameManager : MonoBehaviour, IObserver
         gameOver = false;
 
         time = timeLimit;
+        
+        hidden = false;
 
         ApplyEquipItemEffect();
 
@@ -302,6 +304,8 @@ public class GameManager : MonoBehaviour, IObserver
 
     public void ResumeGame()
     {
+        hidden = time == 1.0f ? true : false;
+    
         StartCoroutine(timeCheckCoroutine);
     }
 
